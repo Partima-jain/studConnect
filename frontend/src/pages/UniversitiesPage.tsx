@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from '../hooks/useApi';
 import { Modal } from '../components/Modal';
@@ -10,14 +10,15 @@ import { OrbitControls } from '@react-three/drei';
 
 const BASE_URL = "https://studconnect-backend.onrender.com"; 
 // const BASE_URL = "http://127.0.0.1:8000";
-const PAGE_SIZE = 20;
-const MAX_PAGE_SIZE = 200;
 
 interface ProgramItem {
   id: string;
-  type: string;
   attributes: any;
+  program_basic: any;
   school_id: string;
+  school: any;
+  program: any;
+  program_requirements: any;
 }
 
 export const UniversitiesPage: React.FC = () => {
@@ -42,22 +43,30 @@ export const UniversitiesPage: React.FC = () => {
   const [allUniversities, setAllUniversities] = useState<string[]>([]);
   const [allProgramNames, setAllProgramNames] = useState<string[]>([]);
 
+  // Add a ref to cache programs data by query params
+  const programsCache = useRef<Map<string, { items: ProgramItem[]; total: number }>>(new Map());
+
   useEffect(() => {
     const countryArr = Object.entries((countriesData as any).countries || {}).map(
       ([label, value]) => ({ label, value })
     );
     setAllCountries(countryArr);
 
-    // Universities: array of names
     setAllUniversities(((universitiesData as any).universities || []));
 
-    // Programs: array of names
-    setAllProgramNames(((programsData as any).programs || []));
+    // Ensure we extract program names from the array in programs.json
+    // If programs.json is an array of objects with a "name" property:
+    // setAllProgramNames(((programsData as any).programs || []).map((p: any) => p.name));
+    // If programs.json is just an array of strings:
+    setAllProgramNames(Array.isArray((programsData as any).programs)
+      ? (programsData as any).programs.map((p: any) => typeof p === 'string' ? p : p.name)
+      : []);
   }, []);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
+    // Build params for cache key
     const params: Record<string, string | number> = {
       page,
       page_size: rowsPerPage,
@@ -65,21 +74,56 @@ export const UniversitiesPage: React.FC = () => {
     if (minTuition) params.min_fees = minTuition;
     if (maxTuition) params.max_fees = maxTuition;
     if (programName) params.program_name = programName;
-    if (universityName) params.school_name = universityName;
-    // For country, send the value (code) not the label
-    if (country) params.country = country;
+    if (universityName) params.university_name = universityName;
+    if (country) {
+      const countryObj = allCountries.find(c => c.value === country);
+      params.country = countryObj ? countryObj.label : country;
+    }
+    const cacheKey = JSON.stringify(params);
 
-    fetch(`${BASE_URL}/api/programs/filter?${new URLSearchParams(params as any).toString()}`)
+    // Check cache first
+    if (programsCache.current.has(cacheKey)) {
+      const cached = programsCache.current.get(cacheKey)!;
+      setPrograms(cached.items);
+      setTotal(cached.total);
+      setLoading(false);
+      return;
+    }
+
+    fetch(`${BASE_URL}/api/program-details?${new URLSearchParams(params as any).toString()}`)
       .then(res => res.json())
       .then(res => {
         setPrograms(res.items || []);
         setTotal(res.total || 0);
+        // Store in cache
+        programsCache.current.set(cacheKey, { items: res.items || [], total: res.total || 0 });
       })
       .catch(e => setError(e.message || 'Failed loading programs'))
       .finally(() => setLoading(false));
-  }, [minTuition, maxTuition, programName, universityName, country, page, rowsPerPage]);
+  }, [minTuition, maxTuition, programName, universityName, country, page, rowsPerPage, allCountries]);
 
   const totalPages = Math.ceil(total / rowsPerPage);
+
+  // Add a handler to go to program details page with program data and query params
+  const handleViewProgramDetails = (program: ProgramItem) => {
+    // Build query params string for current filters
+    const params: Record<string, string | number> = {
+      page,
+      page_size: rowsPerPage,
+    };
+    if (minTuition) params.min_fees = minTuition;
+    if (maxTuition) params.max_fees = maxTuition;
+    if (programName) params.program_name = programName;
+    if (universityName) params.university_name = universityName;
+    // For country, send the label (not the code)
+    if (country) {
+      const countryObj = allCountries.find(c => c.value === country);
+      params.country = countryObj ? countryObj.label : country;
+    }
+
+    const queryString = new URLSearchParams(params as any).toString();
+    navigate(`/programs/${program.id}?${queryString}`, { state: { program } });
+  };
 
   return (
     <main style={{ background: '#f8fafc', minHeight: '100vh', paddingBottom: '2rem', position: 'relative', zIndex: 1 }}>
@@ -88,38 +132,33 @@ export const UniversitiesPage: React.FC = () => {
         margin: '0 auto',
         marginTop: '2.5rem',
         borderRadius: '2.2rem',
-        background: '#fff',
         boxShadow: '0 8px 32px 0 rgba(31,41,55,0.10), 0 1.5px 8px 0 #c7d2fe',
-        padding: '2.2rem 2.2rem 1.5rem 2.2rem',
         position: 'relative',
+        padding: '10px',
         zIndex: 2
       }}>
         {/* Filters */}
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: '2.2rem',
-          gap: '1.5rem'
-        }}>
-          <div>
-            <h1 style={{
-              fontSize: '2.2rem',
-              fontWeight: 800,
-              margin: 0,
-              letterSpacing: '-1px',
-              color: 'var(--uni-title, #1e293b)',
-              transition: 'color 0.3s'
-            }}>Programs</h1>
-            <div style={{
-              fontSize: '1.05rem',
-              color: 'var(--uni-desc, #64748b)',
-              marginTop: '.3rem',
-              transition: 'color 0.3s'
-            }}>Find and compare programs worldwide.</div>
-          </div>
-          <div style={{ display: 'flex', gap: '.9rem', flexWrap: 'wrap', alignItems: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '2.2rem',
+            gap: '1.5rem'
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              gap: '.9rem',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              width: '100%',
+              rowGap: '1rem'
+            }}
+            className="uni-filters-row"
+          >
             <select
               value={country}
               onChange={e => setCountry(e.target.value)}
@@ -129,41 +168,56 @@ export const UniversitiesPage: React.FC = () => {
                 border: '1px solid #e5e7eb',
                 fontWeight: 500,
                 minWidth: 140,
-                background: '#f8fafc'
+                background: '#f8fafc',
+                flex: '1 1 180px',
+                maxWidth: 260
               }}>
               <option value="">All Countries</option>
               {allCountries.map(c => (
                 <option key={c.value} value={c.value}>{c.label}</option>
               ))}
             </select>
-            <select value={universityName} onChange={e => setUniversityName(e.target.value)}
+            <select
+              value={universityName}
+              onChange={e => setUniversityName(e.target.value)}
               style={{
                 padding: '.55rem 1.1rem',
                 borderRadius: '10px',
                 border: '1px solid #e5e7eb',
                 fontWeight: 500,
                 minWidth: 180,
-                background: '#f8fafc'
+                background: '#f8fafc',
+                flex: '1 1 220px',
+                maxWidth: 320
               }}>
               <option value="">All Universities</option>
               {allUniversities.map(u => (
                 <option key={u} value={u}>{u}</option>
               ))}
             </select>
-            <select value={programName} onChange={e => setProgramName(e.target.value)}
+            <input
+              type="text"
+              placeholder="Search Program"
+              value={programName}
+              onChange={e => setProgramName(e.target.value)}
               style={{
                 padding: '.55rem 1.1rem',
                 borderRadius: '10px',
                 border: '1px solid #e5e7eb',
                 fontWeight: 500,
                 minWidth: 180,
-                background: '#f8fafc'
-              }}>
-              <option value="">All Programs</option>
+                background: '#f8fafc',
+                flex: '1 1 220px',
+                maxWidth: 320
+              }}
+              list="program-names-list"
+              autoComplete="off"
+            />
+            <datalist id="program-names-list">
               {allProgramNames.map(p => (
-                <option key={p} value={p}>{p}</option>
+                <option key={p} value={p} />
               ))}
-            </select>
+            </datalist>
             <input
               type="number"
               placeholder="Min Tuition"
@@ -175,7 +229,9 @@ export const UniversitiesPage: React.FC = () => {
                 border: '1px solid #e5e7eb',
                 fontWeight: 500,
                 minWidth: 100,
-                background: '#f8fafc'
+                background: '#f8fafc',
+                flex: '1 1 120px',
+                maxWidth: 160
               }}
             />
             <input
@@ -189,70 +245,42 @@ export const UniversitiesPage: React.FC = () => {
                 border: '1px solid #e5e7eb',
                 fontWeight: 500,
                 minWidth: 100,
-                background: '#f8fafc'
+                background: '#f8fafc',
+                flex: '1 1 120px',
+                maxWidth: 160
               }}
             />
           </div>
-        </div>
-        {/* Results summary and pagination */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.2rem', marginTop: '-1.2rem' }}>
-          <div>
-            <span className="css-9fpggw" aria-live="polite" aria-atomic="true" data-testid="temp">
-              {programs.length > 0
-                ? `${(page - 1) * rowsPerPage + 1} - ${Math.min(page * rowsPerPage, total)} of ${total} items`
-                : '0 items'}
-            </span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
-            <label htmlFor="items-per-page" style={{ fontSize: '.98rem', color: '#64748b' }}>
-              Items per page:
-            </label>
-            <select
-              id="items-per-page"
-              value={rowsPerPage}
-              onChange={e => { setRowsPerPage(Number(e.target.value)); setPage(1); }}
-              style={{
-                padding: '.4rem .9rem',
-                borderRadius: '8px',
-                border: '1px solid #e5e7eb',
-                fontWeight: 500,
-                minWidth: 70,
-                background: '#f8fafc'
-              }}
-            >
-              <option value={12}>12</option>
-              <option value={24}>24</option>
-              <option value={48}>48</option>
-            </select>
-            {/* Pagination buttons */}
-            <button
-              aria-label="Previous page"
-              disabled={page <= 1}
-              onClick={() => setPage(page - 1)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: page > 1 ? 'pointer' : 'not-allowed',
-                fontSize: '1.3rem',
-                color: page > 1 ? '#2563eb' : '#cbd5e1',
-                padding: '0 .5rem'
-              }}
-            >‹</button>
-            <span style={{ fontSize: '.98rem', color: '#64748b' }}>{page} / {totalPages || 1}</span>
-            <button
-              aria-label="Next page"
-              disabled={page >= totalPages}
-              onClick={() => setPage(page + 1)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: page < totalPages ? 'pointer' : 'not-allowed',
-                fontSize: '1.3rem',
-                color: page < totalPages ? '#2563eb' : '#cbd5e1',
-                padding: '0 .5rem'
-              }}
-            >›</button>
-          </div>
+          <style>
+            {`
+              @media (max-width: 900px) {
+                .uni-filters-row {
+                  flex-direction: column !important;
+                  align-items: stretch !important;
+                  gap: 1rem !important;
+                }
+                .uni-filters-row > * {
+                  min-width: 0 !important;
+                  max-width: 100% !important;
+                  width: 100% !important;
+                  flex: 1 1 100% !important;
+                }
+              }
+              @media (max-width: 600px) {
+                .uni-filters-row {
+                  flex-direction: column !important;
+                  align-items: stretch !important;
+                  gap: 0.7rem !important;
+                }
+                .uni-filters-row > * {
+                  min-width: 0 !important;
+                  max-width: 100% !important;
+                  width: 100% !important;
+                  font-size: 0.97rem !important;
+                }
+              }
+            `}
+          </style>
         </div>
         {/* Program Cards */}
         <div
@@ -261,7 +289,7 @@ export const UniversitiesPage: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
             gap: '2.7rem 2.2rem',
             alignItems: 'stretch',
-            marginTop: '2.7rem' // increased top margin for more space
+            marginTop: '2.7rem'
           }}
         >
           {loading && <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#64748b' }}>Loading programs...</div>}
@@ -270,7 +298,7 @@ export const UniversitiesPage: React.FC = () => {
             <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#64748b' }}>No programs found.</div>
           )}
           {!loading && !error && programs.map((p, idx) => {
-            const attrs = p.attributes || {};
+            const attrs = p.program_basic || {};
             const school = attrs.school || {};
             const logoUrl = school.logoThumbnailUrl || '/placeholder.png';
             const universityName = school.name || '';
@@ -361,11 +389,13 @@ export const UniversitiesPage: React.FC = () => {
                       color: '#2563eb',
                       lineHeight: 1.2,
                       cursor: 'pointer',
-                      textDecoration: 'underline',
                       textUnderlineOffset: '2px'
                     }}
-                    onClick={() => {
-                      if (schoolId) navigate(`/universities/${schoolId}`);
+                    onClick={e => {
+                      e.stopPropagation();
+                      if (schoolId) {
+                        window.open(`/universities/${schoolId}`, '_blank', 'noopener,noreferrer');
+                      }
                     }}
                     title={`View details for ${universityName}`}
                   >
@@ -442,8 +472,22 @@ export const UniversitiesPage: React.FC = () => {
                     cursor: 'pointer',
                     transition: 'background 0.18s, box-shadow 0.18s'
                   }}
-                  onClick={() => {
-                    if (schoolId) navigate(`/universities/${schoolId}`);
+                  onClick={e => {
+                    e.stopPropagation();
+                    const url = `/program-details/${p.id}`;
+                    const state = {
+                      id: p.id,
+                      attributes: p.attributes,
+                      program_basic: p.program_basic,
+                      school_id: p.school_id,
+                      school: p.school,
+                      program: p.program,
+                      program_requirements: p.program_requirements
+                    };
+                    // Pass state via window.open using sessionStorage
+                    const stateKey = `program-details-state-${p.id}`;
+                    sessionStorage.setItem(stateKey, JSON.stringify(state));
+                    window.open(`${url}?stateKey=${stateKey}`, '_blank', 'noopener,noreferrer');
                   }}
                 >
                   View Details
@@ -458,6 +502,66 @@ export const UniversitiesPage: React.FC = () => {
               </article>
             );
           })}
+        </div>
+        {/* Results summary and pagination - moved below programs */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.2rem', marginTop: '1.2rem' }}>
+          <div>
+            <span className="css-9fpggw" aria-live="polite" aria-atomic="true" data-testid="temp">
+              {programs.length > 0
+                ? `${(page - 1) * rowsPerPage + 1} - ${Math.min(page * rowsPerPage, total)} of ${total} items`
+                : '0 items'}
+            </span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
+            <label htmlFor="items-per-page" style={{ fontSize: '.98rem', color: '#64748b' }}>
+              Items per page:
+            </label>
+            <select
+              id="items-per-page"
+              value={rowsPerPage}
+              onChange={e => { setRowsPerPage(Number(e.target.value)); setPage(1); }}
+              style={{
+                padding: '.4rem .9rem',
+                borderRadius: '8px',
+                border: '1px solid #e5e7eb',
+                fontWeight: 500,
+                minWidth: 70,
+                background: '#f8fafc'
+              }}
+            >
+              <option value={12}>12</option>
+              <option value={24}>24</option>
+              <option value={48}>48</option>
+            </select>
+            {/* Pagination buttons */}
+            <button
+              aria-label="Previous page"
+              disabled={page <= 1}
+              onClick={() => setPage(page - 1)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: page > 1 ? 'pointer' : 'not-allowed',
+                fontSize: '1.3rem',
+                color: page > 1 ? '#2563eb' : '#cbd5e1',
+                padding: '0 .5rem'
+              }}
+            >‹</button>
+            <span style={{ fontSize: '.98rem', color: '#64748b' }}>{page} / {totalPages || 1}</span>
+            <button
+              aria-label="Next page"
+              disabled={page >= totalPages}
+              onClick={() => setPage(page + 1)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: page < totalPages ? 'pointer' : 'not-allowed',
+                fontSize: '1.3rem',
+                color: page < totalPages ? '#2563eb' : '#cbd5e1',
+                padding: '0 .5rem'
+              }}
+            >›</button>
+          </div>
         </div>
         {/* Modal for Success Prediction Details */}
         {openIntakes && (

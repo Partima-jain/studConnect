@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
 import { AboutPage } from './pages/AboutPage';
 import { ServicesPage } from './pages/ServicesPage';
@@ -16,10 +16,11 @@ import AuthLoginPage from './pages/AuthLoginPage';
 import { FinancialServicesPage } from './pages/FinancialServicesPage';
 import UniversityDetailPage from './pages/UniversityDetailPage';
 import StudyApplication from './pages/StudyApplication';
+import ProgramDetailsPage from './pages/ProgramDetailsPage';
 
 export const App: React.FC = () => (
   <AuthProvider>
-    <BrowserRouter>
+    <Router>
       <SiteNav />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -28,6 +29,7 @@ export const App: React.FC = () => (
         <Route path="/services/peer-counselling" element={<PeerCounsellingPage />} />
         <Route path="/universities" element={<UniversitiesPage />} />
         <Route path="/universities/:id" element={<UniversityDetailPage />} />
+        <Route path="/program-details/:id" element={<ProgramDetailsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/student" element={<StudentDashboard />} />
         <Route path="/counsellor" element={<CounsellorDashboard />} />
@@ -38,6 +40,6 @@ export const App: React.FC = () => (
         <Route path="/services/international-application-process" element={<StudyApplication />} />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   </AuthProvider>
 );
