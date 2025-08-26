@@ -4,10 +4,12 @@ import { useApi } from '../hooks/useApi';
 import { Modal } from '../components/Modal';
 import programsData from './programs.json';
 import countriesData from './countries.json';
+import universitiesData from './universities.json';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-const BASE_URL = "https://studconnect-backend.onrender.com"; // Use deployed backend
+const BASE_URL = "https://studconnect-backend.onrender.com"; 
+// const BASE_URL = "http://127.0.0.1:8000";
 const PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 200;
 
@@ -35,27 +37,22 @@ export const UniversitiesPage: React.FC = () => {
   const [universityName, setUniversityName] = useState('');
   const [country, setCountry] = useState('');
 
-  const [allCountries, setAllCountries] = useState<string[]>([]);
+  // Use JSON files for dropdowns
+  const [allCountries, setAllCountries] = useState<{ label: string; value: string }[]>([]);
   const [allUniversities, setAllUniversities] = useState<string[]>([]);
   const [allProgramNames, setAllProgramNames] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/programs/filter?page=1&page_size=200`)
-      .then(res => res.json())
-      .then(res => {
-        const items = res.items || [];
-        const countrySet = new Set<string>();
-        const universitySet = new Set<string>();
-        const programSet = new Set<string>();
-        items.forEach((p: any) => {
-          if (p.attributes?.school?.country) countrySet.add(p.attributes.school.country);
-          if (p.attributes?.school?.name) universitySet.add(p.attributes.school.name);
-          if (p.attributes?.name) programSet.add(p.attributes.name);
-        });
-        setAllCountries(Array.from(countrySet).sort());
-        setAllUniversities(Array.from(universitySet).sort());
-        setAllProgramNames(Array.from(programSet).sort());
-      });
+    const countryArr = Object.entries((countriesData as any).countries || {}).map(
+      ([label, value]) => ({ label, value })
+    );
+    setAllCountries(countryArr);
+
+    // Universities: array of names
+    setAllUniversities(((universitiesData as any).universities || []));
+
+    // Programs: array of names
+    setAllProgramNames(((programsData as any).programs || []));
   }, []);
 
   useEffect(() => {
@@ -69,6 +66,7 @@ export const UniversitiesPage: React.FC = () => {
     if (maxTuition) params.max_fees = maxTuition;
     if (programName) params.program_name = programName;
     if (universityName) params.school_name = universityName;
+    // For country, send the value (code) not the label
     if (country) params.country = country;
 
     fetch(`${BASE_URL}/api/programs/filter?${new URLSearchParams(params as any).toString()}`)
@@ -122,7 +120,9 @@ export const UniversitiesPage: React.FC = () => {
             }}>Find and compare programs worldwide.</div>
           </div>
           <div style={{ display: 'flex', gap: '.9rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            <select value={country} onChange={e => setCountry(e.target.value)}
+            <select
+              value={country}
+              onChange={e => setCountry(e.target.value)}
               style={{
                 padding: '.55rem 1.1rem',
                 borderRadius: '10px',
@@ -133,7 +133,7 @@ export const UniversitiesPage: React.FC = () => {
               }}>
               <option value="">All Countries</option>
               {allCountries.map(c => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c.value} value={c.value}>{c.label}</option>
               ))}
             </select>
             <select value={universityName} onChange={e => setUniversityName(e.target.value)}
@@ -258,9 +258,10 @@ export const UniversitiesPage: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '2.2rem 1.7rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: '2.7rem 2.2rem',
             alignItems: 'stretch',
+            marginTop: '2.7rem' // increased top margin for more space
           }}
         >
           {loading && <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#64748b' }}>Loading programs...</div>}
@@ -268,7 +269,7 @@ export const UniversitiesPage: React.FC = () => {
           {!loading && !error && programs.length === 0 && (
             <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#64748b' }}>No programs found.</div>
           )}
-          {!loading && !error && programs.map((p) => {
+          {!loading && !error && programs.map((p, idx) => {
             const attrs = p.attributes || {};
             const school = attrs.school || {};
             const logoUrl = school.logoThumbnailUrl || '/placeholder.png';
@@ -292,75 +293,111 @@ export const UniversitiesPage: React.FC = () => {
                 key={p.id}
                 className="program-card"
                 style={{
-                  background: '#fff',
-                  borderRadius: '18px',
-                  boxShadow: '0 2px 12px 0 #e5e7eb',
-                  border: '1px solid #e0e7ef',
-                  padding: '1.7rem 1.5rem 1.5rem 1.5rem',
+                  background: 'linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%)',
+                  borderRadius: '2rem',
+                  boxShadow: '0 4px 24px 0 #2563eb18, 0 2px 8px 0 #60a5fa11',
+                  border: '1.5px solid #e0e7ef',
+                  padding: '3.5rem 1.7rem 1.7rem 1.7rem', // increased top padding for logo space
                   display: 'flex',
                   flexDirection: 'column',
-                  minHeight: 420,
+                  minHeight: 440,
                   height: '100%',
-                  transition: 'box-shadow 0.18s',
                   position: 'relative',
-                  overflow: 'hidden',
+                  overflow: 'visible', // allow logo to overflow
+                  transition: 'box-shadow 0.18s, transform 0.18s',
+                  animation: 'fadein 0.7s cubic-bezier(.4,2,.6,1) both',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.025)';
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = '0 12px 40px 0 #2563eb33, 0 2px 12px 0 #60a5fa22';
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLDivElement).style.transform = '';
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = '0 4px 24px 0 #2563eb18, 0 2px 8px 0 #60a5fa11';
                 }}
               >
-                {/* Header */}
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.1rem', gap: '1.1rem' }}>
-                  <div style={{
-                    width: 56, height: 56, borderRadius: '12px', background: '#f3f4f6',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'
-                  }}>
-                    <img
-                      src={logoUrl}
-                      alt={universityName}
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                    />
-                  </div>
-                  <div>
-                    <h3
-                      style={{
-                        margin: 0,
-                        fontSize: '1.08rem',
-                        fontWeight: 700,
-                        color: '#1e293b',
-                        lineHeight: 1.2,
-                        cursor: 'pointer',
-                        textDecoration: 'underline',
-                        textUnderlineOffset: '2px'
-                      }}
-                      onClick={() => {
-                        if (schoolId) navigate(`/universities/${schoolId}`);
-                      }}
-                      title={`View details for ${universityName}`}
-                    >
-                      {universityName}
-                    </h3>
-                    <div style={{ fontSize: '.97rem', color: '#2563eb', fontWeight: 500 }}>{location}</div>
+                {/* Accent bar */}
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: 7,
+                  borderTopLeftRadius: '2rem',
+                  borderTopRightRadius: '2rem',
+                  opacity: 0.18,
+                  zIndex: 1
+                }} />
+                {/* Floating logo */}
+                <div style={{
+                  position: 'absolute',
+                  top: -32,
+                  right: 24,
+                  zIndex: 3,
+                  background: '#fff',
+                  borderRadius: '50%',
+                  boxShadow: '0 2px 12px #2563eb22',
+                  width: 64,
+                  height: 64,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '2.5px solid #e0e7ef'
+                }}>
+                  <img
+                    src={logoUrl}
+                    alt={universityName}
+                    style={{ width: 48, height: 48, objectFit: 'contain', borderRadius: '50%' }}
+                  />
+                </div>
+                {/* University Name and Location */}
+                <div style={{ marginBottom: '.7rem', marginTop: '1.5rem' }}>
+                  <h3
+                    style={{
+                      margin: 0,
+                      fontSize: '1.18rem',
+                      fontWeight: 800,
+                      color: '#2563eb',
+                      lineHeight: 1.2,
+                      cursor: 'pointer',
+                      textDecoration: 'underline',
+                      textUnderlineOffset: '2px'
+                    }}
+                    onClick={() => {
+                      if (schoolId) navigate(`/universities/${schoolId}`);
+                    }}
+                    title={`View details for ${universityName}`}
+                  >
+                    {universityName}
+                  </h3>
+                  <div style={{ fontSize: '.97rem', color: '#334155', fontWeight: 600, marginTop: '.2rem' }}>
+                    {location}
                   </div>
                 </div>
-
                 {/* Program Title */}
                 <div style={{ marginBottom: '.7rem' }}>
                   <h2 style={{
-                    fontSize: '1.18rem',
-                    fontWeight: 800,
-                    color: '#2563eb',
+                    fontSize: '1.13rem',
+                    fontWeight: 700,
+                    color: '#1e293b',
                     margin: 0,
                     lineHeight: 1.25,
                     wordBreak: 'break-word'
                   }}>
                     {programName}
                   </h2>
-                  <div style={{ fontSize: '.98rem', color: '#64748b', marginTop: '.2rem', fontWeight: 500 }}>
-                    {programLevel}
+                  <div style={{ fontSize: '.98rem', color: '#2563eb', marginTop: '.2rem', fontWeight: 600 }}>
+                    {programLevel
+                      ? programLevel
+                          .replace(/_/g, ' ')
+                          .replace(/\b\w/g, c => c.toUpperCase())
+                      : ''}
                   </div>
                 </div>
-
                 {/* Details */}
                 <dl style={{
-                  fontSize: '.97rem',
+                  fontSize: '.98rem',
                   lineHeight: '1.7',
                   margin: 0,
                   marginBottom: '.7rem',
@@ -390,81 +427,34 @@ export const UniversitiesPage: React.FC = () => {
                     <dd style={{ margin: 0, flex: 1, textAlign: 'right', color: '#334155', fontWeight: 500 }}>{duration}</dd>
                   </div>
                 </dl>
-
-                {/* Success Prediction */}
-                {intakes.length > 0 && (
-                  <div
-                    style={{
-                      marginTop: 'auto',
-                      padding: '1rem',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '12px',
-                      background: '#f9fafb',
-                      marginBottom: '.7rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start'
-                    }}
-                  >
-                    {/* Heading and button in same row */}
-                    <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', marginBottom: '.5rem' }}>
-                      <span style={{ fontWeight: 600, color: '#1e293b', fontSize: '1.04rem', letterSpacing: '.01em' }}>
-                        Success prediction
-                      </span>
-                      <button
-                        style={{
-                          background: '#2563eb',
-                          color: '#fff',
-                          borderRadius: '8px',
-                          padding: '.5rem 1.2rem',
-                          fontWeight: 600,
-                          border: 'none',
-                          cursor: 'pointer',
-                          fontSize: '.98rem'
-                        }}
-                        onClick={() => setOpenIntakes({ program: p, intakes })}
-                      >
-                        Details
-                      </button>
-                    </div>
-                    {/* Years in one row, values in one row below */}
-                    <div style={{ width: '100%', marginBottom: '.2rem', display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
-                      <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '1.2rem', marginBottom: '.2rem' }}>
-                        {intakes.slice(0, 3).map((intake: any) => (
-                          <span key={intake.id || intake.startDate} style={{ color: '#334155', fontWeight: 600, fontSize: '.97rem', minWidth: 80, textAlign: 'center' }}>
-                            {intake.startDate ? new Date(intake.startDate).toLocaleString('default', { month: 'short', year: 'numeric' }) : ''}
-                          </span>
-                        ))}
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '1.2rem' }}>
-                        {intakes.slice(0, 3).map((intake: any) => (
-                          <span
-                            key={(intake.id || intake.startDate) + '-value'}
-                            style={{
-                              fontWeight: 700,
-                              fontSize: '.97rem',
-                              color:
-                                intake.overallScore?.value === 'High'
-                                  ? 'green'
-                                  : intake.overallScore?.value === 'Average'
-                                  ? 'orange'
-                                  : intake.overallScore?.value === 'Very High'
-                                  ? '#2563eb'
-                                  : 'red',
-                              minWidth: 80,
-                              textAlign: 'center'
-                            }}
-                          >
-                            {intake.overallScore?.value}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Spacer to push button to bottom */}
-                <div style={{ flexGrow: 1 }} />
+                {/* View Details Button */}
+                <button
+                  style={{
+                    marginTop: 'auto',
+                    background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+                    color: '#fff',
+                    borderRadius: 10,
+                    padding: '.7rem 1.5rem',
+                    fontWeight: 700,
+                    fontSize: '1.08rem',
+                    border: 'none',
+                    boxShadow: '0 2px 8px #2563eb22',
+                    cursor: 'pointer',
+                    transition: 'background 0.18s, box-shadow 0.18s'
+                  }}
+                  onClick={() => {
+                    if (schoolId) navigate(`/universities/${schoolId}`);
+                  }}
+                >
+                  View Details
+                </button>
+                {/* Fade-in animation */}
+                <style>{`
+                  @keyframes fadein {
+                    0% { opacity: 0; transform: translateY(30px);}
+                    100% { opacity: 1; transform: none;}
+                  }
+                `}</style>
               </article>
             );
           })}
@@ -487,7 +477,7 @@ export const UniversitiesPage: React.FC = () => {
               zIndex: 1000,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
             onClick={() => setOpenIntakes(null)}
           >
@@ -525,13 +515,14 @@ export const UniversitiesPage: React.FC = () => {
                   type="button"
                   className="css-22x0p3"
                   style={{
-                    background: '#2563eb',
+                    background: 'linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)',
                     color: '#fff',
                     borderRadius: '8px',
                     padding: '.7rem 1.5rem',
                     fontWeight: 600,
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 16px 0 rgba(37,99,235,0.18), 0 1.5px 8px 0 #93c5fd'
                   }}
                   onClick={() => setOpenIntakes(null)}
                 >
@@ -550,6 +541,7 @@ export const UniversitiesPage: React.FC = () => {
                 @media (min-width: 0px) {
                   .css-19pzjof > .css-14yws4s {
                     max-width: calc(-32px + 100vw);
+                    max-height: calc(-48px + 100vh);
                   }
                 }
               `}
@@ -561,110 +553,107 @@ export const UniversitiesPage: React.FC = () => {
   );
 };
 
-// Accordion component for intakes
 const IntakeAccordion: React.FC<{ intakes: any[] }> = ({ intakes }) => {
-  const [openIdx, setOpenIdx] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleOpen = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
-    <div
-      className="css-yyeya1"
-      style={{
-        margin: '0 0 1.5rem 0',
-        overflowY: 'auto',
-        flex: 1,
-        minHeight: 0,
-        paddingRight: '0.5rem',
-      }}
-    >
-      <p className="css-9fpggw" style={{ color: '#64748b', fontSize: '.98rem' }}>
-        Success prediction by intake, estimated based on ApplyBoard's historical data. We make no representations, warranties, or guarantees as to the information's accuracy.
-      </p>
-      <div className="css-1xnao7g" style={{ borderTop: '1px solid #e5e7eb', marginTop: '1rem', paddingTop: '1rem' }}>
-        {intakes.map((intake: any, idx: number) => {
-          const isOpen = openIdx === idx;
-          return (
-            <div key={intake.id || intake.startDate} style={{ marginBottom: '1.2rem', borderBottom: idx !== intakes.length - 1 ? '1px solid #e5e7eb' : 'none', paddingBottom: '.7rem' }}>
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                className="css-1puea8s"
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  width: '100%',
-                  textAlign: 'left',
-                  padding: 0,
-                  marginBottom: '.4rem',
-                  fontWeight: 600,
-                  fontSize: '1.08rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1.2rem',
-                  cursor: 'pointer',
-                }}
-                tabIndex={0}
-                onClick={() => setOpenIdx(isOpen ? null : idx)}
-              >
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
-                  <div className="css-1qj0wac">{intake.startDate ? new Date(intake.startDate).toLocaleString('default', { month: 'short', year: 'numeric' }) : ''}</div>
-                  <div className="css-1qj0wac">
-                    <span className="css-kj0uls" style={{
-                      color:
-                        intake.overallScore?.value === 'High'
-                          ? 'green'
-                          : intake.overallScore?.value === 'Average'
-                          ? 'orange'
-                          : intake.overallScore?.value === 'Very High'
-                          ? '#2563eb'
-                          : 'red',
-                      fontWeight: 700
-                    }}>
-                      {intake.overallScore?.value}
-                    </span>
-                  </div>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '.7rem' }}>
+      {intakes.map((intake, index) => {
+        const isOpen = openIndex === index;
+        return (
+          <div key={intake.id || intake.startDate} style={{ borderRadius: '12px', overflow: 'hidden', background: '#f9fafb', border: '1px solid #e5e7eb' }}>
+            {/* Summary row */}
+            <div
+              onClick={() => toggleOpen(index)}
+              style={{
+                cursor: 'pointer',
+                padding: '.8rem 1.2rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                fontWeight: 600,
+                color: '#1e293b',
+                position: 'relative',
+                zIndex: 1
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '.8rem' }}>
+                {/* Intake start date */}
+                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#2563eb' }}>
+                  {intake.startDate ? new Date(intake.startDate).toLocaleString('default', { month: 'short', year: 'numeric' }) : ''}
                 </div>
-                <span className="css-1f6hovf" style={{ marginLeft: 'auto', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▼</span>
-              </button>
-              {isOpen && (
-                <>
-                  <div className="css-1x4m94a" style={{ marginLeft: '1.2rem', marginTop: '.5rem' }}>
-                    {intake.scoreDetails && intake.scoreDetails.map((detail: any) => (
-                      <div key={detail.scoreTypeLabel} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '.3rem' }}>
-                        <div className="css-on9coi" style={{ color: '#64748b' }}>{detail.scoreTypeLabel}</div>
-                        <div className="css-on9coi">
-                          <span className="css-kj0uls" style={{
-                            color:
-                              detail.value === 'High' || detail.value === 'Very High'
-                                ? '#2563eb'
-                                : detail.value === 'Average'
-                                ? 'orange'
-                                : detail.value === 'Low'
-                                ? 'red'
-                                : '#64748b',
-                            fontWeight: 600
-                          }}>
-                            {detail.value}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{ color: '#64748b', fontSize: '.92rem', marginTop: '.3rem', marginLeft: '1.2rem' }}>
-                    Submission Deadline: {intake.submissionDeadline ? new Date(intake.submissionDeadline).toLocaleDateString() : 'N/A'}
-                  </div>
-                </>
-              )}
+                {/* Arrow icon */}
+                <div style={{
+                  width: 8, height: 8, borderRadius: '50%', background: '#e5e7eb',
+                  position: 'absolute', right: '1rem', transition: 'transform 0.3s',
+                  transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)'
+                }} />
+              </div>
             </div>
-          );
-        })}
-      </div>
-      <div className="css-h85bax" style={{ marginTop: '1.5rem' }}>
-        <ul aria-labelledby="unordered-list" className="css-trnyj" style={{ color: '#64748b', fontSize: '.95rem', paddingLeft: '1.2rem' }}>
-          <li className="css-9fpggw">Conversion is the historical ratio of accepted applications to submitted applications.</li>
-          <li className="css-9fpggw">Turn Around Time is the expected time to receive a letter of acceptance after submitting an application.</li>
-          <li className="css-9fpggw">Seat Availability is the predicted likelihood of a seat being available for the program intake.</li>
-        </ul>
-      </div>
+            {/* Details row (collapsible) */}
+            {isOpen && (
+              <div style={{
+                padding: '1rem 1.2rem',
+                borderTop: '1px solid #e5e7eb',
+                background: '#fff',
+                color: '#334155',
+                fontSize: '.95rem',
+                lineHeight: 1.6,
+                position: 'relative',
+                zIndex: 0
+              }}>
+                {/* Success score circles */}
+                <div style={{ display: 'flex', gap: '1rem', marginBottom: '.8rem' }}>
+                  {intake.successScores && Object.entries(intake.successScores).map(([key, value]) => (
+                    <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '.4rem' }}>
+                      <div style={{
+                        width: 24, height: 24, borderRadius: '50%', background: '#e5e7eb',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        position: 'relative'
+                      }}>
+                        <div style={{
+                          width: '70%', height: '70%', borderRadius: '50%',
+                          background: key === 'overall' ? '#2563eb' : key === 'high' ? 'green' : key === 'average' ? 'orange' : 'red',
+                          position: 'absolute', top: 0, left: 0
+                        }} />
+                        <span style={{ fontSize: '.8rem', fontWeight: 600, color: '#fff', position: 'relative', zIndex: 1 }}>
+                          {value}
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '.9rem', color: '#334155', fontWeight: 500 }}>
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* Details list */}
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#334155', fontWeight: 500, lineHeight: 1.7 }}>
+                  {intake.details && intake.details.map((detail, idx) => (
+                    <li key={idx} style={{ paddingLeft: '1.2rem', position: 'relative', marginBottom: '.4rem' }}>
+                      <div style={{
+                        position: 'absolute',
+                        left: 0,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        width: 8,
+                        height: 8,
+                        borderRadius: '50%',
+                        background: '#2563eb',
+                        border: '2px solid #fff'
+                      }} />
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

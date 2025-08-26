@@ -15,6 +15,7 @@ import AuthVerifyPage from './pages/AuthVerifyPage';
 import AuthLoginPage from './pages/AuthLoginPage';
 import { FinancialServicesPage } from './pages/FinancialServicesPage';
 import UniversityDetailPage from './pages/UniversityDetailPage';
+import StudyApplication from './pages/StudyApplication';
 
 export const App: React.FC = () => (
   <AuthProvider>
@@ -34,6 +35,7 @@ export const App: React.FC = () => (
         <Route path="/auth/verify" element={<AuthVerifyPage />} />
         <Route path="/auth/login" element={<AuthLoginPage />} />
         <Route path="/financial-services" element={<FinancialServicesPage />} />
+        <Route path="/services/international-application-process" element={<StudyApplication />} />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>
     </BrowserRouter>
