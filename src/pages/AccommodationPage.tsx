@@ -1,8 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const AccommodationPage: React.FC = () => {
   const navigate = useNavigate();
+  const [showCounsellingModal, setShowCounsellingModal] = useState(false);
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  // Add BASE_URL for API calls
+  const BASE_URL = "https://studconnect-backend.onrender.com";
+    // const BASE_URL = "http://127.0.0.1:8000";
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError('');
+    try {
+      const res = await fetch(`${BASE_URL}/api/accommodation-excel`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      if (!res.ok) throw new Error('Failed to submit');
+      setSubmitted(true);
+      setForm({ name: '', email: '', phone: '', message: '' });
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+    }
+    setSubmitting(false);
+  };
 
   // Responsive styles
   const heroSectionStyle: React.CSSProperties = {
@@ -33,7 +69,6 @@ export const AccommodationPage: React.FC = () => {
     minWidth: 320,
     textAlign: 'center',
     position: 'relative',
-    minHeight: 520,
     zIndex: 1,
     display: 'flex',
     alignItems: 'center',
@@ -135,7 +170,7 @@ export const AccommodationPage: React.FC = () => {
             Landing in a new country? Don’t stress. With our accommodation partners your student housing is sorted, safe, and student-approved—before you even step on the plane.
           </p>
           <button
-            onClick={() => window.open('https://pfecglobal.com.bd/accommodations/', '_blank', 'noopener,noreferrer')}
+            onClick={() => window.open('https://www.universityliving.com/', '_blank', 'noopener,noreferrer')}
             style={{
               marginTop: '1.2rem',
               background: 'linear-gradient(90deg, rgb(55, 81, 138) 0%, rgb(96, 165, 250) 100%)',
@@ -432,154 +467,140 @@ export const AccommodationPage: React.FC = () => {
         }}>
           How It Works
         </h2>
-        <div style={{
+        <ol style={{
+          listStyle: 'none',
+          padding: 0,
+          margin: 0,
           display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: '2rem',
-          alignItems: 'stretch'
+          flexDirection: 'column',
+          gap: '1.2rem'
         }}>
-          {/* Step 1 */}
-          <div style={{
-            flex: 1,
-            minWidth: 200,
-            maxWidth: 220,
-            background: 'linear-gradient(120deg, #e0e7ff 0%, #fff 100%)',
-            borderRadius: 16,
+          <li style={{
+            background: '#fff',
+            borderRadius: 14,
             boxShadow: '0 2px 12px #2563eb11',
-            padding: '1.6rem 1.2rem 1.2rem 1.2rem',
+            padding: '1.2rem 1.7rem',
+            fontSize: '1.07rem',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            position: 'relative'
+            alignItems: 'flex-start',
+            gap: '1rem'
           }}>
-            <div style={{
-              width: 44,
-              height: 44,
+            <span style={{
+              display: 'inline-block',
+              minWidth: 32,
+              height: 32,
               background: '#2563eb',
               color: '#fff',
               borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 800,
-              fontSize: '1.25rem',
-              marginBottom: 12,
-              boxShadow: '0 2px 8px #2563eb22'
-            }}>1</div>
-            <b style={{ fontSize: '1.09rem', color: '#1e3a8a', marginBottom: 6 }}>Browse Listings</b>
-            <div style={{fontSize: '1.02rem', color: '#334155', textAlign: 'center'}}>Swipe through verified housing options in your city.</div>
-          </div>
-          {/* Step 2 */}
-          <div style={{
-            flex: 1,
-            minWidth: 200,
-            maxWidth: 220,
-            background: 'linear-gradient(120deg, #e0e7ff 0%, #fff 100%)',
-            borderRadius: 16,
+              fontWeight: 700,
+              fontSize: '1.1rem',
+              textAlign: 'center',
+              lineHeight: '32px'
+            }}>1</span>
+            <span>
+              <b>Browse Listings:</b> Swipe through verified housing options in your city.
+            </span>
+          </li>
+          <li style={{
+            background: '#fff',
+            borderRadius: 14,
             boxShadow: '0 2px 12px #2563eb11',
-            padding: '1.6rem 1.2rem 1.2rem 1.2rem',
+            padding: '1.2rem 1.7rem',
+            fontSize: '1.07rem',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            position: 'relative'
+            alignItems: 'flex-start',
+            gap: '1rem'
           }}>
-            <div style={{
-              width: 44,
-              height: 44,
+            <span style={{
+              display: 'inline-block',
+              minWidth: 32,
+              height: 32,
               background: '#2563eb',
               color: '#fff',
               borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 800,
-              fontSize: '1.25rem',
-              marginBottom: 12,
-              boxShadow: '0 2px 8px #2563eb22'
-            }}>2</div>
-            <b style={{ fontSize: '1.09rem', color: '#1e3a8a', marginBottom: 6 }}>Read Student Reviews</b>
-            <div style={{fontSize: '1.02rem', color: '#334155', textAlign: 'center'}}>Get the real scoop on each place.</div>
-          </div>
-          {/* Step 3 */}
-          <div style={{
-            flex: 1,
-            minWidth: 200,
-            maxWidth: 220,
-            background: 'linear-gradient(120deg, #e0e7ff 0%, #fff 100%)',
-            borderRadius: 16,
+              fontWeight: 700,
+              fontSize: '1.1rem',
+              textAlign: 'center',
+              lineHeight: '32px'
+            }}>2</span>
+            <span>
+              <b>Read Student Reviews:</b> Get the real scoop on each place.
+            </span>
+          </li>
+          <li style={{
+            background: '#fff',
+            borderRadius: 14,
             boxShadow: '0 2px 12px #2563eb11',
-            padding: '1.6rem 1.2rem 1.2rem 1.2rem',
+            padding: '1.2rem 1.7rem',
+            fontSize: '1.07rem',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            position: 'relative'
+            alignItems: 'flex-start',
+            gap: '1rem'
           }}>
-            <div style={{
-              width: 44,
-              height: 44,
+            <span style={{
+              display: 'inline-block',
+              minWidth: 32,
+              height: 32,
               background: '#2563eb',
               color: '#fff',
               borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 800,
-              fontSize: '1.25rem',
-              marginBottom: 12,
-              boxShadow: '0 2px 8px #2563eb22'
-            }}>3</div>
-            <b style={{ fontSize: '1.09rem', color: '#1e3a8a', marginBottom: 6 }}>Connect Directly</b>
-            <div style={{fontSize: '1.02rem', color: '#334155', textAlign: 'center'}}>Chat with roommates or hosts to clarify doubts.</div>
-          </div>
-          {/* Step 4 */}
-          <div style={{
-            flex: 1,
-            minWidth: 200,
-            maxWidth: 220,
-            background: 'linear-gradient(120deg, #e0e7ff 0%, #fff 100%)',
-            borderRadius: 16,
+              fontWeight: 700,
+              fontSize: '1.1rem',
+              textAlign: 'center',
+              lineHeight: '32px'
+            }}>3</span>
+            <span>
+              <b>Connect Directly:</b> Chat with roommates or hosts to clarify doubts.
+            </span>
+          </li>
+          <li style={{
+            background: '#fff',
+            borderRadius: 14,
             boxShadow: '0 2px 12px #2563eb11',
-            padding: '1.6rem 1.2rem 1.2rem 1.2rem',
+            padding: '1.2rem 1.7rem',
+            fontSize: '1.07rem',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            position: 'relative'
+            alignItems: 'flex-start',
+            gap: '1rem'
           }}>
-            <div style={{
-              width: 44,
-              height: 44,
+            <span style={{
+              display: 'inline-block',
+              minWidth: 32,
+              height: 32,
               background: '#2563eb',
               color: '#fff',
               borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 800,
-              fontSize: '1.25rem',
-              marginBottom: 12,
-              boxShadow: '0 2px 8px #2563eb22'
-            }}>4</div>
-            <b style={{ fontSize: '1.09rem', color: '#1e3a8a', marginBottom: 6 }}>Book Confidently</b>
-            <div style={{fontSize: '1.02rem', color: '#334155', textAlign: 'center'}}>Lock in your space and start your journey stress-free.</div>
-          </div>
-        </div>
+              fontWeight: 700,
+              fontSize: '1.1rem',
+              textAlign: 'center',
+              lineHeight: '32px'
+            }}>4</span>
+            <span>
+              <b>Book Confidently:</b> Lock in your space and start your journey stress-free.
+            </span>
+          </li>
+        </ol>
       </section>
-      {/* Pro Tips */}
+
+      {/* Factors to Consider Section */}
       <section style={{
         maxWidth: 900,
-        margin: '0 auto',
-        padding: '2.5rem 1.5rem 0 1.5rem'
+        margin: '2.5rem auto 0 auto',
+        padding: '2rem 1.5rem 1.5rem 1.5rem',
+        background: 'linear-gradient(120deg,#e0e7ff 0%,#fff 100%)',
+        borderRadius: 18,
+        boxShadow: '0 4px 24px #2563eb11',
+        fontSize: '1.07rem',
+        color: '#334155'
       }}>
         <h2 style={{
-          fontSize: '1.18rem',
+          fontSize: '1.25rem',
           fontWeight: 900,
           color: '#2563eb',
           marginBottom: '1.2rem',
           textAlign: 'center'
         }}>
-          Pro Tips
+          Factors to Consider before Finalizing a Student Accommodation
         </h2>
         <div style={{
           display: 'flex',
@@ -590,11 +611,11 @@ export const AccommodationPage: React.FC = () => {
           margin: '0 auto',
           flexWrap: 'wrap'
         }}>
-          {/* Tip 1 */}
+          {/* Factor 1 */}
           <div style={{
             flex: 1,
             minWidth: 220,
-            background: 'linear-gradient(120deg, #e0e7ff 0%, #fff 100%)',
+            background: 'linear-gradient(120deg, #fff 60%, #e0e7ff 100%)',
             borderRadius: 18,
             boxShadow: '0 4px 24px #2563eb11',
             padding: '2.1rem 1.5rem 1.5rem 1.5rem',
@@ -621,14 +642,16 @@ export const AccommodationPage: React.FC = () => {
               boxShadow: '0 2px 12px #2563eb22',
               border: '3px solid #fff'
             }}>1</div>
-            <b style={{ fontSize: '1.13rem', color: '#1e3a8a', marginBottom: 6 }}>Start Early</b>
-            <div style={{fontSize: '1.07rem', color: '#334155', textAlign: 'center'}}>The best rooms get booked fast.</div>
+            <b style={{ fontSize: '1.13rem', color: '#1e3a8a', marginBottom: 6 }}>Location &amp; Connectivity</b>
+            <div style={{fontSize: '1.07rem', color: '#334155', textAlign: 'center'}}>
+              Choose accommodation close to your university or with easy access to public transport, shops, and essentials.
+            </div>
           </div>
-          {/* Tip 2 */}
+          {/* Factor 2 */}
           <div style={{
             flex: 1,
             minWidth: 220,
-            background: 'linear-gradient(120deg, #e0e7ff 0%, #fff 100%)',
+            background: 'linear-gradient(120deg, #fff 60%, #e0e7ff 100%)',
             borderRadius: 18,
             boxShadow: '0 4px 24px #2563eb11',
             padding: '2.1rem 1.5rem 1.5rem 1.5rem',
@@ -655,14 +678,16 @@ export const AccommodationPage: React.FC = () => {
               boxShadow: '0 2px 12px #2563eb22',
               border: '3px solid #fff'
             }}>2</div>
-            <b style={{ fontSize: '1.13rem', color: '#1e3a8a', marginBottom: 6 }}>Ask Questions</b>
-            <div style={{fontSize: '1.07rem', color: '#334155', textAlign: 'center'}}>Don’t hesitate to reach out to current residents.</div>
+            <b style={{ fontSize: '1.13rem', color: '#1e3a8a', marginBottom: 6 }}>Safety &amp; Security</b>
+            <div style={{fontSize: '1.07rem', color: '#334155', textAlign: 'center'}}>
+              Check for secure entry, CCTV, and emergency support to ensure a safe living environment.
+            </div>
           </div>
-          {/* Tip 3 */}
+          {/* Factor 3 */}
           <div style={{
             flex: 1,
             minWidth: 220,
-            background: 'linear-gradient(120deg, #e0e7ff 0%, #fff 100%)',
+            background: 'linear-gradient(120deg, #fff 60%, #e0e7ff 100%)',
             borderRadius: 18,
             boxShadow: '0 4px 24px #2563eb11',
             padding: '2.1rem 1.5rem 1.5rem 1.5rem',
@@ -689,11 +714,384 @@ export const AccommodationPage: React.FC = () => {
               boxShadow: '0 2px 12px #2563eb22',
               border: '3px solid #fff'
             }}>3</div>
-            <b style={{ fontSize: '1.13rem', color: '#1e3a8a', marginBottom: 6 }}>Budget Smart</b>
-            <div style={{fontSize: '1.07rem', color: '#334155', textAlign: 'center'}}>Compare options and pick what suits your lifestyle.</div>
+            <b style={{ fontSize: '1.13rem', color: '#1e3a8a', marginBottom: 6 }}>Budget &amp; Inclusions</b>
+            <div style={{fontSize: '1.07rem', color: '#334155', textAlign: 'center'}}>
+              Compare costs and see what’s included—utilities, internet, furnishings, etc.—to avoid hidden expenses.
+            </div>
+          </div>
+          {/* Factor 4 */}
+          <div style={{
+            flex: 1,
+            minWidth: 220,
+            background: 'linear-gradient(120deg, #fff 60%, #e0e7ff 100%)',
+            borderRadius: 18,
+            boxShadow: '0 4px 24px #2563eb11',
+            padding: '2.1rem 1.5rem 1.5rem 1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            position: 'relative',
+            borderLeft: '6px solid #60a5fa'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: -28,
+              left: 24,
+              width: 48,
+              height: 48,
+              background: '#2563eb',
+              color: '#fff',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 800,
+              fontSize: '1.3rem',
+              boxShadow: '0 2px 12px #2563eb22',
+              border: '3px solid #fff'
+            }}>4</div>
+            <b style={{ fontSize: '1.13rem', color: '#1e3a8a', marginBottom: 6 }}>Amenities &amp; Facilities</b>
+            <div style={{fontSize: '1.07rem', color: '#334155', textAlign: 'center'}}>
+              Look for features like laundry, kitchen, study areas, and social spaces that support both study and lifestyle.
+            </div>
+          </div>
+          {/* Factor 5 */}
+          <div style={{
+            flex: 1,
+            minWidth: 220,
+            background: 'linear-gradient(120deg, #fff 60%, #e0e7ff 100%)',
+            borderRadius: 18,
+            boxShadow: '0 4px 24px #2563eb11',
+            padding: '2.1rem 1.5rem 1.5rem 1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            position: 'relative',
+            borderLeft: '6px solid #60a5fa'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: -28,
+              left: 24,
+              width: 48,
+              height: 48,
+              background: '#2563eb',
+              color: '#fff',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 800,
+              fontSize: '1.3rem',
+              boxShadow: '0 2px 12px #2563eb22',
+              border: '3px solid #fff'
+            }}>5</div>
+            <b style={{ fontSize: '1.13rem', color: '#1e3a8a', marginBottom: 6 }}>Contract Flexibility</b>
+            <div style={{fontSize: '1.07rem', color: '#334155', textAlign: 'center'}}>
+              Review lease terms, cancellation policies, and notice periods in case your plans change.
+            </div>
           </div>
         </div>
+        <div style={{
+          marginTop: '1.5rem',
+          background: '#f1f5fd',
+          borderLeft: '4px solid #2563eb',
+          borderRadius: 10,
+          padding: '1rem 1.3rem',
+          fontStyle: 'italic',
+          color: '#1e3a8a',
+          fontSize: '1.05rem'
+        }}>
+          <b>Tip for Students:</b> Start looking early! The best accommodations fill up fast, and having a verified place secured will make your transition smooth and stress-free.
+        </div>
       </section>
+
+      {/* University Living Partner Section */}
+      <section style={{
+        maxWidth: 900,
+        margin: '2.5rem auto 0 auto',
+        padding: '2rem 1.5rem 1.5rem 1.5rem',
+        background: 'linear-gradient(120deg,#fff 60%,#e0e7ff 100%)',
+        borderRadius: 18,
+        boxShadow: '0 4px 24px #2563eb11',
+        fontSize: '1.07rem',
+        color: '#334155',
+        textAlign: 'center'
+      }}>
+        <h2 style={{
+          fontSize: '1.18rem',
+          fontWeight: 900,
+          color: '#2563eb',
+          marginBottom: '1.1rem'
+        }}>
+          Our Accommodation Partner
+        </h2>
+        <div
+          className="partner-card"
+          style={{
+            background: '#fff',
+            borderRadius: 16,
+            boxShadow: '0 2px 12px #2563eb22',
+            padding: '1.5rem 1.2rem 1.7rem 1.2rem',
+            margin: '0 auto 1.2rem auto',
+            maxWidth: 500,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '1.1rem'
+          }}
+        >
+          <img
+            decoding="async"
+            src="https://pfecglobal.com.bd/wp-content/uploads/2025/07/Frame-1000001515-1.png"
+            alt="University Living Logo"
+            style={{ width: 180, height: 'auto', marginBottom: 8 }}
+          />
+          <div className="features" style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '.7rem',
+            alignItems: 'flex-start',
+            width: '100%',
+            margin: '0 auto 0.5rem auto',
+            fontSize: '1.05rem'
+          }}>
+            <div className="feature-item" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span role="img" aria-label="city" style={{ color: '#2563eb', fontSize: 20 }}>🏙️</span>
+              65000+ Properties across 640 Cities Globally
+            </div>
+            <div className="feature-item" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span role="img" aria-label="shield" style={{ color: '#2563eb', fontSize: 20 }}>🛡️</span>
+              Safe &amp; Secure Options
+            </div>
+            <div className="feature-item" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span role="img" aria-label="check" style={{ color: '#2563eb', fontSize: 20 }}>✅</span>
+              Verified Listings
+            </div>
+            <div className="feature-item" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span role="img" aria-label="support" style={{ color: '#2563eb', fontSize: 20 }}>🎧</span>
+              24/7 Customer Support
+            </div>
+          </div>
+          <a
+            href="https://www.universityliving.com/"
+            className="cta-button"
+            target="_blank"
+            rel="noopener"
+            style={{
+              display: 'inline-block',
+              background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: '1.07rem',
+              borderRadius: 10,
+              padding: '0.9rem 2.1rem',
+              textDecoration: 'none',
+              marginTop: '0.5rem',
+              boxShadow: '0 2px 8px #2563eb22',
+              transition: 'background 0.18s'
+            }}
+          >
+            Explore Now →
+          </a>
+        </div>
+        <div style={{ marginTop: '1.1rem', color: '#64748b', fontSize: '.98rem' }}>
+          <b>Note:</b> All accommodation bookings and services are powered by <b>University Living</b>.
+        </div>
+      </section>
+
+      {/* Book Counselling Call Section */}
+      <section style={{
+        maxWidth: 900,
+        margin: '2.5rem auto 0 auto',
+        padding: '2rem 1.5rem 2.5rem 1.5rem',
+        background: 'linear-gradient(120deg,#e0e7ff 0%,#fff 100%)',
+        borderRadius: 18,
+        boxShadow: '0 4px 24px #2563eb11',
+        textAlign: 'center'
+      }}>
+        <h2 style={{
+          fontSize: '1.18rem',
+          fontWeight: 900,
+          color: '#2563eb',
+          marginBottom: '1.1rem'
+        }}>
+          Need Help Choosing Accommodation?
+        </h2>
+        <p style={{ fontSize: '1.07rem', color: '#334155', marginBottom: '1.2rem' }}>
+          Book a free accommodation counselling session with our team for personalized guidance.
+        </p>
+        <button
+          onClick={() => setShowCounsellingModal(true)}
+          style={{
+            display: 'inline-block',
+            background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+            color: '#fff',
+            fontWeight: 700,
+            fontSize: '1.07rem',
+            borderRadius: 10,
+            padding: '0.9rem 2.1rem',
+            border: 'none',
+            cursor: 'pointer',
+            margin: '0.5rem 0 0 0',
+            boxShadow: '0 2px 8px #2563eb22',
+            transition: 'background 0.18s'
+          }}
+        >
+          🏠 Book Accommodation Counselling
+        </button>
+      </section>
+
+      {/* Modal for Accommodation Counselling */}
+      {showCounsellingModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(30,41,59,0.18)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            background: '#fff',
+            borderRadius: 16,
+            boxShadow: '0 8px 32px #2563eb33',
+            maxWidth: 400,
+            width: '95vw',
+            padding: '2.2rem 1.5rem 1.5rem 1.5rem',
+            position: 'relative'
+          }}>
+            <button
+              onClick={() => { setShowCounsellingModal(false); setSubmitted(false); setError(''); }}
+              style={{
+                position: 'absolute',
+                top: 12,
+                right: 16,
+                background: 'none',
+                border: 'none',
+                fontSize: 22,
+                color: '#64748b',
+                cursor: 'pointer'
+              }}
+              aria-label="Close"
+            >×</button>
+            <h3 style={{
+              fontSize: '1.18rem',
+              fontWeight: 900,
+              color: '#2563eb',
+              marginBottom: '1.1rem',
+              textAlign: 'center'
+            }}>
+              Book Accommodation Counselling
+            </h3>
+            {submitted ? (
+              <div style={{
+                color: '#2563eb',
+                fontWeight: 700,
+                textAlign: 'center',
+                minHeight: 120,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <span
+                  style={{
+                    fontSize: 48,
+                    color: '#22c55e',
+                    marginBottom: 12,
+                    display: 'inline-block'
+                  }}
+                  aria-label="Success"
+                  role="img"
+                >✔️</span>
+                Thank you! We have received your request.<br />Our team will contact you soon.
+              </div>
+            ) : (
+              <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={form.name}
+                  onChange={handleFormChange}
+                  required
+                  style={{
+                    padding: '0.8rem',
+                    borderRadius: 8,
+                    border: '1px solid #cbd5e1',
+                    fontSize: '1rem'
+                  }}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={form.email}
+                  onChange={handleFormChange}
+                  required
+                  style={{
+                    padding: '0.8rem',
+                    borderRadius: 8,
+                    border: '1px solid #cbd5e1',
+                    fontSize: '1rem'
+                  }}
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Your Phone"
+                  value={form.phone}
+                  onChange={handleFormChange}
+                  required
+                  style={{
+                    padding: '0.8rem',
+                    borderRadius: 8,
+                    border: '1px solid #cbd5e1',
+                    fontSize: '1rem'
+                  }}
+                />
+                <textarea
+                  name="message"
+                  placeholder="Your Message (optional)"
+                  value={form.message}
+                  onChange={handleFormChange}
+                  rows={3}
+                  style={{
+                    padding: '0.8rem',
+                    borderRadius: 8,
+                    border: '1px solid #cbd5e1',
+                    fontSize: '1rem'
+                  }}
+                />
+                {error && <div style={{ color: '#dc2626', fontSize: '.98rem', textAlign: 'center' }}>{error}</div>}
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  style={{
+                    background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+                    color: '#fff',
+                    fontWeight: 700,
+                    fontSize: '1.07rem',
+                    borderRadius: 10,
+                    padding: '0.9rem 2.1rem',
+                    border: 'none',
+                    cursor: 'pointer',
+                    marginTop: '0.5rem',
+                    boxShadow: '0 2px 8px #2563eb22',
+                    transition: 'background 0.18s',
+                    opacity: submitting ? 0.7 : 1
+                  }}
+                >
+                  {submitting ? 'Submitting...' : 'Submit'}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Our Promise & Testimonial */}
       <section style={{
         maxWidth: 900,
@@ -742,4 +1140,3 @@ export const AccommodationPage: React.FC = () => {
 };
 
 export default AccommodationPage;
-
