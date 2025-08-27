@@ -709,7 +709,6 @@ export const LandingPage: React.FC = () => {
 		</>
 	);
 
-	// Financial Services Section (copied from FinancialServicesPage hero)
 	const financialServicesSection = (
 		<section
 			ref={financialServicesSectionRef}
@@ -718,7 +717,7 @@ export const LandingPage: React.FC = () => {
 				borderRadius: 18,
 				boxShadow: '0 4px 24px #fbbf2411',
 				padding: '2.2rem 1.5rem 1.5rem 1.5rem',
-				marginBottom: '2.5rem',
+				// marginBottom: '2.5rem',
 				marginTop: '1.5rem',
 				color: '#1e293b',
 				marginLeft: 'auto',
