@@ -96,7 +96,31 @@ export const Contact: React.FC = () => {
   return (
     <section className="section reveal" id="contact" ref={ref as any} style={{ position: 'relative', zIndex: 1 }}>
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-        <h2 className="section__title">Book Your Consultation</h2>
+        <h2
+          className="section__title"
+          style={{
+            textAlign: 'center',
+            marginTop: 0,
+            marginBottom: '2rem',
+            fontWeight: 900,
+            fontSize: '2.3rem',
+            letterSpacing: '-1px',
+            lineHeight: 1.13,
+            background: 'linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            textShadow: '0 2px 16px #2563eb22',
+            borderRadius: 8,
+            padding: '0.2em 0',
+            display: 'inline-block',
+            width: '100%',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
+          Book Your Consultation
+        </h2>
         <form className="consultation" onSubmit={handleSubmit} noValidate>
           <div className="consultation__grid">
             <div className="field">
