@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const sectionStyle: React.CSSProperties = {
-  maxWidth: 800,
   margin: '2.5rem auto',
   padding: '2.2rem 1.5rem 2.5rem 1.5rem',
   background: 'linear-gradient(90deg,#f8fafc 0%,#e0e7ff 100%)',
@@ -129,7 +128,6 @@ const StudyApplication: React.FC = () => {
     >
       <div
         style={{
-          maxWidth: 900,
           margin: '0 auto',
           width: '100%',
           boxSizing: 'border-box',
