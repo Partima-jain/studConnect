@@ -13,6 +13,7 @@ import PeerCounsellingPage from './pages/PeerCounsellingPage';
 import AuthRegisterPage from './pages/AuthRegisterPage';
 import AuthVerifyPage from './pages/AuthVerifyPage';
 import AuthLoginPage from './pages/AuthLoginPage';
+import AuthForgotPasswordPage from './pages/AuthForgotPasswordPage';
 import { FinancialServicesPage } from './pages/FinancialServicesPage';
 import UniversityDetailPage from './pages/UniversityDetailPage';
 import StudyApplication from './pages/StudyApplication';
@@ -84,6 +85,7 @@ export const App: React.FC = () => (
         <Route path="/auth/register" element={<AuthRegisterPage />} />
         <Route path="/auth/verify" element={<AuthVerifyPage />} />
         <Route path="/auth/login" element={<AuthLoginPage />} />
+        <Route path="/auth/forgot-password" element={<AuthForgotPasswordPage />} />
         <Route path="/financial-services" element={
           <RequireAuth>
             <FinancialServicesPage />

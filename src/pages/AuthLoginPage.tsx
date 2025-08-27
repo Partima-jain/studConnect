@@ -43,6 +43,9 @@ const AuthLoginPage: React.FC = () => {
         </form>
         <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: 14 }}>
           Don't have an account? <a href="/auth/register" style={{ color: '#3b82f6', textDecoration: 'underline' }}>Sign up</a>
+          <div style={{ marginTop: 8 }}>
+            <a href="/auth/forgot-password" style={{ color: '#6366f1', textDecoration: 'underline' }}>Forgot password?</a>
+          </div>
         </div>
       </div>
     </div>
