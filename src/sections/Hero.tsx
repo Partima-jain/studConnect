@@ -39,7 +39,91 @@ export const Hero: React.FC = () => {
             height: '100%'
           }}
         >
-          <div className="hero__cta-inner" style={{width: '100%'}}>
+          <div className="hero__cta-inner"
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start', // default left
+              justifyContent: 'center',
+              minHeight: 420,
+              paddingLeft: 0,
+              paddingRight: 0
+            }}
+          >
+            <div
+              className="hero__cta-textblock"
+              style={{
+                marginBottom: '1.7rem',
+                maxWidth: 420,
+                minWidth: 320,
+                textAlign: 'left',
+                background: 'transparent',
+                borderRadius: 0,
+                padding: 0,
+                boxShadow: 'none',
+                border: 'none',
+                position: 'relative',
+                alignSelf: 'flex-start'
+              }}
+            >
+              <h1
+                style={{
+                  fontSize: '2.5rem',
+                  fontWeight: 900,
+                  margin: 0,
+                  letterSpacing: '-2px',
+                  lineHeight: 1.07,
+                  background: 'linear-gradient(90deg,#fbbf24 0%,#60a5fa 60%,#2563eb 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                  textShadow: '0 4px 24px #2563eb22, 0 1px 2px #fff8',
+                  fontFamily: "'Inter', 'Montserrat', 'Poppins', 'sans-serif'",
+                  display: 'inline-block'
+                }}
+              >
+                Study Abroad. <span style={{
+                  background: 'linear-gradient(90deg,#60a5fa 0%,#2563eb 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  color: 'transparent'
+                }}>Made Simple.</span>
+              </h1>
+              <p
+                style={{
+                  fontSize: '1.18rem',
+                  color: '#e0e7ff',
+                  fontWeight: 500,
+                  margin: '1.1rem 0 0 0',
+                  lineHeight: 1.6,
+                  letterSpacing: '-.2px',
+                  textShadow: '0 2px 12px #2563eb33',
+                  fontFamily: "'Inter', 'Montserrat', 'Poppins', 'sans-serif'"
+                }}
+              >
+                <span style={{
+                  background: 'linear-gradient(90deg,#fbbf24 0%,#60a5fa 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontWeight: 700
+                }}>Connect</span> with <span style={{
+                  color:'#fff', fontWeight:700, background:'unset', WebkitTextFillColor:'unset'
+                }}>real students</span>, explore universities,<br />
+                secure housing, and plan finances—all in one place.
+              </p>
+              {/* Decorative underline
+              <div className="hero-underline" style={{
+                marginTop: '1.1rem',
+                width: 70,
+                height: 5,
+                borderRadius: 8,
+                background: 'linear-gradient(90deg,#fbbf24 0%,#60a5fa 100%)',
+                boxShadow: '0 2px 8px #2563eb22'
+              }} /> */}
+            </div>
             <a
               href="#contact"
               className="btn btn-primary hero-cta hero-cta-3d"
@@ -137,7 +221,98 @@ export const Hero: React.FC = () => {
       {/* Add responsive CSS */}
       <style>
         {`
-          
+          /* Responsive styles for hero heading and paragraph */
+          .hero__cta-inner h1 {
+            font-size: 2.5rem;
+            letter-spacing: -2px;
+            line-height: 1.07;
+            text-align: left;
+          }
+          .hero__cta-inner p {
+            font-size: 1.18rem;
+            margin-top: 1.1rem;
+            text-align: left;
+          }
+          .hero__cta-inner .hero-underline {
+            width: 70px;
+            height: 5px;
+            margin-top: 1.1rem;
+            margin-left: 0;
+            margin-right: 0;
+          }
+          @media (max-width: 1199px) {
+            .hero__cta-inner {
+              align-items: center !important;
+            }
+            .hero__cta-textblock {
+              align-self: center !important;
+              text-align: center !important;
+              max-width: 520px !important;
+              min-width: 0 !important;
+              width: 100% !important;
+            }
+            .hero__cta-inner h1,
+            .hero__cta-inner p {
+              text-align: center !important;
+            }
+            .hero__cta-inner .hero-underline {
+              margin-left: auto !important;
+              margin-right: auto !important;
+            }
+          }
+          @media (max-width: 1100px) {
+            .hero__cta-inner h1 {
+              font-size: 2.1rem;
+            }
+            .hero__cta-inner p {
+              font-size: 1.05rem;
+            }
+            .hero__cta-inner .hero-underline {
+              width: 55px;
+              height: 4px;
+            }
+          }
+          @media (max-width: 900px) {
+            .hero__cta-inner {
+              min-height: 320px !important;
+              padding-left: 0 !important;
+              padding-right: 0 !important;
+            }
+            .hero__cta-inner h1 {
+              font-size: 1.7rem !important;
+              letter-spacing: -1.2px !important;
+            }
+            .hero__cta-inner p {
+              fontSize: 0.98rem !important;
+              margin-top: 0.7rem !important;
+            }
+            .hero__cta-inner .hero-underline {
+              width: 38px !important;
+              height: 3px !important;
+              margin-top: 0.7rem !important;
+            }
+          }
+          @media (max-width: 600px) {
+            .hero__cta-inner {
+              min-height: 180px !important;
+              padding-left: 0 !important;
+              padding-right: 0 !important;
+            }
+            .hero__cta-inner h1 {
+              font-size: 1.15rem !important;
+              letter-spacing: -0.7px !important;
+            }
+            .hero__cta-inner p {
+              font-size: 0.89rem !important;
+              margin-top: 0.5rem !important;
+            }
+            .hero__cta-inner .hero-underline {
+              width: 24px !important;
+              height: 2px !important;
+              margin-top: 0.5rem !important;
+            }
+          }
+          /* Existing button and layout responsive styles */
           @media (max-width: 1199px) {
             .hero__cta-container {
               justify-content: center !important;
@@ -158,8 +333,6 @@ export const Hero: React.FC = () => {
               display: none !important;
             }
           }
-          
-          
           @media (max-width: 900px) {
             .hero__cta-container a.hero-cta-3d {
               font-size: 0.98rem !important;

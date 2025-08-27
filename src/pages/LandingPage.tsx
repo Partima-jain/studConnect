@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { Hero } from '../sections/Hero';
-import { Services } from '../sections/Services';
 import { FeaturedUniversities } from '../sections/FeaturedUniversities';
 import { HowItWorks } from '../sections/HowItWorks';
 import { Testimonials } from '../sections/Testimonials';
@@ -8,9 +7,6 @@ import { Contact } from '../sections/Contact';
 import { Footer } from '../sections/Footer';
 import { useNavigate } from 'react-router-dom';
 
-// Inline minimal services preview (copy from ServicesPage)
-
-// All services for the landing page carousel
 const allServices = [
   {
     code: 'peer-counselling',
