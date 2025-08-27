@@ -37,7 +37,7 @@ const allServices = [
   {
     code: 'financial',
     name: 'Financial Services / Education Loans',
-    desc: 'Get help with education loans, scholarships, and funding options.',
+    desc: 'Get help with education loans and funding options.',
     path: '/financial-services',
     img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/mentor-3512369_1920.jpg'
   },
