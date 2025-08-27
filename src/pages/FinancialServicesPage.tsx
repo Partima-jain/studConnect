@@ -1,101 +1,1073 @@
 import React, { useEffect, useState } from 'react';
-import { API_BASE_URL } from '../apiBase';
-// Add Three.js and react-three-fiber for 3D animation
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 
-// Simple 3D animated floating coins component
-function FloatingCoins() {
-  return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      zIndex: 0,
-      pointerEvents: 'none',
-      opacity: 0.18
-    }}>
-      <Canvas camera={{ position: [0, 0, 7], fov: 60 }}>
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[2, 2, 2]} intensity={0.7} />
-        <Coin position={[-2, 1, 0]} speed={0.7} color="#fbbf24" />
-        <Coin position={[2, -1, 0]} speed={1.1} color="#fde68a" />
-        <Coin position={[0, 2, 0]} speed={0.9} color="#f59e42" />
-        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.7} />
-      </Canvas>
-    </div>
-  );
-}
-
-function Coin({ position, speed, color }: { position: [number, number, number], speed: number, color: string }) {
-  // Animate rotation
-  const [rotation, setRotation] = useState(0);
-  useEffect(() => {
-    let frame: number;
-    const animate = () => {
-      setRotation(r => r + 0.01 * speed);
-      frame = requestAnimationFrame(animate);
-    };
-    animate();
-    return () => cancelAnimationFrame(frame);
-  }, [speed]);
-  return (
-    <mesh position={position} rotation={[rotation, rotation, 0]}>
-      <cylinderGeometry args={[0.5, 0.5, 0.08, 32]} />
-      <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
-    </mesh>
-  );
-}
 
 export const FinancialServicesPage: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    fetch(`${API_BASE_URL}/api/australia-scholarships`)
-      .then(res => {
-        if (!res.ok) throw new Error("Failed to fetch data");
-        const contentType = res.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("API did not return JSON. Check backend route and proxy config.");
-        }
-        return res.json();
-      })
-      .then(setData)
-      .catch(e => setError(e.message || "Error loading data"))
-      .finally(() => setLoading(false));
-  }, []);
 
   return (
     <main className="page container" style={{ position: 'relative', zIndex: 1 }}>
-      {/* 3D Animated Coins in the background */}
-      <FloatingCoins />
-      <h1 style={{
-        fontSize: '2.3rem',
-        fontWeight: 800,
-        marginBottom: '0.5rem',
-        background: 'linear-gradient(90deg, #fbbf24 0%, #2563eb 100%)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent'
+    
+      {/* Funding & Loans Made Easy */}
+      <section style={{
+        background: 'linear-gradient(90deg,#fbbf24 0%,#e0e7ff 100%)',
+        borderRadius: 18,
+        boxShadow: '0 4px 24px #fbbf2411',
+        padding: '2.2rem 1.5rem 1.5rem 1.5rem',
+        marginBottom: '2.5rem',
+        marginTop: '1.5rem',
+        color: '#1e293b',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '2.2rem',
+        flexWrap: 'wrap'
       }}>
-        Financial Services & Education Loans
-      </h1>
-      <p style={{
-        fontSize: '1.15rem',
-        color: '#64748b',
-        marginBottom: '2rem',
-        fontWeight: 500
-      }}>
-        Explore scholarships, funding, and loan opportunities by university. Interactive, premium, and beautiful.
-      </p>
-      {loading && <div style={{marginTop:'2rem'}}>Loading...</div>}
-      {error && <div style={{marginTop:'2rem', color:'#dc2626'}}>Error: {error}</div>}
-      <div style={{
+        <div style={{ flex: 1, minWidth: 260 }}>
+          <h1 style={{
+            fontSize: '2.3rem',
+            fontWeight: 800,
+            marginBottom: '0.5rem',
+            background: 'linear-gradient(90deg, #0f172a 0%, rgb(37, 99, 235) 100%) text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
+            <span role="img" aria-label="money">💸</span> Funding &amp; Loans Made Easy
+          </h1>
+          <p style={{
+            fontSize: '1.15rem',
+            color: '#334155',
+            marginBottom: '1.2rem',
+            fontWeight: 500
+          }}>
+            Studying abroad is a dream—but funding it shouldn’t be stressful. <b>StudConnect</b> helps you plan, compare, and secure loans and scholarships so you can focus on your journey, not your finances.
+          </p>
+          {/* Explore Funding Options Button */}
+          <a
+            href="#funding-options"
+            style={{
+              display: 'inline-block',
+              background: 'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: '1.13rem',
+              borderRadius: 12,
+              padding: '1rem 2.5rem',
+              textDecoration: 'none',
+              margin: '0.5rem 0 0 0',
+              boxShadow: '0 2px 8px #22c55e33',
+              transition: 'background 0.18s'
+            }}
+          >
+            Explore Funding Options
+          </a>
+        </div>
+        <div style={{ flex: 1, minWidth: 220, textAlign: 'center' }}>
+          <img
+            src="https://framerusercontent.com/images/B9TBGTwN0hDvfPhPzcP3N4twFpM.png"
+            alt="Education Loan Illustration"
+            style={{
+              width: '100%',
+              maxWidth: 320,
+              borderRadius: 18,
+              boxShadow: '0 2px 12px #2563eb22',
+              objectFit: 'cover'
+            }}
+          />
+        </div>
+      </section>
+
+      {/* What We Offer */}
+      <section
+        style={{
+          margin: '0 auto 2.5rem auto',
+          padding: '1.5rem',
+          background: '#fff',
+          borderRadius: 16,
+          boxShadow: '0 2px 12px #fbbf2411',
+          color: '#1e293b',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '2rem',
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        {/* Responsive styles */}
+        <style>
+          {`
+            .what-we-offer-cards {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 1.2rem;
+              margin-bottom: 1.2rem;
+            }
+            @media (max-width: 900px) {
+              .what-we-offer-cards {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+              }
+            }
+            @media (max-width: 600px) {
+              .what-we-offer-cards {
+                grid-template-columns: 1fr;
+                gap: 0.7rem;
+              }
+              .what-we-offer-card h3 {
+                font-size: 1.05rem !important;
+              }
+              .what-we-offer-card p {
+                font-size: 0.97rem !important;
+              }
+            }
+          `}
+        </style>
+        {/* Background image as absolute layer */}
+        <div
+          data-framer-background-image-wrapper="true"
+          style={{
+            position: 'absolute',
+            borderRadius: 'inherit',
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: 'none',
+            opacity: 0.13
+          }}
+        >
+          <img
+            decoding="async"
+            width="3840"
+            height="2731"
+            sizes="900px"
+            srcSet="https://framerusercontent.com/images/IVHL7o98u0JfJ9VjWa1tgUWLA.png?scale-down-to=512 512w,https://framerusercontent.com/images/IVHL7o98u0JfJ9VjWa1tgUWLA.png?scale-down-to=1024 1024w,https://framerusercontent.com/images/IVHL7o98u0JfJ9VjWa1tgUWLA.png?scale-down-to=2048 2048w,https://framerusercontent.com/images/IVHL7o98u0JfJ9VjWa1tgUWLA.png 3840w"
+            src="https://framerusercontent.com/images/IVHL7o98u0JfJ9VjWa1tgUWLA.png"
+            alt=""
+            style={{
+              display: 'block',
+              width: '100%',
+              height: '100%',
+              borderRadius: 'inherit',
+              objectPosition: 'center bottom',
+              objectFit: 'contain'
+            }}
+          />
+        </div>
+        {/* Content */}
+        <div style={{ flex: 1.5, minWidth: 260, zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div style={{ fontWeight: 600, letterSpacing: '-0.04em', color: '#1d2026', fontSize: '1rem', marginBottom: '.5rem' }}>
+            AWESOME BENEFITS
+          </div>
+          <h2 style={{
+            fontWeight: 800,
+            fontSize: '2rem',
+            color: 'rgba(0,141,234,0.87)',
+            margin: 0,
+            lineHeight: 1.1,
+            letterSpacing: '-0.04em'
+          }}>
+            Get Your Study Abroad Loan
+          </h2>
+          <h2 style={{
+            fontWeight: 800,
+            fontSize: '2rem',
+            color: '#1d2026',
+            margin: 0,
+            lineHeight: 1.1,
+            letterSpacing: '-0.04em',
+            marginBottom: '1.1rem'
+          }}>
+            Easily from Home
+          </h2>
+          <div style={{
+            fontSize: '1.15rem',
+            fontWeight: 500,
+            color: '#1d2026',
+            marginBottom: '1.4rem',
+            letterSpacing: '-0.04em',
+            lineHeight: '140%'
+          }}>
+            We've streamlined the loan process with top banks offering the best, lowest rates. Smart lending, straight to your heart.
+          </div>
+          <div className="what-we-offer-cards">
+            {/* Fast & Easy */}
+            <div className="what-we-offer-card" style={{
+              background: 'linear-gradient(90deg,#e0f7fa 0%,#f1f5fd 100%)',
+              borderRadius: 14,
+              padding: '1.2rem 1rem',
+              boxShadow: '0 2px 8px #b6eaff33',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem',
+              minWidth: 0
+            }}>
+              {/* Bolt SVG */}
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38 }}>
+                <svg width="32" height="38" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 2L4 21H16L12 36L28 13H16L20 2Z" fill="#008dea" fillOpacity="0.87"/>
+                  <path d="M16 2L4 21H16L12 36L28 13H16L20 2Z" stroke="#008dea" strokeWidth="2" strokeLinejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <h3 style={{ fontWeight: 600, fontSize: '1.18rem', margin: 0, color: '#008dea' }}>Fast &amp; Easy</h3>
+                <p style={{ margin: 0, color: '#5d5d5d', fontWeight: 500 }}>Get a loan in just 2 minutes with a simple one-click (or swipe) process.</p>
+              </div>
+            </div>
+            {/* Flexible Options */}
+            <div className="what-we-offer-card" style={{
+              background: 'linear-gradient(90deg,#f1f5fd 0%,#e0f7fa 100%)',
+              borderRadius: 14,
+              padding: '1.2rem 1rem',
+              boxShadow: '0 2px 8px #b6eaff33',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem',
+              minWidth: 0
+            }}>
+              {/* Branching Paths SVG */}
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38 }}>
+                <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 36V2M19 2L6 15M19 2L32 15" stroke="#008dea" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <h3 style={{ fontWeight: 600, fontSize: '1.18rem', margin: 0, color: '#008dea' }}>Flexible Options</h3>
+                <p style={{ margin: 0, color: '#5d5d5d', fontWeight: 500 }}>Choose from top Banks and NBFCs aligned with market trends.</p>
+              </div>
+            </div>
+            {/* Real-Time Tracking & Insights */}
+            <div className="what-we-offer-card" style={{
+              background: 'linear-gradient(90deg,#e0f7fa 0%,#f1f5fd 100%)',
+              borderRadius: 14,
+              padding: '1.2rem 1rem',
+              boxShadow: '0 2px 8px #b6eaff33',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem',
+              minWidth: 0
+            }}>
+              {/* Routing SVG */}
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38 }}>
+                <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="19" cy="19" r="17" stroke="#008dea" strokeWidth="2.5"/>
+                  <path d="M19 8V19L27 27" stroke="#008dea" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <h3 style={{ fontWeight: 600, fontSize: '1.18rem', margin: 0, color: '#008dea' }}>Real-Time Tracking &amp; Insights</h3>
+                <p style={{ margin: 0, color: '#5d5d5d', fontWeight: 500 }}>Monitor loan status with live updates and reporting.</p>
+              </div>
+            </div>
+            {/* Peer Guidance */}
+            <div className="what-we-offer-card" style={{
+              background: 'linear-gradient(90deg,#f1f5fd 0%,#e0f7fa 100%)',
+              borderRadius: 14,
+              padding: '1.2rem 1rem',
+              boxShadow: '0 2px 8px #b6eaff33',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem',
+              minWidth: 0
+            }}>
+              {/* User/Chat SVG */}
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38 }}>
+                <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="19" cy="13" r="7" stroke="#008dea" strokeWidth="2.5"/>
+                  <path d="M6 32c0-5.523 5.82-10 13-10s13 4.477 13 10" stroke="#008dea" strokeWidth="2.5" strokeLinecap="round"/>
+                </svg>
+              </span>
+              <div>
+                <h3 style={{ fontWeight: 600, fontSize: '1.18rem', margin: 0, color: '#008dea' }}>Peer Guidance</h3>
+                <p style={{ margin: 0, color: '#5d5d5d', fontWeight: 500 }}>Learn from students who’ve already navigated the financial
+side of studying abroad.</p>
+                <a href="/services/peer-counselling"
+                  style={{
+                    display: 'inline-block',
+                    marginTop: '.5rem',
+                    background: 'linear-gradient(90deg,#008dea 0%,#22c55e 100%)',
+                    color: '#fff',
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    borderRadius: 8,
+                    padding: '.5rem 1.2rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 8px #008dea22',
+                    transition: 'background 0.18s'
+                  }}>
+                  Ask a Peer
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{ flex: 1, minWidth: 220, textAlign: 'center', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <img
+            src="https://framerusercontent.com/images/xZe31QYxYlY3R3uXndfdsVdc7Y8.png"
+            alt="Loan Process Illustration"
+            style={{
+              width: '100%',
+              maxWidth: 260,
+              borderRadius: 16,
+              boxShadow: '0 2px 12px #fbbf2411',
+              objectFit: 'cover'
+            }}
+          />
+        </div>
+      </section>
+      
+      <section>
+        {/* Partner Banks */}
+          <div
+            style={{
+              background: 'linear-gradient(90deg, #eff8ff 0%, #fff 100%)',
+              borderRadius: 16,
+              border: '1px solid #d9d9d9',
+              padding: '1.1rem 1rem 1.1rem 1rem',
+              margin: '0 0 1.5rem 0',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              opacity: 1,
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 800,
+                fontSize: '1.35rem',
+                marginBottom: '.7rem',
+                letterSpacing: '-0.03em',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'linear-gradient(90deg,#2563eb 0%,#fbbf24 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textAlign: 'center',
+                gap: '.6rem'
+              }}
+            >
+              <span role="img" aria-label="bank">🏦</span>
+              Our Partner Banks &amp; NBFCs
+            </div>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+                gap: '1.2rem',
+                alignItems: 'center',
+                justifyItems: 'center',
+                overflowX: 'auto',
+              }}
+            >
+              {/* Bank of India */}
+              <a href="./education-loan/bank-of-india" style={{
+                background: '#fff',
+                borderRadius: 12,
+                border: '1px solid #dbdbdb',
+                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                padding: '1rem .5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textDecoration: 'none',
+                color: '#1e293b',
+                minWidth: 110,
+                transition: 'box-shadow .15s'
+              }}>
+                <img src="https://framerusercontent.com/images/pnrcAvqYHiL4EGmFRwEm8D3x22Y.png" alt="Bank of India" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Bank of India</span>
+              </a>
+              {/* Punjab National Bank */}
+              <a href="./education-loan/punjab-national-bank" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/9bnCNN9JC4zodgwmRW7QVZqlQRs.png" alt="Punjab National Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Punjab National Bank</span>
+              </a>
+              {/* Bank of Maharashtra */}
+              <a href="./education-loan/bank-of-maharashtra" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/LtAg8KaEuIyS6GzfMSGuGkOf6E.png" alt="Bank of Maharashtra" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Bank of Maharashtra</span>
+              </a>
+              {/* Bank of Baroda */}
+              <a href="./education-loan/bank-of-baroda" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/OTI8KjM7YMqNLl4AJKlkYdeMLZs.png" alt="Bank of Baroda" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Bank of Baroda</span>
+              </a>
+              {/* Union Bank of India */}
+              <a href="./education-loan/union-bank-of-india" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/sR4martDokWyDYXuP6dgIiWCJk0.png" alt="Union Bank of India" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Union Bank of India</span>
+              </a>
+              {/* State Bank of India */}
+              <a href="./education-loan/state-bank-of-india" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/nKrsZ25sbMcxfh2OF83P4X9DGWI.png" alt="State Bank of India" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>State Bank of India</span>
+              </a>
+              {/* MPower Financing */}
+              <a href="./education-loan/mpower-financing" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/fKN6SakWdLFVLEYSOtSr1eeNaFM.png" alt="MPower Financing" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>MPower Financing</span>
+              </a>
+              {/* Prodigy Finance */}
+              <a href="./education-loan/prodigy-finance" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/N4ujbId7eTBtfnM2rXq4LSrRY.png" alt="Prodigy Finance" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Prodigy Finance</span>
+              </a>
+              {/* Avanse Global */}
+              <a href="./education-loan/avanse-global" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/vOiWo2sc2ycx4bv1B3tsruQeYGw.png" alt="Avanse Global" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Avanse Global</span>
+              </a>
+              {/* IDFC First Bank */}
+              <a href="./education-loan/idfc-first-bank" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/a300mMgfMmpH6TV5Z0NT0R8XAAI.png" alt="IDFC First Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>IDFC First Bank</span>
+              </a>
+              {/* Axis Bank */}
+              <a href="./education-loan/axis-bank" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/wCqqbT8gRAprZQfkyO9ExayTzg.png" alt="Axis Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Axis Bank</span>
+              </a>
+              {/* ICICI Bank */}
+              <a href="./education-loan/icici-bank" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/xnz5iwGEzPTl9AYAvH3OKn4q5e4.png" alt="ICICI Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>ICICI Bank</span>
+              </a>
+              {/* Yes Bank */}
+              <a href="./education-loan/yes-bank" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/K2DjcIyk3AtIycmbQDQM6tJiV4.png" alt="Yes Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Yes Bank</span>
+              </a>
+              {/* Credila */}
+              <a href="./education-loan/hdfc-credilea" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/EZijcqgZEmADwJDAmCXmyv5XI.png" alt="Credila" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Credila</span>
+              </a>
+              {/* Avanse */}
+              <a href="./education-loan/avanse" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/vOiWo2sc2ycx4bv1B3tsruQeYGw.png" alt="Avanse" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Avanse</span>
+              </a>
+              {/* Incred */}
+              <a href="./education-loan/incred" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/ddHfKK2QwWo6VAgwr6JTZ248GzM.png" alt="Incred" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Incred</span>
+              </a>
+              {/* Auxilo */}
+              <a href="./education-loan/auxilo" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/9ISe0CbmNRBF0EO14z8RfGPgkA.png" alt="Auxilo" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Auxilo</span>
+              </a>
+              {/* Tata Capital */}
+              <a href="./education-loan/tata-capital" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/M6zUrrd1bvOV2fBqXL47qMOZ0Vo.png" alt="Tata Capital" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Tata Capital</span>
+              </a>
+              {/* Propelld */}
+              <a href="./education-loan/propelld" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/JxNDywcvwxLs9yPBKXwxcWNFmg.png" alt="Propelld" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Propelld</span>
+              </a>
+              {/* Poonawalla Fincorp */}
+              <a href="./education-loan/poonahwalla-fincorp" style={{
+                ...{
+                  background: '#fff',
+                  borderRadius: 12,
+                  border: '1px solid #dbdbdb',
+                  boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+                  padding: '1rem .5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: '#1e293b',
+                  minWidth: 110,
+                  transition: 'box-shadow .15s'
+                }
+              }}>
+                <img src="https://framerusercontent.com/images/L4rXvu1MsEySvYQrIELyeQbKihw.png" alt="Poonawalla Fincorp" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
+                <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Poonawalla Fincorp</span>
+              </a>
+            </div>
+          </div>
+          {/* End Partner Banks */}
+
+      </section>
+      {/* How It Works */}
+      <section
+        style={{
+          margin: '0 auto 2.5rem auto',
+          padding: '2.2rem 1.5rem',
+          background: 'linear-gradient(90deg,#e0e7ff 0%,#f8fafc 100%)',
+          borderRadius: 20,
+          boxShadow: '0 2px 16px #2563eb11',
+          color: '#1e293b',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '2.5rem',
+          alignItems: 'flex-start' // <-- changed from 'center' to 'flex-start'
+        }}
+      >
+        <div style={{ flex: 1, minWidth: 240, alignSelf: 'flex-start' }}>
+          <div
+            style={{
+              fontWeight: 900,
+              fontSize: '1.35rem',
+              letterSpacing: '-0.03em',
+              background: 'linear-gradient(90deg,#2563eb 0%,#fbbf24 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              marginBottom: '1.2rem'
+            }}
+          >
+            How It Works
+          </div>
+          <div style={{
+            display: 'grid',
+            gap: '1.1rem',
+            gridTemplateColumns: '1fr',
+            marginTop: '.5rem'
+          }}>
+            {/* Step 1 */}
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #2563eb11',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#2563eb 0%,#60a5fa 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #2563eb33',
+                flexShrink: 0
+              }}>1</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.08rem', color: '#2563eb' }}>Explore Options</div>
+                <div style={{ color: '#475569', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Check out scholarships, grants, and loans tailored for your destination and course.
+                </div>
+              </div>
+            </div>
+            {/* Step 2 */}
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #fbbf2411',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#fbbf24 0%,#f59e42 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #fbbf2433',
+                flexShrink: 0
+              }}>2</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.08rem', color: '#2563eb' }}>Compare &amp; Choose</div>
+                <div style={{ color: '#475569', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Evaluate loan terms, interest rates, and repayment options.
+                </div>
+              </div>
+            </div>
+            {/* Step 3 */}
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #22c55e22',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#22c55e 0%,#4ade80 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #22c55e33',
+                flexShrink: 0
+              }}>3</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.08rem', color: '#22c55e' }}>Apply Confidently</div>
+                <div style={{ color: '#475569', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Get guided steps to apply through our verified loan partners.
+                </div>
+              </div>
+            </div>
+            {/* Step 4 */}
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #2563eb11',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#0f172a 0%,#64748b 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #64748b33',
+                flexShrink: 0
+              }}>4</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.08rem', color: '#0f172a' }}>Manage &amp; Track</div>
+                <div style={{ color: '#475569', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Keep tabs on your spending and stay on top of your budget.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{ flex: 1, minWidth: 240, alignSelf: 'flex-start' }}>
+          <div
+            style={{
+              fontWeight: 900,
+              fontSize: '1.35rem',
+              letterSpacing: '-0.03em',
+              background: 'linear-gradient(90deg,#2563eb 0%,#fbbf24 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              marginBottom: '1.2rem'
+            }}
+          >
+            Quick Funding Tips
+          </div>
+          <div style={{
+            display: 'grid',
+            gap: '1.1rem',
+            gridTemplateColumns: '1fr',
+            marginTop: '.5rem'
+          }}>
+            {/* Tip 1 */}
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #2563eb11',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#2563eb 0%,#60a5fa 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #2563eb33',
+                flexShrink: 0
+              }}>1</div>
+              <div>
+                <div style={{ color: '#2563eb', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                   Apply early for scholarships and loans.
+                </div>
+              </div>
+            </div>
+            {/* Tip 2 */}
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #fbbf2411',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#fbbf24 0%,#f59e42 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #fbbf2433',
+                flexShrink: 0
+              }}>2</div>
+              <div>
+                <div style={{ color: '#2563eb', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Use budgeting tools to track expenses.
+                </div>
+              </div>
+            </div>
+            {/* Tip 3 */}
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #22c55e22',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#22c55e 0%,#4ade80 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #22c55e33',
+                flexShrink: 0
+              }}>3</div>
+              <div>
+                <div style={{ color: '#2563eb', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Ask peers for real-world advice.
+                </div>
+              </div>
+            </div>
+            {/* Tip 4 */}
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #2563eb11',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#0f172a 0%,#64748b 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #64748b33',
+                flexShrink: 0
+              }}>4</div>
+              <div>
+                <div style={{ color: '#2563eb', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Always have an emergency fund.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Funding Options Table/Content */}
+      <div id="funding-options" style={{
         marginTop:'2rem',
         display:'grid',
         gap:'2rem',
@@ -103,6 +1075,56 @@ export const FinancialServicesPage: React.FC = () => {
         position: 'relative',
         zIndex: 2
       }}>
+        {/* Example: Multiple Lenders/Providers */}
+        <div style={{
+          padding:'1.5rem',
+          borderRadius:'1.5rem',
+          background: '#f8fafc',
+          boxShadow: '0 8px 32px 0 rgba(37,99,235,0.10), 0 1.5px 8px 0 #fbbf24',
+          border: '1.5px solid #e0e7ef',
+        }}>
+          <h3 style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.15rem', marginBottom: '.7rem' }}>Leap Finance</h3>
+          <ul style={{ fontSize: '1.02rem', color: '#334155', marginBottom: '.7rem', paddingLeft: '1.1rem' }}>
+            <li>No-cosigner, collateral-free loans</li>
+            <li>Competitive interest rates</li>
+            <li>Fast approval process</li>
+            <li>For international students</li>
+          </ul>
+          <a href="https://www.leapfinance.com/" target="_blank" rel="noopener" style={{
+            color: '#fff',
+            background: 'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
+            borderRadius: 8,
+            padding: '.7rem 1.5rem',
+            fontWeight: 700,
+            textDecoration: 'none',
+            display: 'inline-block'
+          }}>Apply with Leap Finance</a>
+        </div>
+        <div style={{
+          padding:'1.5rem',
+          borderRadius:'1.5rem',
+          background: '#f8fafc',
+          boxShadow: '0 8px 32px 0 rgba(37,99,235,0.10), 0 1.5px 8px 0 #fbbf24',
+          border: '1.5px solid #e0e7ef',
+        }}>
+          <h3 style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.15rem', marginBottom: '.7rem' }}>ForeignAdmits</h3>
+          <ul style={{ fontSize: '1.02rem', color: '#334155', marginBottom: '.7rem', paddingLeft: '1.1rem' }}>
+            <li>Compare 15+ banks &amp; NBFCs</li>
+            <li>Secured &amp; unsecured loan options</li>
+            <li>Fast, digital process</li>
+            <li>Personalized support for study abroad</li>
+          </ul>
+          <a href="https://www.foreignadmits.com/" target="_blank" rel="noopener" style={{
+            color: '#fff',
+            background: 'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
+            borderRadius: 8,
+            padding: '.7rem 1.5rem',
+            fontWeight: 700,
+            textDecoration: 'none',
+            display: 'inline-block'
+          }}>Apply with ForeignAdmits</a>
+        </div>
+        {/* ...existing code for university scholarships... */}
         {data.map((uni, idx) => (
           <div
             key={uni.university + idx}
@@ -192,6 +1214,151 @@ export const FinancialServicesPage: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* Why Our Funding Services Rock */}
+      <section
+        style={{
+          margin: '0 auto 2.5rem auto',
+          padding: '2.2rem 1.5rem',
+          background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+          borderRadius: 20,
+          boxShadow: '0 2px 16px #2563eb11',
+          color: '#1e293b',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '2.5rem',
+          alignItems: 'flex-start'
+        }}
+      >
+        <div style={{ flex: 1, minWidth: 240, alignSelf: 'flex-start' }}>
+          <div
+            style={{
+              fontWeight: 900,
+              fontSize: '1.35rem',
+              letterSpacing: '-0.03em',
+              background: 'linear-gradient(90deg,#2563eb 0%,#fbbf24 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              marginBottom: '1.2rem'
+            }}
+          >
+            Why Our Funding Services Rock
+          </div>
+          <div style={{
+            display: 'grid',
+            gap: '1.1rem',
+            gridTemplateColumns: '1fr',
+            marginTop: '.5rem'
+          }}>
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#e0e7ff 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #2563eb11',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#2563eb 0%,#60a5fa 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #2563eb33',
+                flexShrink: 0
+              }}>1</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.08rem', color: '#2563eb' }}>Transparent &amp; Student-Friendly</div>
+                <div style={{ color: '#475569', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  No confusing jargon, no hidden fees.
+                </div>
+              </div>
+            </div>
+            <div style={{
+              background: 'linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(254 249 238) 20%, rgb(224, 231, 255) 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #fbbf2411',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#fbbf24 0%,#f59e42 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #fbbf2433',
+                flexShrink: 0
+              }}>2</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.08rem', color: '#f59e42' }}>Third-Party Loan Partner</div>
+                <div style={{ color: '#475569', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Secure, reliable, and tailored for international students.
+                </div>
+              </div>
+            </div>
+            <div style={{
+              background: 'linear-gradient(90deg,#fff 0%,#22c55e22 100%)',
+              borderRadius: 14,
+              boxShadow: '0 2px 8px #22c55e22',
+              padding: '1.1rem 1.2rem',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '1.1rem'
+            }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#22c55e 0%,#4ade80 100%)',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '1.18rem',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px -2px #22c55e33',
+                flexShrink: 0
+              }}>3</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.08rem', color: '#22c55e' }}>Peer-Powered Insights</div>
+                <div style={{ color: '#475569', fontWeight: 500, fontSize: '1rem', marginTop: 4 }}>
+                  Real tips from students who’ve been there.
+                </div>
+              </div>
+            </div>
+          </div>
+          <blockquote style={{
+            background: '#f1f5fd',
+            borderLeft: '4px solid #fbbf24',
+            borderRadius: 12,
+            padding: '1.2rem 1.7rem',
+            fontStyle: 'italic',
+            color: '#1e3a8a',
+            margin: '1.2rem 0 0 0',
+            textAlign: 'center',
+            fontSize: '1.08rem'
+          }}>
+            “I was stressed about paying for my course abroad, but StudConnect guided me through loans and scholarships. The process was fast and easy thanks to their partnered loan provider!”<br />
+            <span style={{fontWeight: 700, color: '#fbbf24'}}>– Student Ambassador</span>
+          </blockquote>
+        </div>
+      </section>
+
+      
     </main>
   );
 };
