@@ -462,7 +462,7 @@ export const UniversitiesPage: React.FC = () => {
                 <button
                   style={{
                     marginTop: 'auto',
-                    background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+                    background: 'linear-gradient(90deg, rgb(55, 81, 138) 0%, rgb(96, 165, 250) 100%)',
                     color: '#fff',
                     borderRadius: 10,
                     padding: '.7rem 1.5rem',
@@ -540,12 +540,16 @@ export const UniversitiesPage: React.FC = () => {
               disabled={page <= 1}
               onClick={() => setPage(page - 1)}
               style={{
-                background: 'none',
+                background: 'linear-gradient(90deg, rgb(55, 81, 138) 0%, rgb(96, 165, 250) 100%)',
+                color: '#fff',
                 border: 'none',
-                cursor: page > 1 ? 'pointer' : 'not-allowed',
+                borderRadius: 8,
                 fontSize: '1.3rem',
-                color: page > 1 ? '#2563eb' : '#cbd5e1',
-                padding: '0 .5rem'
+                padding: '0 .9rem',
+                fontWeight: 700,
+                cursor: page > 1 ? 'pointer' : 'not-allowed',
+                boxShadow: '0 2px 8px #2563eb22',
+                transition: 'background 0.18s'
               }}
             >‹</button>
             <span style={{ fontSize: '.98rem', color: '#64748b' }}>{page} / {totalPages || 1}</span>
@@ -554,12 +558,16 @@ export const UniversitiesPage: React.FC = () => {
               disabled={page >= totalPages}
               onClick={() => setPage(page + 1)}
               style={{
-                background: 'none',
+                background: 'linear-gradient(90deg, rgb(55, 81, 138) 0%, rgb(96, 165, 250) 100%)',
+                color: '#fff',
                 border: 'none',
-                cursor: page < totalPages ? 'pointer' : 'not-allowed',
+                borderRadius: 8,
                 fontSize: '1.3rem',
-                color: page < totalPages ? '#2563eb' : '#cbd5e1',
-                padding: '0 .5rem'
+                padding: '0 .9rem',
+                fontWeight: 700,
+                cursor: page < totalPages ? 'pointer' : 'not-allowed',
+                boxShadow: '0 2px 8px #2563eb22',
+                transition: 'background 0.18s'
               }}
             >›</button>
           </div>
@@ -620,7 +628,7 @@ export const UniversitiesPage: React.FC = () => {
                   type="button"
                   className="css-22x0p3"
                   style={{
-                    background: 'linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)',
+                    background: 'linear-gradient(90deg, rgb(55, 81, 138) 0%, rgb(96, 165, 250) 100%)',
                     color: '#fff',
                     borderRadius: '8px',
                     padding: '.7rem 1.5rem',
