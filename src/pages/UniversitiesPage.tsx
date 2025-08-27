@@ -155,7 +155,8 @@ export const UniversitiesPage: React.FC = () => {
               flexWrap: 'wrap',
               alignItems: 'center',
               width: '100%',
-              rowGap: '1rem'
+              rowGap: '1rem',
+              marginTop: '1.5rem'
             }}
             className="uni-filters-row"
           >

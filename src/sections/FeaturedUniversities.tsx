@@ -66,46 +66,117 @@ export const FeaturedUniversities: React.FC = () => {
           pointerEvents: 'none'
         }}
       >
+        {/* --- REPLACED SECTION START --- */}
         <h2
           style={{
-            fontSize: '2.4rem',
+            fontSize: '2.2rem',
             fontWeight: 900,
             color: '#fff',
-            letterSpacing: '-1px',
-            marginBottom: '1.1rem',
+            letterSpacing: '-1.5px',
+            marginBottom: '0.7rem',
             textShadow: '0 2px 16px #1e293b88, 0 1px 2px #2563eb44',
+            textTransform: 'uppercase',
             pointerEvents: 'auto'
           }}
         >
-          Featured Universities
+          UNIVERSITY EXPLORER
         </h2>
         <div
           style={{
-            fontSize: '1.35rem',
+            fontSize: '1.18rem',
             color: '#fbbf24',
             fontWeight: 700,
             marginBottom: '1.5rem',
             maxWidth: 520,
             textShadow: '0 2px 12px #1e293b88',
-            pointerEvents: 'auto'
+            pointerEvents: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
           }}
         >
-          Discover 10,000+ programs across the world’s top universities. Find your dream course, compare destinations, and unlock your global future.
+          <span role="img" aria-label="globe">🌍</span> 800+ Universities. 6+ Countries. One Platform.
         </div>
-        <button
-          className="btn btn-primary"
+        {/* Search Bar */}
+        <form
           style={{
-            fontSize: '1.08rem',
-            fontWeight: 700,
-            padding: '1rem 2.2rem',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '1rem',
+            alignItems: 'center',
+            background: '#fff3',
             borderRadius: 14,
-            boxShadow: '0 4px 18px #2563eb33',
+            padding: '1.1rem 1rem',
+            boxShadow: '0 2px 12px #2563eb11',
+            marginBottom: '1.5rem',
             pointerEvents: 'auto'
           }}
-          onClick={() => navigate('/universities')}
+          onSubmit={e => { e.preventDefault(); navigate('/universities'); }}
         >
-          Explore Programs
-        </button>
+          <input
+            type="text"
+            placeholder="Country"
+            style={{
+              flex: '1 1 120px',
+              minWidth: 90,
+              maxWidth: 140,
+              padding: '0.7rem 1rem',
+              borderRadius: 8,
+              border: '1.5px solid #c7d2fe',
+              fontSize: '1rem',
+              background: '#fff',
+              color: '#1e293b'
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Course"
+            style={{
+              flex: '1 1 120px',
+              minWidth: 90,
+              maxWidth: 140,
+              padding: '0.7rem 1rem',
+              borderRadius: 8,
+              border: '1.5px solid #c7d2fe',
+              fontSize: '1rem',
+              background: '#fff',
+              color: '#1e293b'
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Tuition Range"
+            style={{
+              flex: '1 1 120px',
+              minWidth: 90,
+              maxWidth: 140,
+              padding: '0.7rem 1rem',
+              borderRadius: 8,
+              border: '1.5px solid #c7d2fe',
+              fontSize: '1rem',
+              background: '#fff',
+              color: '#1e293b'
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: '1.07rem',
+              border: 'none',
+              borderRadius: 8,
+              padding: '0.7rem 1.6rem',
+              cursor: 'pointer',
+              boxShadow: '0 2px 8px #2563eb22',
+              transition: 'background 0.18s'
+            }}
+          >
+            Explore
+          </button>
+        </form>
+        {/* --- REPLACED SECTION END --- */}
       </div>
       <style>
         {`
@@ -113,8 +184,13 @@ export const FeaturedUniversities: React.FC = () => {
             #universities h2 {
               font-size: 1.5rem !important;
             }
-            #universities div[style*="font-size: 1.35rem"] {
+            #universities div[style*="font-size: 1.18rem"] {
               font-size: 1.01rem !important;
+            }
+            #universities form {
+              flex-direction: column !important;
+              gap: 0.7rem !important;
+              padding: 0.7rem 0.5rem !important;
             }
             #universities .btn-primary {
               font-size: 0.98rem !important;
@@ -135,8 +211,13 @@ export const FeaturedUniversities: React.FC = () => {
             #universities h2 {
               font-size: 1.1rem !important;
             }
-            #universities div[style*="font-size: 1.35rem"] {
+            #universities div[style*="font-size: 1.18rem"] {
               font-size: 0.89rem !important;
+            }
+            #universities form {
+              flex-direction: column !important;
+              gap: 0.5rem !important;
+              padding: 0.5rem 0.2rem !important;
             }
             #universities .btn-primary {
               font-size: 0.89rem !important;

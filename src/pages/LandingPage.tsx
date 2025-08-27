@@ -361,6 +361,12 @@ export const LandingPage: React.FC = () => {
           </div>
         ))}
       </div>
+      {/* Dots indicator for mobile */}
+      <div className="services-scroll-dots" aria-hidden="true">
+        <span className="dot" />
+        <span className="dot" />
+        <span className="dot" />
+      </div>
       <style>{`
         .services-carousel::-webkit-scrollbar { display: none; }
         .services-carousel { scrollbar-width: none; }
@@ -377,7 +383,6 @@ export const LandingPage: React.FC = () => {
           height: 180%;
           transform: translate(-50%, -50%) scale(0.6);
           border-radius: 50%;
-          /* Shiny, glassy, colored effect */
           background: radial-gradient(circle at 50% 40%, #60a5fa44 0%, #fbbf2433 40%, #2563eb22 70%, transparent 100%);
           opacity: 0;
           transition: opacity 0.25s, transform 0.25s;
@@ -403,6 +408,36 @@ export const LandingPage: React.FC = () => {
           background-clip: text;
           color: transparent;
           text-shadow: 0 2px 16px #fff8, 0 1px 2px #fbbf2444;
+        }
+        /* Dots indicator styles */
+        .services-scroll-dots {
+          display: none;
+        }
+        @media (max-width: 750px) {
+          .services-scroll-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 0.2rem;
+            margin-bottom: 0.7rem;
+            pointer-events: none;
+            user-select: none;
+          }
+          .services-scroll-dots .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #2563eb55;
+            display: inline-block;
+            transition: background 0.2s;
+            box-shadow: 0 1px 4px #2563eb22;
+          }
+          .services-scroll-dots .dot:nth-child(2) {
+            background: #2563eb;
+            width: 11px;
+            height: 11px;
+          }
         }
       `}</style>
     </section>

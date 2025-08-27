@@ -24,7 +24,7 @@ const allServices = [
     code: 'accommodation-assistance',
     name: 'Accommodation Assistance',
     desc: 'Find and secure student accommodation in your destination country.',
-    path: '/services/accommodation-assistance',
+    path: '/accommodation', // updated path
     img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/hotel-6862159_1920.jpg'
   },
   {
@@ -386,4 +386,3 @@ export const ServicesPage: React.FC = () => {
     </main>
   );
 };
-         
