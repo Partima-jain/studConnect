@@ -5,32 +5,26 @@ import { useReveal } from '../hooks/useReveal';
 const stepImages = [
 	'https://studconnect-assets.s3.amazonaws.com/step1.png',
 	'https://studconnect-assets.s3.amazonaws.com/step2.png',
-	'https://studconnect-assets.s3.amazonaws.com/step3.png',
+	'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/1_-_LakeheadU_Simcoe_Hall_Orillia_Campus.jpg',
 	'https://studconnect-assets.s3.amazonaws.com/step4.png',
-	'https://studconnect-assets.s3.amazonaws.com/step5.png',
-	'https://studconnect-assets.s3.amazonaws.com/step6.png',
 ];
 
 const steps = [
 	{
 		title: 'Real Stories, Real Advice',
 		desc: 'No hidden agendas, just honest guidance.',
-		img: stepImages[0],
 	},
 	{
 		title: 'Affordable and Flexible',
 		desc: 'Pay per session, not overpriced “packages.”',
-		img: stepImages[1],
 	},
 	{
 		title: 'Complete Student Journey Support',
 		desc: 'From shortlisting courses to settling into your new home abroad.',
-		img: stepImages[2],
 	},
 	{
 		title: 'Built for Gen Z ',
 		desc: 'A modern, mobile-first platform with community vibes and tools that make sense.',
-		img: stepImages[3],
 	},
 ];
 
@@ -43,10 +37,25 @@ export const HowItWorks: React.FC = () => {
 				position: 'relative',
 				zIndex: 1,
 				padding: '0 0 4rem 0',
-				background: 'radial-gradient(circle at 80% 10%, #e0e7ff 0%, #fff 80%)',
-				overflow: 'hidden'
+				background: 'radial-gradient(ellipse at 70% 0%, #e0e7ff 0%, #c7d2fe 35%, #f1f5f9 70%, #fff 100%)',
+				overflow: 'hidden',
+				minHeight: 600,
 			}}
 		>
+			{/* Dreamy overlay */}
+			<div
+				aria-hidden
+				style={{
+					position: 'absolute',
+					inset: 0,
+					zIndex: 0,
+					background: 'linear-gradient(120deg, #fbbf2440 0%, #60a5fa22 60%, #fff0 100%)',
+					backdropFilter: 'blur(2.5px)',
+					WebkitBackdropFilter: 'blur(2.5px)',
+					pointerEvents: 'none',
+					mixBlendMode: 'lighten',
+				}}
+			/>
 			{/* Unique Decorative SVG Waves, Sparkles, and Animated Gradient Orbs */}
 			<div
 				aria-hidden
@@ -203,6 +212,15 @@ export const HowItWorks: React.FC = () => {
 				style={{
 					position: 'relative',
 					zIndex: 1,
+					maxWidth: 1300,
+					margin: '0 auto',
+					borderRadius: 32,
+					background: 'rgba(255,255,255,0.82)',
+					boxShadow: '0 8px 48px #2563eb18, 0 1.5px 0 #c7d2fe',
+					border: '1.5px solid #e0e7ff',
+					backdropFilter: 'blur(1.5px)',
+					WebkitBackdropFilter: 'blur(1.5px)',
+					overflow: 'hidden',
 				}}
 			>
 				{/* Section Heading */}
@@ -322,31 +340,57 @@ export const HowItWorks: React.FC = () => {
 								>
 									{idx + 1}
 								</div>
+								{/* Decorative icon/circle instead of image */}
 								<div
 									style={{
 										width: 80,
 										height: 80,
 										margin: '1.5rem auto 1.1rem auto',
 										borderRadius: '50%',
-										background: '#e0e7ff',
+										background:
+											idx % 2 === 0
+												? 'linear-gradient(135deg,#e0e7ff 60%,#c7d2fe 100%)'
+												: 'linear-gradient(135deg,#f1f5f9 60%,#e0e7ff 100%)',
 										display: 'flex',
 										alignItems: 'center',
 										justifyContent: 'center',
-										overflow: 'hidden',
-										boxShadow: '0 2px 12px #2563eb22',
+										boxShadow: '0 4px 16px #2563eb18',
 									}}
 								>
-									<img
-										src={step.img}
-										alt={step.title}
-										style={{
-											width: 64,
-											height: 64,
-											objectFit: 'contain',
-											display: 'block',
-										}}
-										loading="lazy"
-									/>
+									{idx === 0 && (
+										// Modern chat/message icon
+										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
+											<rect x="13" y="15" width="18" height="12" rx="6" stroke="#2563eb" strokeWidth="2.5" fill="none"/>
+											<path d="M19 27L17 31L22 29L27 31L25 27" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round" fill="none"/>
+										</svg>
+									)}
+									{idx === 1 && (
+										// Modern wallet/money icon
+										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
+											<rect x="13" y="17" width="18" height="10" rx="3" stroke="#2563eb" strokeWidth="2.5" fill="none"/>
+											<circle cx="29" cy="22" r="1.5" fill="#2563eb"/>
+											<path d="M13 21h18" stroke="#2563eb" strokeWidth="2"/>
+										</svg>
+									)}
+									{idx === 2 && (
+										// Modern globe icon
+										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
+											<circle cx="22" cy="22" r="10" stroke="#2563eb" strokeWidth="2.5"/>
+											<ellipse cx="22" cy="22" rx="10" ry="4" stroke="#2563eb" strokeWidth="2"/>
+											<path d="M22 12v20M12 22h20" stroke="#2563eb" strokeWidth="2"/>
+										</svg>
+									)}
+									{idx === 3 && (
+										// Modern smartphone icon
+										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
+											<rect x="16" y="12" width="12" height="20" rx="3" stroke="#2563eb" strokeWidth="2.5" fill="none"/>
+											<rect x="20" y="28" width="4" height="2" rx="1" fill="#2563eb"/>
+										</svg>
+									)}
 								</div>
 								<h4
 									style={{
