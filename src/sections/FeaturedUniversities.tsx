@@ -117,7 +117,6 @@ export const FeaturedUniversities: React.FC = () => {
             type="text"
             placeholder="Country"
             style={{
-              flex: '1 1 120px',
               minWidth: 90,
               maxWidth: 140,
               padding: '0.7rem 1rem',
@@ -132,7 +131,6 @@ export const FeaturedUniversities: React.FC = () => {
             type="text"
             placeholder="Course"
             style={{
-              flex: '1 1 120px',
               minWidth: 90,
               maxWidth: 140,
               padding: '0.7rem 1rem',
@@ -147,7 +145,6 @@ export const FeaturedUniversities: React.FC = () => {
             type="text"
             placeholder="Tuition Range"
             style={{
-              flex: '1 1 120px',
               minWidth: 90,
               maxWidth: 140,
               padding: '0.7rem 1rem',

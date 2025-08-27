@@ -629,7 +629,7 @@ export const LandingPage: React.FC = () => {
 						style={{
 							marginTop: '1.2rem',
 							background:
-								'linear-gradient(90deg, rgb(55, 81, 138) 0%, rgb(96, 165, 250) 100%)',
+								'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
 							color: '#fff',
 							border: 'none',
 							borderRadius: 14,
@@ -637,12 +637,12 @@ export const LandingPage: React.FC = () => {
 							fontWeight: 700,
 							fontSize: '1.13rem',
 							cursor: 'pointer',
-							boxShadow: '0 4px 18px #2563eb33',
+							boxShadow: '0 4px 18px #22c55e33',
 							transition: 'background 0.18s',
 							letterSpacing: '.5px',
 						}}
 					>
-						Book Accommodation Now
+						Explore Housing Options
 					</button>
 				</div>
 				<div style={heroImagesWrapper}>
