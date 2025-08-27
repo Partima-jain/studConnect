@@ -13,13 +13,13 @@ const allServices = [
     path: '/services/peer-counselling',
     img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/meeting-5395615_1920.jpg'
   },
-  {
-    code: 'university-representative',
-    name: 'University Representative Counselling',
-    desc: 'Official sessions with university representatives for program clarity.',
-    path: '/services/university-representative',
-    img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/308597795_10159867060511195_7794074239140869476_n.jpg'
-  },
+  // {
+  //   code: 'university-representative',
+  //   name: 'University Representative Counselling',
+  //   desc: 'Official sessions with university representatives for program clarity.',
+  //   path: '/services/university-representative',
+  //   img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/308597795_10159867060511195_7794074239140869476_n.jpg'
+  // },
   {
     code: 'accommodation-assistance',
     name: 'Accommodation Assistance',

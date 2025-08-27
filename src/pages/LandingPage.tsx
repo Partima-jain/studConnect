@@ -15,18 +15,18 @@ const allServices = [
 		path: '/services/peer-counselling',
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/meeting-5395615_1920.jpg',
 	},
-	{
-		code: 'university-representative',
-		name: 'University Representative Counselling',
-		desc: 'Official sessions with university representatives for program clarity.',
-		path: '/services/university-representative',
-		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/308597795_10159867060511195_7794074239140869476_n.jpg',
-	},
+	// {
+	// 	code: 'university-representative',
+	// 	name: 'University Representative Counselling',
+	// 	desc: 'Official sessions with university representatives for program clarity.',
+	// 	path: '/services/university-representative',
+	// 	img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/308597795_10159867060511195_7794074239140869476_n.jpg',
+	// },
 	{
 		code: 'accommodation-assistance',
 		name: 'Accommodation Assistance',
 		desc: 'Find and secure student accommodation in your destination country.',
-		path: '/services/accommodation-assistance',
+		path: '/accommodation',
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/hotel-6862159_1920.jpg',
 	},
 	{
@@ -382,110 +382,108 @@ export const LandingPage: React.FC = () => {
 				}}
 				className="services-carousel"
 			>
-				{[...allServices, ...allServices].map((s, idx) => (
-					<div
-						key={s.code + idx}
-						className="work-process-area landing-service-card"
-						style={{
-							minWidth: 340,
-							maxWidth: 370,
-							background: '#fff',
-							borderRadius: 18,
-							boxShadow: '0 8px 32px 0 #2563eb11, 0 2px 8px 0 #60a5fa11',
-							border: '1.5px solid #e0e7ff',
-							overflow: 'hidden',
-							cursor: 'pointer',
-							transition:
-								'box-shadow 0.18s, transform 0.18s, background 0.18s',
-							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'flex-start',
-							animation: 'fadein 0.7s cubic-bezier(.4,2,.6,1) both',
-							position: 'relative',
-						}}
-						onClick={() => navigate(s.path)}
-						tabIndex={0}
-						aria-label={s.name}
-					>
-						<div style={{ position: 'relative', width: '100%', height: 170 }}>
-							<img
-								src={s.img}
-								alt={s.name}
-								style={{
-									width: '100%',
-									height: 170,
-									objectFit: 'cover',
-									borderTopLeftRadius: 18,
-									borderTopRightRadius: 18,
-									boxShadow: '0 2px 12px #2563eb11',
-								}}
-							/>
-							{/* Shaded banner overlay */}
-							<div
-								className="service-banner"
-								style={{
-									position: 'absolute',
-									left: 0,
-									right: 0,
-									bottom: 0,
-									height: 48,
-									display: 'flex',
-									alignItems: 'center',
-									padding: '0 1.1rem',
-									background:
-										'linear-gradient(90deg, #1e293bcc 0%, #2563ebcc 100%)',
-									color: '#fff',
-									borderBottomLeftRadius: 18,
-									borderBottomRightRadius: 18,
-									zIndex: 2,
-								}}
-							>
-								<span
+				{Array.from({ length: allServices.length * 2 }).map((_, idx) => {
+					const s = allServices[idx % allServices.length];
+					return (
+						<div
+							key={s.code + idx}
+							className="work-process-area landing-service-card"
+							style={{
+								minWidth: 340,
+								maxWidth: 370,
+								background: '#fff',
+								borderRadius: 18,
+								boxShadow: '0 8px 32px 0 #2563eb11, 0 2px 8px 0 #60a5fa11',
+								border: '1.5px solid #e0e7ff',
+								overflow: 'hidden',
+								cursor: 'pointer',
+								transition:
+									'box-shadow 0.18s, transform 0.18s, background 0.18s',
+							}}
+							onClick={() => navigate(s.path)}
+							tabIndex={0}
+							aria-label={s.name}
+						>
+							<div style={{ position: 'relative', width: '100%', height: 170 }}>
+								<img
+									src={s.img}
+									alt={s.name}
 									style={{
-										fontWeight: 700,
-										fontSize: '1.08rem',
-										flex: 1,
-										whiteSpace: 'nowrap',
-										overflow: 'hidden',
-										textOverflow: 'ellipsis',
-										letterSpacing: '-.5px',
+										width: '100%',
+										height: 170,
+										objectFit: 'cover',
+										borderTopLeftRadius: 18,
+										borderTopRightRadius: 18,
+										boxShadow: '0 2px 12px #2563eb11',
+									}}
+								/>
+								{/* Shaded banner overlay */}
+								<div
+									className="service-banner"
+									style={{
+										position: 'absolute',
+										left: 0,
+										right: 0,
+										bottom: 0,
+										height: 48,
+										display: 'flex',
+										alignItems: 'center',
+										padding: '0 1.1rem',
+										background:
+											'linear-gradient(90deg, #1e293bcc 0%, #2563ebcc 100%)',
+										color: '#fff',
+										borderBottomLeftRadius: 18,
+										borderBottomRightRadius: 18,
+										zIndex: 2,
 									}}
 								>
-									{s.name}
-								</span>
-								{/* Arrow icon (SVG) */}
-								<svg
-									width="32"
-									height="32"
-									viewBox="0 0 32 32"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									style={{
-										marginLeft: 10,
-										flexShrink: 0,
-										transform: 'rotate(-45deg)',
-									}}
-									aria-hidden="true"
-								>
-									<circle cx="16" cy="16" r="16" fill="#fff2" />
-									<path
-										d="M11 17L21 17M21 17L17.5 13.5M21 17L17.5 20.5"
-										stroke="#fff"
-										strokeWidth="2.5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
+									<span
+										style={{
+											fontWeight: 700,
+											fontSize: '1.08rem',
+											flex: 1,
+											whiteSpace: 'nowrap',
+											overflow: 'hidden',
+											textOverflow: 'ellipsis',
+											letterSpacing: '-.5px',
+										}}
+									>
+										{s.name}
+									</span>
+									{/* Arrow icon (SVG) */}
+									<svg
+										width="32"
+										height="32"
+										viewBox="0 0 32 32"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+										style={{
+											marginLeft: 10,
+											flexShrink: 0,
+											transform: 'rotate(-45deg)',
+										}}
+										aria-hidden="true"
+									>
+										<circle cx="16" cy="16" r="16" fill="#fff2" />
+										<path
+											d="M11 17L21 17M21 17L17.5 13.5M21 17L17.5 20.5"
+											stroke="#fff"
+											strokeWidth="2.5"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
+									</svg>
+								</div>
 							</div>
-						</div>
-						<style>{`
+							<style>{`
               @keyframes fadein {
                 0% { opacity: 0; transform: translateY(30px);}
                 100% { opacity: 1; transform: none;}
               }
             `}</style>
-					</div>
-				))}
+						</div>
+					);
+				})}
 			</div>
 			{/* Dots indicator for mobile */}
 			<div className="services-scroll-dots" aria-hidden="true">
@@ -813,4 +811,4 @@ export const LandingPage: React.FC = () => {
 		</>
 	);
 };
-
+	
