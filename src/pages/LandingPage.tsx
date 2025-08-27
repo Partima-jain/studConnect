@@ -131,6 +131,7 @@ const responsiveStyle = `
 export const LandingPage: React.FC = () => {
 	const navigate = useNavigate();
 	const carouselRef = useRef<HTMLDivElement>(null);
+	const financialServicesSectionRef = useRef<HTMLDivElement>(null);
 
 	// Auto-scroll effect for the services carousel
 	useEffect(() => {
@@ -710,6 +711,93 @@ export const LandingPage: React.FC = () => {
 		</>
 	);
 
+	// Financial Services Section (copied from FinancialServicesPage hero)
+	const financialServicesSection = (
+		<section
+			ref={financialServicesSectionRef}
+			style={{
+				background: 'linear-gradient(90deg,#fbbf24 0%,#e0e7ff 100%)',
+				borderRadius: 18,
+				boxShadow: '0 4px 24px #fbbf2411',
+				padding: '2.2rem 1.5rem 1.5rem 1.5rem',
+				marginBottom: '2.5rem',
+				marginTop: '1.5rem',
+				color: '#1e293b',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+				display: 'flex',
+				alignItems: 'center',
+				gap: '2.2rem',
+				flexWrap: 'wrap'
+			}}
+		>
+			<div style={{
+				flex: 1,
+				minWidth: 220,
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				textAlign: 'center'
+			}}>
+				<img
+					src="https://framerusercontent.com/images/B9TBGTwN0hDvfPhPzcP3N4twFpM.png"
+					alt="Education Loan Illustration"
+					style={{
+						width: '100%',
+						maxWidth: 320,
+						borderRadius: 18,
+						boxShadow: '0 2px 12px #2563eb22',
+						objectFit: 'cover'
+					}}
+				/>
+			</div>
+			<div style={{ flex: 1, minWidth: 260 }}>
+				<h1 style={{
+					fontSize: '2.3rem',
+					fontWeight: 800,
+					marginBottom: '0.5rem',
+					background: 'linear-gradient(90deg, #0f172a 0%, rgb(37, 99, 235) 100%) text',
+					WebkitBackgroundClip: 'text',
+					WebkitTextFillColor: 'transparent'
+				}}>
+					<span role="img" aria-label="money">💸</span> Funding &amp; Loans Made Easy
+				</h1>
+				<p style={{
+					fontSize: '1.15rem',
+					color: '#334155',
+					marginBottom: '1.2rem',
+					fontWeight: 500
+				}}>
+					Studying abroad is a dream—but funding it shouldn’t be stressful. <b>StudConnect</b> helps you plan, compare, and secure loans and scholarships so you can focus on your journey, not your finances.
+				</p>
+				<a
+					href="#"
+					onClick={e => {
+						e.preventDefault();
+						navigate('/financial-services');
+					}}
+					style={{
+						display: 'inline-block',
+						background: 'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
+						color: '#fff',
+						fontWeight: 700,
+						fontSize: '1.13rem',
+						borderRadius: 12,
+						padding: '1rem 2.5rem',
+						textDecoration: 'none',
+						margin: '0.5rem 0 0 0',
+						boxShadow: '0 2px 8px #22c55e33',
+						transition: 'background 0.18s',
+						cursor: 'pointer'
+					}}
+				>
+					Explore Funding Options
+				</a>
+			</div>
+			
+		</section>
+	);
+
 	return (
 		<>
 			<Hero />
@@ -717,6 +805,7 @@ export const LandingPage: React.FC = () => {
 			{servicesSection}
 			<FeaturedUniversities />
 			{accommodationHeroSection}
+			{financialServicesSection}
 			<HowItWorks />
 			<Testimonials />
 			<Contact />
