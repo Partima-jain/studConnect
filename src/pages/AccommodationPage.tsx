@@ -1054,10 +1054,10 @@ export const AccommodationPage: React.FC = () => {
                 />
                 <textarea
                   name="message"
-                  placeholder="Your Message (optional)"
+                  placeholder="City/Country"
                   value={form.message}
                   onChange={handleFormChange}
-                  rows={3}
+                  required
                   style={{
                     padding: '0.8rem',
                     borderRadius: 8,
