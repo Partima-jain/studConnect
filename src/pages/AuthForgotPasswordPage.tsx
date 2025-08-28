@@ -52,18 +52,27 @@ const AuthForgotPasswordPage: React.FC = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%)'
+      background: 'linear-gradient(135deg, #fff 0%, #D6C5F0 100%)'
     }}>
       <div style={{
-        background: '#fff',
+        background: 'rgba(255,255,255,0.98)',
         padding: '2.5rem 2rem',
-        borderRadius: '1rem',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+        borderRadius: '1.5rem',
+        boxShadow: '0 8px 32px #9F7AEA22, 0 2px 8px #D6C5F044',
         minWidth: 340,
         maxWidth: 400,
-        width: '100%'
+        width: '100%',
+        border: '2px solid #D6C5F0'
       }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#3b82f6' }}>Forgot Password</h2>
+        <h2 style={{
+          textAlign: 'center',
+          marginBottom: '1.5rem',
+          background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          fontWeight: 800
+        }}>Forgot Password</h2>
         {step === 'request' && (
           <form onSubmit={requestOtp} className="auth-form">
             <input
@@ -75,7 +84,22 @@ const AuthForgotPasswordPage: React.FC = () => {
             />
             {error && <div className="auth-error">{error}</div>}
             {message && <div className="auth-success">{message}</div>}
-            <button className="btn btn-primary" type="submit">Send OTP</button>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              style={{
+                background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                color: '#fff',
+                borderRadius: 14,
+                fontWeight: 700,
+                border: 'none',
+                boxShadow: '0 4px 16px #9F7AEA33, 0 1.5px 8px #5727A322',
+                marginTop: 8,
+                transition: 'background 0.2s, transform 0.2s'
+              }}
+            >
+              Send OTP
+            </button>
           </form>
         )}
         {step === 'reset' && (
@@ -96,11 +120,31 @@ const AuthForgotPasswordPage: React.FC = () => {
             />
             {error && <div className="auth-error">{error}</div>}
             {message && <div className="auth-success">{message}</div>}
-            <button className="btn btn-primary" type="submit">Reset Password</button>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              style={{
+                background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                color: '#fff',
+                borderRadius: 14,
+                fontWeight: 700,
+                border: 'none',
+                boxShadow: '0 4px 16px #9F7AEA33, 0 1.5px 8px #5727A322',
+                marginTop: 8,
+                transition: 'background 0.2s, transform 0.2s'
+              }}
+            >
+              Reset Password
+            </button>
           </form>
         )}
         <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: 14 }}>
-          <a href="/auth/login" style={{ color: '#3b82f6', textDecoration: 'underline' }}>Back to Login</a>
+          Remembered your password?{' '}
+          <a href="/auth/login" style={{
+            color: '#5727A3',
+            textDecoration: 'underline',
+            fontWeight: 600
+          }}>Login</a>
         </div>
       </div>
     </div>

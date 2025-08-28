@@ -6,7 +6,7 @@ export const ContactPage: React.FC = () => (
     style={{
       position: 'relative',
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)',
+      background: 'linear-gradient(135deg, rgb(255 255 255) 0%, rgb(197 185 234) 100%)', // Updated to hero section theme
       overflow: 'hidden'
     }}
   >
@@ -32,7 +32,7 @@ export const ContactPage: React.FC = () => (
           left: '-120px',
           width: 420,
           height: 420,
-          background: 'radial-gradient(circle at 30% 30%, #60a5fa99 0%, #2563eb33 100%)',
+          background: 'radial-gradient(circle at 30% 30%, #A78BFA99 0%, #6D28D933 100%)', // purple theme
           filter: 'blur(70px)',
           borderRadius: '50%',
           opacity: 0.75,
@@ -46,7 +46,7 @@ export const ContactPage: React.FC = () => (
           right: '-120px',
           width: 340,
           height: 340,
-          background: 'radial-gradient(circle at 70% 70%, #a5b4fcbb 0%, #818cf855 100%)',
+          background: 'radial-gradient(circle at 70% 70%, #C4B5FDbb 0%, #A78BFA55 100%)', // lighter purple
           filter: 'blur(70px)',
           borderRadius: '50%',
           opacity: 0.7,
@@ -70,8 +70,8 @@ export const ContactPage: React.FC = () => (
       >
         <defs>
           <linearGradient id="goldring" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#fbbf24" />
-            <stop offset="100%" stopColor="#f59e42" />
+            <stop offset="0%" stopColor="#FBBF24" />
+            <stop offset="100%" stopColor="#F59E42" />
           </linearGradient>
         </defs>
         <ellipse
@@ -101,9 +101,9 @@ export const ContactPage: React.FC = () => (
           style={{
             width: '100%',
             height: '100%',
-            background: 'linear-gradient(135deg,#2563eb 60%,#a5b4fc 100%)',
+            background: 'linear-gradient(135deg,#6D28D9 60%,#A78BFA 100%)', // purple gradient
             borderRadius: 16,
-            boxShadow: '0 8px 32px #2563eb33, 0 0 0 2px #fbbf2440',
+            boxShadow: '0 8px 32px #A78BFA33, 0 0 0 2px #FBBF2440',
             transform: 'rotateY(30deg) rotateX(20deg)'
           }}
         />
@@ -118,7 +118,7 @@ export const ContactPage: React.FC = () => (
             top: `${Math.random() * 100}%`,
             width: 2 + Math.random() * 2,
             height: 2 + Math.random() * 2,
-            background: 'linear-gradient(90deg,#fbbf24 0%,#fff 100%)',
+            background: 'linear-gradient(90deg,#FBBF24 0%,#fff 100%)',
             borderRadius: '50%',
             opacity: 0.18 + Math.random() * 0.18,
             filter: 'blur(0.5px)'
@@ -152,8 +152,8 @@ export const ContactPage: React.FC = () => (
       <style>
         {`
           button, .global-btn {
-            background: linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%) !important;
-            box-shadow: 0 4px 16px #9F7AEA33, 0 1.5px 8px #5727A322 !important;
+            background: linear-gradient(90deg,#6D28D9 0%,#A78BFA 100%) !important; /* purple gradient */
+            box-shadow: 0 4px 16px #A78BFA33, 0 1.5px 8px #6D28D922 !important;
             color: #fff !important;
             border-radius: 14px !important;
             font-weight: 700 !important;
@@ -161,7 +161,7 @@ export const ContactPage: React.FC = () => (
             transition: background 0.2s, transform 0.2s;
           }
           button:hover, .global-btn:hover {
-            background: linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%) !important;
+            background: linear-gradient(90deg,#A78BFA 0%,#6D28D9 100%) !important;
             transform: scale(1.04);
           }
         `}
