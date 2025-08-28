@@ -368,4 +368,64 @@ export const Contact: React.FC = () => {
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
+            background: 'linear-gradient(90deg,#fff 60%,#D6C5F0 100%)',
+            color: '#1B0044'
+          }}
+        >
+          <h3 style={{
+            marginBottom:'.7rem',
+            fontWeight:700,
+            fontSize:'1.25rem',
+            color:'#5727A3',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>Stay Updated</h3>
+          <p style={{margin:'0 0 1.1rem 0', color:'#5727A3', fontSize:'.97rem'}}>Subscribe to get the latest updates, tips, and university news.</p>
+          <form
+            className="newsletter__form"
+            style={{display:'flex', gap:'.6rem', width:'100%', justifyContent:'center'}}
+            onSubmit={e => e.preventDefault()}
+          >
+            <input
+              type="email"
+              placeholder="Email for updates"
+              required
+              style={{
+                flex:1,
+                minWidth:0,
+                padding:'.7rem 1rem',
+                borderRadius:'8px',
+                border:'1.5px solid #D6C5F0',
+                fontSize:'.98rem',
+                background: '#fff',
+                color: '#1B0044'
+              }}
+            />
+            <button
+              className="btn"
+              style={{
+                background:'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                color:'#fff',
+                borderRadius:'8px',
+                padding:'.7rem 1.2rem',
+                fontWeight:700,
+                fontSize:'.98rem',
+                border: 'none',
+                boxShadow: '0 2px 8px #9F7AEA22',
+                transition: 'background 0.18s'
+              }}
+              onMouseOver={e => {
+                e.currentTarget.style.background = 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)';
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.background = 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)';
+              }}
+            >Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
 };
