@@ -336,7 +336,7 @@ export const Hero: React.FC = () => {
 
         /* Multi-color animated gradient */
         .hero-bg-gradient.hero-bg-gradient-multicolor {
-          background: linear-gradient(120deg, #d7c6f1 0%, #F0E6FF 40%, #ffffff 70%, #F7D6E0 100%);
+          background: linear-gradient(120deg, #d7c6f1 0%, #f0e8fa 40%, #ffffff 70%, #eed6f7 100%);
           background-size: 200% 200%;
           animation: heroBgMoveMulti 16s ease-in-out infinite alternate;
           opacity: 0.85;

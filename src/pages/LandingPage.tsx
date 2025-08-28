@@ -7,46 +7,40 @@ import { Contact } from '../sections/Contact';
 import { Footer } from '../sections/Footer';
 import { useNavigate } from 'react-router-dom';
 
+// Shortened and clear service names/descriptions
 const allServices = [
 	{
 		code: 'peer-counselling',
-		name: 'Main Counsellor Counselling & Peer Counselling',
-		desc: 'Talk to experienced counsellors and real international students for authentic guidance.',
+		name: 'Peer Counselling',
+		desc: 'Get honest advice from real students and expert counsellors.',
 		path: '/services/peer-counselling',
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/meeting-5395615_1920.jpg',
 	},
-	// {
-	// 	code: 'university-representative',
-	// 	name: 'University Representative Counselling',
-	// 	desc: 'Official sessions with university representatives for program clarity.',
-	// 	path: '/services/university-representative',
-	// 	img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/308597795_10159867060511195_7794074239140869476_n.jpg',
-	// },
 	{
 		code: 'accommodation-assistance',
-		name: 'Accommodation Assistance',
-		desc: 'Find and secure student accommodation in your destination country.',
+		name: 'Accommodation Help',
+		desc: 'Secure safe, student-friendly housing before you arrive.',
 		path: '/accommodation',
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/hotel-6862159_1920.jpg',
 	},
 	{
 		code: 'airport-pickup',
 		name: 'Airport Pickup',
-		desc: 'Book airport pickup and arrival support for a smooth landing.',
+		desc: 'Book your airport pickup for a smooth landing.',
 		path: '/services/airport-pickup',
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/airplane-7359232.jpg',
 	},
 	{
 		code: 'financial',
-		name: 'Financial Services / Education Loans',
-		desc: 'Get help with education loans, scholarships, and funding options.',
+		name: 'Funding & Loans',
+		desc: 'Compare and secure education loans and scholarships.',
 		path: '/financial-services',
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/mentor-3512369_1920.jpg',
 	},
 	{
 		code: 'international-application-process',
-		name: 'International Study Application Process',
-		desc: 'Step-by-step guidance through the entire international study application process.',
+		name: 'Application Process',
+		desc: 'Step-by-step help for your study abroad application.',
 		path: '/services/international-application-process',
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/desk-3139127_1920.jpg',
 	},
@@ -115,12 +109,12 @@ const responsiveStyle = `
     .accom-hero-img-side.left {
       left: 10px !important;
       right: auto !important;
-      transform: rotate(-18deg) scale(1.02) !important;
+    //   transform: rotate(-18deg) scale(1) !important;
     }
     .accom-hero-img-side.right {
       right: 10px !important;
       left: auto !important;
-      transform: rotate(18deg) scale(1.02) !important;
+    //   transform: rotate(18deg) scale(1) !important;
     }
   }
   .accom-hero-images-inner::-webkit-scrollbar {
@@ -400,12 +394,472 @@ export const LandingPage: React.FC = () => {
 		</section>
 	);
 
-	// Services Carousel Section
+	// 3D Service Card without images, using animated 3D icons and glassmorphism
+	const Service3DCard: React.FC<{
+		service: typeof allServices[0];
+		onClick: () => void;
+		index: number;
+	}> = ({ service, onClick, index }) => {
+		const cardRef = useRef<HTMLDivElement>(null);
+
+		// 3D tilt effect
+		useEffect(() => {
+			const card = cardRef.current;
+			if (!card) return;
+			const handleMouseLeave = () => {
+				card.style.transform = '';
+				card.style.boxShadow = '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011';
+			};
+			card.addEventListener('mouseleave', handleMouseLeave);
+			return () => {
+				card.removeEventListener('mouseleave', handleMouseLeave);
+			};
+		}, []);
+
+		// Unique animated SVG icon for each card (choose by index)
+		const icons = [
+			// Peer Counselling: chat bubbles
+			<svg width="54" height="54" viewBox="0 0 54 54" fill="none" key="chat" style={{ filter: 'drop-shadow(0 2px 12px #9F7AEA33)' }}>
+				<ellipse cx="27" cy="27" rx="22" ry="18" fill="#F0E6FF" />
+				<ellipse cx="27" cy="27" rx="18" ry="14" fill="#D6C5F0" />
+				<ellipse cx="27" cy="27" rx="12" ry="9" fill="#9F7AEA" opacity="0.7">
+					<animate attributeName="rx" values="12;14;12" dur="2.5s" repeatCount="indefinite"/>
+					<animate attributeName="ry" values="9;11;9" dur="2.5s" repeatCount="indefinite"/>
+				</ellipse>
+				<circle cx="22" cy="27" r="1.7" fill="#fff"/>
+				<circle cx="27" cy="27" r="1.7" fill="#fff"/>
+				<circle cx="32" cy="27" r="1.7" fill="#fff"/>
+			</svg>,
+			// Accommodation: 3D house
+			<svg width="54" height="54" viewBox="0 0 54 54" fill="none" key="house" style={{ filter: 'drop-shadow(0 2px 12px #9F7AEA33)' }}>
+				<rect x="13" y="26" width="28" height="15" rx="4" fill="#F0E6FF"/>
+				<rect x="17" y="30" width="20" height="11" rx="3" fill="#D6C5F0"/>
+				<rect x="23" y="34" width="8" height="7" rx="2" fill="#9F7AEA" opacity="0.7">
+					<animate attributeName="y" values="34;32;34" dur="2.2s" repeatCount="indefinite"/>
+				</rect>
+				<polygon points="27,16 12,28 42,28" fill="#9F7AEA" opacity="0.8">
+					<animate attributeName="points" values="27,16 12,28 42,28;27,14 12,28 42,28;27,16 12,28 42,28" dur="2.2s" repeatCount="indefinite"/>
+				</polygon>
+			</svg>,
+			// Airport Pickup: 3D car
+			<svg width="54" height="54" viewBox="0 0 54 54" fill="none" key="car" style={{ filter: 'drop-shadow(0 2px 12px #9F7AEA33)' }}>
+				<rect x="14" y="32" width="26" height="7" rx="3.5" fill="#D6C5F0"/>
+				<rect x="17" y="28" width="20" height="8" rx="3" fill="#9F7AEA" opacity="0.7">
+					<animate attributeName="y" values="28;26;28" dur="2.2s" repeatCount="indefinite"/>
+				</rect>
+				<circle cx="19" cy="40" r="3" fill="#5727A3"/>
+				<circle cx="35" cy="40" r="3" fill="#5727A3"/>
+				<rect x="22" y="30" width="10" height="4" rx="2" fill="#fff" opacity="0.7"/>
+			</svg>,
+			// Financial: 3D coin stack
+			<svg width="54" height="54" viewBox="0 0 54 54" fill="none" key="coins" style={{ filter: 'drop-shadow(0 2px 12px #9F7AEA33)' }}>
+				<ellipse cx="27" cy="38" rx="10" ry="4" fill="#D6C5F0"/>
+				<ellipse cx="27" cy="34" rx="10" ry="4" fill="#F0E6FF"/>
+				<ellipse cx="27" cy="30" rx="10" ry="4" fill="#9F7AEA" opacity="0.7">
+					<animate attributeName="cy" values="30;28;30" dur="2.2s" repeatCount="indefinite"/>
+				</ellipse>
+				<ellipse cx="27" cy="26" rx="10" ry="4" fill="#D6C5F0"/>
+				<ellipse cx="27" cy="22" rx="10" ry="4" fill="#F0E6FF"/>
+			</svg>,
+			// Application Process: 3D document
+			<svg width="54" height="54" viewBox="0 0 54 54" fill="none" key="doc" style={{ filter: 'drop-shadow(0 2px 12px #9F7AEA33)' }}>
+				<rect x="16" y="16" width="22" height="28" rx="5" fill="#F0E6FF"/>
+				<rect x="19" y="20" width="16" height="4" rx="2" fill="#9F7AEA" opacity="0.7">
+					<animate attributeName="width" values="16;20;16" dur="2.2s" repeatCount="indefinite"/>
+				</rect>
+				<rect x="19" y="27" width="12" height="3" rx="1.5" fill="#D6C5F0"/>
+				<rect x="19" y="33" width="10" height="3" rx="1.5" fill="#D6C5F0"/>
+			</svg>
+		];
+		const icon = icons[index % icons.length];
+
+		return (
+			<div
+				ref={cardRef}
+				className="service-3d-card"
+				tabIndex={0}
+				onClick={onClick}
+				onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
+				style={{
+					background: 'rgba(255,255,255,0.82)',
+					borderRadius: 22,
+					boxShadow: '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
+					border: '1.5px solid #D6C5F0',
+					overflow: 'hidden', // Ensure content does not overflow
+					cursor: 'pointer',
+					transition: 'box-shadow 0.18s, transform 0.18s, background 0.18s',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					minWidth: 220,
+					maxWidth: 300,
+					height: 260,
+					position: 'relative',
+					userSelect: 'none',
+					outline: 'none',
+					backdropFilter: 'blur(4px) saturate(1.1)',
+					WebkitBackdropFilter: 'blur(4px) saturate(1.1)',
+					perspective: 600,
+				}}
+				aria-label={service.name}
+			>
+				<div style={{
+					width: 80,
+					height: 80,
+					margin: '1.2rem auto 0.7rem auto',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					borderRadius: '50%',
+					background: 'linear-gradient(120deg,#F0E6FF 60%,#D6C5F0 100%)',
+					boxShadow: '0 2px 12px #9F7AEA11',
+					position: 'relative',
+					animation: `serviceIconFloat${index} 2.8s ease-in-out infinite alternate`
+				}}>
+					{icon}
+				</div>
+				<h3 style={{
+					fontSize: '1.13rem',
+					fontWeight: 800,
+					color: '#5727A3',
+					margin: '1.1rem 0 .5rem 0',
+					textAlign: 'center',
+					width: '100%',
+					whiteSpace: 'normal',
+					overflow: 'visible',
+				}}>{service.name}</h3>
+				<p style={{
+					fontSize: '1.01rem',
+					color: '#334155',
+					fontWeight: 500,
+					margin: 0,
+					textAlign: 'center',
+					padding: '0 1.1rem',
+					width: '100%',
+					boxSizing: 'border-box',
+					whiteSpace: 'normal',
+					overflow: 'visible',
+				}}>{service.desc}</p>
+				<span
+					className="service-3d-arrow"
+					style={{
+						position: 'absolute',
+						right: 24,
+						bottom: 18,
+						opacity: 0,
+						transition: 'opacity 0.18s cubic-bezier(.4,2,.6,1), transform 0.18s cubic-bezier(.4,2,.6,1)',
+						fontSize: 22,
+						color: '#5727A3',
+						zIndex: 3,
+						pointerEvents: 'none'
+					}}
+				>→</span>
+				<style>{`
+					@keyframes serviceIconFloat${index} {
+						0% { transform: translateY(0) scale(1);}
+						100% { transform: translateY(-10px) scale(1.08);}
+					}
+					.service-3d-card:focus,
+					.service-3d-card:hover {
+						box-shadow: 0 24px 64px 0 #9F7AEA33, 0 4px 16px 0 #D6C5F033 !important;
+						transform: scale(1.06) !important;
+						border-color: #9F7AEA !important;
+					}
+					.service-3d-card:focus .service-3d-arrow,
+					.service-3d-card:hover .service-3d-arrow {
+						opacity: 1 !important;
+						transform: translateX(6px);
+					}
+				`}</style>
+			</div>
+		);
+	};
+
+	// 3D Animated Carousel for Services (cards rotate in a 3D circle, click/arrow to rotate)
+	const Service3DCarousel: React.FC<{ services: typeof allServices; onCardClick: (s: typeof allServices[0]) => void }> = ({ services, onCardClick }) => {
+		const [active, setActive] = useState(0);
+		const [isMobile, setIsMobile] = useState(false);
+		const [animating, setAnimating] = useState<'left' | 'right' | null>(null);
+		const [animationKey, setAnimationKey] = useState(0); // For dynamic key
+		const cardCount = services.length;
+		const radius = 420;
+		const cardWidth = 220;
+
+		useEffect(() => {
+			const checkMobile = () => setIsMobile(window.innerWidth <= 600);
+			checkMobile();
+			window.addEventListener('resize', checkMobile);
+			return () => window.removeEventListener('resize', checkMobile);
+		}, []);
+
+		const rotate = (dir: number) => {
+			setAnimating(dir === 1 ? 'right' : 'left');
+			setTimeout(() => {
+				setActive(a => {
+					const next = (a + dir + cardCount) % cardCount;
+					setAnimationKey(prev => prev + 1); // Change key to force remount
+					return next;
+				});
+				setAnimating(null);
+			}, 320); // match animation duration
+		};
+
+		return (
+			<div style={{
+				position: 'relative',
+				width: isMobile ? '100vw' : 600,
+				height: 340,
+				margin: '0 auto 2.2rem auto',
+				perspective: 1200,
+				perspectiveOrigin: '50% 40%',
+				overflow: 'visible',
+				maxWidth: '100vw'
+			}}>
+				{services.map((service, idx) => {
+					const angle = ((360 / cardCount) * (idx - active));
+					const rad = angle * Math.PI / 180;
+					const x = Math.sin(rad) * radius * 0.7;
+					const z = Math.cos(rad) * radius * 0.7;
+					const y = Math.abs(angle) < 1 ? -16 : 0;
+					const scale = Math.abs(angle) < 1 ? 1.13 : 0.92;
+					const baseOpacity = Math.abs(angle) < 120 ? 1 : 0.80;
+					const isActive = idx === active;
+					const isLeft = idx === (active - 1 + cardCount) % cardCount;
+					const isRight = idx === (active + 1) % cardCount;
+					const opacity = isActive ? 1 : (isLeft || isRight) ? 1 : baseOpacity;
+
+					// Only render center, left, and right cards (on mobile, only center)
+					if (isMobile) {
+						if (!isActive) return null;
+					} else {
+						if (!isActive && !isLeft && !isRight) return null;
+					}
+
+					let animClass = '';
+					if (!isMobile && animating) {
+						if (animating === 'right') {
+							if (isRight) animClass = 'carousel-move-to-center-from-right';
+							if (isActive) animClass = 'carousel-move-to-left';
+						} else if (animating === 'left') {
+							if (isLeft) animClass = 'carousel-move-to-center-from-left';
+							if (isActive) animClass = 'carousel-move-to-right';
+						}
+					}
+					if (isMobile && animating) {
+						if (isActive && animating === 'right') animClass = 'carousel-fade-in-right';
+						if (isActive && animating === 'left') animClass = 'carousel-fade-in-left';
+					}
+
+					const cardKey = `${service.code}-${animationKey}-${isActive ? 'center' : isLeft ? 'left' : isRight ? 'right' : 'hidden'}`;
+
+					return (
+						<div
+							key={cardKey}
+							tabIndex={0}
+							onClick={() => onCardClick(service)}
+							onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onCardClick(service); }}
+							className={animClass}
+							style={{
+								position: 'absolute',
+								left: '50%',
+								top: '50%',
+								transform: isMobile
+									? 'translate(-50%, -50%) scale(1.05)'
+									: `
+										translate(-50%, -50%)
+										rotateY(${angle}deg)
+										translateZ(${z}px)
+										translateX(${x}px)
+										translateY(${y}px)
+										scale(${scale})
+									`,
+								transition: 'transform 0.7s cubic-bezier(.4,2,.6,1), box-shadow 0.3s, opacity 0.3s',
+								zIndex: isActive ? 10 : (isLeft || isRight) ? 9 : 1,
+								opacity: isMobile ? 1 : opacity,
+								pointerEvents: isMobile ? (isActive ? 'auto' : 'none') : (isActive || isLeft || isRight) ? 'auto' : 'none',
+								cursor: isActive ? 'pointer' : 'grab',
+								boxShadow: isActive
+									? '0 24px 64px 0 #9F7AEA33, 0 4px 16px 0 #D6C5F033'
+									: '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
+								background: isActive
+									? 'linear-gradient(120deg, #fff 80%, #D6C5F0 100%)'
+									: 'rgba(255,255,255,0.82)',
+								border: isActive ? '2.5px solid #9F7AEA' : '1.5px solid #D6C5F0',
+								borderRadius: 22,
+								width: cardWidth,
+								height: 220,
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+								justifyContent: 'center',
+								userSelect: 'none',
+								outline: isActive ? '2px solid #9F7AEA44' : 'none',
+								backdropFilter: 'blur(4px) saturate(1.1)',
+								WebkitBackdropFilter: 'blur(4px) saturate(1.1)',
+								overflow: 'hidden',
+								backgroundClip: 'padding-box',
+							}}
+							aria-label={service.name}
+						>
+							{/* Animated 3D icon (reuse previous icons) */}
+							<div style={{
+								width: 70,
+								height: 70,
+								margin: '0 auto 1.1rem auto',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								borderRadius: '50%',
+								background: 'linear-gradient(120deg,#F0E6FF 60%,#D6C5F0 100%)',
+								boxShadow: '0 2px 12px #9F7AEA11',
+								position: 'relative',
+								animation: `serviceIconFloat${idx} 2.8s ease-in-out infinite alternate`,
+								overflow: 'hidden',
+							}}>
+								{/* ...existing code... */}
+							</div>
+							<h3 style={{
+								fontSize: '1.13rem',
+								fontWeight: 800,
+								color: '#5727A3',
+								margin: '1.1rem 0 .5rem 0',
+								textAlign: 'center',
+								width: '100%',
+								whiteSpace: 'normal',
+								overflow: 'visible',
+							}}>{service.name}</h3>
+							<p style={{
+								fontSize: '1.01rem',
+								color: '#334155',
+								fontWeight: 500,
+								margin: 0,
+								textAlign: 'center',
+								padding: '0 1.1rem',
+								width: '100%',
+								boxSizing: 'border-box',
+								whiteSpace: 'normal',
+								overflow: 'visible',
+							}}>{service.desc}</p>
+						</div>
+					);
+				})}
+				{/* Carousel controls */}
+				<button
+					aria-label="Previous"
+					onClick={() => rotate(-1)}
+					style={{
+						position: 'absolute',
+						left: isMobile ? 10 : -60,
+						top: '50%',
+						transform: 'translateY(-50%)',
+						background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
+						border: 'none',
+						borderRadius: '50%',
+						width: isMobile ? 36 : 44,
+						height: isMobile ? 36 : 44,
+						boxShadow: '0 2px 8px #9F7AEA22',
+						color: '#5727A3',
+						fontWeight: 900,
+						fontSize: isMobile ? 18 : 22,
+						cursor: 'pointer',
+						zIndex: 20,
+						transition: 'background 0.18s'
+					}}
+					disabled={!!animating}
+				>&lt;</button>
+				<button
+					aria-label="Next"
+					onClick={() => rotate(1)}
+					style={{
+						position: 'absolute',
+						right: isMobile ? 10 : -60,
+						top: '50%',
+						transform: 'translateY(-50%)',
+						background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
+						border: 'none',
+						borderRadius: '50%',
+						width: isMobile ? 36 : 44,
+						height: isMobile ? 36 : 44,
+						boxShadow: '0 2px 8px #9F7AEA22',
+						color: '#5727A3',
+						fontWeight: 900,
+						fontSize: isMobile ? 18 : 22,
+						cursor: 'pointer',
+						zIndex: 20,
+						transition: 'background 0.18s'
+					}}
+					disabled={!!animating}
+				>&gt;</button>
+				<style>{`
+					@media (max-width: 600px) {
+						[aria-label="Previous"], [aria-label="Next"] {
+							width: 32px !important;
+							height: 32px !important;
+							font-size: 18px !important;
+						}
+					}
+					${services.map((_, idx) => `
+						@keyframes serviceIconFloat${idx} {
+							0% { transform: translateY(0) scale(1);}
+							100% { transform: translateY(-10px) scale(1.08);}
+						}
+					`).join('\n')}
+					.carousel-move-to-center-from-right {
+						animation: moveToCenterFromRight 0.32s cubic-bezier(.4,2,.6,1);
+						z-index: 11 !important;
+					}
+					.carousel-move-to-left {
+						animation: moveToLeft 0.32s cubic-bezier(.4,2,.6,1);
+						z-index: 10 !important;
+					}
+					.carousel-move-to-center-from-left {
+						animation: moveToCenterFromLeft 0.32s cubic-bezier(.4,2,.6,1);
+						z-index: 11 !important;
+					}
+					.carousel-move-to-right {
+						animation: moveToRight 0.32s cubic-bezier(.4,2,.6,1);
+						z-index: 10 !important;
+					}
+					.carousel-fade-in-right {
+						animation: fadeInRight 0.32s cubic-bezier(.4,2,.6,1);
+					}
+					.carousel-fade-in-left {
+						animation: fadeInLeft 0.32s cubic-bezier(.4,2,.6,1);
+					}
+					@keyframes moveToCenterFromRight {
+						0% { opacity: 0.7; transform: translate(-20%, -50%) scale(0.92);}
+						100% { opacity: 1; transform: translate(-50%, -50%) scale(1.13);}
+					}
+					@keyframes moveToLeft {
+						0% { opacity: 1; transform: translate(-50%, -50%) scale(1.13);}
+						100% { opacity: 0.7; transform: translate(-80%, -50%) scale(0.92);}
+					}
+					@keyframes moveToCenterFromLeft {
+						0% { opacity: 0.7; transform: translate(-80%, -50%) scale(0.92);}
+						100% { opacity: 1; transform: translate(-50%, -50%) scale(1.13);}
+					}
+					@keyframes moveToRight {
+						0% { opacity: 1; transform: translate(-50%, -50%) scale(1.13);}
+						100% { opacity: 0.7; transform: translate(-20%, -50%) scale(0.92);}
+					}
+					@keyframes fadeInRight {
+						0% { opacity: 0; transform: translate(-30%, -50%) scale(0.92);}
+						100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05);}
+					}
+					@keyframes fadeInLeft {
+						0% { opacity: 0; transform: translate(-70%, -50%) scale(0.92);}
+						100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05);}
+					}
+				`}</style>
+			</div>
+		);
+	};
+
+	// Replace servicesSection with animated 3D carousel
 	const servicesSection = (
 		<section
 			style={{
 				maxWidth: 1400,
-				padding: '2.2rem 1.5rem',
 				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
 				boxShadow: '0 4px 24px #9F7AEA22',
 				border: '2px solid #D6C5F0',
@@ -413,6 +867,7 @@ export const LandingPage: React.FC = () => {
 				position: 'relative',
 				borderRadius: 32,
 				margin: '2.5rem auto 0 auto',
+				overflow: 'visible',
 			}}
 		>
 			<div style={{ marginBottom: '2.2rem' }}>
@@ -437,202 +892,10 @@ export const LandingPage: React.FC = () => {
 					</span>
 				</h2>
 			</div>
-			<div
-				ref={carouselRef}
-				style={{
-					display: 'flex',
-					gap: '2rem',
-					overflowX: 'auto',
-					scrollBehavior: 'smooth',
-					padding: '1rem 0',
-					marginBottom: '1.5rem',
-					scrollbarWidth: 'none',
-					msOverflowStyle: 'none',
-				}}
-				className="services-carousel"
-			>
-				{Array.from({ length: allServices.length * 2 }).map((_, idx) => {
-					const s = allServices[idx % allServices.length];
-					return (
-						<div
-							key={s.code + idx}
-							className="work-process-area landing-service-card"
-							style={{
-								minWidth: 340,
-								maxWidth: 370,
-								background: '#fff',
-								borderRadius: 18,
-								boxShadow: '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
-								border: '1.5px solid #D6C5F0',
-								overflow: 'hidden',
-								cursor: 'pointer',
-								transition:
-									'box-shadow 0.18s, transform 0.18s, background 0.18s',
-							}}
-							onClick={() => navigate(s.path)}
-							tabIndex={0}
-							aria-label={s.name}
-						>
-							<div style={{ position: 'relative', width: '100%', height: 170 }}>
-								<img
-									src={s.img}
-									alt={s.name}
-									style={{
-										width: '100%',
-										height: 170,
-										objectFit: 'cover',
-										borderTopLeftRadius: 18,
-										borderTopRightRadius: 18,
-										boxShadow: '0 2px 12px #9F7AEA11',
-									}}
-								/>
-								{/* Shaded banner overlay */}
-								<div
-									className="service-banner"
-									style={{
-										position: 'absolute',
-										left: 0,
-										right: 0,
-										bottom: 0,
-										height: 48,
-										display: 'flex',
-										alignItems: 'center',
-										padding: '0 1.1rem',
-										background:
-											'linear-gradient(90deg, #5727A3cc 0%, #9F7AEA 100%)',
-										color: '#fff',
-										borderBottomLeftRadius: 18,
-										borderBottomRightRadius: 18,
-										zIndex: 2,
-									}}
-								>
-									<span
-										style={{
-											fontWeight: 700,
-											fontSize: '1.08rem',
-											flex: 1,
-											whiteSpace: 'nowrap',
-											overflow: 'hidden',
-											textOverflow: 'ellipsis',
-											letterSpacing: '-.5px',
-										}}
-									>
-										{s.name}
-									</span>
-									{/* Arrow icon (SVG) */}
-									<svg
-										width="32"
-										height="32"
-										viewBox="0 0 32 32"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-										style={{
-											marginLeft: 10,
-											flexShrink: 0,
-											transform: 'rotate(-45deg)',
-										}}
-										aria-hidden="true"
-									>
-										<circle cx="16" cy="16" r="16" fill="#fff2" />
-										<path
-											d="M11 17L21 17M21 17L17.5 13.5M21 17L17.5 20.5"
-											stroke="#fff"
-											strokeWidth="2.5"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-										/>
-									</svg>
-								</div>
-							</div>
-							<style>{`
-              @keyframes fadein {
-                0% { opacity: 0; transform: translateY(30px);}
-                100% { opacity: 1; transform: none;}
-              }
-            `}</style>
-						</div>
-					);
-				})}
-			</div>
-			{/* Dots indicator for mobile */}
-			<div className="services-scroll-dots" aria-hidden="true">
-				<span className="dot" />
-				<span className="dot" />
-				<span className="dot" />
-			</div>
-			<style>{`
-        .services-carousel::-webkit-scrollbar { display: none; }
-        .services-carousel { scrollbar-width: none; }
-        .landing-service-card {
-          position: relative;
-        }
-        .landing-service-card::after {
-          content: '';
-          pointer-events: none;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 180%;
-          height: 180%;
-          transform: translate(-50%, -50%) scale(0.6);
-          border-radius: 50%;
-          background: radial-gradient(circle at 50% 40%, #D6C5F044 0%, #9F7AEA33 40%, #5727A322 70%, transparent 100%);
-          opacity: 0;
-          transition: opacity 0.25s, transform 0.25s;
-          z-index: 2;
-          filter: blur(2px) saturate(1.3);
-          mix-blend-mode: lighten;
-        }
-        .landing-service-card:hover::after,
-        .landing-service-card:focus::after {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(1);
-        }
-        .landing-service-card:hover, .landing-service_card:focus {
-          background: radial-gradient(circle at 60% 40%, #5727A3 0%, #9F7AEA 60%, #D6C5F0 100%);
-          box-shadow: 0 24px 64px 0 #9F7AEA55, 0 4px 16px 0 #D6C5F033 !important;
-          transform: scale(1.06) !important;
-          border-color: #9F7AEA !important;
-        }
-        .landing-service-card:hover h6, .landing-service-card:focus h6 {
-          background: linear-gradient(90deg,#fff 0%,#9F7AEA 100%);
-          WebkitBackgroundClip: text;
-          WebkitTextFillColor: transparent;
-          background-clip: text;
-          color: transparent;
-          text-shadow: 0 2px 16px #fff8, 0 1px 2px #9F7AEA44;
-        }
-        /* Dots indicator styles */
-        .services-scroll-dots {
-          display: none;
-        }
-        @media (max-width: 750px) {
-          .services-scroll-dots {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 0.2rem;
-            margin-bottom: 0.7rem;
-            pointer-events: none;
-            user-select: none;
-          }
-          .services-scroll-dots .dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: #9F7AEA55;
-            display: inline-block;
-            transition: background 0.2s;
-            box-shadow: 0 1px 4px #9F7AEA22;
-          }
-          .services-scroll-dots .dot:nth-child(2) {
-            background: #9F7AEA;
-            width: 11px;
-            height: 11px;
-          }
-        }
-      `}</style>
+			<Service3DCarousel
+				services={allServices}
+				onCardClick={s => navigate(s.path)}
+			/>
 		</section>
 	);
 
@@ -929,4 +1192,3 @@ export const LandingPage: React.FC = () => {
 		</>
 	);
 };
-
