@@ -31,6 +31,12 @@ export const SiteNav: React.FC = () => {
   const [servicesOpen, setServicesOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [navIn, setNavIn] = useState(false);
+
+  useEffect(() => {
+    // Trigger animation on mount
+    setTimeout(() => setNavIn(true), 80);
+  }, []);
 
   useEffect(() => {
     const close = () => setOpen(false);
@@ -40,7 +46,7 @@ export const SiteNav: React.FC = () => {
 
   return (
     <nav
-      className="site-nav"
+      className={`site-nav${navIn ? ' site-nav-3d-in' : ''}`}
       role="navigation"
       aria-label="Main Navigation"
       style={{
@@ -355,6 +361,15 @@ export const SiteNav: React.FC = () => {
             margin-top: 0 !important;
             min-width: 0 !important;
           }
+        }
+        .site-nav {
+          opacity: 0;
+          transform: perspective(900px) translateY(-80px) rotateX(18deg) scale3d(0.97,0.97,1);
+          transition: transform 0.85s cubic-bezier(.4,2,.6,1), opacity 0.85s cubic-bezier(.4,2,.6,1);
+        }
+        .site-nav.site-nav-3d-in {
+          opacity: 1;
+          transform: none;
         }
       `}</style>
     </nav>

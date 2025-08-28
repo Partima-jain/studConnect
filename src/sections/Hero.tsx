@@ -46,8 +46,8 @@ export const Hero: React.FC = () => {
 			}}
 			className="hero-animated-bg"
 		>
-			{/* Animated background gradient overlay */}
-			<div className="hero-bg-gradient" />
+			{/* Animated multi-color gradient background */}
+			<div className="hero-bg-gradient hero-bg-gradient-multicolor" />
 			<div
 				style={{
 					display: 'flex',
@@ -332,6 +332,19 @@ export const Hero: React.FC = () => {
         @keyframes heroBgMove {
           0% { background-position: 0% 50%; }
           100% { background-position: 100% 50%; }
+        }
+
+        /* Multi-color animated gradient */
+        .hero-bg-gradient.hero-bg-gradient-multicolor {
+          background: linear-gradient(120deg, #d7c6f1 0%, #F0E6FF 40%, #ffffff 70%, #F7D6E0 100%);
+          background-size: 200% 200%;
+          animation: heroBgMoveMulti 16s ease-in-out infinite alternate;
+          opacity: 0.85;
+        }
+        @keyframes heroBgMoveMulti {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
 
         /* Shine animation for heading */

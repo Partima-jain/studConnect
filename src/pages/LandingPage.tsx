@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Hero } from '../sections/Hero';
 import { FeaturedUniversities } from '../sections/FeaturedUniversities';
 import { HowItWorks } from '../sections/HowItWorks';
@@ -133,6 +133,21 @@ export const LandingPage: React.FC = () => {
 	const carouselRef = useRef<HTMLDivElement>(null);
 	const financialServicesSectionRef = useRef<HTMLDivElement>(null);
 
+	// --- 3D About Section Animation State ---
+	const aboutSectionRef = useRef<HTMLDivElement>(null);
+	const [aboutInView, setAboutInView] = useState(false);
+
+	useEffect(() => {
+		const el = aboutSectionRef.current;
+		if (!el) return;
+		const observer = new window.IntersectionObserver(
+			([entry]) => setAboutInView(entry.isIntersecting),
+			{ threshold: 0.4 }
+		);
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, []);
+
 	// Auto-scroll effect for the services carousel
 	useEffect(() => {
 		const carousel = carouselRef.current;
@@ -159,6 +174,7 @@ export const LandingPage: React.FC = () => {
 	// AboutPage Hero Section only (first section)
 	const aboutHeroSection = (
 		<section
+			ref={aboutSectionRef}
 			style={{
 				display: 'flex',
 				alignItems: 'center',
@@ -172,8 +188,12 @@ export const LandingPage: React.FC = () => {
 				borderRadius: 32,
 				margin: '2.5rem auto 0 auto',
 			}}
+			className={`about-hero-section${aboutInView ? ' about-3d-inview' : ''}`}
 		>
-			<div style={{ flex: 1, minWidth: 320 }}>
+			<div
+				style={{ flex: 1, minWidth: 320 }}
+				className={`about-3d-text${aboutInView ? ' about-3d-animate' : ''}`}
+			>
 				<h1
 					style={{
 						fontSize: '2.2rem',
@@ -250,6 +270,7 @@ export const LandingPage: React.FC = () => {
 					position: 'relative',
 					minHeight: 420,
 				}}
+				className={`about-3d-img${aboutInView ? ' about-3d-animate' : ''}`}
 			>
 				{/* Radiant effect behind the girl */}
 				<div
@@ -282,6 +303,7 @@ export const LandingPage: React.FC = () => {
 						position: 'relative',
 						zIndex: 2,
 					}}
+					className={`about-3d-girl${aboutInView ? ' about-3d-animate' : ''}`}
 				/>
 				{/* Dotted line (thinking effect) in gap between girl head and globe */}
 				<svg
@@ -321,6 +343,7 @@ export const LandingPage: React.FC = () => {
 						pointerEvents: 'none',
 						animation: 'aboutGlobeFloat 2.2s infinite cubic-bezier(.4,2,.6,1)',
 					}}
+					className={`about-3d-globe${aboutInView ? ' about-3d-animate' : ''}`}
 				/>
 				<style>{`
           @keyframes aboutGlobeFloat {
@@ -329,6 +352,51 @@ export const LandingPage: React.FC = () => {
           }
         `}</style>
 			</div>
+			<style>{`
+        /* 3D animation for About section */
+        .about-3d-text, .about-3d-img, .about-3d-girl, .about-3d-globe {
+          will-change: transform, opacity;
+        }
+        .about-3d-text {
+          transform: perspective(900px) rotateY(-18deg) scale3d(0.96,0.96,1);
+          opacity: 0.7;
+          transition: transform 0.7s cubic-bezier(.4,2,.6,1), opacity 0.7s cubic-bezier(.4,2,.6,1);
+        }
+        .about-3d-img {
+          transform: perspective(900px) rotateY(18deg) scale3d(0.96,0.96,1);
+          opacity: 0.7;
+          transition: transform 0.7s cubic-bezier(.4,2,.6,1), opacity 0.7s cubic-bezier(.4,2,.6,1);
+        }
+        .about-3d-girl {
+          transform: perspective(900px) rotateX(12deg) scale3d(0.93,0.93,1);
+          opacity: 0.8;
+          transition: transform 0.7s cubic-bezier(.4,2,.6,1), opacity 0.7s cubic-bezier(.4,2,.6,1);
+        }
+        .about-3d-globe {
+          filter: drop-shadow(0 4px 16px #9F7AEA22);
+          transform: perspective(900px) rotateY(-30deg) rotateZ(-10deg) scale3d(0.9,0.9,1);
+          opacity: 0.7;
+          transition: transform 0.8s cubic-bezier(.4,2,.6,1), opacity 0.8s cubic-bezier(.4,2,.6,1);
+        }
+        .about-3d-inview .about-3d-text,
+        .about-3d-inview .about-3d-img {
+          transform: none;
+          opacity: 1;
+        }
+        .about-3d-girl.about-3d-animate {
+          transform: perspective(900px) rotateX(0deg) scale3d(1,1,1);
+          opacity: 1;
+        }
+        .about-3d-globe.about-3d-animate {
+          animation: aboutGlobeFloat 2.2s infinite cubic-bezier(.4,2,.6,1), aboutGlobeSpin3D 2.8s cubic-bezier(.4,2,.6,1) 1 both;
+          transform: none;
+          opacity: 1;
+        }
+        @keyframes aboutGlobeSpin3D {
+          0% { transform: perspective(900px) rotateY(-30deg) rotateZ(-10deg) scale3d(0.9,0.9,1);}
+          100% { transform: none;}
+        }
+      `}</style>
 		</section>
 	);
 
