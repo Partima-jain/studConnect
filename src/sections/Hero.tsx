@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 const metrics = [
 	{ value: '50+', label: 'Tutors' },
@@ -16,19 +16,38 @@ export const Hero: React.FC = () => {
 		}
 	};
 
+	// 3D tilt state and refs
+	const [tilt, setTilt] = useState({ x: 0, y: 0 });
+	const imgRef = useRef<HTMLDivElement>(null);
+
+	const handleMouseMove = (e: React.MouseEvent) => {
+		const el = imgRef.current;
+		if (!el) return;
+		const rect = el.getBoundingClientRect();
+		const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+		const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+		setTilt({ x: y * 15, y: x * 15 });
+	};
+	const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
+
 	return (
 		<header
 			style={{
 				width: '100%',
-				background: '#D6C5F0',
+				background: 'linear-gradient(120deg, #D6C5F0 0%, #F0E6FF 100%)',
 				padding: 0,
 				boxSizing: 'border-box',
 				backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0) 83.4%, rgb(255,255,255) 100%)',
 				minHeight: '900px',
 				display: 'flex',
-				alignItems: 'center'
+				alignItems: 'center',
+				position: 'relative', // for animated bg
+				overflow: 'hidden'
 			}}
+			className="hero-animated-bg"
 		>
+			{/* Animated background gradient overlay */}
+			<div className="hero-bg-gradient" />
 			<div
 				style={{
 					display: 'flex',
@@ -72,13 +91,19 @@ export const Hero: React.FC = () => {
 						style={{
 							fontWeight: 700,
 							fontSize: 'clamp(32px, 7vw, 64px)',
-							color: '#000',
+							color: '#5727A3',
 							padding: '0 0 30px 0',
 							lineHeight: '1.1',
-							marginBottom: 0
+							marginBottom: 0,
+							position: 'relative',
+							overflow: 'hidden',
+							textShadow: '0 8px 32px #9F7AEA33, 0 2px 8px #5727A355',
+							animation: 'heroPop3D 1.2s cubic-bezier(.4,2,.6,1) 0.2s both'
 						}}
+						className="hero-shine-heading"
 					>
 						Dream it, Plan it, Achieve it!
+						<span className="hero-shine-anim" />
 					</div>
 					<div
 						style={{
@@ -172,19 +197,49 @@ export const Hero: React.FC = () => {
 						justifyContent: 'flex-start',
 						position: 'relative',
 						height: 700,
-						minHeight: 320
+						minHeight: 320,
+						perspective: 1200,
+						perspectiveOrigin: '50% 40%'
 					}}
 					className="hero-fadein-right"
 				>
 					<div
+						ref={imgRef}
 						style={{
 							position: 'relative',
 							width: 'clamp(220px, 40vw, 540px)',
 							height: 'clamp(220px, 40vw, 540px)',
-							top: '30px'
+							top: '30px',
+							transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale3d(1.04,1.04,1.04)`,
+							transition: 'transform 0.25s cubic-bezier(.4,2,.6,1)'
 						}}
 						className="hero-float-img"
+						onMouseMove={handleMouseMove}
+						onMouseLeave={handleMouseLeave}
 					>
+						{/* Decorative floating star */}
+						<svg
+							className="hero-floating-star"
+							width="48"
+							height="48"
+							viewBox="0 0 48 48"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							style={{
+								position: 'absolute',
+								top: '-18%',
+								right: '-10%',
+								zIndex: 2,
+								filter: 'drop-shadow(0 2px 8px #9F7AEA66)'
+							}}
+						>
+							<polygon
+								points="24,2 29,18 46,18 32,28 37,44 24,34 11,44 16,28 2,18 19,18"
+								fill="#F7E1FF"
+								stroke="#9F7AEA"
+								strokeWidth="2"
+							/>
+						</svg>
 						<img
 							src="https://assets-v2.codedesign.ai/storage/v1/object/public/playground_663f30ba/photo-1623632306901-e509641e7191.jpeg"
 							alt="Study Abroad"
@@ -206,14 +261,14 @@ export const Hero: React.FC = () => {
 								transform: 'translateX(-50%)',
 								background: 'rgba(255,255,255,0.92)',
 								borderRadius: 22,
-								boxShadow: '0 2px 12px #1B004433',
+								boxShadow: '0 8px 32px #9F7AEA22, 0 2px 8px #5727A322',
 								padding: 'clamp(12px,2vw,28px) clamp(18px,4vw,48px) clamp(8px,1.5vw,22px) clamp(18px,4vw,48px)',
 								textAlign: 'center',
 								border: '1.5px solid #fff',
 								minWidth: 80,
 								maxWidth: 180
 							}}
-							className="hero-float-metric"
+							className="hero-float-metric hero-float-metric-delay0"
 						>
 							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[0].value}</div>
 							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[0].label}</div>
@@ -227,14 +282,14 @@ export const Hero: React.FC = () => {
 								transform: 'translateY(-50%)',
 								background: 'rgba(255,255,255,0.92)',
 								borderRadius: 22,
-								boxShadow: '0 2px 12px #1B004433',
+								boxShadow: '0 8px 32px #9F7AEA22, 0 2px 8px #5727A322',
 								padding: 'clamp(12px,2vw,28px) clamp(12px,3vw,36px) clamp(8px,1.5vw,22px) clamp(12px,3vw,36px)',
 								textAlign: 'center',
 								border: '1.5px solid #fff',
 								minWidth: 80,
 								maxWidth: 180
 							}}
-							className="hero-float-metric"
+							className="hero-float-metric hero-float-metric-delay1"
 						>
 							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[1].value}</div>
 							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[1].label}</div>
@@ -247,14 +302,14 @@ export const Hero: React.FC = () => {
 								right: '-4%',
 								background: 'rgba(255,255,255,0.92)',
 								borderRadius: 22,
-								boxShadow: '0 2px 12px #1B004433',
+								boxShadow: '0 8px 32px #9F7AEA22, 0 2px 8px #5727A322',
 								padding: 'clamp(12px,2vw,28px) clamp(12px,3vw,36px) clamp(8px,1.5vw,22px) clamp(12px,3vw,36px)',
 								textAlign: 'center',
 								border: '1.5px solid #fff',
 								minWidth: 80,
 								maxWidth: 180
 							}}
-							className="hero-float-metric"
+							className="hero-float-metric hero-float-metric-delay2"
 						>
 							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[2].value}</div>
 							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[2].label}</div>
@@ -264,6 +319,65 @@ export const Hero: React.FC = () => {
 			</div>
 			<style>
 				{`
+        /* Animated gradient background overlay */
+        .hero-bg-gradient {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+          background: linear-gradient(120deg, #D6C5F0 0%, #F0E6FF 100%, #E9D8FD 100%);
+          opacity: 0.7;
+          animation: heroBgMove 12s ease-in-out infinite alternate;
+        }
+        @keyframes heroBgMove {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 100% 50%; }
+        }
+
+        /* Shine animation for heading */
+        .hero-shine-heading {
+          position: relative;
+          display: inline-block;
+          background: linear-gradient(90deg, #5727A3 40%, #9F7AEA 60%, #5727A3 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+        }
+        .hero-shine-anim {
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          pointer-events: none;
+          background: linear-gradient(120deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.0) 100%);
+          width: 120%;
+          height: 100%;
+          transform: translateX(-100%);
+          animation: heroShine 2.8s cubic-bezier(.4,2,.6,1) infinite;
+        }
+        @keyframes heroShine {
+          0% { transform: translateX(-100%);}
+          60% { transform: translateX(120%);}
+          100% { transform: translateX(120%);}
+        }
+
+        /* Floating star animation */
+        .hero-floating-star {
+          animation: heroStarFloat 4.2s ease-in-out infinite alternate, heroStarSpin3D 8s linear infinite;
+          transform-style: preserve-3d;
+        }
+        @keyframes heroStarSpin3D {
+          0% { transform: rotateY(0deg) rotateZ(0deg);}
+          100% { transform: rotateY(360deg) rotateZ(360deg);}
+        }
+
+        /* Staggered metric float animations */
+        .hero-float-metric {
+          animation: heroMetricFloat 2.8s ease-in-out infinite alternate;
+        }
+        .hero-float-metric-delay0 { animation-delay: 0.1s; }
+        .hero-float-metric-delay1 { animation-delay: 0.7s; }
+        .hero-float-metric-delay2 { animation-delay: 1.2s; }
+
         /* Fade-in and float animations for hero section */
         .hero-fadein-left {
           animation: heroFadeInLeft 1.1s cubic-bezier(.4,2,.6,1) 0.1s both;
@@ -276,9 +390,6 @@ export const Hero: React.FC = () => {
         }
         .hero-float-img {
           animation: heroFloat 3.5s ease-in-out infinite alternate;
-        }
-        .hero-float-metric {
-          animation: heroMetricFloat 2.8s ease-in-out infinite alternate;
         }
         @keyframes heroFadeInLeft {
           0% { opacity: 0; transform: translateX(-60px);}
@@ -299,6 +410,11 @@ export const Hero: React.FC = () => {
         @keyframes heroMetricFloat {
           0% { transform: translateY(0);}
           100% { transform: translateY(-8px);}
+        }
+        @keyframes heroPop3D {
+          0% { transform: scale3d(0.92,0.92,1) translateZ(-40px); opacity: 0; }
+          60% { transform: scale3d(1.08,1.08,1) translateZ(24px); opacity: 1; }
+          100% { transform: none; opacity: 1; }
         }
         @media (max-width: 900px) {
           header {

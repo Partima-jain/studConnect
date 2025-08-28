@@ -376,7 +376,7 @@ export const AboutPage: React.FC = () => {
       ref={aboutRef as any}
       style={{
         fontFamily: 'Inter, Roboto, Arial, sans-serif',
-        background: 'linear-gradient(135deg, #D6C5F0 0%, #f8fafc 100%)',
+        background: 'linear-gradient(135deg, rgb(242 234 255) 0%, rgb(248, 250, 252) 100%)',
         color: '#1B0044',
         minHeight: '100vh',
         padding: 0,
