@@ -54,6 +54,7 @@ export const Hero: React.FC = () => {
 						justifyContent: 'center',
             padding: '0 8px',
 					}}
+					className="hero-fadein-left"
 				>
 					<div
 						style={{
@@ -132,6 +133,7 @@ export const Hero: React.FC = () => {
 							e.currentTarget.style.boxShadow = '0 4px 24px #5727A355, 0 1.5px 8px #9F7AEA33';
 							e.currentTarget.style.transform = '';
 						}}
+						className="hero-fadein-btn"
 					>
 						<span style={{
 							whiteSpace: 'nowrap',
@@ -172,6 +174,7 @@ export const Hero: React.FC = () => {
 						height: 700,
 						minHeight: 320
 					}}
+					className="hero-fadein-right"
 				>
 					<div
 						style={{
@@ -180,6 +183,7 @@ export const Hero: React.FC = () => {
 							height: 'clamp(220px, 40vw, 540px)',
 							top: '30px'
 						}}
+						className="hero-float-img"
 					>
 						<img
 							src="https://assets-v2.codedesign.ai/storage/v1/object/public/playground_663f30ba/photo-1623632306901-e509641e7191.jpeg"
@@ -209,6 +213,7 @@ export const Hero: React.FC = () => {
 								minWidth: 80,
 								maxWidth: 180
 							}}
+							className="hero-float-metric"
 						>
 							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[0].value}</div>
 							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[0].label}</div>
@@ -229,6 +234,7 @@ export const Hero: React.FC = () => {
 								minWidth: 80,
 								maxWidth: 180
 							}}
+							className="hero-float-metric"
 						>
 							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[1].value}</div>
 							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[1].label}</div>
@@ -248,6 +254,7 @@ export const Hero: React.FC = () => {
 								minWidth: 80,
 								maxWidth: 180
 							}}
+							className="hero-float-metric"
 						>
 							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[2].value}</div>
 							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[2].label}</div>
@@ -257,6 +264,42 @@ export const Hero: React.FC = () => {
 			</div>
 			<style>
 				{`
+        /* Fade-in and float animations for hero section */
+        .hero-fadein-left {
+          animation: heroFadeInLeft 1.1s cubic-bezier(.4,2,.6,1) 0.1s both;
+        }
+        .hero-fadein-btn {
+          animation: heroFadeInUp 1.2s cubic-bezier(.4,2,.6,1) 0.5s both;
+        }
+        .hero-fadein-right {
+          animation: heroFadeInRight 1.1s cubic-bezier(.4,2,.6,1) 0.3s both;
+        }
+        .hero-float-img {
+          animation: heroFloat 3.5s ease-in-out infinite alternate;
+        }
+        .hero-float-metric {
+          animation: heroMetricFloat 2.8s ease-in-out infinite alternate;
+        }
+        @keyframes heroFadeInLeft {
+          0% { opacity: 0; transform: translateX(-60px);}
+          100% { opacity: 1; transform: none;}
+        }
+        @keyframes heroFadeInRight {
+          0% { opacity: 0; transform: translateX(60px);}
+          100% { opacity: 1; transform: none;}
+        }
+        @keyframes heroFadeInUp {
+          0% { opacity: 0; transform: translateY(40px);}
+          100% { opacity: 1; transform: none;}
+        }
+        @keyframes heroFloat {
+          0% { transform: translateY(0);}
+          100% { transform: translateY(-18px);}
+        }
+        @keyframes heroMetricFloat {
+          0% { transform: translateY(0);}
+          100% { transform: translateY(-8px);}
+        }
         @media (max-width: 900px) {
           header {
             min-height: 600px !important;
