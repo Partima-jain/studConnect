@@ -1,13 +1,36 @@
 import React, { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
 import { API_BASE_URL } from '../apiBase';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Float } from '@react-three/drei';
 import * as THREE from 'three';
 
 
 
 
+
+// 3D Globe for Contact page
+const ContactGlobe: React.FC = () => (
+  <Canvas style={{
+    width: 180,
+    height: 180,
+    position: 'absolute',
+    top: -70,
+    right: 40,
+    zIndex: 0,
+    pointerEvents: 'none'
+  }}>
+    <ambientLight intensity={0.7} />
+    <directionalLight position={[3, 3, 3]} intensity={0.7} />
+    <Float speed={2} rotationIntensity={1.2} floatIntensity={1.5}>
+      <mesh>
+        <sphereGeometry args={[1.3, 48, 48]} />
+        <meshStandardMaterial color="#9F7AEA" roughness={0.38} metalness={0.18} />
+      </mesh>
+    </Float>
+    <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.7} />
+  </Canvas>
+);
 
 export const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted'>('idle');
@@ -94,7 +117,44 @@ export const Contact: React.FC = () => {
   }
 
   return (
-    <section className="section reveal" id="contact" ref={ref as any} style={{ position: 'relative', zIndex: 1 }}>
+    <section className="section reveal" id="contact" ref={ref as any} style={{ position: 'relative', zIndex: 1, background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)', borderRadius: 32, boxShadow: '0 8px 32px 0 #9F7AEA22', margin: '2.5rem auto 0 auto', padding: '2.5rem 0', overflow: 'hidden' }}>
+      {/* 3D Globe background */}
+      <div style={{ position: 'absolute', top: 0, right: 0, zIndex: 0, pointerEvents: 'none' }}>
+        <ContactGlobe />
+      </div>
+      {/* Blurred glassy blobs */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          top: '-100px',
+          left: '-100px',
+          width: 320,
+          height: 320,
+          background: 'radial-gradient(circle at 30% 30%, #D6C5F088 0%, #9F7AEA33 100%)',
+          filter: 'blur(60px)',
+          borderRadius: '50%',
+          opacity: 0.7,
+          zIndex: 0,
+          pointerEvents: 'none'
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          bottom: '-80px',
+          right: '-80px',
+          width: 220,
+          height: 220,
+          background: 'radial-gradient(circle at 70% 70%, #9F7AEA99 0%, #D6C5F033 100%)',
+          filter: 'blur(60px)',
+          borderRadius: '50%',
+          opacity: 0.6,
+          zIndex: 0,
+          pointerEvents: 'none'
+        }}
+      />
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <h2
           className="section__title"
@@ -106,11 +166,11 @@ export const Contact: React.FC = () => {
             fontSize: '2.3rem',
             letterSpacing: '-1px',
             lineHeight: 1.13,
-            background: 'linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)',
+            background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
-            textShadow: '0 2px 16px #2563eb22',
+            textShadow: '0 2px 16px #9F7AEA22',
             borderRadius: 8,
             padding: '0.2em 0',
             display: 'inline-block',
@@ -121,20 +181,20 @@ export const Contact: React.FC = () => {
         >
           Book Your Consultation
         </h2>
-        <form className="consultation" onSubmit={handleSubmit} noValidate>
+        <form className="consultation" onSubmit={handleSubmit} noValidate style={{ background: 'linear-gradient(90deg,#fff 60%,#D6C5F0 100%)', borderRadius: 18, boxShadow: '0 2px 12px #9F7AEA11', padding: '2rem 1.5rem', color: '#1B0044' }}>
           <div className="consultation__grid">
             <div className="field">
-              <label>First Name<span>*</span></label>
-              <input required name="first_name" placeholder="John" />
+              <label style={{ color: '#5727A3', fontWeight: 700 }}>First Name<span>*</span></label>
+              <input required name="first_name" placeholder="John" style={{ background: '#fff', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 8 }} />
             </div>
             <div className="field">
-              <label>Last Name<span>*</span></label>
-              <input required name="last_name" placeholder="Doe" />
+              <label style={{ color: '#5727A3', fontWeight: 700 }}>Last Name<span>*</span></label>
+              <input required name="last_name" placeholder="Doe" style={{ background: '#fff', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 8 }} />
             </div>
             <div className="field phone">
-              <label>Phone Number<span>*</span></label>
+              <label style={{ color: '#5727A3', fontWeight: 700 }}>Phone Number<span>*</span></label>
               <div className="phone__inner">
-                <select name="dial_code" defaultValue="+91" aria-label="Country code">
+                <select name="dial_code" defaultValue="+91" aria-label="Country code" style={{ background: '#fff', color: '#5727A3', border: '1.5px solid #D6C5F0', borderRadius: 8 }}>
                   <option value="+91">+91</option>
                   <option value="+1">+1</option>
                   <option value="+44">+44</option>
@@ -203,18 +263,19 @@ export const Contact: React.FC = () => {
                     setPhone(digits);
                     setErrors(prev => ({...prev, phone: undefined}));
                   }}
+                  style={{ background: '#fff', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 8 }}
                 />
               </div>
-              {errors.phone && <span className="field-error" role="alert">{errors.phone}</span>}
+              {errors.phone && <span className="field-error" role="alert" style={{ color: '#dc2626', fontWeight: 600 }}>{errors.phone}</span>}
             </div>
             <div className="field">
-              <label>Email<span>*</span></label>
-              <input required name="email" type="email" placeholder="you@example.com" aria-invalid={!!errors.email} />
-              {errors.email && <span className="field-error" role="alert">{errors.email}</span>}
+              <label style={{ color: '#5727A3', fontWeight: 700 }}>Email<span>*</span></label>
+              <input required name="email" type="email" placeholder="you@example.com" aria-invalid={!!errors.email} style={{ background: '#fff', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 8 }} />
+              {errors.email && <span className="field-error" role="alert" style={{ color: '#dc2626', fontWeight: 600 }}>{errors.email}</span>}
             </div>
             <div className="field">
-              <label>Nationality<span>*</span></label>
-              <select required name="nationality" defaultValue="India">
+              <label style={{ color: '#5727A3', fontWeight: 700 }}>Nationality<span>*</span></label>
+              <select required name="nationality" defaultValue="India" style={{ background: '#fff', color: '#5727A3', border: '1.5px solid #D6C5F0', borderRadius: 8 }}>
                 <option value="India">India</option>
                 <option value="United States">United States</option>
                 <option value="Canada">Canada</option>
@@ -268,37 +329,23 @@ export const Contact: React.FC = () => {
               className="btn btn-primary"
               disabled={status !== 'idle'}
               type="submit"
-              onClick={async (e) => {
-                if (status !== 'idle') return;
-                const form = (e.target as HTMLElement).closest('form');
-                if (!form) return;
-                e.preventDefault();
-                const formDataObj: Record<string, any> = {};
-                Array.from(form.elements).forEach((el: any) => {
-                  if (el.name) formDataObj[el.name] = el.value;
-                });
-                const phoneVal = formDataObj.phone?.trim() || '';
-                const dialVal = formDataObj.dial_code || '';
-                const emailVal = formDataObj.email?.trim() || '';
-                const nextErrors: { phone?: string; email?: string } = {};
-                if(!validatePhone(phoneVal, dialVal)) {
-                  nextErrors.phone = dialVal === '+91' ? 'Enter a valid 10-digit Indian mobile starting 6-9' : 'Enter a valid phone number';
-                }
-                if(!validateEmail(emailVal)) {
-                  nextErrors.email = 'Enter a valid email address';
-                }
-                setErrors(nextErrors);
-                if(Object.keys(nextErrors).length) return;
-                setStatus('submitting');
-                try {
-                  await submitConsultationToExcel({
-                    ...formDataObj,
-                    timestamp: new Date().toISOString()
-                  });
-                  setStatus('submitted');
-                } catch {
-                  setStatus('idle');
-                }
+              style={{
+                background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                color: '#fff',
+                borderRadius: 14,
+                fontWeight: 700,
+                fontSize: '1.13rem',
+                padding: '.7rem 2.2rem',
+                border: 'none',
+                boxShadow: '0 2px 8px #9F7AEA22',
+                cursor: status === 'idle' ? 'pointer' : 'not-allowed',
+                transition: 'background 0.18s'
+              }}
+              onMouseOver={e => {
+                e.currentTarget.style.background = 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)';
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.background = 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)';
               }}
             >
               {status === 'submitting' ? 'Submitting...' : status === 'submitted' ? 'Submitted!' : 'Submit'}
@@ -306,7 +353,7 @@ export const Contact: React.FC = () => {
           </div>
           {status === 'submitted' && (
             <div style={{textAlign:'center', marginTop:'.7rem'}}>
-              <span className="form-success">Thanks! We will contact you soon.</span>
+              <span className="form-success" style={{ color: '#22c55e', fontWeight: 700 }}>Thanks! We will contact you soon.</span>
             </div>
           )}
         </form>
@@ -316,49 +363,9 @@ export const Contact: React.FC = () => {
             margin: '2.5rem auto 0',
             maxWidth: 420,
             borderRadius: 16,
-            boxShadow: '0 2px 16px 0 #e5e7eb',
+            boxShadow: '0 2px 16px 0 #9F7AEA22',
             padding: '2rem 1.5rem 1.5rem 1.5rem',
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <h3 style={{marginBottom:'.7rem', fontWeight:600, fontSize:'1.25rem', color:'#2563eb'}}>Stay Updated</h3>
-          <p style={{margin:'0 0 1.1rem 0', color:'#64748b', fontSize:'.97rem'}}>Subscribe to get the latest updates, tips, and university news.</p>
-          <form
-            className="newsletter__form"
-            style={{display:'flex', gap:'.6rem', width:'100%', justifyContent:'center'}}
-            onSubmit={e => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="Email for updates"
-              required
-              style={{
-                flex:1,
-                minWidth:0,
-                padding:'.7rem 1rem',
-                borderRadius:'8px',
-                border:'1px solid #d1d5db',
-                fontSize:'.98rem'
-              }}
-            />
-            <button
-              className="btn"
-              style={{
-                background:'#2563eb',
-                color:'#fff',
-                borderRadius:'8px',
-                padding:'.7rem 1.2rem',
-                fontWeight:600,
-                fontSize:'.98rem'
-              }}
-            >Subscribe</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  );
 };
-

@@ -1,395 +1,323 @@
-import React, { useEffect } from 'react';
-import PastelGlobeScene from '../components/PastelGlobeScene';
+import React from 'react';
+
+const metrics = [
+	{ value: '50+', label: 'Tutors' },
+	{ value: '2K+', label: 'Top Universities' },
+	{ value: '97%', label: 'Visa Success' }
+];
 
 export const Hero: React.FC = () => {
-  useEffect(() => {
-    const link = document.querySelector('.hero-cta');
-    const handler = (e: Event) => {
-      e.preventDefault();
-      document.querySelector('#contact')?.scrollIntoView({ behavior:'smooth'});
-    };
-    link?.addEventListener('click', handler);
-    return () => link?.removeEventListener('click', handler);
-  }, []);
-  return (
-    <header className="hero hero--cinematic hero--globe" style={{overflow: 'hidden'}}>
-      <div
-        className="hero-flex"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          maxWidth: 1400,
-          margin: '0 auto',
-          padding: '0 1.5rem',
-          minHeight: 520,
-          position: 'relative'
-        }}
-      >
-        {/* Button left-aligned on laptop */}
-        <div
-          className="hero__cta-container"
-          style={{
-            flex: '0 0 220px',
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            minWidth: 180,
-            zIndex: 2,
-            height: '100%'
-          }}
-        >
-          <div className="hero__cta-inner"
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start', // default left
-              justifyContent: 'center',
-              minHeight: 420,
-              paddingLeft: 0,
-              paddingRight: 0
-            }}
-          >
-            <div
-              className="hero__cta-textblock"
-              style={{
-                marginBottom: '1.7rem',
-                maxWidth: 420,
-                minWidth: 320,
-                textAlign: 'left',
-                background: 'transparent',
-                borderRadius: 0,
-                padding: 0,
-                boxShadow: 'none',
-                border: 'none',
-                position: 'relative',
-                alignSelf: 'flex-start'
-              }}
-            >
-              <h1
-                style={{
-                  fontSize: '2.5rem',
-                  fontWeight: 900,
-                  margin: 0,
-                  letterSpacing: '-2px',
-                  lineHeight: 1.07,
-                  background: 'linear-gradient(90deg,#fbbf24 0%,#60a5fa 60%,#2563eb 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  color: 'transparent',
-                  textShadow: '0 4px 24px #2563eb22, 0 1px 2px #fff8',
-                  fontFamily: "'Inter', 'Montserrat', 'Poppins', 'sans-serif'",
-                  display: 'inline-block'
-                }}
-              >
-                Study Abroad. <span style={{
-                  background: 'linear-gradient(90deg,#60a5fa 0%,#2563eb 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  color: 'transparent'
-                }}>Made Simple.</span>
-              </h1>
-              <p
-                style={{
-                  fontSize: '1.18rem',
-                  color: '#e0e7ff',
-                  fontWeight: 500,
-                  margin: '1.1rem 0 0 0',
-                  lineHeight: 1.6,
-                  letterSpacing: '-.2px',
-                  textShadow: '0 2px 12px #2563eb33',
-                  fontFamily: "'Inter', 'Montserrat', 'Poppins', 'sans-serif'"
-                }}
-              >
-                <span style={{
-                  background: 'linear-gradient(90deg,#fbbf24 0%,#60a5fa 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  fontWeight: 700
-                }}>Connect</span> with <span style={{
-                  color:'#fff', fontWeight:700, background:'unset', WebkitTextFillColor:'unset'
-                }}>real students</span>, explore universities,<br />
-                secure housing, and plan finances—all in one place.
-              </p>
-              {/* Decorative underline
-              <div className="hero-underline" style={{
-                marginTop: '1.1rem',
-                width: 70,
-                height: 5,
-                borderRadius: 8,
-                background: 'linear-gradient(90deg,#fbbf24 0%,#60a5fa 100%)',
-                boxShadow: '0 2px 8px #2563eb22'
-              }} /> */}
-            </div>
-            <a
-              href="#contact"
-              className="btn btn-primary hero-cta hero-cta-3d"
-              style={{
-                fontWeight: 700,
-                fontSize: '1.08rem',
-                letterSpacing: '.2px',
-                boxShadow: '0 6px 24px -4px #2563eb55, 0 1.5px 8px 0 #60a5fa33',
-                borderRadius: '16px',
-                padding: '1.05rem 2.1rem',
-                transition: 'transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s cubic-bezier(.4,2,.6,1), background 0.18s',
-                background: 'linear-gradient(100deg, rgb(237 238 240) 60%, rgb(51 107 177) 100%)',
-                color: 'rgb(17 29 81)',
-                position: 'relative',
-                overflow: 'hidden',
-                outline: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <span style={{
-                position: 'relative',
-                zIndex: 2,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '.6rem'
-              }}>
-                Book Your Consultation
-                {/* Large arrow icon, top-right direction, as provided */}
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  aria-hidden="true"
-                  style={{
-                    marginLeft: 10,
-                    flexShrink: 0,
-                    transform: 'rotate(-45deg)'
-                  }}
-                >
-                  <circle cx="16" cy="16" r="16" fill="#fff2"></circle>
-                  <path d="M11 17L21 17M21 17L17.5 13.5M21 17L17.5 20.5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                </svg>
-              </span>
-              {/* 3D shine effect */}
-              <span className="hero-cta-3d-shine" style={{
-                position: 'absolute',
-                top: 0, left: 0, right: 0, height: '60%',
-                background: 'linear-gradient(90deg,rgba(255,255,255,0.18) 0%,rgba(255,255,255,0.04) 100%)',
-                borderTopLeftRadius: '16px',
-                borderTopRightRadius: '16px',
-                zIndex: 1,
-                pointerEvents: 'none'
-              }} />
-            </a>
-          </div>
-        </div>
-        {/* Globe center */}
-        <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', minWidth: 320}}>
-          <PastelGlobeScene />
-        </div>
-        <div className="container hero__content" style={{flex: 1, minWidth: 320, zIndex: 2}}>
-        </div>
-        <div
-          className="hero__decor-image"
-          style={{
-            flex: '0 0 350px',
-            display: 'flex',
-            alignItems: 'stretch',
-            minWidth: 220,
-            height: '100%',
-            zIndex: 1
-          }}
-        >
-          <img
-            src="https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/Untitled.png"
-            alt="Decorative"
-            style={{
-              maxWidth: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              display: 'block',
-              margin: 0
-            }}
-          />
-        </div>
-      </div>
-      <div className="hero__bg">
-        <div className="blob blob--1" />
-        <div className="blob blob--2" />
-        <div className="gridlines" />
-      </div>
-      {/* Add responsive CSS */}
-      <style>
-        {`
-          /* Responsive styles for hero heading and paragraph */
-          .hero__cta-inner h1 {
-            font-size: 2.5rem;
-            letter-spacing: -2px;
-            line-height: 1.07;
-            text-align: left;
+	// Scroll to Contact section on button click
+	const handleScrollToContact = (e: React.MouseEvent) => {
+		e.preventDefault();
+		const el = document.getElementById('contact');
+		if (el) {
+			el.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
+	return (
+		<header
+			style={{
+				width: '100%',
+				background: '#D6C5F0',
+				padding: 0,
+				boxSizing: 'border-box',
+				backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0) 83.4%, rgb(255,255,255) 100%)',
+				minHeight: '900px',
+				display: 'flex',
+				alignItems: 'center'
+			}}
+		>
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'flex-start',
+					gap: 50,
+					maxWidth: 1500,
+					margin: '0 auto',
+					padding: '0 32px',
+					flexWrap: 'wrap',
+					width: '100%'
+				}}
+			>
+				{/* Left: Text content */}
+				<div
+					style={{
+						flex: '1 1 400px',
+						minWidth: 280,
+						maxWidth: 700,
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+            padding: '0 8px',
+					}}
+				>
+					<div
+						style={{
+							fontWeight: 700,
+							fontSize: 20,
+							color: '#000',
+							marginBottom: 0,
+							letterSpacing: 0,
+							lineHeight: '32px'
+						}}
+					>
+						Your Study Abroad
+					</div>
+					<div
+						style={{
+							fontWeight: 700,
+							fontSize: 'clamp(32px, 7vw, 64px)',
+							color: '#000',
+							padding: '0 0 30px 0',
+							lineHeight: '1.1',
+							marginBottom: 0
+						}}
+					>
+						Dream it, Plan it, Achieve it!
+					</div>
+					<div
+						style={{
+							fontSize: 'clamp(16px, 3vw, 24px)',
+							color: '#000',
+							fontWeight: 400,
+							padding: '0 0 40px 0',
+							lineHeight: '1.5'
+						}}
+					>
+						Yournextuniversity is your one-stop platform, guiding you from university selection to visas, loans, accommodation, and peer counselling.
+					</div>
+					<a
+						href="#contact"
+						style={{
+							display: 'inline-flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							whiteSpace: 'nowrap',
+							padding: 'clamp(14px,2vw,22px) clamp(18px,6vw,32px)',
+							background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+							borderRadius: 100,
+							border: 'none',
+							color: '#fff',
+							fontWeight: 700,
+							fontSize: 'clamp(16px,2.5vw,20px)',
+							lineHeight: '32px',
+							textDecoration: 'none',
+							transition: 'background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.18s',
+							height: 'clamp(48px,4vw,60px)',
+							minWidth: 0,
+							width: '100%',
+							maxWidth: 260,
+							boxShadow: '0 4px 24px #5727A355, 0 1.5px 8px #9F7AEA33',
+							gap: '0.7em',
+							letterSpacing: '.5px',
+							cursor: 'pointer',
+							position: 'relative',
+							overflow: 'hidden',
+							textAlign: 'center'
+						}}
+						onClick={handleScrollToContact}
+						onMouseOver={e => {
+							e.currentTarget.style.background = 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)';
+							e.currentTarget.style.color = '#fff';
+							e.currentTarget.style.boxShadow = '0 8px 32px #5727A388, 0 2px 12px #9F7AEA44';
+							e.currentTarget.style.transform = 'scale(1.04)';
+						}}
+						onMouseOut={e => {
+							e.currentTarget.style.background = 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)';
+							e.currentTarget.style.color = '#fff';
+							e.currentTarget.style.boxShadow = '0 4px 24px #5727A355, 0 1.5px 8px #9F7AEA33';
+							e.currentTarget.style.transform = '';
+						}}
+					>
+						<span style={{
+							whiteSpace: 'nowrap',
+							overflow: 'hidden',
+							textOverflow: 'ellipsis',
+							width: '100%',
+							textAlign: 'center',
+							display: 'block'
+						}}>
+							Get Started
+						</span>
+						<svg width="32" height="28" viewBox="0 0 24 24" style={{ marginLeft: 8, transform: 'rotate(315deg)' }} fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+						</svg>
+						<span
+							style={{
+								position: 'absolute',
+								inset: 0,
+								borderRadius: 100,
+								background: 'linear-gradient(120deg,rgba(255,255,255,0.09) 0%,rgba(255,255,255,0.02) 100%)',
+								opacity: 0.5,
+								pointerEvents: 'none'
+							}}
+						/>
+					</a>
+				</div>
+				{/* Right: Larger Image with metrics on 3 sides */}
+				<div
+					style={{
+						flex: '1 1 400px',
+						minWidth: 280,
+						maxWidth: 800,
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						justifyContent: 'flex-start',
+						position: 'relative',
+						height: 700,
+						minHeight: 320
+					}}
+				>
+					<div
+						style={{
+							position: 'relative',
+							width: 'clamp(220px, 40vw, 540px)',
+							height: 'clamp(220px, 40vw, 540px)',
+							top: '30px'
+						}}
+					>
+						<img
+							src="https://assets-v2.codedesign.ai/storage/v1/object/public/playground_663f30ba/photo-1623632306901-e509641e7191.jpeg"
+							alt="Study Abroad"
+							style={{
+								width: '100%',
+								height: '100%',
+								borderRadius: '100%',
+								objectFit: 'cover',
+								boxShadow: '0 10px 56px #1B004488',
+								display: 'block'
+							}}
+						/>
+						{/* Top: 50+ Tutors */}
+						<div
+							style={{
+								position: 'absolute',
+								top: '-12%',
+								left: '50%',
+								transform: 'translateX(-50%)',
+								background: 'rgba(255,255,255,0.92)',
+								borderRadius: 22,
+								boxShadow: '0 2px 12px #1B004433',
+								padding: 'clamp(12px,2vw,28px) clamp(18px,4vw,48px) clamp(8px,1.5vw,22px) clamp(18px,4vw,48px)',
+								textAlign: 'center',
+								border: '1.5px solid #fff',
+								minWidth: 80,
+								maxWidth: 180
+							}}
+						>
+							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[0].value}</div>
+							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[0].label}</div>
+						</div>
+						{/* Left: 2K+ Top Universities */}
+						<div
+							style={{
+								position: 'absolute',
+								top: '50%',
+								left: '-17%',
+								transform: 'translateY(-50%)',
+								background: 'rgba(255,255,255,0.92)',
+								borderRadius: 22,
+								boxShadow: '0 2px 12px #1B004433',
+								padding: 'clamp(12px,2vw,28px) clamp(12px,3vw,36px) clamp(8px,1.5vw,22px) clamp(12px,3vw,36px)',
+								textAlign: 'center',
+								border: '1.5px solid #fff',
+								minWidth: 80,
+								maxWidth: 180
+							}}
+						>
+							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[1].value}</div>
+							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[1].label}</div>
+						</div>
+						{/* Bottom Right: 97% Visa Success */}
+						<div
+							style={{
+								position: 'absolute',
+								bottom: '0%',
+								right: '-4%',
+								background: 'rgba(255,255,255,0.92)',
+								borderRadius: 22,
+								boxShadow: '0 2px 12px #1B004433',
+								padding: 'clamp(12px,2vw,28px) clamp(12px,3vw,36px) clamp(8px,1.5vw,22px) clamp(12px,3vw,36px)',
+								textAlign: 'center',
+								border: '1.5px solid #fff',
+								minWidth: 80,
+								maxWidth: 180
+							}}
+						>
+							<div style={{ fontSize: 'clamp(20px,3vw,40px)', fontWeight: 800, color: '#1B0044', lineHeight: 1 }}>{metrics[2].value}</div>
+							<div style={{ fontSize: 'clamp(12px,1.5vw,22px)', fontWeight: 600, color: '#1B0044', opacity: 0.8 }}>{metrics[2].label}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<style>
+				{`
+        @media (max-width: 900px) {
+          header {
+            min-height: 600px !important;
+            padding-top: 30px !important;
           }
-          .hero__cta-inner p {
-            font-size: 1.18rem;
-            margin-top: 1.1rem;
-            text-align: left;
+          header > div {
+            flex-direction: column !important;
+            gap: 24px !important;
+            align-items: center !important;
+            padding: 0 8px !important;
           }
-          .hero__cta-inner .hero-underline {
-            width: 70px;
-            height: 5px;
-            margin-top: 1.1rem;
-            margin-left: 0;
-            margin-right: 0;
+          header > div > div {
+            max-width: 100% !important;
+            min-width: 0 !important;
           }
-          @media (max-width: 1199px) {
-            .hero__cta-inner {
-              align-items: center !important;
-            }
-            .hero__cta-textblock {
-              align-self: center !important;
-              text-align: center !important;
-              max-width: 520px !important;
-              min-width: 0 !important;
-              width: 100% !important;
-            }
-            .hero__cta-inner h1,
-            .hero__cta-inner p {
-              text-align: center !important;
-            }
-            .hero__cta-inner .hero-underline {
-              margin-left: auto !important;
-              margin-right: auto !important;
-            }
+          header a {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            text-align: center !important;
+            justify-content: center !important;
           }
-          @media (max-width: 1100px) {
-            .hero__cta-inner h1 {
-              font-size: 2.1rem;
-            }
-            .hero__cta-inner p {
-              font-size: 1.05rem;
-            }
-            .hero__cta-inner .hero-underline {
-              width: 55px;
-              height: 4px;
-            }
+        }
+        @media (max-width: 600px) {
+          header {
+            padding-top: 20px !important;
+            min-height: 400px !important;
           }
-          @media (max-width: 900px) {
-            .hero__cta-inner {
-              min-height: 320px !important;
-              padding-left: 0 !important;
-              padding-right: 0 !important;
-            }
-            .hero__cta-inner h1 {
-              font-size: 1.7rem !important;
-              letter-spacing: -1.2px !important;
-            }
-            .hero__cta-inner p {
-              fontSize: 0.98rem !important;
-              margin-top: 0.7rem !important;
-            }
-            .hero__cta-inner .hero-underline {
-              width: 38px !important;
-              height: 3px !important;
-              margin-top: 0.7rem !important;
-            }
+          header > div {
+            flex-direction: column !important;
+            gap: 12px !important;
+            align-items: center !important;
+            padding: 0 2px !important;
           }
-          @media (max-width: 600px) {
-            .hero__cta-inner {
-              min-height: 180px !important;
-              padding-left: 0 !important;
-              padding-right: 0 !important;
-            }
-            .hero__cta-inner h1 {
-              font-size: 1.15rem !important;
-              letter-spacing: -0.7px !important;
-            }
-            .hero__cta-inner p {
-              font-size: 0.89rem !important;
-              margin-top: 0.5rem !important;
-            }
-            .hero__cta-inner .hero-underline {
-              width: 24px !important;
-              height: 2px !important;
-              margin-top: 0.5rem !important;
-            }
+          header > div > div {
+            max-width: 100% !important;
+            min-width: 0 !important;
           }
-          /* Existing button and layout responsive styles */
-          @media (max-width: 1199px) {
-            .hero__cta-container {
-              justify-content: center !important;
-              align-items: center !important;
-              width: 100%;
-              flex-basis: 100% !important;
-              display: flex !important;
-              height: 100% !important;
-            }
-            .hero__cta-inner {
-              display: flex !important;
-              align-items: center !important;
-              justify-content: center !important;
-              width: 100% !important;
-              height: 100% !important;
-            }
-            .hero__decor-image {
-              display: none !important;
-            }
+          header a {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            text-align: center !important;
+            justify-content: center !important;
           }
-          @media (max-width: 900px) {
-            .hero__cta-container a.hero-cta-3d {
-              font-size: 0.98rem !important;
-              padding: 0.85rem 1.5rem !important;
-              border-radius: 13px !important;
-            }
-            .hero__cta-container svg {
-              width: 26px !important;
-              height: 26px !important;
-              margin-left: 7px !important;
-            }
-            .hero-flex {
-              min-height: 400px !important;
-              padding: 0 0.5rem !important;
-            }
-          }
-          @media (max-width: 600px) {
-            .hero__cta-container a.hero-cta-3d {
-              font-size: 0.89rem !important;
-              padding: 0.7rem 1rem !important;
-              border-radius: 9px !important;
-            }
-            .hero__cta-container svg {
-              width: 20px !important;
-              height: 20px !important;
-              margin-left: 5px !important;
-            }
-            .hero-flex {
-              min-height: 260px !important;
-              padding: 0 0.2rem !important;
-            }
-          }
-          .hero-cta-3d {
-            box-shadow: 0 6px 24px -4px #2563eb55, 0 1.5px 8px 0 #60a5fa33;
-            transform: perspective(600px) translateZ(0);
-            will-change: transform, box-shadow;
-          }
-          .hero-cta-3d:hover, .hero-cta-3d:focus {
-            transform: scale(1.055) perspective(600px) translateZ(8px) rotateX(-2deg) rotateY(1deg);
-            box-shadow: 0 16px 48px -6px #2563eb88, 0 4px 16px 0 #60a5fa55;
-            background: linear-gradient(100deg,#2563eb 40%,#60a5fa 100%);
-            outline: none;
-          }
-          .hero-cta-3d:active {
-            transform: scale(0.98) perspective(600px) translateZ(0);
-            box-shadow: 0 2px 8px #2563eb33;
-          }
-          .hero-cta-3d .hero-cta-3d-shine {
-            animation: heroCtaShine 2.5s linear infinite;
-          }
-          @keyframes heroCtaShine {
-            0% { opacity: 0.18; }
-            50% { opacity: 0.32; }
-            100% { opacity: 0.18; }
-          }
+        }
         `}
-      </style>
-    </header>
-  );
+			</style>
+		</header>
+	);
+};
+
+const navLinkStyleWhite: React.CSSProperties = {
+	fontFamily: 'Open Sans, sans-serif',
+	fontSize: 16,
+	fontWeight: 400,
+	color: '#fff',
+	padding: '15px 15px',
+	letterSpacing: 0,
+	lineHeight: '26px',
+	textDecoration: 'none',
+	transition: 'color 0.2s',
+	background: 'none'
 };

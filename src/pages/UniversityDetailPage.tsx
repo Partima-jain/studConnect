@@ -2,13 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Color palette
-const PRIMARY = "#1b2e4b";
-const SECONDARY = "#2563eb";
-const BG = "#f8fafc";
+const PRIMARY = "#5727A3";
+const SECONDARY = "#9F7AEA";
+const BG = "linear-gradient(90deg,#D6C5F0 0%,#fff 100%)";
 const CARD_BG = "#fff";
-const TEXT = "#22223b";
-const SUBTEXT = "#64748b";
-const BORDER = "#e5e7eb";
+const TEXT = "#1B0044";
+const SUBTEXT = "#9F7AEA";
+const BORDER = "#D6C5F0";
 
 const BASE_URL = "https://studconnect-backend.onrender.com";
 
@@ -24,7 +24,7 @@ const globalStyles = `
 }
 .glass {
   background: rgba(255,255,255,0.25);
-  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+  box-shadow: 0 8px 32px 0 rgba(217, 191, 247, 0.18);
   backdrop-filter: blur(12px);
   border-radius: 18px;
   border: 1.5px solid rgba(255,255,255,0.18);
@@ -133,7 +133,7 @@ const FactCard: React.FC<{ label: string; value: React.ReactNode }> = ({ label, 
   >
     <div style={{
       fontWeight: 700,
-      color: '#2563eb',
+      color: PRIMARY,
       fontSize: '.98rem',
       marginBottom: '.1rem',
       letterSpacing: '.2px'
@@ -172,7 +172,7 @@ const ProgramLevelBarChart3D: React.FC<{ data: Record<string, number> }> = ({ da
             height: `${Math.max((count / max) * maxBarHeight, minBarHeight)}px`,
             background: `linear-gradient(120deg,${colors[i % colors.length]} 60%,#e0e7ff 100%)`,
             borderRadius: '12px 12px 8px 8px',
-            boxShadow: '0 2px 12px #2563eb22',
+            boxShadow: '0 2px 12px #F0E0FF',
             marginBottom: '.5rem',
             transition: 'height 0.6s cubic-bezier(.4,2,.6,1)',
             maxHeight: maxBarHeight
@@ -479,17 +479,18 @@ export const UniversityDetailPage: React.FC = () => {
     <main
       className="gradient-animated univ-main"
       style={{
-        maxWidth: 1100,
+        maxWidth: 1200,
         margin: "2.5rem auto",
         borderRadius: 32,
-        boxShadow: "0 16px 64px 0 rgba(27,46,75,0.13), 0 3px 16px 0 #2563eb33",
+        boxShadow: "0 16px 64px 0 #9F7AEA22, 0 3px 16px 0 #9F7AEA33",
         padding: "2.5rem 2.5rem 2rem 2.5rem",
         fontFamily: "'Poppins', 'Segoe UI', Arial, sans-serif",
         color: TEXT,
         position: 'relative',
         overflow: 'hidden',
-        border: `2.5px solid #e0e7ff`,
+        border: `2.5px solid ${BORDER}`,
         minHeight: 800,
+        background: BG
       }}
     >
 
@@ -499,9 +500,9 @@ export const UniversityDetailPage: React.FC = () => {
           alignItems: 'center',
           gap: '1.2rem',
           marginBottom: '2.5rem',
-          background: 'linear-gradient(90deg,#e0e7ff 0%,#f8fafc 100%)',
-          boxShadow: '0 8px 32px 0 #2563eb22, 0 1.5px 8px 0 #a5b4fc33',
-          border: '2px solid #e0e7ff',
+          background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+          boxShadow: '0 8px 32px 0 #9F7AEA22, 0 1.5px 8px 0 #9F7AEA33',
+          border: `2px solid ${BORDER}`,
           position: 'relative',
           zIndex: 1,
         }}
@@ -513,7 +514,7 @@ export const UniversityDetailPage: React.FC = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            filter: 'drop-shadow(0 4px 24px #2563eb33)',
+            filter: 'drop-shadow(0 4px 24px #9F7AEA33)',
             width: 90,
             minWidth: 70,
             margin: '0 auto'
@@ -532,11 +533,14 @@ export const UniversityDetailPage: React.FC = () => {
               color: PRIMARY,
               letterSpacing: '-1.5px',
               lineHeight: 1.1,
-              textShadow: '0 2px 12px #a5b4fc33',
+              textShadow: '0 2px 12px #9F7AEA33',
               wordBreak: 'break-word',
               marginTop: '.2rem',
               marginBottom: '.2rem',
-              textAlign: 'center'
+              textAlign: 'center',
+              background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
             }}
           >
             {attrs.name || "University Details"}
@@ -547,13 +551,16 @@ export const UniversityDetailPage: React.FC = () => {
             fontWeight: 700,
             marginTop: ".1rem",
             letterSpacing: '.5px',
-            textShadow: '0 1px 4px #a5b4fc55',
+            textShadow: '0 1px 4px #9F7AEA55',
             wordBreak: 'break-word',
-            textAlign: 'center'
+            textAlign: 'center',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>
             {[attrs.city, attrs.state, attrs.country].filter(Boolean).join(', ')}
           </div>
-          <div style={{ marginTop: '.5rem', color: SUBTEXT, fontWeight: 400, wordBreak: 'break-word', textAlign: 'left' }}>
+          <div style={{ marginTop: '.5rem', color: SECONDARY, fontWeight: 400, wordBreak: 'break-word', textAlign: 'left' }}>
             {attrs.website && (
               <a href={attrs.website} target="_blank" rel="noopener noreferrer" style={{
                 color: SECONDARY,
@@ -561,7 +568,7 @@ export const UniversityDetailPage: React.FC = () => {
                 textDecoration: "underline",
                 textUnderlineOffset: "2px",
                 transition: 'color 0.2s',
-                filter: 'drop-shadow(0 1px 4px #a5b4fc55)',
+                filter: 'drop-shadow(0 1px 4px #9F7AEA55)',
                 wordBreak: 'break-all'
               }}>{attrs.website}</a>
             )}
@@ -573,9 +580,9 @@ export const UniversityDetailPage: React.FC = () => {
       {photos.length > 0 && (
         <Section
           style={{
-            background: 'linear-gradient(90deg,#f8fafc 0%,#e0e7ff 100%)',
+            background: 'linear-gradient(90deg,#fff 0%,#D6C5F0 100%)',
             marginBottom: '2.5rem',
-            border: '2px solid #e0e7ff',
+            border: `2px solid ${BORDER}`,
           }}
           className="univ-section"
         >
@@ -584,7 +591,10 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>Campus Gallery</div>
           <div
             className="univ-gallery-flex"
@@ -653,14 +663,17 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>About</div>
           <div
             style={{
-              color: SUBTEXT,
+              color: TEXT,
               fontSize: "1.13rem",
               lineHeight: 1.7,
-              textShadow: '0 1px 4px #a5b4fc22'
+              textShadow: '0 1px 4px #9F7AEA22'
             }}
             dangerouslySetInnerHTML={{ __html: aboutHtml }}
           />
@@ -671,10 +684,13 @@ export const UniversityDetailPage: React.FC = () => {
       <Section className="univ-section">
         <div style={{
           fontWeight: 700,
-          color: PRIMARY,
+          color: 'PRIMARY',
           marginBottom: ".7rem",
           fontSize: '1.18rem',
-          letterSpacing: '.5px'
+          letterSpacing: '.5px',
+          background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
         }}>Key Facts</div>
         <div style={{
           display: 'flex',
@@ -709,12 +725,15 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>Program Categories</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: ".7rem" }}>
             {programCategories.map((cat: any) => (
               <span key={cat.name} className="card-3d" style={{
-                background: 'linear-gradient(90deg,#e0e7ff 0%,#f8fafc 100%)',
+                background: 'linear-gradient(90deg, rgb(236 224 255) 0%, rgb(248, 250, 252) 100%)',
                 color: SECONDARY,
                 border: `1.5px solid ${BORDER}`,
                 borderRadius: 12,
@@ -742,7 +761,10 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>Program Level Counts</div>
           <ProgramLevelBarChart3D data={programLevelCounts} />
         </Section>
@@ -756,12 +778,15 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>All Program Categories</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: ".7rem" }}>
             {categoriesOfAllPrograms.map((cat: any) => (
               <span key={cat[0] + cat[1]} className="card-3d" style={{
-                background: 'linear-gradient(90deg,#e0e7ff 0%,#f8fafc 100%)',
+                background: 'linear-gradient(90deg, rgb(236 224 255) 0%, rgb(248, 250, 252) 100%)',
                 color: SECONDARY,
                 border: `1.5px solid ${BORDER}`,
                 borderRadius: 12,
@@ -788,12 +813,15 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>Upcoming Intakes</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: ".7rem" }}>
             {intakesOfAllPrograms.map((date: string) => (
               <span key={date} className="card-3d" style={{
-                background: 'linear-gradient(90deg,#e0e7ff 0%,#f8fafc 100%)',
+                background: 'linear-gradient(90deg, rgb(236 224 255) 0%, rgb(248, 250, 252) 100%)',
                 color: SECONDARY,
                 border: `1.5px solid ${BORDER}`,
                 borderRadius: 12,
@@ -820,14 +848,17 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>Accommodation</div>
           <div
             style={{
-              color: SUBTEXT,
+              color: TEXT,
               fontSize: "1.13rem",
               lineHeight: 1.7,
-              textShadow: '0 1px 4px #a5b4fc22'
+              textShadow: '0 1px 4px #9F7AEA22'
             }}
             dangerouslySetInnerHTML={{ __html: accommodation.attributes.description }}
           />
@@ -881,7 +912,10 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>Location</div>
           <div style={{
             width: '100%',
@@ -922,7 +956,10 @@ export const UniversityDetailPage: React.FC = () => {
             color: PRIMARY,
             marginBottom: ".7rem",
             fontSize: '1.18rem',
-            letterSpacing: '.5px'
+            letterSpacing: '.5px',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>Campus Video</div>
           <div style={{
             position: 'relative',

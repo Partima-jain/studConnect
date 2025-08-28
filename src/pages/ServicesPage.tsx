@@ -73,158 +73,49 @@ export const ServicesPage: React.FC = () => {
 
   return (
     <main className="page container" style={{ paddingBottom: '3rem', position: 'relative', zIndex: 1 }}>
-      {/* 3D/Glassmorphism/Animated Background Elements (like landing page) */}
-      <div
-        aria-hidden
-        style={{
-          position: 'fixed',
-          zIndex: 0,
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          pointerEvents: 'none',
-          overflow: 'hidden'
-        }}
-      >
-        {/* Blurred glassy blobs */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-120px',
-            left: '-120px',
-            width: 400,
-            height: 400,
-            background: 'radial-gradient(circle at 30% 30%, #60a5fa88 0%, #2563eb33 100%)',
-            filter: 'blur(60px)',
-            borderRadius: '50%',
-            opacity: 0.7,
-            animation: 'float1 12s ease-in-out infinite alternate'
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '-100px',
-            right: '-100px',
-            width: 320,
-            height: 320,
-            background: 'radial-gradient(circle at 70% 70%, #a5b4fc99 0%, #818cf833 100%)',
-            filter: 'blur(60px)',
-            borderRadius: '50%',
-            opacity: 0.6,
-            animation: 'float2 14s ease-in-out infinite alternate'
-          }}
-        />
-        {/* 3D gradient ring */}
-        <svg
-          width="320"
-          height="320"
-          viewBox="0 0 320 320"
-          style={{
-            position: 'absolute',
-            top: '60%',
-            left: '-120px',
-            opacity: 0.18,
-            filter: 'blur(1.5px)',
-            transform: 'rotate(-18deg)',
-            animation: 'spin 24s linear infinite'
-          }}
-        >
-          <defs>
-            <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#a5b4fc" />
-            </linearGradient>
-          </defs>
-          <ellipse
-            cx="160"
-            cy="160"
-            rx="120"
-            ry="48"
-            fill="none"
-            stroke="url(#ring)"
-            strokeWidth="18"
-          />
-        </svg>
-        {/* Floating cubes */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '60vw',
-            top: '10vh',
-            width: 60,
-            height: 60,
-            perspective: 200,
-            opacity: 0.25,
-            animation: 'cubeFloat 10s ease-in-out infinite alternate'
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              background: 'linear-gradient(135deg,#2563eb 60%,#a5b4fc 100%)',
-              borderRadius: 12,
-              boxShadow: '0 8px 32px #2563eb33',
-              transform: 'rotateY(30deg) rotateX(20deg)'
-            }}
-          />
-        </div>
-        {/* CSS Animations */}
-        <style>
-          {`
-            @keyframes float1 {
-              0% { transform: translateY(0) scale(1);}
-              100% { transform: translateY(60px) scale(1.08);}
-            }
-            @keyframes float2 {
-              0% { transform: translateY(0) scale(1);}
-              100% { transform: translateY(-40px) scale(1.12);}
-            }
-            @keyframes spin {
-              100% { transform: rotate(342deg);}
-            }
-            @keyframes cubeFloat {
-              0% { transform: translateY(0) rotateY(30deg) rotateX(20deg);}
-              100% { transform: translateY(-40px) rotateY(60deg) rotateX(40deg);}
-            }
-          `}
-        </style>
-      </div>
-      {/* --- End 3D/Glassmorphism/Animated Background Elements --- */}
-
+      {/* Removed 3D/Glassmorphism/Animated Background Elements */}
       <h1 style={{
-        fontSize: '2.5rem',
+        fontSize: '2.7rem',
         fontWeight: 900,
-        color: '#1e3a8a',
+        color: '#5727A3',
         marginBottom: '1.2rem',
         letterSpacing: '-2px',
         lineHeight: 1.1,
-        textAlign: 'center'
+        textAlign: 'center',
+        background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        textShadow: '0 2px 16px #9F7AEA22'
       }}>Our Services</h1>
       <p style={{
         textAlign: 'center',
-        fontSize: '1.13rem',
-        color: '#334155',
+        fontSize: '1.18rem',
+        color: '#1B0044',
         fontWeight: 500,
-        marginBottom: '2.2rem'
+        marginBottom: '2.2rem',
+        letterSpacing: '-.5px'
       }}>
         Explore our full range of support for your study abroad journey.
       </p>
       <section style={{
         maxWidth: 1400,
-        padding: '2.2rem 1.5rem',
+        padding: '2.5rem 1.5rem',
         textAlign: 'center',
         position: 'relative',
-        margin: '0 auto'
+        margin: '0 auto',
+        background: 'linear-gradient(120deg, #D6C5F0 0%, #fff 100%)',
+        borderRadius: 40,
+        boxShadow: '0 12px 48px 0 #9F7AEA22, 0 2px 8px 0 #5727A322',
+        border: '2.5px solid #D6C5F0',
+        overflow: 'visible'
       }}>
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '2.2rem',
-            padding: '1rem 0',
+            gap: '5.5rem 3.2rem', // Increased row gap
+            padding: '1.5rem 0',
             marginBottom: '1.5rem'
           }}
         >
@@ -233,11 +124,11 @@ export const ServicesPage: React.FC = () => {
               key={s.code + idx}
               className="work-process-area landing-service-card"
               style={{
-                background: '#fff',
-                borderRadius: 18,
-                boxShadow: '0 8px 32px 0 #2563eb11, 0 2px 8px 0 #60a5fa11',
-                border: '1.5px solid #e0e7ff',
-                overflow: 'hidden',
+                background: 'linear-gradient(135deg, #fff 60%, #D6C5F0 100%)',
+                borderRadius: 32,
+                boxShadow: '0 12px 36px 0 #9F7AEA22, 0 2px 8px 0 #D6C5F022',
+                border: '2.5px solid #9F7AEA22',
+                overflow: 'visible',
                 cursor: 'pointer',
                 transition: 'box-shadow 0.18s, transform 0.18s, background 0.18s',
                 display: 'flex',
@@ -245,83 +136,72 @@ export const ServicesPage: React.FC = () => {
                 justifyContent: 'flex-start',
                 animation: 'fadein 0.7s cubic-bezier(.4,2,.6,1) both',
                 position: 'relative',
-                minWidth: 0
+                minWidth: 0,
+                alignItems: 'center',
+                padding: 0,
+                zIndex: 1
               }}
               onClick={() => nav(s.path)}
               tabIndex={0}
               aria-label={s.name}
             >
-              <div style={{position: 'relative', width: '100%', height: 200}}>
+              {/* Unique floating image with shadow and border */}
+              <div style={{
+                position: 'absolute',
+                top: -48,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 110,
+                height: 110,
+                zIndex: 3,
+                background: 'linear-gradient(135deg,#D6C5F0 60%,#9F7AEA 100%)',
+                borderRadius: '50%',
+                boxShadow: '0 8px 32px #9F7AEA33, 0 2px 8px #D6C5F044',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '5px solid #fff',
+                overflow: 'hidden'
+              }}>
                 <img
                   src={s.img}
                   alt={s.name}
                   style={{
-                    width: '100%',
-                    height: 200,
+                    width: 90,
+                    height: 90,
                     objectFit: 'cover',
-                    borderTopLeftRadius: 18,
-                    borderTopRightRadius: 18,
-                    boxShadow: '0 2px 12px #2563eb11'
+                    borderRadius: '50%',
+                    display: 'block',
+                    boxShadow: '0 2px 12px #9F7AEA22'
                   }}
                 />
-                {/* Shaded banner overlay */}
-                <div
-                  className="service-banner"
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: 48,
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '0 1.1rem',
-                    background: 'linear-gradient(90deg, #1e293bcc 0%, #2563ebcc 100%)',
-                    color: '#fff',
-                    borderBottomLeftRadius: 18,
-                    borderBottomRightRadius: 18,
-                    zIndex: 2
-                  }}
-                >
-                  <span
-                    style={{
-                      fontWeight: 700,
-                      fontSize: '1.08rem',
-                      flex: 1,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      letterSpacing: '-.5px'
-                    }}
-                  >
-                    {s.name}
-                  </span>
-                  {/* Arrow icon (SVG) */}
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style={{marginLeft: 10, flexShrink: 0, transform: 'rotate(-45deg)'}}
-                    aria-hidden="true"
-                  >
-                    <circle cx="16" cy="16" r="16" fill="#fff2" />
-                    <path d="M11 17L21 17M21 17L17.5 13.5M21 17L17.5 20.5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
               </div>
+              {/* Card content */}
               <div style={{
-                padding: '1.1rem 1.2rem 1.2rem 1.2rem',
-                textAlign: 'left',
+                padding: '5.5rem 1.7rem 1.7rem 1.7rem',
+                textAlign: 'center',
                 flex: 1,
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                position: 'relative'
               }}>
+                <h3 style={{
+                  fontWeight: 900,
+                  fontSize: '1.25rem',
+                  color: '#5727A3',
+                  margin: '0 0 .7rem 0',
+                  letterSpacing: '-.5px',
+                  background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  textShadow: '0 2px 8px #9F7AEA11'
+                }}>{s.name}</h3>
                 <div style={{
-                  fontSize: '1.08rem',
-                  color: '#334155',
+                  fontSize: '1.09rem',
+                  color: '#1B0044',
                   fontWeight: 500,
                   margin: 0,
                   marginBottom: 0,
@@ -332,57 +212,100 @@ export const ServicesPage: React.FC = () => {
                   WebkitBoxOrient: 'vertical'
                 }}>{s.desc}</div>
               </div>
+              {/* Unique bottom action bar with glass effect and floating arrow */}
+              <div style={{
+                width: '100%',
+                height: 54,
+                background: 'rgba(151, 117, 234, 0.13)',
+                color: '#5727A3',
+                borderBottomLeftRadius: 32,
+                borderBottomRightRadius: 32,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '1.13rem',
+                letterSpacing: '-.5px',
+                gap: 10,
+                cursor: 'pointer',
+                transition: 'background 0.18s',
+                position: 'relative',
+                boxShadow: '0 2px 8px #9F7AEA22'
+              }}>
+                <span style={{
+                  background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  fontWeight: 800
+                }}>Learn More</span>
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 36,
+                  height: 36,
+                  background: 'linear-gradient(135deg,#D6C5F0 60%,#9F7AEA 100%)',
+                  borderRadius: '50%',
+                  marginLeft: 6,
+                  boxShadow: '0 2px 8px #9F7AEA22'
+                }}>
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    style={{ transform: 'rotate(-45deg)' }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="12" fill="#fff2" />
+                    <path d="M7 13H17M17 13L13.5 9.5M17 13L13.5 16.5" stroke="#5727A3" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+              {/* Decorative floating gradient ring */}
+              <div style={{
+                position: 'absolute',
+                top: -60,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 140,
+                height: 140,
+                borderRadius: '50%',
+                background: 'radial-gradient(circle at 50% 50%, #D6C5F0 0%, #9F7AEA33 80%, transparent 100%)',
+                opacity: 0.25,
+                zIndex: 0,
+                pointerEvents: 'none'
+              }} />
               <style>{`
                 @keyframes fadein {
                   0% { opacity: 0; transform: translateY(30px);}
                   100% { opacity: 1; transform: none;}
                 }
+                .landing-service-card:hover, .landing-service-card:focus {
+                  box-shadow: 0 24px 64px 0 #9F7AEA55, 0 4px 16px 0 #D6C5F033 !important;
+                  transform: scale(1.06) !important;
+                  border-color: #9F7AEA !important;
+                  background: linear-gradient(135deg, #fff 40%, #D6C5F0 100%);
+                }
+                .landing-service-card:hover h3, .landing-service-card:focus h3 {
+                  background: linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%);
+                  WebkitBackgroundClip: text;
+                  WebkitTextFillColor: transparent;
+                  background-clip: text;
+                  color: transparent;
+                  text-shadow: 0 2px 16px #fff8, 0 1px 2px #9F7AEA44;
+                }
+                .landing-service-card:hover .bottom-bar, .landing-service_card:focus .bottom-bar {
+                  background: linear-gradient(90deg, #9F7AEA 0%, #5727A3 100%);
+                }
               `}</style>
             </div>
           ))}
         </div>
-        <style>{`
-          .landing-service-card {
-            position: relative;
-          }
-          .landing-service-card::after {
-            content: '';
-            pointer-events: none;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 180%;
-            height: 180%;
-            transform: translate(-50%, -50%) scale(0.6);
-            border-radius: 50%;
-            background: radial-gradient(circle at 50% 40%, #60a5fa44 0%, #fbbf2433 40%, #2563eb22 70%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.25s, transform 0.25s;
-            z-index: 2;
-            filter: blur(2px) saturate(1.3);
-            mix-blend-mode: lighten;
-          }
-          .landing-service-card:hover::after,
-          .landing-service-card:focus::after {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-          }
-          .landing-service-card:hover, .landing-service_card:focus {
-            background: radial-gradient(circle at 60% 40%, #2563eb 0%, #60a5fa 60%, #1e293b 100%);
-            box-shadow: 0 24px 64px 0 #2563eb55, 0 4px 16px 0 #60a5fa33 !important;
-            transform: scale(1.06) !important;
-            border-color: #2563eb !important;
-          }
-          .landing-service-card:hover h6, .landing-service-card:focus h6 {
-            background: linear-gradient(90deg,#fff 0%,#fbbf24 100%);
-            WebkitBackgroundClip: text;
-            WebkitTextFillColor: transparent;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 16px #fff8, 0 1px 2px #fbbf2444;
-          }
-        `}</style>
       </section>
     </main>
   );
 };
+                  

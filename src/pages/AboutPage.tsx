@@ -173,7 +173,7 @@ const Feature3DCard: React.FC<{
         <h3 style={{
           fontSize: '1.18rem',
           fontWeight: 700,
-          color: '#1e3a8a',
+          color: '#5727A3',
           marginBottom: '.6rem',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
@@ -376,15 +376,15 @@ export const AboutPage: React.FC = () => {
       ref={aboutRef as any}
       style={{
         fontFamily: 'Inter, Roboto, Arial, sans-serif',
-        background: 'linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%)',
-        color: '#111827',
+        background: 'linear-gradient(135deg, #D6C5F0 0%, #f8fafc 100%)',
+        color: '#1B0044',
         minHeight: '100vh',
         padding: 0,
         margin: 0,
         width: '100vw',
-        maxWidth: '100vw', // Prevent overflow beyond viewport width
+        maxWidth: '100vw',
         boxSizing: 'border-box',
-        overflowX: 'hidden' // Prevent horizontal scroll and right-side white space
+        overflowX: 'hidden'
       }}
     >
       {/* Hero Section */}
@@ -398,34 +398,34 @@ export const AboutPage: React.FC = () => {
         padding: '3rem 1.5rem 2rem 1.5rem',
         boxSizing: 'border-box',
         width: '100%',
-        overflow: 'hidden' // Prevent child overflow
+        overflow: 'hidden'
       }}>
         <div style={{ flex: 1, minWidth: 320 }}>
           <h1 style={{
             fontSize: '2.8rem',
             fontWeight: 900,
-            color: '#1e3a8a',
+            color: '#5727A3',
             marginBottom: '1.2rem',
             letterSpacing: '-2px',
             lineHeight: 1.1
           }}>
             Our Story: <span style={{
-              background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+              background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>The Amazon for Studying Abroad</span>
           </h1>
           <p style={{
             fontSize: '1.13rem',
-            color: '#334155',
+            color: '#1B0044',
             fontWeight: 500,
             marginBottom: '1.2rem'
           }}>
-            We didn’t build <b>StudConnect</b> because we wanted to be another consultancy. We built it because we got tired of watching students get lost in a system full of half-truths, hidden costs, and overhyped promises.
+            We didn’t build <b>Yournextuniversity</b> because we wanted to be another consultancy. We built it because we got tired of watching students get lost in a system full of half-truths, hidden costs, and overhyped promises.
           </p>
           <p style={{
             fontSize: '1.13rem',
-            color: '#334155',
+            color: '#1B0044',
             fontWeight: 500,
             marginBottom: '1.2rem'
           }}>
@@ -476,9 +476,9 @@ export const AboutPage: React.FC = () => {
         maxWidth: 1200,
         margin: '2.5rem auto 0 auto',
         padding: '2.5rem 1.5rem',
-        background: 'linear-gradient(90deg,#2563eb0d 0%,#60a5fa0d 100%)',
+        background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA11 100%)',
         borderRadius: '2.2rem',
-        boxShadow: '0 4px 24px 0 #2563eb11',
+        boxShadow: '0 4px 24px 0 #5727A322',
         position: 'relative',
         overflow: 'visible'
       }}>
@@ -486,19 +486,19 @@ export const AboutPage: React.FC = () => {
           textAlign: 'center',
           fontSize: '2.1rem',
           fontWeight: 800,
-          color: '#2563eb',
+          color: '#5727A3',
           marginBottom: '2.2rem'
         }}>
           Not a Consultancy—A Marketplace
         </h2>
         <p style={{
           fontSize: '1.13rem',
-          color: '#334155',
+          color: '#1B0044',
           fontWeight: 500,
           marginBottom: '1.2rem',
           textAlign: 'center'
         }}>
-          <b>StudConnect</b> is not a consultancy—it’s a <span style={{ color: '#2563eb', fontWeight: 700 }}>marketplace</span>. Think of us as the <b>Amazon for studying abroad</b>.
+          <b style={{ color: '#5727A3' }}>Yournextuniversity</b> is not a consultancy—it’s a <span style={{ color: '#5727A3', fontWeight: 700 }}>marketplace</span>. Think of us as the <b style={{ color: '#5727A3' }}>Amazon for studying abroad</b>.
         </p>
         <div
           className="about-features-grid"
@@ -508,7 +508,8 @@ export const AboutPage: React.FC = () => {
             gap: '2.5rem',
             alignItems: 'stretch',
             width: '100%',
-            position: 'relative'
+            position: 'relative',
+            color: '#1B0044'
           }}
         >
           {features.map((f, i) => (
@@ -539,52 +540,71 @@ export const AboutPage: React.FC = () => {
         `}</style>
       </section>
       
-      {/* Promise Section: simple, direct, light background, full width, no emoji */}
+      {/* Promise Section */}
       <section
         style={{
           width: '100vw',
           margin: '2.5rem 0 0 0',
-          padding: '2rem 0',
-          background: 'linear-gradient(90deg,#f1f5fd 0%,#e0e7ff 100%)',
-          color: '#1e293b',
+          padding: '0',
+          color: '#1B0044',
           textAlign: 'center',
-          boxShadow: '0 2px 8px 0 #2563eb11',
           borderRadius: 0,
           fontWeight: 600,
+          position: 'relative',
         }}
       >
+        {/* Decorative gradient border and subtle background effect */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0.5,
+            zIndex: 0,
+            pointerEvents: 'none'
+          }}
+        />
         <div style={{
-          maxWidth: 700,
           margin: '0 auto',
           padding: '0 1.5rem',
         }}>
           <h2 style={{
-            fontSize: '1.5rem',
+            fontSize: '2.1rem',
             fontWeight: 900,
             marginBottom: '1.1rem',
             letterSpacing: '-1px',
-            color: '#2563eb',
-            background: 'none',
-            WebkitBackgroundClip: 'unset',
-            WebkitTextFillColor: 'unset'
+            color: '#5727A3',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            textShadow: '0 2px 16px #9F7AEA22',
+            lineHeight: 1.13,
+            display: 'inline-block',
+            padding: '0.2em 0.7em',
+            borderRadius: 18,
+            boxShadow: '0 2px 12px #9F7AEA22'
           }}>
             No Packages. No Pressure. No Sales Pitch.
           </h2>
           <p style={{
-            fontSize: '1.13rem',
+            fontSize: '1.18rem',
             fontWeight: 500,
-            marginBottom: '1.2rem'
+            marginBottom: '1.2rem',
+            color: '#1B0044',
+            lineHeight: 1.7,
+            textShadow: '0 1px 2px #fff8'
           }}>
-            Just <b>choice</b>, <b>clarity</b>, and <b>control</b>.<br />
+            Just <span style={{ color: '#5727A3', fontWeight: 700 }}>choice</span>, <span style={{ color: '#5727A3', fontWeight: 700 }}>clarity</span>, and <span style={{ color: '#5727A3', fontWeight: 700 }}>control</span>.<br />
             We built this for the students who value honesty over hype, who want to learn from people who’ve actually been there, done that, and who want studying abroad to feel as easy as adding items to a cart.
           </p>
           <p style={{
-            fontSize: '1.13rem',
-            color: '#2563eb',
+            fontSize: '1.18rem',
+            color: '#9F7AEA',
             fontWeight: 700,
-            margin: '1.2rem 0 0 0'
+            margin: '1.2rem 0 0 0',
+            textShadow: '0 1px 2px #fff8'
           }}>
-            We’re not here to “sell” you a dream. We’re here to help you <span style={{ textDecoration: 'underline', color: '#1e293b' }}>live it</span>.
+            We’re not here to “sell” you a dream. We’re here to help you <span style={{ textDecoration: 'underline', color: '#1B0044' }}>live it</span>.
           </p>
         </div>
       </section>
@@ -595,10 +615,10 @@ export const AboutPage: React.FC = () => {
           maxWidth: 700,
           margin: '2.5rem auto 0 auto',
           padding: '2.2rem 1.5rem 2.5rem 1.5rem',
-          background: 'linear-gradient(90deg,#1e293b 0%,#2563eb 100%)',
+          background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
           borderRadius: '1.5rem',
-          boxShadow: '0 8px 32px 0 #2563eb33, 0 2px 8px 0 #60a5fa22',
-          color: '#f1f5fd',
+          boxShadow: '0 8px 32px 0 #5727A322, 0 2px 8px 0 #9F7AEA22',
+          color: '#1B0044',
           textAlign: 'center',
           fontWeight: 600,
           fontSize: '1.13rem',
@@ -613,7 +633,7 @@ export const AboutPage: React.FC = () => {
             position: 'absolute',
             inset: -5,
             borderRadius: '1.7rem',
-            background: 'conic-gradient(from 90deg, #2563eb 0deg 120deg, #60a5fa 120deg 240deg, #2563eb 240deg 360deg)',
+            background: 'conic-gradient(from 90deg, #5727A3 0deg 120deg, #9F7AEA 120deg 240deg, #5727A3 240deg 360deg)',
             opacity: 0.13,
             zIndex: 0,
             filter: 'blur(4px)',
@@ -627,7 +647,7 @@ export const AboutPage: React.FC = () => {
           fontWeight: 800,
           marginBottom: '.7rem',
           letterSpacing: '-1px',
-          background: 'linear-gradient(90deg,#60a5fa 0%,#fff 100%)',
+          background: 'rgb(87, 39, 163)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           zIndex: 2,
@@ -637,17 +657,17 @@ export const AboutPage: React.FC = () => {
         </span>
         <div style={{
           margin: '1.1rem 0 0 0',
-          color: '#f1f5fd',
+          color: '#1B0044',
           fontWeight: 600,
           fontSize: '1.13rem',
           zIndex: 2,
           position: 'relative',
           borderRadius: 12,
           padding: '1.1rem 1rem 1.1rem 1rem',
-          boxShadow: '0 2px 8px 0 #2563eb11',
+          boxShadow: '0 2px 8px 0 #5727A322',
           lineHeight: 1.6
         }}>
-          We’re <b>StudConnect</b> — the Amazon for Studying Abroad. Tired of overpriced packages, fake promises, and confusing agents? We give you <b>real students</b>, <b>verified housing</b>, <b>scholarships</b>, and guidance that actually works. Pick what you need. Skip the hype. Own your journey.
+          We’re <b>Yournextuniversity</b> — the Amazon for Studying Abroad. Tired of overpriced packages, fake promises, and confusing agents? We give you <b>real students</b>, <b>verified housing</b>, <b>scholarships</b>, and guidance that actually works. Pick what you need. Skip the hype. Own your journey.
         </div>
         <style>{`
           @keyframes bio-bounce {

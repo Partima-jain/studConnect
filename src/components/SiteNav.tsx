@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './SiteNav.css';
 import { useAuth } from '../context/AuthContext';
 
-// const ThemeToggle: React.FC = () => {
-//   const [theme, setTheme] = useState<string>(() => localStorage.getItem('theme') || 'light');
-//   useEffect(() => {
-//     document.documentElement.dataset.theme = theme;
-//     localStorage.setItem('theme', theme);
-//   }, [theme]);
-//   return (
-//     <button aria-label="Toggle theme" className="btn btn-small" onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}>
-//       {theme === 'light' ? '🌙' : '☀️'}
-//     </button>
-//   );
-// };
+const servicesDropdown = [
+  {
+    name: 'Main Counsellor Counselling & Peer Counselling',
+    path: '/services/peer-counselling',
+  },
+  {
+    name: 'Accommodation Assistance',
+    path: '/accommodation',
+  },
+  {
+    name: 'Airport Pickup',
+    path: '/services/airport-pickup',
+  },
+  {
+    name: 'Financial Services / Education Loans',
+    path: '/financial-services',
+  },
+  {
+    name: 'International Study Application Process',
+    path: '/services/international-application-process',
+  },
+];
 
 export const SiteNav: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const close = () => setOpen(false);
@@ -32,23 +44,23 @@ export const SiteNav: React.FC = () => {
       role="navigation"
       aria-label="Main Navigation"
       style={{
-        background: 'rgba(245, 247, 251, 0.98)',
-        color: '#1e293b',
+        background: 'linear-gradient(90deg, #D6C5F0 0%, #9F7AEA 100%)',
+        color: '#1B0044',
         borderRadius: '22px',
         margin: '1.2rem auto 1.5rem auto',
         maxWidth: '1200px',
         position: 'relative',
         zIndex: 10,
-        boxShadow: '0 4px 24px 0 rgba(37,99,235,0.08), 0 1.5px 8px 0 rgba(59,130,246,0.06)',
+        boxShadow: '0 4px 24px 0 #5727A355, 0 1.5px 8px 0 #9F7AEA33',
         transition: 'box-shadow 0.3s, transform 0.3s'
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px) scale(1.01)';
-        (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 36px 0 rgba(37,99,235,0.13), 0 2px 12px 0 rgba(59,130,246,0.09)';
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 36px 0 #5727A388, 0 2px 12px 0 #9F7AEA44';
       }}
       onMouseLeave={e => {
         (e.currentTarget as HTMLElement).style.transform = '';
-        (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 24px 0 rgba(37,99,235,0.08), 0 1.5px 8px 0 rgba(59,130,246,0.06)';
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 24px 0 #5727A355, 0 1.5px 8px 0 #9F7AEA33';
       }}
     >
       <div className="container site-nav__inner" style={{
@@ -71,11 +83,11 @@ export const SiteNav: React.FC = () => {
             onClick={() => setOpen(o => !o)}
             style={{
               background: '#fff',
-              boxShadow: open ? '0 2px 12px 0 #3b82f644' : '0 1px 4px 0 #2563eb22',
+              boxShadow: open ? '0 2px 12px 0 #9F7AEA44' : '0 1px 4px 0 #5727A322',
               borderRadius: '50%',
               border: 'none',
               transition: 'box-shadow 0.3s, background 0.3s',
-              outline: open ? '2px solid #3b82f6' : 'none'
+              outline: open ? '2px solid #9F7AEA' : 'none'
             }}
           >
             <span /><span /><span />
@@ -88,15 +100,15 @@ export const SiteNav: React.FC = () => {
               fontWeight: 800,
               fontSize: '1.7rem',
               letterSpacing: '-1px',
-              color: '#1e3a8a',
+              color: '#5727A3',
               background: 'none',
               WebkitBackgroundClip: 'initial',
               WebkitTextFillColor: 'initial',
               backgroundClip: 'initial',
-              textShadow: '0 2px 12px #fff3, 0 1px 2px #2563eb11'
+              textShadow: '0 2px 12px #fff3, 0 1px 2px #5727A311'
             }}
           >
-            StudConnect
+            Yournextuniversity
           </NavLink>
         </div>
         <div
@@ -113,70 +125,142 @@ export const SiteNav: React.FC = () => {
           <NavLink
             to="/about"
             onClick={()=>setOpen(false)}
-            style={({isActive}) => ({
-              background: isActive ? 'linear-gradient(90deg, rgb(55 81 138) 0%, rgb(96, 165, 250) 100%)' : '#fff',
-              color: isActive ? '#fff' : '#1e3a8a',
+            style={{
+              background: 'none',
+              color: '#5727A3',
               borderRadius: '18px',
               fontWeight: 700,
               fontSize: '1.05rem',
               padding: '.65rem 1.2rem',
-              boxShadow: isActive
-                ? '0 4px 16px 0 #2563eb55, 0 1.5px 8px 0 #3b82f622'
-                : '0 2px 8px 0 #e0e7ef',
-              border: isActive ? 'none' : '1px solid #e0e7ef',
+              boxShadow: 'none',
+              border: 'none',
               transition: 'all 0.25s'
-            })}
+            }}
           >About</NavLink>
-          <NavLink
-            to="/services"
-            onClick={()=>setOpen(false)}
-            style={({isActive}) => ({
-              background: isActive ? 'linear-gradient(90deg, rgb(55 81 138) 0%, rgb(96, 165, 250) 100%)' : '#fff',
-              color: isActive ? '#fff' : '#1e3a8a',
-              borderRadius: '18px',
-              fontWeight: 700,
-              fontSize: '1.05rem',
-              padding: '.65rem 1.2rem',
-              boxShadow: isActive
-                ? '0 4px 16px 0 #2563eb55, 0 1.5px 8px 0 #3b82f622'
-                : '0 2px 8px 0 #e0e7ef',
-              border: isActive ? 'none' : '1px solid #e0e7ef',
-              transition: 'all 0.25s'
-            })}
-          >Services</NavLink>
+          <div
+            className="nav-services-dropdown"
+            style={{ position: 'relative', display: 'inline-block' }}
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}
+          >
+            <NavLink
+              to="/services"
+              onClick={()=>setOpen(false)}
+              style={{
+                background: 'none',
+                color: '#5727A3',
+                borderRadius: '18px',
+                fontWeight: 700,
+                fontSize: '1.05rem',
+                padding: '.65rem 1.2rem',
+                boxShadow: 'none',
+                border: 'none',
+                transition: 'all 0.25s',
+                position: 'relative',
+                zIndex: 2
+              }}
+            >
+              Services
+              <svg style={{ marginLeft: 6, verticalAlign: 'middle' }} width="16" height="16" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="#5727A3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </NavLink>
+            {servicesOpen && (
+              <div
+                className="services-dropdown-menu"
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  minWidth: 240,
+                  background: '#fff',
+                  borderRadius: 16,
+                  boxShadow: '0 8px 32px #9F7AEA22, 0 2px 8px #D6C5F022',
+                  padding: '0.5rem 0',
+                  zIndex: 100,
+                  marginTop: 8,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  animation: 'fadein .18s cubic-bezier(.4,2,.6,1)'
+                }}
+                onMouseEnter={() => setServicesOpen(true)}
+                onMouseLeave={() => setServicesOpen(false)}
+              >
+                {servicesDropdown.map((item) => (
+                  <div
+                    key={item.path}
+                    style={{
+                      padding: '0.85rem 1.3rem',
+                      color: '#5727A3',
+                      fontWeight: 600,
+                      fontSize: '1.03rem',
+                      textDecoration: 'none',
+                      border: 'none',
+                      background: 'none',
+                      borderRadius: 12,
+                      transition: 'background 0.15s, color 0.15s',
+                      margin: '0 0.2rem',
+                      textAlign: 'left',
+                      cursor: 'pointer'
+                    }}
+                    tabIndex={0}
+                    aria-label={item.name}
+                    onClick={() => {
+                      setOpen(false);
+                      setServicesOpen(false);
+                      navigate(item.path);
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        setOpen(false);
+                        setServicesOpen(false);
+                        navigate(item.path);
+                      }
+                    }}
+                    onMouseOver={e => {
+                      (e.currentTarget as HTMLDivElement).style.background = 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA22 100%)';
+                      (e.currentTarget as HTMLDivElement).style.color = '#9F7AEA';
+                    }}
+                    onMouseOut={e => {
+                      (e.currentTarget as HTMLDivElement).style.background = 'none';
+                      (e.currentTarget as HTMLDivElement).style.color = '#5727A3';
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <NavLink
             to="/universities"
             onClick={()=>setOpen(false)}
-            style={({isActive}) => ({
-              background: isActive ? 'linear-gradient(90deg, rgb(55 81 138) 0%, rgb(96, 165, 250) 100%)' : '#fff',
-              color: isActive ? '#fff' : '#1e3a8a',
+            style={{
+              background: 'none',
+              color: '#5727A3',
               borderRadius: '18px',
               fontWeight: 700,
               fontSize: '1.05rem',
               padding: '.65rem 1.2rem',
-              boxShadow: isActive
-                ? '0 4px 16px 0 #2563eb55, 0 1.5px 8px 0 #3b82f622'
-                : '0 2px 8px 0 #e0e7ef',
-              border: isActive ? 'none' : '1px solid #e0e7ef',
+              boxShadow: 'none',
+              border: 'none',
               transition: 'all 0.25s'
-            })}
+            }}
           >Universities</NavLink>
           <NavLink
             to="/contact"
             onClick={()=>setOpen(false)}
-            style={({isActive}) => ({
-              background: isActive ? 'linear-gradient(90deg, rgb(55 81 138) 0%, rgb(96, 165, 250) 100%)' : '#fff',
-              color: isActive ? '#fff' : '#1e3a8a',
+            style={{
+              background: 'none',
+              color: '#5727A3',
               borderRadius: '18px',
               fontWeight: 700,
               fontSize: '1.05rem',
               padding: '.65rem 1.2rem',
-              boxShadow: isActive
-                ? '0 4px 16px 0 #2563eb55, 0 1.5px 8px 0 #3b82f622'
-                : '0 2px 8px 0 #e0e7ef',
-              border: isActive ? 'none' : '1px solid #e0e7ef',
+              boxShadow: 'none',
+              border: 'none',
               transition: 'all 0.25s'
-            })}
+            }}
           >Contact</NavLink>
           {/* <ThemeToggle /> */}
           {user ? (
@@ -184,12 +268,12 @@ export const SiteNav: React.FC = () => {
               <span style={{
                 fontSize:'.9rem',
                 opacity:.85,
-                color:'#1e3a8a',
-                background:'#e0e7ef',
+                color:'#5727A3',
+                background:'#E9D8FD',
                 borderRadius:'12px',
                 padding:'.4rem 1rem',
                 fontWeight:700,
-                boxShadow:'0 1px 6px #2563eb11',
+                boxShadow:'0 1px 6px #9F7AEA22',
                 whiteSpace: 'nowrap'
               }}>{user.full_name || user.email}</span>
               <button
@@ -197,14 +281,14 @@ export const SiteNav: React.FC = () => {
                 type="button"
                 onClick={logout}
                 style={{
-                  background: 'linear-gradient(180deg,#3b82f6 0%,#1e3a8a 100%)',
+                  background: 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)',
                   color: '#fff',
                   border: 'none',
                   borderRadius: '18px',
                   fontWeight: 700,
                   fontSize: '1.05rem',
                   padding: '.55rem 1.1rem',
-                  boxShadow: '0 6px 18px -4px #2563eb55, 0 2px 8px 0 #3b82f622',
+                  boxShadow: '0 6px 18px -4px #5727A355, 0 2px 8px 0 #9F7AEA33',
                   transition: 'all 0.25s',
                   whiteSpace: 'nowrap'
                 }}
@@ -217,14 +301,14 @@ export const SiteNav: React.FC = () => {
                 onClick={()=>setOpen(false)}
                 className={({isActive}) => 'btn btn-small' + (isActive ? ' btn-primary' : '')}
                 style={({isActive}) => ({
-                  background: isActive ? 'linear-gradient(180deg,#3b82f6 0%,#1e3a8a 100%)' : '#fff',
-                  color: isActive ? '#fff' : '#1e3a8a',
+                  background: isActive ? 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)' : '#fff',
+                  color: isActive ? '#fff' : '#5727A3',
                   borderRadius: '18px',
                   fontWeight: 700,
                   fontSize: '1.05rem',
                   padding: '.55rem 1.1rem',
                   boxShadow: isActive
-                    ? '0 6px 18px -4px #2563eb55, 0 2px 8px 0 #3b82f622'
+                    ? '0 6px 18px -4px #5727A355, 0 2px 8px 0 #9F7AEA33'
                     : '0 2px 8px 0 #e0e7ef',
                   border: isActive ? 'none' : '1px solid #e0e7ef',
                   transition: 'all 0.25s',
@@ -236,14 +320,14 @@ export const SiteNav: React.FC = () => {
                 onClick={()=>setOpen(false)}
                 className={({isActive}) => 'btn btn-small' + (isActive ? ' btn-primary' : '')}
                 style={({isActive}) => ({
-                  background: isActive ? 'linear-gradient(180deg,#3b82f6 0%,#1e3a8a 100%)' : '#fff',
-                  color: isActive ? '#fff' : '#1e3a8a',
+                  background: isActive ? 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)' : '#fff',
+                  color: isActive ? '#fff' : '#5727A3',
                   borderRadius: '18px',
                   fontWeight: 700,
                   fontSize: '1.05rem',
                   padding: '.55rem 1.1rem',
                   boxShadow: isActive
-                    ? '0 6px 18px -4px #2563eb55, 0 2px 8px 0 #3b82f622'
+                    ? '0 6px 18px -4px #5727A355, 0 2px 8px 0 #9F7AEA33'
                     : '0 2px 8px 0 #e0e7ef',
                   border: isActive ? 'none' : '1px solid #e0e7ef',
                   transition: 'all 0.25s',
@@ -254,6 +338,26 @@ export const SiteNav: React.FC = () => {
           )}
         </div>
       </div>
+      <style>{`
+        @keyframes fadein {
+          0% { opacity: 0; transform: translateY(10px);}
+          100% { opacity: 1; transform: none;}
+        }
+        .services-dropdown-menu a:active {
+          background: linear-gradient(90deg,#D6C5F0 0%,#9F7AEA22 100%) !important;
+          color: #9F7AEA !important;
+        }
+        @media (max-width: 900px) {
+          .nav-services-dropdown .services-dropdown-menu {
+            position: static !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            margin-top: 0 !important;
+            min-width: 0 !important;
+          }
+        }
+      `}</style>
     </nav>
   );
 };
+

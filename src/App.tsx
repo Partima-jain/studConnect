@@ -57,14 +57,10 @@ export const App: React.FC = () => (
           </RequireAuth>
         } />
         <Route path="/universities/:id" element={
-          <RequireAuth>
-            <UniversityDetailPage />
-          </RequireAuth>
+          <UniversityDetailPage />
         } />
         <Route path="/program-details/:id" element={
-          <RequireAuth>
-            <ProgramDetailsPage />
-          </RequireAuth>
+           <ProgramDetailsPage />
         } />
         <Route path="/contact" element={
           <RequireAuth>

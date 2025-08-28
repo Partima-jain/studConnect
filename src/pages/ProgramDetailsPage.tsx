@@ -269,19 +269,22 @@ export const ProgramDetailsPage: React.FC = () => {
     <section
       style={{
         marginBottom: '2.2rem',
-        background: 'rgba(255,255,255,0.97)',
+        background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
         borderRadius: 18,
-        boxShadow: '0 2px 12px #2563eb11',
+        boxShadow: '0 2px 12px #9F7AEA11',
         padding: '1.5rem 2rem',
-        border: '1px solid #e0e7ef'
+        border: '1.5px solid #D6C5F0'
       }}
     >
       <h2 style={{
-        color: '#2563eb',
+        color: '#5727A3',
         fontWeight: 900,
         fontSize: '1.25rem',
         marginBottom: '1.1rem',
-        letterSpacing: '.01em'
+        letterSpacing: '.01em',
+        background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent'
       }}>{title}</h2>
       {children}
     </section>
@@ -291,16 +294,16 @@ export const ProgramDetailsPage: React.FC = () => {
   const IntakeCard = ({ intake }: { intake: any }) => (
     <div
       style={{
-        background: '#f8fafc',
+        background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
         borderRadius: 12,
-        border: '1px solid #e0e7ef',
-        boxShadow: '0 2px 8px #2563eb11',
+        border: '1.5px solid #D6C5F0',
+        boxShadow: '0 2px 8px #9F7AEA11',
         padding: '1rem 1.2rem',
         marginBottom: 14,
         minWidth: 0,
       }}
     >
-      <div style={{ fontWeight: 700, color: '#2563eb', fontSize: '1.08rem', marginBottom: 6 }}>
+      <div style={{ fontWeight: 700, color: '#5727A3', fontSize: '1.08rem', marginBottom: 6 }}>
         {intake.startDate ? new Date(intake.startDate).toLocaleString('default', { month: 'short', year: 'numeric' }) : 'Intake'}
       </div>
       <PrettyField label="Open Date" value={intake.openDate ? new Date(intake.openDate).toLocaleDateString() : 'N/A'} />
@@ -344,7 +347,7 @@ export const ProgramDetailsPage: React.FC = () => {
   return (
     <main
       style={{
-        background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)',
+        background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
         minHeight: '100vh',
         paddingBottom: '2rem',
         position: 'relative',
@@ -375,7 +378,7 @@ export const ProgramDetailsPage: React.FC = () => {
             left: '-120px',
             width: 400,
             height: 400,
-            background: 'radial-gradient(circle at 30% 30%, #60a5fa88 0%, #2563eb33 100%)',
+            background: 'radial-gradient(circle at 30% 30%, #D6C5F088 0%, #9F7AEA33 100%)',
             filter: 'blur(60px)',
             borderRadius: '50%',
             opacity: 0.7,
@@ -389,7 +392,7 @@ export const ProgramDetailsPage: React.FC = () => {
             right: '-100px',
             width: 320,
             height: 320,
-            background: 'radial-gradient(circle at 70% 70%, #a5b4fc99 0%, #818cf833 100%)',
+            background: 'radial-gradient(circle at 70% 70%, #9F7AEA99 0%, #D6C5F033 100%)',
             filter: 'blur(60px)',
             borderRadius: '50%',
             opacity: 0.6,
@@ -413,8 +416,8 @@ export const ProgramDetailsPage: React.FC = () => {
         >
           <defs>
             <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#a5b4fc" />
+              <stop offset="0%" stopColor="#5727A3" />
+              <stop offset="100%" stopColor="#9F7AEA" />
             </linearGradient>
           </defs>
           <ellipse
@@ -444,9 +447,9 @@ export const ProgramDetailsPage: React.FC = () => {
             style={{
               width: '100%',
               height: '100%',
-              background: 'linear-gradient(135deg,#2563eb 60%,#a5b4fc 100%)',
+              background: 'linear-gradient(135deg,#5727A3 60%,#9F7AEA 100%)',
               borderRadius: 12,
-              boxShadow: '0 8px 32px #2563eb33',
+              boxShadow: '0 8px 32px #9F7AEA33',
               transform: 'rotateY(30deg) rotateX(20deg)'
             }}
           />
@@ -472,44 +475,43 @@ export const ProgramDetailsPage: React.FC = () => {
             .program-section-title {
               font-size: 1.5rem;
               font-weight: 900;
-              color: #2563eb;
+              color: #5727A3;
               margin-bottom: 1.2rem;
               letter-spacing: 0.01em;
-              text-shadow: 0 2px 8px #2563eb11;
+              text-shadow: 0 2px 8px #9F7AEA11;
             }
             .program-card-glass {
-              background: rgba(255,255,255,0.85);
-              box-shadow: 0 8px 32px 0 rgba(31,41,55,0.13), 0 1.5px 8px 0 #c7d2fe;
-              border-radius: 1.5rem;
-              backdrop-filter: blur(8px) saturate(1.2);
-              border: 1px solid #e0e7ef;
+              background: linear-gradient(90deg,#D6C5F0 0%,#fff 100%);
+              box-shadow: 0 8px 32px 0 #9F7AEA22, 0 1.5px 8px 0 #D6C5F022;
+              border-radius: 2.2rem;
+              border: 1.5px solid #D6C5F0;
             }
             .program-highlight {
-              background: linear-gradient(90deg,#2563eb 0%,#60a5fa 100%);
+              background: linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%);
               color: #fff;
               border-radius: 8px;
               padding: .3rem 1rem;
               font-weight: 700;
               font-size: 1.05rem;
               margin-right: .5rem;
-              box-shadow: 0 2px 8px #2563eb22;
+              box-shadow: 0 2px 8px #9F7AEA22;
               display: inline-block;
             }
             .program-cta-btn {
-              background: linear-gradient(90deg,#2563eb 0%,#60a5fa 100%);
+              background: linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%);
               color: #fff;
               border-radius: 10px;
               padding: .7rem 2rem;
               font-weight: 700;
-              font-size: 1.13rem;
+              fontSize: 1.13rem;
               border: none;
-              box-shadow: 0 2px 8px #2563eb22;
+              box-shadow: 0 2px 8px #9F7AEA22;
               cursor: pointer;
               margin-top: 1.5rem;
               transition: background 0.2s, transform 0.2s;
             }
             .program-cta-btn:hover {
-              background: linear-gradient(90deg,#60a5fa 0%,#2563eb 100%);
+              background: linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%);
               transform: scale(1.04);
             }
           `}
@@ -620,11 +622,18 @@ export const ProgramDetailsPage: React.FC = () => {
                 <h1 style={{
                   fontSize: '2.2rem',
                   fontWeight: 900,
-                  color: '#2563eb',
+                  color: '#5727A3',
                   marginBottom: '.5rem',
-                  letterSpacing: '.01em'
+                  letterSpacing: '.01em',
+                  background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
                 }}>{programName}</h1>
-                <div style={{ fontSize: '1.13rem', color: '#334155', fontWeight: 700, marginBottom: '1.1rem' }}>
+                <div style={{ fontSize: '1.13rem', color: '#5727A3', fontWeight: 700, marginBottom: '1.1rem',
+                  background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
                   {programLevel ? labelize(programLevel) : ''}
                 </div>
                 {tags && tags.length > 0 && (
@@ -710,7 +719,18 @@ export const ProgramDetailsPage: React.FC = () => {
                   marginBottom: 0,
                 }}
               >
-                <div style={{ fontWeight: 700, fontSize: '1.15rem', color: '#2563eb', marginBottom: 18, textAlign: 'center' }}>Program Fees</div>
+                <div style={{
+                  fontWeight: 700,
+                  fontSize: '1.15rem',
+                  color: '#5727A3',
+                  marginBottom: 18,
+                  textAlign: 'center',
+                  background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
+                  Program Fees
+                </div>
                 <PrettyField label="Tuition (1st year)" value={tuitionFee} />
                 <PrettyField label="Application Fee" value={applicationFee} />
                 <PrettyField label="Cost of Living" value={costOfLiving ? `${currency === 'AUD' ? 'A$' : currency === 'USD' ? '$' : '£'}${costOfLiving} ${currency}` : 'N/A'} />
@@ -727,7 +747,7 @@ export const ProgramDetailsPage: React.FC = () => {
                 {/* Show intake cards with scores */}
                 {intakes && intakes.length > 0 && (
                   <div style={{ marginTop: 14 }}>
-                    <div style={{ color: '#2563eb', fontWeight: 700, marginBottom: 6 }}>Upcoming Intakes</div>
+                    <div style={{ color: '#5727A3', fontWeight: 700, marginBottom: 6 }}>Upcoming Intakes</div>
                     {intakes.map((intake: any) => (
                       <IntakeCard key={intake.id} intake={intake} />
                     ))}
@@ -736,7 +756,6 @@ export const ProgramDetailsPage: React.FC = () => {
               </SectionCard>
             </div>
           </div>
-
           {/* Scholarships */}
           {program_basic?.tags?.includes('scholarships_available') &&
             !scholarshipLoading &&

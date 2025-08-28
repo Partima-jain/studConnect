@@ -152,16 +152,16 @@ export const ContactPage: React.FC = () => (
       <style>
         {`
           button, .global-btn {
-            background: linear-gradient(90deg, rgb(55, 81, 138) 0%, rgb(96, 165, 250) 100%) !important;
-            box-shadow: rgba(37, 99, 235, 0.333) 0px 4px 16px 0px, rgba(59, 130, 246, 0.133) 0px 1.5px 8px 0px !important;
+            background: linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%) !important;
+            box-shadow: 0 4px 16px #9F7AEA33, 0 1.5px 8px #5727A322 !important;
             color: #fff !important;
-            border-radius: 10px !important;
+            border-radius: 14px !important;
             font-weight: 700 !important;
             border: none !important;
             transition: background 0.2s, transform 0.2s;
           }
           button:hover, .global-btn:hover {
-            background: linear-gradient(90deg, rgb(96, 165, 250) 0%, rgb(55, 81, 138) 100%) !important;
+            background: linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%) !important;
             transform: scale(1.04);
           }
         `}

@@ -169,9 +169,8 @@ export const LandingPage: React.FC = () => {
 				width: '100%',
 				overflow: 'hidden',
 				position: 'relative',
-				background: 'linear-gradient(90deg,#e0e7ff 0%,#f8fafc 100%)',
-				boxShadow: '0 4px 24px #2563eb22',
-				border: '2px solid #e0e7ff',
+				borderRadius: 32,
+				margin: '2.5rem auto 0 auto',
 			}}
 		>
 			<div style={{ flex: 1, minWidth: 320 }}>
@@ -179,7 +178,7 @@ export const LandingPage: React.FC = () => {
 					style={{
 						fontSize: '2.2rem',
 						fontWeight: 900,
-						color: '#1e3a8a',
+						color: '#5727A3',
 						marginBottom: '1.2rem',
 						letterSpacing: '-2px',
 						lineHeight: 1.1,
@@ -188,7 +187,7 @@ export const LandingPage: React.FC = () => {
 					Our Story:{' '}
 					<span
 						style={{
-							background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+							background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
 							WebkitBackgroundClip: 'text',
 							WebkitTextFillColor: 'transparent',
 						}}
@@ -199,12 +198,12 @@ export const LandingPage: React.FC = () => {
 				<p
 					style={{
 						fontSize: '1.13rem',
-						color: '#334155',
+						color: '#1B0044',
 						fontWeight: 500,
 						marginBottom: '1.2rem',
 					}}
 				>
-					We didn’t build <b>StudConnect</b> because we wanted to be another
+					We didn’t build <b>Yournextuniversity</b> because we wanted to be another
 					consultancy. We built it because we got tired of watching students get
 					lost in a system full of half-truths, hidden costs, and overhyped
 					promises.
@@ -212,7 +211,7 @@ export const LandingPage: React.FC = () => {
 				<p
 					style={{
 						fontSize: '1.13rem',
-						color: '#334155',
+						color: '#1B0044',
 						fontWeight: 500,
 						marginBottom: '1.2rem',
 					}}
@@ -228,7 +227,7 @@ export const LandingPage: React.FC = () => {
 					style={{
 						marginTop: '1.2rem',
 						background:
-							'linear-gradient(90deg, rgb(55, 81, 138) 0%, rgb(96, 165, 250) 100%)',
+							'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
 						color: '#fff',
 						border: 'none',
 						borderRadius: 8,
@@ -236,7 +235,7 @@ export const LandingPage: React.FC = () => {
 						fontWeight: 700,
 						fontSize: '1.07rem',
 						cursor: 'pointer',
-						boxShadow: '0 2px 8px #2563eb22',
+						boxShadow: '0 2px 8px #9F7AEA22',
 						transition: 'background 0.18s',
 					}}
 				>
@@ -263,7 +262,7 @@ export const LandingPage: React.FC = () => {
 						height: 340,
 						borderRadius: '50%',
 						background:
-							'radial-gradient(circle at 50% 50%, #93c5fd 0%, #60a5fa88 40%, #2563eb33 70%, transparent 100%)',
+							'radial-gradient(circle at 50% 50%, #D6C5F0 0%, #9F7AEA88 40%, #5727A333 70%, transparent 100%)',
 						filter: 'blur(18px) brightness(1.15)',
 						zIndex: 1,
 						pointerEvents: 'none',
@@ -298,7 +297,7 @@ export const LandingPage: React.FC = () => {
 				>
 					<path
 						d="M0,60 Q30,-30 80,10"
-						stroke="#2563eb"
+						stroke="#5727A3"
 						strokeWidth={3}
 						fill="none"
 						strokeDasharray="8,10"
@@ -317,7 +316,7 @@ export const LandingPage: React.FC = () => {
 						left: 380,
 						top: 0,
 						zIndex: 3,
-						filter: 'drop-shadow(0 4px 16px #2563eb22)',
+						filter: 'drop-shadow(0 4px 16px #9F7AEA22)',
 						willChange: 'transform',
 						pointerEvents: 'none',
 						animation: 'aboutGlobeFloat 2.2s infinite cubic-bezier(.4,2,.6,1)',
@@ -339,11 +338,13 @@ export const LandingPage: React.FC = () => {
 			style={{
 				maxWidth: 1400,
 				padding: '2.2rem 1.5rem',
-				background: 'linear-gradient(90deg,#f8fafc 0%,#e0e7ff 100%)',
-				boxShadow: '0 4px 24px #2563eb22',
-				border: '2px solid #e0e7ff',
+				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+				boxShadow: '0 4px 24px #9F7AEA22',
+				border: '2px solid #D6C5F0',
 				textAlign: 'center',
 				position: 'relative',
+				borderRadius: 32,
+				margin: '2.5rem auto 0 auto',
 			}}
 		>
 			<div style={{ marginBottom: '2.2rem' }}>
@@ -351,7 +352,7 @@ export const LandingPage: React.FC = () => {
 					style={{
 						fontSize: '2.1rem',
 						fontWeight: 800,
-						color: '#1b2e4b',
+						color: '#5727A3',
 						marginBottom: '.7rem',
 						letterSpacing: '-1px',
 					}}
@@ -360,7 +361,7 @@ export const LandingPage: React.FC = () => {
 						style={{
 							display: 'inline-block',
 							perspective: 400,
-							textShadow: '0 2px 12px #2563eb11',
+							textShadow: '0 2px 12px #9F7AEA11',
 						}}
 					>
 						<span style={{ display: 'inline-block' }}>Our</span>{' '}
@@ -393,8 +394,8 @@ export const LandingPage: React.FC = () => {
 								maxWidth: 370,
 								background: '#fff',
 								borderRadius: 18,
-								boxShadow: '0 8px 32px 0 #2563eb11, 0 2px 8px 0 #60a5fa11',
-								border: '1.5px solid #e0e7ff',
+								boxShadow: '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
+								border: '1.5px solid #D6C5F0',
 								overflow: 'hidden',
 								cursor: 'pointer',
 								transition:
@@ -414,7 +415,7 @@ export const LandingPage: React.FC = () => {
 										objectFit: 'cover',
 										borderTopLeftRadius: 18,
 										borderTopRightRadius: 18,
-										boxShadow: '0 2px 12px #2563eb11',
+										boxShadow: '0 2px 12px #9F7AEA11',
 									}}
 								/>
 								{/* Shaded banner overlay */}
@@ -430,7 +431,7 @@ export const LandingPage: React.FC = () => {
 										alignItems: 'center',
 										padding: '0 1.1rem',
 										background:
-											'linear-gradient(90deg, #1e293bcc 0%, #2563ebcc 100%)',
+											'linear-gradient(90deg, #5727A3cc 0%, #9F7AEA 100%)',
 										color: '#fff',
 										borderBottomLeftRadius: 18,
 										borderBottomRightRadius: 18,
@@ -507,7 +508,7 @@ export const LandingPage: React.FC = () => {
           height: 180%;
           transform: translate(-50%, -50%) scale(0.6);
           border-radius: 50%;
-          background: radial-gradient(circle at 50% 40%, #60a5fa44 0%, #fbbf2433 40%, #2563eb22 70%, transparent 100%);
+          background: radial-gradient(circle at 50% 40%, #D6C5F044 0%, #9F7AEA33 40%, #5727A322 70%, transparent 100%);
           opacity: 0;
           transition: opacity 0.25s, transform 0.25s;
           z-index: 2;
@@ -520,18 +521,18 @@ export const LandingPage: React.FC = () => {
           transform: translate(-50%, -50%) scale(1);
         }
         .landing-service-card:hover, .landing-service_card:focus {
-          background: radial-gradient(circle at 60% 40%, #2563eb 0%, #60a5fa 60%, #1e293b 100%);
-          box-shadow: 0 24px 64px 0 #2563eb55, 0 4px 16px 0 #60a5fa33 !important;
+          background: radial-gradient(circle at 60% 40%, #5727A3 0%, #9F7AEA 60%, #D6C5F0 100%);
+          box-shadow: 0 24px 64px 0 #9F7AEA55, 0 4px 16px 0 #D6C5F033 !important;
           transform: scale(1.06) !important;
-          border-color: #2563eb !important;
+          border-color: #9F7AEA !important;
         }
         .landing-service-card:hover h6, .landing-service-card:focus h6 {
-          background: linear-gradient(90deg,#fff 0%,#fbbf24 100%);
+          background: linear-gradient(90deg,#fff 0%,#9F7AEA 100%);
           WebkitBackgroundClip: text;
           WebkitTextFillColor: transparent;
           background-clip: text;
           color: transparent;
-          text-shadow: 0 2px 16px #fff8, 0 1px 2px #fbbf2444;
+          text-shadow: 0 2px 16px #fff8, 0 1px 2px #9F7AEA44;
         }
         /* Dots indicator styles */
         .services-scroll-dots {
@@ -552,13 +553,13 @@ export const LandingPage: React.FC = () => {
             width: 9px;
             height: 9px;
             border-radius: 50%;
-            background: #2563eb55;
+            background: #9F7AEA55;
             display: inline-block;
             transition: background 0.2s;
-            box-shadow: 0 1px 4px #2563eb22;
+            box-shadow: 0 1px 4px #9F7AEA22;
           }
           .services-scroll-dots .dot:nth-child(2) {
-            background: #2563eb;
+            background: #9F7AEA;
             width: 11px;
             height: 11px;
           }
@@ -571,7 +572,13 @@ export const LandingPage: React.FC = () => {
 	const accommodationHeroSection = (
 		<>
 			<style>{responsiveStyle}</style>
-			<section className="accom-hero-section" style={heroSectionStyle}>
+			<section className="accom-hero-section" style={{
+				...heroSectionStyle,
+				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+				borderRadius: 32,
+				boxShadow: '0 8px 32px 0 #9F7AEA22',
+				margin: '2.5rem auto 0 auto',
+			}}>
 				{/* Decorative Globe/Blob */}
 				<div
 					style={{
@@ -581,7 +588,7 @@ export const LandingPage: React.FC = () => {
 						width: 320,
 						height: 320,
 						background:
-							'radial-gradient(circle at 60% 40%, #60a5fa55 0%, #2563eb22 100%)',
+							'radial-gradient(circle at 60% 40%, #D6C5F0 0%, #9F7AEA22 100%)',
 						borderRadius: '50%',
 						filter: 'blur(40px)',
 						zIndex: 0,
@@ -713,19 +720,19 @@ export const LandingPage: React.FC = () => {
 		<section
 			ref={financialServicesSectionRef}
 			style={{
-				background: 'linear-gradient(90deg,#fbbf24 0%,#e0e7ff 100%)',
-				borderRadius: 18,
-				boxShadow: '0 4px 24px #fbbf2411',
+				background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
+				borderRadius: 32,
+				boxShadow: '0 8px 32px 0 #9F7AEA22',
 				padding: '2.2rem 1.5rem 1.5rem 1.5rem',
-				// marginBottom: '2.5rem',
-				marginTop: '1.5rem',
-				color: '#1e293b',
+				marginTop: '2.5rem',
+				color: '#1B0044',
 				marginLeft: 'auto',
 				marginRight: 'auto',
 				display: 'flex',
 				alignItems: 'center',
 				gap: '2.2rem',
-				flexWrap: 'wrap'
+				flexWrap: 'wrap',
+				maxWidth: 1200,
 			}}
 		>
 			<div style={{
@@ -743,7 +750,7 @@ export const LandingPage: React.FC = () => {
 						width: '100%',
 						maxWidth: 320,
 						borderRadius: 18,
-						boxShadow: '0 2px 12px #2563eb22',
+						boxShadow: '0 2px 12px #9F7AEA22',
 						objectFit: 'cover'
 					}}
 				/>
@@ -753,7 +760,7 @@ export const LandingPage: React.FC = () => {
 					fontSize: '2.3rem',
 					fontWeight: 800,
 					marginBottom: '0.5rem',
-					background: 'linear-gradient(90deg, #0f172a 0%, rgb(37, 99, 235) 100%) text',
+					background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
 					WebkitBackgroundClip: 'text',
 					WebkitTextFillColor: 'transparent'
 				}}>
@@ -761,11 +768,11 @@ export const LandingPage: React.FC = () => {
 				</h1>
 				<p style={{
 					fontSize: '1.15rem',
-					color: '#334155',
+					color: '#1B0044',
 					marginBottom: '1.2rem',
 					fontWeight: 500
 				}}>
-					Studying abroad is a dream—but funding it shouldn’t be stressful. <b>StudConnect</b> helps you plan, compare, and secure loans and scholarships so you can focus on your journey, not your finances.
+					Studying abroad is a dream—but funding it shouldn’t be stressful. <b>Yournextuniversity</b> helps you plan, compare, and secure loans and scholarships so you can focus on your journey, not your finances.
 				</p>
 				<a
 					href="#"
@@ -775,7 +782,7 @@ export const LandingPage: React.FC = () => {
 					}}
 					style={{
 						display: 'inline-block',
-						background: 'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
+						background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
 						color: '#fff',
 						fontWeight: 700,
 						fontSize: '1.13rem',
@@ -783,7 +790,7 @@ export const LandingPage: React.FC = () => {
 						padding: '1rem 2.5rem',
 						textDecoration: 'none',
 						margin: '0.5rem 0 0 0',
-						boxShadow: '0 2px 8px #22c55e33',
+						boxShadow: '0 2px 8px #9F7AEA33',
 						transition: 'background 0.18s',
 						cursor: 'pointer'
 					}}
@@ -791,7 +798,6 @@ export const LandingPage: React.FC = () => {
 					Explore Funding Options
 				</a>
 			</div>
-			
 		</section>
 	);
 
@@ -800,14 +806,59 @@ export const LandingPage: React.FC = () => {
 			<Hero />
 			{aboutHeroSection}
 			{servicesSection}
-			<FeaturedUniversities />
+			<FeaturedUniversities
+				style={{
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px 0 #9F7AEA22',
+					margin: '2.5rem auto 0 auto',
+					padding: '2.5rem 1.5rem',
+					maxWidth: 1400,
+				}}
+			/>
 			{accommodationHeroSection}
 			{financialServicesSection}
-			<HowItWorks />
-			<Testimonials />
-			<Contact />
-			<Footer />
+			<HowItWorks
+				style={{
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px 0 #9F7AEA22',
+					margin: '2.5rem auto 0 auto',
+					padding: '2.5rem 1.5rem',
+					maxWidth: 1400,
+				}}
+			/>
+			<Testimonials
+				style={{
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px 0 #9F7AEA22',
+					margin: '2.5rem auto 0 auto',
+					padding: '2.5rem 1.5rem',
+					maxWidth: 1400,
+				}}
+			/>
+			<Contact
+				style={{
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px 0 #9F7AEA22',
+					margin: '2.5rem auto 0 auto',
+					padding: '2.5rem 1.5rem',
+					maxWidth: 1400,
+				}}
+			/>
+			<Footer
+				style={{
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
+					borderRadius: 0,
+					boxShadow: '0 -2px 16px 0 #9F7AEA22',
+					margin: 0,
+					padding: '2.5rem 1.5rem',
+					maxWidth: '100vw',
+				}}
+			/>
 		</>
 	);
 };
-	
+
