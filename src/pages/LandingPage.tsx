@@ -924,6 +924,7 @@ export const LandingPage: React.FC = () => {
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
+					overflow: 'hidden', // Prevents horizontal overflow
 				}}
 			/>
 			{accommodationHeroSection}
@@ -936,6 +937,7 @@ export const LandingPage: React.FC = () => {
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
+					overflow: 'hidden', // Prevents horizontal overflow
 				}}
 			/>
 			<Testimonials
@@ -946,6 +948,7 @@ export const LandingPage: React.FC = () => {
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
+					overflow: 'hidden', // Prevents horizontal overflow
 				}}
 			/>
 			<Contact
@@ -956,6 +959,7 @@ export const LandingPage: React.FC = () => {
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
+					overflow: 'hidden', // Prevents horizontal overflow
 				}}
 			/>
 			<Footer
@@ -966,8 +970,28 @@ export const LandingPage: React.FC = () => {
 					margin: 0,
 					padding: '2.5rem 1.5rem',
 					maxWidth: '100vw',
+					overflow: 'hidden', // Prevents horizontal overflow
 				}}
 			/>
+			<style>{`
+				html, body, #root {
+					width: 100vw;
+					overflow-x: hidden !important;
+				}
+				body {
+					margin: 0;
+					padding: 0;
+				}
+				section, header, footer, main, .container {
+					max-width: 100vw !important;
+					overflow-x: hidden !important;
+				}
+				/* Prevents horizontal scroll from absolutely positioned blobs, etc */
+				[class*="blob"], [class*="hero__bg"], [class*="accom-hero-images-inner"], [class*="accom-hero-img-side"], [class*="accom-hero-img-center"] {
+					max-width: 100vw !important;
+					overflow-x: hidden !important;
+				}
+			`}</style>
 		</>
 	);
 };
