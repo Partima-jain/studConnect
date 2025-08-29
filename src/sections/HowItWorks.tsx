@@ -37,7 +37,6 @@ export const HowItWorks: React.FC = () => {
 				position: 'relative',
 				zIndex: 1,
 				padding: '0 0 4rem 0',
-				background: 'radial-gradient(ellipse at 70% 0%, #e0e7ff 0%, #c7d2fe 35%, #f1f5f9 70%, #fff 100%)',
 				overflow: 'hidden',
 				minHeight: 600,
 			}}
@@ -49,7 +48,6 @@ export const HowItWorks: React.FC = () => {
 					position: 'absolute',
 					inset: 0,
 					zIndex: 0,
-					background: 'linear-gradient(120deg, #fbbf2440 0%, #60a5fa22 60%, #fff0 100%)',
 					backdropFilter: 'blur(2.5px)',
 					WebkitBackdropFilter: 'blur(2.5px)',
 					pointerEvents: 'none',
@@ -90,12 +88,7 @@ export const HowItWorks: React.FC = () => {
 						d="M0,80 Q360,160 720,80 T1440,80 V180 H0 Z"
 						fill="url(#howitworks-wave1)"
 					/>
-					<defs>
-						<linearGradient id="howitworks-wave1" x1="0" y1="0" x2="1" y2="1">
-							<stop offset="0%" stopColor="#a5b4fc" />
-							<stop offset="100%" stopColor="#60a5fa" />
-						</linearGradient>
-					</defs>
+					
 				</svg>
 				{/* Subtle bottom wave */}
 				<svg
@@ -120,7 +113,7 @@ export const HowItWorks: React.FC = () => {
 					<defs>
 						<linearGradient id="howitworks-wave2" x1="0" y1="0" x2="1" y2="1">
 							<stop offset="0%" stopColor="#fbbf24" />
-							<stop offset="100%" stopColor="#60a5fa" />
+							<stop offset="100%" stopColor="#9f7aea" />
 						</linearGradient>
 					</defs>
 				</svg>
@@ -151,7 +144,6 @@ export const HowItWorks: React.FC = () => {
 						width: 110,
 						height: 110,
 						borderRadius: '50%',
-						background: 'radial-gradient(circle at 30% 30%, #fbbf24cc 0%, #fbbf2400 80%)',
 						filter: 'blur(8px)',
 						opacity: 0.45,
 						animation: 'orbFloat1 9s ease-in-out infinite alternate'
@@ -214,10 +206,6 @@ export const HowItWorks: React.FC = () => {
 					zIndex: 1,
 					maxWidth: 1300,
 					margin: '0 auto',
-					borderRadius: 32,
-					background: 'rgba(255,255,255,0.82)',
-					boxShadow: '0 8px 48px #2563eb18, 0 1.5px 0 #c7d2fe',
-					border: '1.5px solid #e0e7ff',
 					backdropFilter: 'blur(1.5px)',
 					WebkitBackdropFilter: 'blur(1.5px)',
 					overflow: 'hidden',
@@ -237,11 +225,11 @@ export const HowItWorks: React.FC = () => {
 							fontWeight: 900,
 							textAlign: 'center',
 							letterSpacing: '-1px',
-							color: '#2563eb',
+							color: '#5727A3', // updated to match main theme
 							marginBottom: '2.2rem',
 							perspective: 400,
 							lineHeight: 1.1,
-							textShadow: '0 2px 8px #2563eb11',
+							textShadow: '0 2px 8px #9f7aea22',
 							position: 'relative',
 						}}
 					>
@@ -249,7 +237,7 @@ export const HowItWorks: React.FC = () => {
 							style={{
 								display: 'inline-block',
 								background:
-									'linear-gradient(90deg, rgb(37, 99, 235) 0%, rgb(14 26 40) 100%) text',
+									'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
 								WebkitBackgroundClip: 'text',
 								WebkitTextFillColor: 'transparent',
 								fontWeight: 900,
@@ -289,7 +277,7 @@ export const HowItWorks: React.FC = () => {
 									maxWidth: 320,
 									background: '#fff',
 									borderRadius: 22,
-									boxShadow: '0 4px 24px #2563eb11',
+									boxShadow: '0 4px 24px #9F7AEA22',
 									padding: '2.2rem 1.5rem 1.5rem 1.5rem',
 									display: 'flex',
 									flexDirection: 'column',
@@ -299,19 +287,19 @@ export const HowItWorks: React.FC = () => {
 									transition: 'box-shadow .18s, transform .18s',
 									cursor: 'pointer',
 									borderLeft: `6px solid ${
-										idx % 2 === 0 ? '#2563eb' : '#60a5fa'
+										idx % 2 === 0 ? '#5727A3' : '#9F7AEA'
 									}`,
 									zIndex: 1,
 								}}
 								onMouseOver={(e) => {
 									(e.currentTarget as HTMLDivElement).style.boxShadow =
-										'0 8px 32px #2563eb22';
+										'0 8px 32px #9F7AEA44';
 									(e.currentTarget as HTMLDivElement).style.transform =
 										'translateY(-4px) scale(1.03)';
 								}}
 								onMouseOut={(e) => {
 									(e.currentTarget as HTMLDivElement).style.boxShadow =
-										'0 4px 24px #2563eb11';
+										'0 4px 24px #9F7AEA22';
 									(e.currentTarget as HTMLDivElement).style.transform = '';
 								}}
 							>
@@ -324,8 +312,8 @@ export const HowItWorks: React.FC = () => {
 										height: 48,
 										background:
 											idx % 2 === 0
-												? 'linear-gradient(135deg,#2563eb 0%,#60a5fa 100%)'
-												: 'linear-gradient(135deg,#60a5fa 0%,#2563eb 100%)',
+												? 'linear-gradient(135deg,#5727A3 0%,#9F7AEA 100%)'
+												: 'linear-gradient(135deg,#9F7AEA 0%,#5727A3 100%)',
 										color: '#fff',
 										borderRadius: '50%',
 										display: 'flex',
@@ -333,7 +321,7 @@ export const HowItWorks: React.FC = () => {
 										justifyContent: 'center',
 										fontWeight: 800,
 										fontSize: '1.3rem',
-										boxShadow: '0 2px 12px #2563eb22',
+										boxShadow: '0 2px 12px #9F7AEA33',
 										border: '3px solid #fff',
 										zIndex: 2,
 									}}
@@ -349,53 +337,53 @@ export const HowItWorks: React.FC = () => {
 										borderRadius: '50%',
 										background:
 											idx % 2 === 0
-												? 'linear-gradient(135deg,#e0e7ff 60%,#c7d2fe 100%)'
-												: 'linear-gradient(135deg,#f1f5f9 60%,#e0e7ff 100%)',
+												? 'linear-gradient(135deg, rgb(237 225 241) 60%, rgb(196 171 242) 100%)'
+												: 'linear-gradient(135deg,#f1f5f9 60%,rgb(226 209 244) 100%)',
 										display: 'flex',
 										alignItems: 'center',
 										justifyContent: 'center',
-										boxShadow: '0 4px 16px #2563eb18',
+										boxShadow: '0 4px 16px #9F7AEA18',
 									}}
 								>
 									{idx === 0 && (
 										// Modern chat/message icon
 										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
 											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
-											<rect x="13" y="15" width="18" height="12" rx="6" stroke="#2563eb" strokeWidth="2.5" fill="none"/>
-											<path d="M19 27L17 31L22 29L27 31L25 27" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round" fill="none"/>
+											<rect x="13" y="15" width="18" height="12" rx="6" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
+											<path d="M19 27L17 31L22 29L27 31L25 27" stroke="#5727A3" strokeWidth="2" strokeLinejoin="round" fill="none"/>
 										</svg>
 									)}
 									{idx === 1 && (
 										// Modern wallet/money icon
 										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
 											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
-											<rect x="13" y="17" width="18" height="10" rx="3" stroke="#2563eb" strokeWidth="2.5" fill="none"/>
-											<circle cx="29" cy="22" r="1.5" fill="#2563eb"/>
-											<path d="M13 21h18" stroke="#2563eb" strokeWidth="2"/>
+											<rect x="13" y="17" width="18" height="10" rx="3" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
+											<circle cx="29" cy="22" r="1.5" fill="#5727A3"/>
+											<path d="M13 21h18" stroke="#5727A3" strokeWidth="2"/>
 										</svg>
 									)}
 									{idx === 2 && (
 										// Modern globe icon
 										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
 											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
-											<circle cx="22" cy="22" r="10" stroke="#2563eb" strokeWidth="2.5"/>
-											<ellipse cx="22" cy="22" rx="10" ry="4" stroke="#2563eb" strokeWidth="2"/>
-											<path d="M22 12v20M12 22h20" stroke="#2563eb" strokeWidth="2"/>
+											<circle cx="22" cy="22" r="10" stroke="#5727A3" strokeWidth="2.5"/>
+											<ellipse cx="22" cy="22" rx="10" ry="4" stroke="#5727A3" strokeWidth="2"/>
+											<path d="M22 12v20M12 22h20" stroke="#5727A3" strokeWidth="2"/>
 										</svg>
 									)}
 									{idx === 3 && (
 										// Modern smartphone icon
 										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
 											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
-											<rect x="16" y="12" width="12" height="20" rx="3" stroke="#2563eb" strokeWidth="2.5" fill="none"/>
-											<rect x="20" y="28" width="4" height="2" rx="1" fill="#2563eb"/>
+											<rect x="16" y="12" width="12" height="20" rx="3" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
+											<rect x="20" y="28" width="4" height="2" rx="1" fill="#5727A3"/>
 										</svg>
 									)}
 								</div>
 								<h4
 									style={{
 										fontSize: '1.13rem',
-										color: '#2563eb',
+										color: '#5727A3', // updated to main theme
 										fontWeight: 800,
 										margin: '0 0 .5rem 0',
 										textAlign: 'center',
@@ -407,7 +395,7 @@ export const HowItWorks: React.FC = () => {
 								<p
 									style={{
 										fontSize: '1.07rem',
-										color: '#334155',
+										color: '#1B0044', // darker for contrast
 										textAlign: 'center',
 										margin: 0,
 										fontWeight: 500,
@@ -449,3 +437,4 @@ export const HowItWorks: React.FC = () => {
 		</div>
 	);
 };
+	

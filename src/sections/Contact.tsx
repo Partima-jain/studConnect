@@ -117,7 +117,7 @@ export const Contact: React.FC = () => {
   }
 
   return (
-    <section className="section reveal" id="contact" ref={ref as any} style={{ position: 'relative', zIndex: 1, background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)', borderRadius: 32, boxShadow: '0 8px 32px 0 #9F7AEA22', margin: '2.5rem auto 0 auto', padding: '2.5rem 0', overflow: 'hidden' }}>
+    <section className="section reveal" id="contact" ref={ref as any} style={{ position: 'relative', zIndex: 1, margin: '2.5rem auto 0 auto', padding: '2.5rem 0', overflow: 'hidden' }}>
       {/* 3D Globe background */}
       <div style={{ position: 'absolute', top: 0, right: 0, zIndex: 0, pointerEvents: 'none' }}>
         <ContactGlobe />

@@ -37,7 +37,6 @@ export const Testimonials: React.FC = () => {
 			id="testimonials"
 			ref={ref as any}
 			style={{
-				background: 'radial-gradient(circle at 60% 10%, #0f172a 0%, #1e293b 100%)',
 				padding: '0 0 3rem 0',
 			}}
 		>
@@ -55,7 +54,7 @@ export const Testimonials: React.FC = () => {
 									fontWeight: 900,
 									fontSize: '2.2rem',
 									letterSpacing: '-1px',
-									background: 'linear-gradient(90deg,#60a5fa 0%,#fbbf24 100%)',
+									background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
 									WebkitBackgroundClip: 'text',
 									WebkitTextFillColor: 'transparent',
 									textAlign: 'center',
@@ -66,7 +65,7 @@ export const Testimonials: React.FC = () => {
 							<p
 								style={{
 									textAlign: 'center',
-									color: '#cbd5e1',
+									color: '#5727A3',
 									fontSize: '1.13rem',
 									fontWeight: 500,
 									marginBottom: 0,
@@ -76,7 +75,7 @@ export const Testimonials: React.FC = () => {
 									marginRight: 'auto',
 								}}
 							>
-								At <b style={{ color: '#60a5fa' }}>StudConnect</b>, your journey is our mission. Our students have earned admits to world-class universities, won life-changing scholarships, and built new lives abroad. Every story is unique—every achievement, a testament to honest guidance and real support.
+								At <b style={{ color: '#9F7AEA' }}>StudConnect</b>, your journey is our mission. Our students have earned admits to world-class universities, won life-changing scholarships, and built new lives abroad. Every story is unique—every achievement, a testament to honest guidance and real support.
 							</p>
 						</div>
 					</div>
@@ -101,10 +100,11 @@ export const Testimonials: React.FC = () => {
 									style={{
 										minWidth: 340,
 										maxWidth: 370,
-										background: 'linear-gradient(135deg,#1e293b 60%,#0f172a 100%)',
+										// Updated card background and border to match hero section theme
+										background: 'linear-gradient(135deg,#fff 60%,#e0c3fc 100%)',
 										borderRadius: 22,
-										boxShadow: '0 8px 32px 0 #2563eb22, 0 2px 8px 0 #60a5fa11',
-										border: '1.5px solid #334155',
+										boxShadow: '0 8px 32px 0 #9F7AEA22, 0 2px 8px 0 #9F7AEA11',
+										border: '1.5px solid #9F7AEA',
 										overflow: 'hidden',
 										cursor: 'pointer',
 										transition: 'box-shadow 0.18s, transform 0.18s, background 0.18s',
@@ -114,7 +114,7 @@ export const Testimonials: React.FC = () => {
 										justifyContent: 'space-between',
 										scrollSnapAlign: 'start',
 										position: 'relative',
-										color: '#e0e7ff',
+										color: '#5727A3',
 										textAlign: 'center',
 									}}
 								>
@@ -138,7 +138,7 @@ export const Testimonials: React.FC = () => {
 									<p
 										style={{
 											fontSize: '1.13rem',
-											color: '#f1f5f9',
+											color: '#1B0044',
 											fontWeight: 500,
 											margin: '1.2rem 0 1.5rem 0',
 											minHeight: 80,
@@ -164,26 +164,26 @@ export const Testimonials: React.FC = () => {
 											<img
 												src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(
 													t.name
-												)}&backgroundColor=60a5fa,a5b4fc&radius=50`}
+												)}&backgroundColor=9f7aea,e0c3fc&radius=50`}
 												alt={t.name}
 												style={{
 													width: 48,
 													height: 48,
 													borderRadius: '50%',
 													objectFit: 'cover',
-													boxShadow: '0 2px 8px #2563eb22',
-													border: '2px solid #334155',
-													background: '#1e293b',
+													boxShadow: '0 2px 8px #9F7AEA22',
+													border: '2px solid #9F7AEA',
+													background: '#fff',
 												}}
 											/>
 											<div className="content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-												<h6 style={{ fontWeight: 700, margin: 0, color: '#60a5fa', fontSize: '1.08rem', letterSpacing: '-.5px' }}>{t.name}</h6>
-												<p style={{ margin: 0, color: '#fbbf24', fontWeight: 500, fontSize: '.98rem', letterSpacing: '-.2px' }}>{t.result}</p>
+												<h6 style={{ fontWeight: 700, margin: 0, color: '#5727A3', fontSize: '1.08rem', letterSpacing: '-.5px' }}>{t.name}</h6>
+												<p style={{ margin: 0, color: '#9F7AEA', fontWeight: 500, fontSize: '.98rem', letterSpacing: '-.2px' }}>{t.result}</p>
 											</div>
 										</div>
 										<svg width="32" height="32" viewBox="0 0 32 32" fill="none"
 											style={{ marginLeft: 'auto', opacity: 0.18 }}>
-											<path d="M12 12H8V20H14V16H12V12ZM24 12H20V20H26V16H24V12Z" fill="#60a5fa" />
+											<path d="M12 12H8V20H14V16H12V12ZM24 12H20V20H26V16H24V12Z" fill="#9F7AEA" />
 										</svg>
 									</div>
 								</div>
@@ -195,7 +195,6 @@ export const Testimonials: React.FC = () => {
 			<style>{`
 				.testimonial13-slider::-webkit-scrollbar { display: none; }
 				.testimonial13-slider { scrollbar-width: none; }
-				
 			`}</style>
 		</section>
 	);

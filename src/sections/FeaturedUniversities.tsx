@@ -19,52 +19,11 @@ export const FeaturedUniversities: React.FC = () => {
         overflow: 'hidden',
         padding: 0,
         minHeight: 420,
-        background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
-        borderRadius: 32,
-        boxShadow: '0 8px 32px 0 #9F7AEA22, 0 2px 8px 0 #5727A322',
-        border: '2.5px solid #D6C5F0',
         margin: '2.5rem auto 0 auto',
         maxWidth: 1400,
       }}
     >
-      {/* Decorative blobs and sparkles */}
-      <div aria-hidden style={{
-        position: 'absolute', top: -80, left: -120, width: 320, height: 320,
-        background: 'radial-gradient(circle at 60% 40%, #D6C5F0 0%, #9F7AEA22 100%)',
-        borderRadius: '50%', filter: 'blur(40px)', zIndex: 0, opacity: 0.7, pointerEvents: 'none'
-      }} />
-      <div aria-hidden style={{
-        position: 'absolute', bottom: -80, right: -120, width: 260, height: 260,
-        background: 'radial-gradient(circle at 60% 60%, #9F7AEA 0%, #D6C5F033 100%)',
-        borderRadius: '50%', filter: 'blur(40px)', zIndex: 0, opacity: 0.5, pointerEvents: 'none'
-      }} />
-      {/* Animated sparkles */}
-      {[...Array(8)].map((_, i) => (
-        <div key={i} aria-hidden style={{
-          position: 'absolute',
-          left: `${10 + Math.random() * 80}%`,
-          top: `${10 + Math.random() * 80}%`,
-          width: 3 + Math.random() * 4,
-          height: 3 + Math.random() * 4,
-          background: 'linear-gradient(90deg,#9F7AEA 0%,#fff 100%)',
-          borderRadius: '50%',
-          opacity: 0.13 + Math.random() * 0.18,
-          filter: 'blur(0.5px)',
-          animation: `sparkle-move-fu${i} 7s ease-in-out infinite alternate`,
-          zIndex: 1,
-          pointerEvents: 'none'
-        }} />
-      ))}
-      <style>
-        {`
-          ${[...Array(8)].map((_, i) => `
-            @keyframes sparkle-move-fu${i} {
-              0% { transform: scale(1) translateY(0);}
-              100% { transform: scale(${0.8 + Math.random() * 0.7}) translateY(${Math.random() * 30 - 15}px);}
-            }
-          `).join('\n')}
-        `}
-      </style>
+
       {/* Section content */}
       <div style={{
         position: 'relative',

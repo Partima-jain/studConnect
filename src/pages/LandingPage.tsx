@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { ParallaxBackground } from '../components/ParallaxBackground'; // <-- Add this import
 import { Hero } from '../sections/Hero';
 import { FeaturedUniversities } from '../sections/FeaturedUniversities';
 import { HowItWorks } from '../sections/HowItWorks';
@@ -197,6 +198,7 @@ export const LandingPage: React.FC = () => {
 				position: 'relative',
 				borderRadius: 32,
 				margin: '2.5rem auto 0 auto',
+				background: 'transparent', // <-- Make background transparent
 			}}
 			className={`about-hero-section${aboutInView ? ' about-3d-inview' : ''}`}
 		>
@@ -600,8 +602,8 @@ export const LandingPage: React.FC = () => {
 			className={`services-section${servicesInView ? ' services-3d-inview' : ''}`}
 			style={{
 				maxWidth: 1400,
-				background: 'linear-gradient(90deg,#fff 0%,#d6c5ea 100%)',
-				boxShadow: '0 4px 24px #9F7AEA22',
+				background: 'transparent', // <-- Make background transparent
+				boxShadow: 'none', // <-- Remove box shadow for clarity
 				textAlign: 'center',
 				position: 'relative',
 				margin: '2.5rem auto 0 auto',
@@ -684,9 +686,8 @@ export const LandingPage: React.FC = () => {
 			<style>{responsiveStyle}</style>
 			<section className="accom-hero-section" style={{
 				...heroSectionStyle,
-				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
-				borderRadius: 32,
-				boxShadow: '0 8px 32px 0 #9F7AEA22',
+				background: 'transparent', // <-- Make background transparent
+				boxShadow: 'none', // <-- Remove box shadow for clarity
 				margin: '2.5rem auto 0 auto',
 			}}>
 				{/* Decorative Globe/Blob */}
@@ -830,9 +831,9 @@ export const LandingPage: React.FC = () => {
 		<section
 			ref={financialServicesSectionRef}
 			style={{
-				background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
+				background: 'transparent', // <-- Make background transparent
+				boxShadow: 'none', // <-- Remove box shadow for clarity
 				borderRadius: 32,
-				boxShadow: '0 8px 32px 0 #9F7AEA22',
 				padding: '2.2rem 1.5rem 1.5rem 1.5rem',
 				marginTop: '2.5rem',
 				color: '#1B0044',
@@ -913,64 +914,65 @@ export const LandingPage: React.FC = () => {
 
 	return (
 		<>
-			<Hero />
+			<ParallaxBackground /> {/* <-- Add this at the very top */}
+			<Hero
+				style={{
+					background: 'transparent', // <-- Make background transparent
+					boxShadow: 'none',
+				}}
+			/>
 			{aboutHeroSection}
 			{servicesSection}
 			<FeaturedUniversities
 				style={{
-					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
-					borderRadius: 32,
-					boxShadow: '0 8px 32px 0 #9F7AEA22',
+					background: 'transparent', // <-- Make background transparent
+					boxShadow: 'none',
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-					overflow: 'hidden', // Prevents horizontal overflow
+					overflow: 'hidden',
 				}}
 			/>
 			{accommodationHeroSection}
 			{financialServicesSection}
 			<HowItWorks
 				style={{
-					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
-					borderRadius: 32,
-					boxShadow: '0 8px 32px 0 #9F7AEA22',
+					background: 'transparent', // <-- Make background transparent
+					boxShadow: 'none',
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-					overflow: 'hidden', // Prevents horizontal overflow
+					overflow: 'hidden',
 				}}
 			/>
 			<Testimonials
 				style={{
-					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
-					borderRadius: 32,
-					boxShadow: '0 8px 32px 0 #9F7AEA22',
+					background: 'transparent', // <-- Make background transparent
+					boxShadow: 'none',
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-					overflow: 'hidden', // Prevents horizontal overflow
+					overflow: 'hidden',
 				}}
 			/>
 			<Contact
 				style={{
-					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
-					borderRadius: 32,
-					boxShadow: '0 8px 32px 0 #9F7AEA22',
+					background: 'transparent', // <-- Make background transparent
+					boxShadow: 'none',
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-					overflow: 'hidden', // Prevents horizontal overflow
+					overflow: 'hidden',
 				}}
 			/>
 			<Footer
 				style={{
-					background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
-					borderRadius: 0,
-					boxShadow: '0 -2px 16px 0 #9F7AEA22',
+					background: 'transparent', // <-- Make background transparent
+					boxShadow: 'none',
 					margin: 0,
 					padding: '2.5rem 1.5rem',
 					maxWidth: '100vw',
-					overflow: 'hidden', // Prevents horizontal overflow
+					overflow: 'hidden',
 				}}
 			/>
 			<style>{`
@@ -984,12 +986,14 @@ export const LandingPage: React.FC = () => {
 				}
 				section, header, footer, main, .container {
 					max-width: 100vw !important;
-					// overflow-x: hidden !important;
 				}
-				/* Prevents horizontal scroll from absolutely positioned blobs, etc */
 				[class*="blob"], [class*="hero__bg"], [class*="accom-hero-images-inner"], [class*="accom-hero-img-side"], [class*="accom-hero-img-center"] {
 					max-width: 100vw !important;
 					overflow-x: hidden !important;
+				}
+				/* Optional: Add text shadow for readability */
+				section, .about-hero-section, .services-section, .accom-hero-section {
+					text-shadow: 0 2px 8px #fff8, 0 1px 2px #0002;
 				}
 			`}</style>
 		</>
