@@ -131,12 +131,28 @@ export const LandingPage: React.FC = () => {
 	const aboutSectionRef = useRef<HTMLDivElement>(null);
 	const [aboutInView, setAboutInView] = useState(false);
 
+	// --- 3D Services Section Animation State ---
+	const servicesSectionRef = useRef<HTMLDivElement>(null);
+	const [servicesInView, setServicesInView] = useState(false);
+
 	useEffect(() => {
 		const el = aboutSectionRef.current;
 		if (!el) return;
 		const observer = new window.IntersectionObserver(
 			([entry]) => setAboutInView(entry.isIntersecting),
 			{ threshold: 0.4 }
+		);
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, []);
+
+	// Observe services section for 3D animation
+	useEffect(() => {
+		const el = servicesSectionRef.current;
+		if (!el) return;
+		const observer = new window.IntersectionObserver(
+			([entry]) => setServicesInView(entry.isIntersecting),
+			{ threshold: 0.3 }
 		);
 		observer.observe(el);
 		return () => observer.disconnect();
@@ -394,29 +410,40 @@ export const LandingPage: React.FC = () => {
 		</section>
 	);
 
-	// 3D Service Card without images, using animated 3D icons and glassmorphism
-	const Service3DCard: React.FC<{
+	// --- Simple Services Grid Section ---
+	const SimpleServiceCard: React.FC<{
 		service: typeof allServices[0];
 		onClick: () => void;
 		index: number;
 	}> = ({ service, onClick, index }) => {
 		const cardRef = useRef<HTMLDivElement>(null);
 
-		// 3D tilt effect
+		// 3D tilt effect on mouse move
 		useEffect(() => {
 			const card = cardRef.current;
 			if (!card) return;
+			const handleMouseMove = (e: MouseEvent) => {
+				const rect = card.getBoundingClientRect();
+				const x = e.clientX - rect.left;
+				const y = e.clientY - rect.top;
+				const centerX = rect.width / 2;
+				const centerY = rect.height / 2;
+				const rotateX = ((y - centerY) / centerY) * 10; // max 10deg
+				const rotateY = ((x - centerX) / centerX) * -10;
+				card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+			};
 			const handleMouseLeave = () => {
 				card.style.transform = '';
-				card.style.boxShadow = '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011';
 			};
+			card.addEventListener('mousemove', handleMouseMove);
 			card.addEventListener('mouseleave', handleMouseLeave);
 			return () => {
+				card.removeEventListener('mousemove', handleMouseMove);
 				card.removeEventListener('mouseleave', handleMouseLeave);
 			};
 		}, []);
 
-		// Unique animated SVG icon for each card (choose by index)
+		// Use the same icons as before
 		const icons = [
 			// Peer Counselling: chat bubbles
 			<svg width="54" height="54" viewBox="0 0 54 54" fill="none" key="chat" style={{ filter: 'drop-shadow(0 2px 12px #9F7AEA33)' }}>
@@ -472,41 +499,39 @@ export const LandingPage: React.FC = () => {
 			</svg>
 		];
 		const icon = icons[index % icons.length];
-
 		return (
 			<div
 				ref={cardRef}
-				className="service-3d-card"
+				className={`simple-service-card${servicesInView ? ' service-3d-inview' : ''}`}
 				tabIndex={0}
 				onClick={onClick}
 				onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
 				style={{
-					background: 'rgba(255,255,255,0.82)',
+					background: 'rgba(255,255,255,0.95)',
 					borderRadius: 22,
 					boxShadow: '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
 					border: '1.5px solid #D6C5F0',
-					overflow: 'hidden', // Ensure content does not overflow
 					cursor: 'pointer',
-					transition: 'box-shadow 0.18s, transform 0.18s, background 0.18s',
+					transition: 'box-shadow 0.18s, transform 0.28s cubic-bezier(.4,2,.6,1), background 0.18s',
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
+					padding: '2.2rem 1.2rem 1.5rem 1.2rem',
 					minWidth: 220,
-					maxWidth: 300,
-					height: 260,
-					position: 'relative',
+					maxWidth: 320,
 					userSelect: 'none',
 					outline: 'none',
 					backdropFilter: 'blur(4px) saturate(1.1)',
 					WebkitBackdropFilter: 'blur(4px) saturate(1.1)',
-					perspective: 600,
+					margin: '0 auto',
+					willChange: 'transform',
 				}}
 				aria-label={service.name}
 			>
 				<div style={{
-					width: 80,
-					height: 80,
-					margin: '1.2rem auto 0.7rem auto',
+					width: 70,
+					height: 70,
+					marginBottom: '1.1rem',
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
@@ -540,338 +565,53 @@ export const LandingPage: React.FC = () => {
 					whiteSpace: 'normal',
 					overflow: 'visible',
 				}}>{service.desc}</p>
-				<span
-					className="service-3d-arrow"
-					style={{
-						position: 'absolute',
-						right: 24,
-						bottom: 18,
-						opacity: 0,
-						transition: 'opacity 0.18s cubic-bezier(.4,2,.6,1), transform 0.18s cubic-bezier(.4,2,.6,1)',
-						fontSize: 22,
-						color: '#5727A3',
-						zIndex: 3,
-						pointerEvents: 'none'
-					}}
-				>→</span>
 				<style>{`
 					@keyframes serviceIconFloat${index} {
 						0% { transform: translateY(0) scale(1);}
 						100% { transform: translateY(-10px) scale(1.08);}
 					}
-					.service-3d-card:focus,
-					.service-3d-card:hover {
+					.simple-service-card:focus,
+					.simple-service-card:hover {
 						box-shadow: 0 24px 64px 0 #9F7AEA33, 0 4px 16px 0 #D6C5F033 !important;
-						transform: scale(1.06) !important;
 						border-color: #9F7AEA !important;
 					}
-					.service-3d-card:focus .service-3d-arrow,
-					.service-3d-card:hover .service-3d-arrow {
-						opacity: 1 !important;
-						transform: translateX(6px);
+					.simple-service-card:focus {
+						transform: perspective(600px) rotateX(0deg) rotateY(0deg) scale(1.04) !important;
+					}
+					/* 3D entrance animation for service cards */
+					.simple-service-card {
+						opacity: 0;
+						transform: perspective(800px) rotateY(24deg) scale3d(0.93,0.93,1) translateY(60px);
+						transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
+					}
+					.service-3d-inview.simple-service-card {
+						opacity: 1;
+						transform: none;
+						transition-delay: ${index * 0.09 + 0.1}s;
 					}
 				`}</style>
 			</div>
 		);
 	};
 
-	// 3D Animated Carousel for Services (cards rotate in a 3D circle, click/arrow to rotate)
-	const Service3DCarousel: React.FC<{ services: typeof allServices; onCardClick: (s: typeof allServices[0]) => void }> = ({ services, onCardClick }) => {
-		const [active, setActive] = useState(0);
-		const [isMobile, setIsMobile] = useState(false);
-		const [animating, setAnimating] = useState<'left' | 'right' | null>(null);
-		const [animationKey, setAnimationKey] = useState(0); // For dynamic key
-		const cardCount = services.length;
-		const radius = 420;
-		const cardWidth = 220;
-
-		useEffect(() => {
-			const checkMobile = () => setIsMobile(window.innerWidth <= 600);
-			checkMobile();
-			window.addEventListener('resize', checkMobile);
-			return () => window.removeEventListener('resize', checkMobile);
-		}, []);
-
-		const rotate = (dir: number) => {
-			setAnimating(dir === 1 ? 'right' : 'left');
-			setTimeout(() => {
-				setActive(a => {
-					const next = (a + dir + cardCount) % cardCount;
-					setAnimationKey(prev => prev + 1); // Change key to force remount
-					return next;
-				});
-				setAnimating(null);
-			}, 320); // match animation duration
-		};
-
-		return (
-			<div style={{
-				position: 'relative',
-				width: isMobile ? '100vw' : 600,
-				height: 340,
-				margin: '0 auto 2.2rem auto',
-				perspective: 1200,
-				perspectiveOrigin: '50% 40%',
-				overflow: 'visible',
-				maxWidth: '100vw'
-			}}>
-				{services.map((service, idx) => {
-					const angle = ((360 / cardCount) * (idx - active));
-					const rad = angle * Math.PI / 180;
-					const x = Math.sin(rad) * radius * 0.7;
-					const z = Math.cos(rad) * radius * 0.7;
-					const y = Math.abs(angle) < 1 ? -16 : 0;
-					const scale = Math.abs(angle) < 1 ? 1.13 : 0.92;
-					const baseOpacity = Math.abs(angle) < 120 ? 1 : 0.80;
-					const isActive = idx === active;
-					const isLeft = idx === (active - 1 + cardCount) % cardCount;
-					const isRight = idx === (active + 1) % cardCount;
-					const opacity = isActive ? 1 : (isLeft || isRight) ? 1 : baseOpacity;
-
-					// Only render center, left, and right cards (on mobile, only center)
-					if (isMobile) {
-						if (!isActive) return null;
-					} else {
-						if (!isActive && !isLeft && !isRight) return null;
-					}
-
-					let animClass = '';
-					if (!isMobile && animating) {
-						if (animating === 'right') {
-							if (isRight) animClass = 'carousel-move-to-center-from-right';
-							if (isActive) animClass = 'carousel-move-to-left';
-						} else if (animating === 'left') {
-							if (isLeft) animClass = 'carousel-move-to-center-from-left';
-							if (isActive) animClass = 'carousel-move-to-right';
-						}
-					}
-					if (isMobile && animating) {
-						if (isActive && animating === 'right') animClass = 'carousel-fade-in-right';
-						if (isActive && animating === 'left') animClass = 'carousel-fade-in-left';
-					}
-
-					const cardKey = `${service.code}-${animationKey}-${isActive ? 'center' : isLeft ? 'left' : isRight ? 'right' : 'hidden'}`;
-
-					return (
-						<div
-							key={cardKey}
-							tabIndex={0}
-							onClick={() => onCardClick(service)}
-							onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onCardClick(service); }}
-							className={animClass}
-							style={{
-								position: 'absolute',
-								left: '50%',
-								top: '50%',
-								transform: isMobile
-									? 'translate(-50%, -50%) scale(1.05)'
-									: `
-										translate(-50%, -50%)
-										rotateY(${angle}deg)
-										translateZ(${z}px)
-										translateX(${x}px)
-										translateY(${y}px)
-										scale(${scale})
-									`,
-								transition: 'transform 0.7s cubic-bezier(.4,2,.6,1), box-shadow 0.3s, opacity 0.3s',
-								zIndex: isActive ? 10 : (isLeft || isRight) ? 9 : 1,
-								opacity: isMobile ? 1 : opacity,
-								pointerEvents: isMobile ? (isActive ? 'auto' : 'none') : (isActive || isLeft || isRight) ? 'auto' : 'none',
-								cursor: isActive ? 'pointer' : 'grab',
-								boxShadow: isActive
-									? '0 24px 64px 0 #9F7AEA33, 0 4px 16px 0 #D6C5F033'
-									: '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
-								background: isActive
-									? 'linear-gradient(120deg, #fff 80%, #D6C5F0 100%)'
-									: 'rgba(255,255,255,0.82)',
-								border: isActive ? '2.5px solid #9F7AEA' : '1.5px solid #D6C5F0',
-								borderRadius: 22,
-								width: cardWidth,
-								height: 220,
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'center',
-								justifyContent: 'center',
-								userSelect: 'none',
-								outline: isActive ? '2px solid #9F7AEA44' : 'none',
-								backdropFilter: 'blur(4px) saturate(1.1)',
-								WebkitBackdropFilter: 'blur(4px) saturate(1.1)',
-								overflow: 'hidden',
-								backgroundClip: 'padding-box',
-							}}
-							aria-label={service.name}
-						>
-							{/* Animated 3D icon (reuse previous icons) */}
-							<div style={{
-								width: 70,
-								height: 70,
-								margin: '0 auto 1.1rem auto',
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								borderRadius: '50%',
-								background: 'linear-gradient(120deg,#F0E6FF 60%,#D6C5F0 100%)',
-								boxShadow: '0 2px 12px #9F7AEA11',
-								position: 'relative',
-								animation: `serviceIconFloat${idx} 2.8s ease-in-out infinite alternate`,
-								overflow: 'hidden',
-							}}>
-								{/* ...existing code... */}
-							</div>
-							<h3 style={{
-								fontSize: '1.13rem',
-								fontWeight: 800,
-								color: '#5727A3',
-								margin: '1.1rem 0 .5rem 0',
-								textAlign: 'center',
-								width: '100%',
-								whiteSpace: 'normal',
-								overflow: 'visible',
-							}}>{service.name}</h3>
-							<p style={{
-								fontSize: '1.01rem',
-								color: '#334155',
-								fontWeight: 500,
-								margin: 0,
-								textAlign: 'center',
-								padding: '0 1.1rem',
-								width: '100%',
-								boxSizing: 'border-box',
-								whiteSpace: 'normal',
-								overflow: 'visible',
-							}}>{service.desc}</p>
-						</div>
-					);
-				})}
-				{/* Carousel controls */}
-				<button
-					aria-label="Previous"
-					onClick={() => rotate(-1)}
-					style={{
-						position: 'absolute',
-						left: isMobile ? 10 : -60,
-						top: '50%',
-						transform: 'translateY(-50%)',
-						background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
-						border: 'none',
-						borderRadius: '50%',
-						width: isMobile ? 36 : 44,
-						height: isMobile ? 36 : 44,
-						boxShadow: '0 2px 8px #9F7AEA22',
-						color: '#5727A3',
-						fontWeight: 900,
-						fontSize: isMobile ? 18 : 22,
-						cursor: 'pointer',
-						zIndex: 20,
-						transition: 'background 0.18s'
-					}}
-					disabled={!!animating}
-				>&lt;</button>
-				<button
-					aria-label="Next"
-					onClick={() => rotate(1)}
-					style={{
-						position: 'absolute',
-						right: isMobile ? 10 : -60,
-						top: '50%',
-						transform: 'translateY(-50%)',
-						background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
-						border: 'none',
-						borderRadius: '50%',
-						width: isMobile ? 36 : 44,
-						height: isMobile ? 36 : 44,
-						boxShadow: '0 2px 8px #9F7AEA22',
-						color: '#5727A3',
-						fontWeight: 900,
-						fontSize: isMobile ? 18 : 22,
-						cursor: 'pointer',
-						zIndex: 20,
-						transition: 'background 0.18s'
-					}}
-					disabled={!!animating}
-				>&gt;</button>
-				<style>{`
-					@media (max-width: 600px) {
-						[aria-label="Previous"], [aria-label="Next"] {
-							width: 32px !important;
-							height: 32px !important;
-							font-size: 18px !important;
-						}
-					}
-					${services.map((_, idx) => `
-						@keyframes serviceIconFloat${idx} {
-							0% { transform: translateY(0) scale(1);}
-							100% { transform: translateY(-10px) scale(1.08);}
-						}
-					`).join('\n')}
-					.carousel-move-to-center-from-right {
-						animation: moveToCenterFromRight 0.32s cubic-bezier(.4,2,.6,1);
-						z-index: 11 !important;
-					}
-					.carousel-move-to-left {
-						animation: moveToLeft 0.32s cubic-bezier(.4,2,.6,1);
-						z-index: 10 !important;
-					}
-					.carousel-move-to-center-from-left {
-						animation: moveToCenterFromLeft 0.32s cubic-bezier(.4,2,.6,1);
-						z-index: 11 !important;
-					}
-					.carousel-move-to-right {
-						animation: moveToRight 0.32s cubic-bezier(.4,2,.6,1);
-						z-index: 10 !important;
-					}
-					.carousel-fade-in-right {
-						animation: fadeInRight 0.32s cubic-bezier(.4,2,.6,1);
-					}
-					.carousel-fade-in-left {
-						animation: fadeInLeft 0.32s cubic-bezier(.4,2,.6,1);
-					}
-					@keyframes moveToCenterFromRight {
-						0% { opacity: 0.7; transform: translate(-20%, -50%) scale(0.92);}
-						100% { opacity: 1; transform: translate(-50%, -50%) scale(1.13);}
-					}
-					@keyframes moveToLeft {
-						0% { opacity: 1; transform: translate(-50%, -50%) scale(1.13);}
-						100% { opacity: 0.7; transform: translate(-80%, -50%) scale(0.92);}
-					}
-					@keyframes moveToCenterFromLeft {
-						0% { opacity: 0.7; transform: translate(-80%, -50%) scale(0.92);}
-						100% { opacity: 1; transform: translate(-50%, -50%) scale(1.13);}
-					}
-					@keyframes moveToRight {
-						0% { opacity: 1; transform: translate(-50%, -50%) scale(1.13);}
-						100% { opacity: 0.7; transform: translate(-20%, -50%) scale(0.92);}
-					}
-					@keyframes fadeInRight {
-						0% { opacity: 0; transform: translate(-30%, -50%) scale(0.92);}
-						100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05);}
-					}
-					@keyframes fadeInLeft {
-						0% { opacity: 0; transform: translate(-70%, -50%) scale(0.92);}
-						100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05);}
-					}
-				`}</style>
-			</div>
-		);
-	};
-
-	// Replace servicesSection with animated 3D carousel
 	const servicesSection = (
 		<section
+			ref={servicesSectionRef}
+			className={`services-section${servicesInView ? ' services-3d-inview' : ''}`}
 			style={{
 				maxWidth: 1400,
-				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+				background: 'linear-gradient(90deg,#fff 0%,#d6c5ea 100%)',
 				boxShadow: '0 4px 24px #9F7AEA22',
-				border: '2px solid #D6C5F0',
 				textAlign: 'center',
 				position: 'relative',
-				borderRadius: 32,
 				margin: '2.5rem auto 0 auto',
 				overflow: 'visible',
+				padding: '2.5rem 1.5rem',
 			}}
 		>
 			<div style={{ marginBottom: '2.2rem' }}>
 				<h2
+					className="services-section-title"
 					style={{
 						fontSize: '2.1rem',
 						fontWeight: 800,
@@ -892,10 +632,49 @@ export const LandingPage: React.FC = () => {
 					</span>
 				</h2>
 			</div>
-			<Service3DCarousel
-				services={allServices}
-				onCardClick={s => navigate(s.path)}
-			/>
+			<div
+				style={{
+					display: 'grid',
+					gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+					gap: '2.2rem',
+					justifyContent: 'center',
+					alignItems: 'stretch',
+					maxWidth: 1100,
+					margin: '0 auto',
+				}}
+			>
+				{allServices.map((service, idx) => (
+					<SimpleServiceCard
+						key={service.code}
+						service={service}
+						index={idx}
+						onClick={() => navigate(service.path)}
+					/>
+				))}
+			</div>
+			<style>{`
+				/* 3D entrance for the whole section */
+				.services-section {
+					opacity: 0;
+					transform: perspective(900px) rotateX(12deg) scale3d(0.97,0.97,1) translateY(60px);
+					transition: opacity 0.8s cubic-bezier(.4,2,.6,1), transform 0.8s cubic-bezier(.4,2,.6,1);
+				}
+				.services-3d-inview.services-section {
+					opacity: 1;
+					transform: none;
+				}
+				/* 3D entrance for section title */
+				.services-section-title {
+					opacity: 0;
+					transform: perspective(900px) rotateY(-18deg) scale3d(0.96,0.96,1) translateY(40px);
+					transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
+				}
+				.services-3d-inview .services-section-title {
+					opacity: 1;
+					transform: none;
+					transition-delay: 0.1s;
+				}
+			`}</style>
 		</section>
 	);
 
