@@ -987,7 +987,7 @@ export const LandingPage: React.FC = () => {
 				section, header, footer, main, .container {
 					max-width: 100vw !important;
 				}
-				[class*="blob"], [class*="hero__bg"], [class*="accom-hero-images-inner"], [class*="accom-hero-img-side"], [class*="accom-hero-img-center"] {
+				[class*="blob"], [class*="hero__bg"], [class*="accom-hero-img-side"], [class*="accom-hero-img-center"] {
 					max-width: 100vw !important;
 					overflow-x: hidden !important;
 				}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const valuePoints = [
@@ -8,12 +8,23 @@ const valuePoints = [
   { title:'Actionable Next Steps', text:'Leave every session with prioritized, time‑bound tasks.' }
 ];
 
+// Combine flow into 3 wrapped steps for better readability and no overflow
 const flow = [
-  { step:1, title:'Request Session', text:'Pick a slot & share quick intent notes.' },
-  { step:2, title:'Match & Prep', text:'We pair you with a relevant mentor; you get a mini prep brief.' },
-  { step:3, title:'Live Peer Call', text:'45–50 min structured conversation + open Q&A.' },
-  { step:4, title:'Session Recap', text:'Key takeaways, links & next‑step checklist.' },
-  { step:5, title:'Follow‑Up Window', text:'72h asynchronous clarification support.' }
+  {
+    step: 1,
+    title: 'Book & Match',
+    text: 'Request a session, share your goals, and we’ll pair you with a relevant mentor. You’ll get a mini prep brief before your call.',
+  },
+  {
+    step: 2,
+    title: 'Live Peer Call',
+    text: '45–50 min structured conversation with open Q&A. Get candid feedback, compare options, and receive actionable next steps.',
+  },
+  {
+    step: 3,
+    title: 'Recap & Support',
+    text: 'Receive a session recap, key links, and a next-step checklist. Enjoy 72h of follow-up support for any clarifications.',
+  },
 ];
 
 
@@ -65,6 +76,8 @@ const PAYMENT_METHODS = [
 
 const PeerCounsellingPage: React.FC = () => {
   const nav = useNavigate();
+  // Add ref for counsellor section
+  const counsellorSectionRef = useRef<HTMLDivElement>(null);
   // Directory state
   const [counsellors, setCounsellors] = useState<any[]>([]);
   const [selected, setSelected] = useState<any | null>(null);
@@ -92,87 +105,117 @@ const PeerCounsellingPage: React.FC = () => {
     setBookingLoading(false);
   };
 
+  // Scroll to counsellor section on Book Session click
   const goContact = () => {
-    nav('/contact');
-    requestAnimationFrame(()=>document.querySelector('#contact')?.scrollIntoView({ behavior:'smooth'}));
+    if (counsellorSectionRef.current) {
+      counsellorSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      nav('/contact');
+      requestAnimationFrame(()=>document.querySelector('#contact')?.scrollIntoView({ behavior:'smooth'}));
+    }
   };
   return (
-    <main className="peer-page">
-      <section className="peer-hero">
-        <div className="peer-hero__inner">
-          <h1><span className="gradient-text">Peer Counselling</span> Connect With Current International Students</h1>
-          <p className="peer-lead">Validate your plan, compare countries & programs, and avoid costly mistakes by speaking to students already living your next step.</p>
-          <div className="peer-cta-group">
-            <button className="btn btn-primary" onClick={goContact}>Book Session</button>
-            <button className="btn btn-small" onClick={()=>nav('/services')}>All Services</button>
+    <main className="peer-page" style={{ background: 'radial-gradient(at 70% 0%, rgb(224, 195, 252) 0%, rgb(223 196 255) 35%, rgb(240, 230, 255) 70%, rgb(255, 255, 255) 100%)', minHeight: '100vh' }}>
+      <section className="peer-hero" style={{
+        background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
+        color: '#fff',
+        padding: '3.5rem 0 2.5rem 0',
+        borderRadius: '0 0 36px 36px',
+        boxShadow: '0 8px 48px #9F7AEA22',
+        marginBottom: '2.5rem'
+      }}>
+        <div className="peer-hero__inner" style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+          <h1>
+            <span className="gradient-text" style={{
+              background: 'linear-gradient(90deg, #fff 0%, #9F7AEA 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontWeight: 900,
+              fontSize: '2.5rem',
+              letterSpacing: '-1px',
+              display: 'inline-block'
+            }}>Peer Counselling</span>
+            <span style={{ display: 'block', fontWeight: 700, fontSize: '1.3rem', marginTop: '.7rem', color: '#e0e7ff' }}>
+              Connect With Current International Students
+            </span>
+          </h1>
+          <p className="peer-lead" style={{ color: '#e0e7ff', fontSize: '1.18rem', margin: '1.2rem 0 2rem 0', fontWeight: 500 }}>
+            Validate your plan, compare countries & programs, and avoid costly mistakes by speaking to students already living your next step.
+          </p>
+          <div className="peer-cta-group" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
+            <button className="btn btn-primary" style={{
+              background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 12,
+              fontWeight: 700,
+              fontSize: '1.13rem',
+              padding: '0.8rem 2.2rem',
+              boxShadow: '0 2px 8px #9F7AEA33',
+              cursor: 'pointer'
+            }} onClick={goContact}>Book Session</button>
+            <button className="btn btn-small" style={{
+              background: '#fff',
+              color: '#5727A3',
+              border: '1.5px solid #9F7AEA',
+              borderRadius: 12,
+              fontWeight: 700,
+              fontSize: '1.13rem',
+              padding: '0.8rem 2.2rem',
+              cursor: 'pointer'
+            }} onClick={()=>nav('/services')}>All Services</button>
           </div>
-          <div className="peer-stats">
-            <div><strong>3k+</strong><span>Peer Sessions</span></div>
-            <div><strong>40+</strong><span>Universities</span></div>
-            <div><strong>32</strong><span>Countries</span></div>
+          <div className="peer-stats" style={{ display: 'flex', gap: '2.5rem', justifyContent: 'center', marginTop: '2rem' }}>
+            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>3k+</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Peer Sessions</span></div>
+            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>40+</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Universities</span></div>
+            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>32</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Countries</span></div>
           </div>
         </div>
       </section>
 
-      <section className="peer-section">
-        <h2 className="peer-heading">Why It Works</h2>
-        <div className="peer-grid">
-          {valuePoints.map(v=>(
-            <div key={v.title} className="peer-card">
-              <h3>{v.title}</h3>
-              <p>{v.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="peer-section">
-        <h2 className="peer-heading">Session Flow</h2>
-        <ol className="peer-flow">
-          {flow.map(f=>(
-            <li key={f.step}>
-              <div className="peer-flow__num">{f.step}</div>
-              <div>
-                <h3>{f.title}</h3>
-                <p>{f.text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="peer-section">
-        <h2 className="peer-heading">Real Outcomes</h2>
-        <div className="peer-testimonials">
-          {testimonials.map(t=>(
-            <div key={t.name} className="peer-testimonial">
-              <p>"{t.text}"</p>
-              <span>{t.name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      
 
       {/* --- Peer Counsellor Directory --- */}
-      <section className="peer-section">
-        <h2 className="peer-heading">Meet Our Peer Counsellors</h2>
+      <section
+        className="peer-section"
+        ref={counsellorSectionRef}
+        style={{
+          background: 'rgba(255,255,255,0.93)',
+          borderRadius: 28,
+          boxShadow: '0 4px 24px #9F7AEA11',
+          maxWidth: 1100,
+          margin: '2.5rem auto 0 auto',
+          padding: '2.5rem 1.5rem'
+        }}>
+        <h2 className="peer-heading" style={{
+          color: '#5727A3',
+          fontWeight: 900,
+          fontSize: '2rem',
+          marginBottom: '2rem',
+          letterSpacing: '-1px',
+          textAlign: 'center'
+        }}>Meet Our Peer Counsellors</h2>
         <div className="peer-directory" style={{display:'flex', flexWrap:'wrap', gap:'2rem', justifyContent:'center'}}>
           {counsellors.map(c => (
             <div key={c.id} className="peer-profile-card" style={{
-              background:'#fff', borderRadius:16, boxShadow:'0 2px 16px #e0e7ff', padding:'1.5rem', width:320, display:'flex', flexDirection:'column', alignItems:'center'
+              background:'linear-gradient(135deg,#fff 60%,#e0c3fc 100%)',
+              borderRadius:16,
+              boxShadow:'0 2px 16px #9F7AEA22',
+              padding:'1.5rem',
+              width:320,
+              display:'flex',
+              flexDirection:'column',
+              alignItems:'center'
             }}>
-              <img src={c.photo} alt={c.name} className="peer-profile-photo" style={{width:80, height:80, borderRadius:'50%', objectFit:'cover', marginBottom:'.8rem'}} />
-              <h3 style={{marginBottom:'.2rem', color:'#6366f1'}}>{c.name}</h3>
-              <div style={{fontSize:'.97rem', color:'#334155', marginBottom:'.2rem'}}>{c.university}</div>
-              <div style={{fontSize:'.9rem', color:'#64748b', marginBottom:'.2rem'}}>{c.course} ({c.year})</div>
+              <img src={c.photo} alt={c.name} className="peer-profile-photo" style={{width:80, height:80, borderRadius:'50%', objectFit:'cover', marginBottom:'.8rem', border:'3px solid #9F7AEA'}} />
+              <h3 style={{marginBottom:'.2rem', color:'#5727A3', fontWeight:800}}>{c.name}</h3>
+              <div style={{fontSize:'.97rem', color:'#9F7AEA', marginBottom:'.2rem', fontWeight:700}}>{c.university}</div>
+              <div style={{fontSize:'.9rem', color:'#1B0044', marginBottom:'.2rem'}}>{c.course} ({c.year})</div>
               <div className="peer-profile-areas" style={{display:'flex', flexWrap:'wrap', gap:'.4rem', marginBottom:'.5rem'}}>
-                {c.areas.map((a:string) => <span key={a} className="chip" style={{background:'#e0e7ff', color:'#6366f1', borderRadius:8, padding:'2px 8px', fontSize:'.8rem'}}>{a}</span>)}
+                {c.areas.map((a:string) => <span key={a} className="chip" style={{background:'#e0e7ff', color:'#5727A3', borderRadius:8, padding:'2px 8px', fontSize:'.8rem', fontWeight:600}}>{a}</span>)}
               </div>
               <p style={{fontSize:'.95rem', color:'#475569', marginBottom:'.7rem', textAlign:'center'}}>{c.bio}</p>
               <div style={{width:'100%', marginBottom:'.7rem'}}>
-                <strong style={{fontSize:'.93rem', color:'#6366f1'}}>Availability</strong>
+                <strong style={{fontSize:'.93rem', color:'#5727A3'}}>Availability</strong>
                 <div style={{marginTop:'.3rem', width:'100%', minHeight:60, background:'#f8fafc', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center'}}>
                   <iframe
                     src={c.calendlyUrl}
@@ -181,7 +224,17 @@ const PeerCounsellingPage: React.FC = () => {
                   />
                 </div>
               </div>
-              <button className="btn btn-primary btn-small" onClick={()=>startBooking(c)}>
+              <button className="btn btn-primary btn-small" style={{
+                background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 8,
+                fontWeight: 700,
+                fontSize: '1.07rem',
+                padding: '0.7rem 1.6rem',
+                marginTop: '.5rem',
+                cursor: 'pointer'
+              }} onClick={()=>startBooking(c)}>
                 Book Session
               </button>
             </div>
@@ -192,10 +245,16 @@ const PeerCounsellingPage: React.FC = () => {
       {/* --- Booking Modal --- */}
       {selected && bookingStep && (
         <div className="modal-overlay" style={{
-          position:'fixed', top:0, left:0, right:0, bottom:0, background:'rgba(0,0,0,0.18)', zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center'
+          position:'fixed', top:0, left:0, right:0, bottom:0, background:'rgba(87,39,163,0.13)', zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center'
         }} onClick={()=>{setSelected(null); setBookingStep(null);}}>
           <div className="modal" style={{
-            background:'#fff', borderRadius:16, boxShadow:'0 2px 24px #e0e7ff', padding:'2rem', minWidth:320, maxWidth:400, position:'relative'
+            background:'linear-gradient(135deg,#fff 60%,#e0c3fc 100%)',
+            borderRadius:16,
+            boxShadow:'0 2px 24px #9F7AEA22',
+            padding:'2rem',
+            minWidth:320,
+            maxWidth:400,
+            position:'relative'
           }} onClick={e=>e.stopPropagation()}>
             {bookingStep === 'profile' && (
               <>
@@ -255,13 +314,167 @@ const PeerCounsellingPage: React.FC = () => {
         </div>
       )}
 
-      <section className="peer-section">
-        <h2 className="peer-heading">FAQs</h2>
+      <section className="peer-section" style={{
+        background: 'rgba(255,255,255,0.93)',
+        borderRadius: 28,
+        boxShadow: '0 4px 24px #9F7AEA11',
+        maxWidth: 1100,
+        margin: '2.5rem auto 0 auto',
+        padding: '2.5rem 1.5rem'
+      }}>
+        <h2 className="peer-heading" style={{
+          color: '#5727A3',
+          fontWeight: 900,
+          fontSize: '2rem',
+          marginBottom: '2rem',
+          letterSpacing: '-1px',
+          textAlign: 'center'
+        }}>Session Flow</h2>
+        <ol className="peer-flow" style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '2rem',
+          justifyContent: 'center',
+          listStyle: 'none',
+          padding: 0,
+          margin: 0
+        }}>
+          {flow.map(f=>(
+            <li key={f.step} style={{
+              background: 'linear-gradient(135deg, rgb(238 229 253) 60%, rgb(235 199 254) 100%)',
+              borderRadius: 16,
+              boxShadow: '0 2px 12px #9F7AEA11',
+              padding: '1.5rem 1.2rem',
+              minWidth: 200,
+              maxWidth: 260,
+              textAlign: 'center',
+              flex: '1 1 200px',
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
+              whiteSpace: 'normal',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <div className="peer-flow__num" style={{
+                width: 38,
+                height: 38,
+                background: 'linear-gradient(135deg,#5727A3 0%,#9F7AEA 100%)',
+                color: '#fff',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 800,
+                fontSize: '1.2rem',
+                margin: '0 auto 1rem auto',
+                boxShadow: '0 2px 8px #9F7AEA22'
+              }}>{f.step}</div>
+              {/* Heading and step number in same row */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.7rem',
+                marginBottom: '.7rem',
+                width: '100%',
+                flexWrap: 'nowrap'
+              }}>
+                {/* Hide the number here, since it's above */}
+                <h3 style={{
+                  color: '#5727A3',
+                  fontWeight: 800,
+                  fontSize: '1.13rem',
+                  margin: 0,
+                  wordBreak: 'break-word',
+                  whiteSpace: 'normal',
+                  flex: 1,
+                  textAlign: 'center'
+                }}>{f.title}</h3>
+              </div>
+              <p style={{
+                color: '#1B0044',
+                fontSize: '1.01rem',
+                fontWeight: 500,
+                margin: 0,
+                wordBreak: 'break-word',
+                whiteSpace: 'normal'
+              }}>{f.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="peer-section" style={{
+        background: 'rgba(255,255,255,0.93)',
+        borderRadius: 28,
+        boxShadow: '0 4px 24px #9F7AEA11',
+        maxWidth: 1100,
+        margin: '2.5rem auto 0 auto',
+        padding: '2.5rem 1.5rem'
+      }}>
+        <h2 className="peer-heading" style={{
+          color: '#5727A3',
+          fontWeight: 900,
+          fontSize: '2rem',
+          marginBottom: '2rem',
+          letterSpacing: '-1px',
+          textAlign: 'center'
+        }}>Real Outcomes</h2>
+        <div className="peer-testimonials" style={{
+          display: 'flex',
+          gap: '2rem',
+          flexWrap: 'wrap',
+          justifyContent: 'center'
+        }}>
+          {testimonials.map(t=>(
+            <div key={t.name} className="peer-testimonial" style={{
+              background: 'linear-gradient(135deg,#e7c7fe 40%,#fff 100%)',
+              borderRadius: 16,
+              boxShadow: '0 2px 12px #9F7AEA11',
+              padding: '1.5rem 1.2rem',
+              minWidth: 220,
+              maxWidth: 320,
+              textAlign: 'center',
+              color: '#5727A3',
+              fontWeight: 600
+            }}>
+              <p style={{ fontStyle: 'italic', color: '#1B0044', fontWeight: 500 }}>"{t.text}"</p>
+              <span style={{ color: '#9F7AEA', fontWeight: 700 }}>{t.name}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+      <section className="peer-section" style={{
+        background: 'rgba(255,255,255,0.93)',
+        borderRadius: 28,
+        boxShadow: '0 4px 24px #9F7AEA11',
+        maxWidth: 1100,
+        margin: '2.5rem auto 2.5rem auto',
+        padding: '2.5rem 1.5rem'
+      }}>
+        <h2 className="peer-heading" style={{
+          color: '#5727A3',
+          fontWeight: 900,
+          fontSize: '2rem',
+          marginBottom: '2rem',
+          letterSpacing: '-1px',
+          textAlign: 'center'
+        }}>FAQs</h2>
         <div className="peer-faq">
           {faqs.map(f=>(
-            <details key={f.q}>
-              <summary>{f.q}</summary>
-              <p>{f.a}</p>
+            <details key={f.q} style={{
+              background: '#f8fafc',
+              borderRadius: 10,
+              marginBottom: '.9rem',
+              padding: '.7rem 1rem',
+              color: '#1B0044',
+              border: '1.5px solid #e0e7ff'
+            }}>
+              <summary style={{ color: '#5727A3', fontWeight: 700, cursor: 'pointer' }}>{f.q}</summary>
+              <p style={{ margin: '.5rem 0 0 0', color: '#334155' }}>{f.a}</p>
             </details>
           ))}
         </div>
