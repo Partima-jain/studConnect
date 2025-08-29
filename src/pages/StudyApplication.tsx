@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 const sectionStyle: React.CSSProperties = {
   margin: '2.5rem auto',
   padding: '2.2rem 1.5rem 2.5rem 1.5rem',
-  background: 'linear-gradient(90deg,#f8fafc 0%,#e0e7ff 100%)',
+  background: 'linear-gradient(90deg,#fff 0%,#e0c3fc 100%)',
   borderRadius: '1.5rem',
-  boxShadow: '0 8px 32px 0 #2563eb33, 0 2px 8px 0 #60a5fa22',
-  color: '#1e293b',
+  boxShadow: '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
+  color: '#1B0044',
   fontSize: '1.08rem',
   lineHeight: 1.7,
   marginBottom: '2.5rem',
@@ -87,9 +87,9 @@ const StepCard: React.FC<{ step: number; title: string; desc: string; img: strin
     alignItems: 'center',
     gap: '1.5rem',
     marginBottom: '2.2rem',
-    background: '#fff',
+    background: 'linear-gradient(90deg,#fff 0%,#e0c3fc 100%)',
     borderRadius: 18,
-    boxShadow: '0 2px 12px 0 #e0e7ef',
+    boxShadow: '0 2px 12px 0 #9F7AEA11',
     padding: '1.2rem 1.2rem 1.2rem 1.2rem'
   }}>
     <img src={img} alt={title} style={{
@@ -97,17 +97,17 @@ const StepCard: React.FC<{ step: number; title: string; desc: string; img: strin
       height: 80,
       borderRadius: 12,
       objectFit: 'cover',
-      boxShadow: '0 2px 8px #2563eb22'
+      boxShadow: '0 2px 8px #9F7AEA22'
     }} />
     <div>
       <div style={{
         fontWeight: 700,
-        color: '#2563eb',
+        color: '#5727A3',
         fontSize: '1.1rem',
         marginBottom: '.2rem'
       }}>Step {step}</div>
-      <div style={{ fontWeight: 800, fontSize: '1.13rem', marginBottom: '.2rem' }}>{title}</div>
-      <div style={{ color: '#334155', fontSize: '1.01rem' }}>{desc}</div>
+      <div style={{ fontWeight: 800, fontSize: '1.13rem', marginBottom: '.2rem', color: '#5727A3' }}>{title}</div>
+      <div style={{ color: '#1B0044', fontSize: '1.01rem' }}>{desc}</div>
     </div>
   </div>
 );
@@ -118,7 +118,7 @@ const StudyApplication: React.FC = () => {
   return (
     <div
       style={{
-        background: '#f8fafc',
+        background: 'radial-gradient(ellipse at 70% 0%, #e0c3fc 0%, #ffffffff 35%, #f0e6ff 70%, #fff 100%)',
         minHeight: '100vh',
         paddingBottom: '2rem',
         width: '100vw',
@@ -137,14 +137,14 @@ const StudyApplication: React.FC = () => {
       >
         {/* Hero Section */}
         <Section style={{
-          background: 'linear-gradient(90deg,#e0e7ff 0%,#f8fafc 100%)',
+          background: 'linear-gradient(90deg,#fff 0%,#e0c3fc 100%)',
           textAlign: 'center',
           marginTop: '2.5rem'
         }}>
           <h1 style={{
             fontSize: '2.3rem',
             fontWeight: 900,
-            color: '#2563eb',
+            color: '#5727A3',
             marginBottom: '1.2rem',
             letterSpacing: '-1px'
           }}>
@@ -153,30 +153,30 @@ const StudyApplication: React.FC = () => {
           <h2 style={{
             fontSize: '1.3rem',
             fontWeight: 800,
-            color: '#1e40af',
+            color: '#9F7AEA',
             marginBottom: '1.1rem'
           }}>
             Error-Free Applications with Higher Success Rates
           </h2>
-          <p style={{ fontSize: '1.13rem', color: '#334155', fontWeight: 500, marginBottom: '1.2rem' }}>
+          <p style={{ fontSize: '1.13rem', color: '#5727A3', fontWeight: 500, marginBottom: '1.2rem' }}>
             Our experienced team ensures your application is accurate, complete, and strategically presented to meet each institution’s expectations. We guide you every step of the way — from selecting the right institution to submitting all required documents.
           </p>
           <div style={{ margin: '1.5rem 0 1rem 0', display: 'flex', justifyContent: 'center', gap: '1.2rem', flexWrap: 'wrap' }}>
             {countryFlags.map(flag => (
-              <span key={flag.name} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', fontWeight: 600, fontSize: '1.08rem', color: '#1e40af', background: '#e0e7ff', borderRadius: 8, padding: '.3rem 1rem' }}>
-                <img src={flag.url} alt={flag.name} style={{ width: 28, height: 18, borderRadius: 3, boxShadow: '0 1px 4px #2563eb22' }} />
+              <span key={flag.name} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', fontWeight: 600, fontSize: '1.08rem', color: '#5727A3', background: '#f3e8ff', borderRadius: 8, padding: '.3rem 1rem' }}>
+                <img src={flag.url} alt={flag.name} style={{ width: 28, height: 18, borderRadius: 3, boxShadow: '0 1px 4px #9F7AEA22' }} />
                 {flag.name}
               </span>
             ))}
           </div>
-          <div style={{ fontSize: '1.08rem', color: '#475569', marginTop: '1.2rem' }}>
+          <div style={{ fontSize: '1.08rem', color: '#1B0044', marginTop: '1.2rem' }}>
             Whether you're applying for an undergraduate, postgraduate, diploma, or research program — we guide you every step of the way.
           </div>
         </Section>
 
         {/* Application Process Section */}
         <Section>
-          <h2 style={{ color: '#2563eb', fontWeight: 800, fontSize: '1.25rem', marginBottom: '1.2rem' }}>Step-by-Step Application Process</h2>
+          <h2 style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.25rem', marginBottom: '1.2rem' }}>Step-by-Step Application Process</h2>
           <div>
             {stepData.map((step, idx) => (
               <StepCard key={step.title} step={idx + 1} title={step.title} desc={step.desc} img={step.img} />
@@ -186,31 +186,31 @@ const StudyApplication: React.FC = () => {
 
         {/* Required Documents Section */}
         <Section>
-          <h2 style={{ color: '#2563eb', fontWeight: 800, fontSize: '1.25rem', marginBottom: '.8rem' }}>Commonly Required Documents</h2>
-          <ul style={{ marginLeft: '1.2rem', marginTop: '.7rem', color: '#334155', fontSize: '1.08rem', fontWeight: 500 }}>
+          <h2 style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.25rem', marginBottom: '.8rem' }}>Commonly Required Documents</h2>
+          <ul style={{ marginLeft: '1.2rem', marginTop: '.7rem', color: '#1B0044', fontSize: '1.08rem', fontWeight: 500 }}>
             {docList.map(doc => <li key={doc}>{doc}</li>)}
           </ul>
         </Section>
 
         {/* Error-Free Submission Section */}
         <Section>
-          <h2 style={{ color: '#2563eb', fontWeight: 800, fontSize: '1.25rem', marginBottom: '.8rem' }}>Error-Free Application Submission</h2>
-          <p style={{ color: '#334155', fontSize: '1.08rem', marginBottom: '.7rem' }}>
+          <h2 style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.25rem', marginBottom: '.8rem' }}>Error-Free Application Submission</h2>
+          <p style={{ color: '#1B0044', fontSize: '1.08rem', marginBottom: '.7rem' }}>
             Every year, thousands of applications are rejected due to small mistakes. We ensure your application is:
           </p>
-          <ul style={{ marginLeft: '1.2rem', marginBottom: '1.2rem', color: '#334155', fontSize: '1.08rem', fontWeight: 500 }}>
+          <ul style={{ marginLeft: '1.2rem', marginBottom: '1.2rem', color: '#1B0044', fontSize: '1.08rem', fontWeight: 500 }}>
             {checklist.map(item => <li key={item}>{item}</li>)}
           </ul>
           <div style={{
             marginTop: '1.5rem',
-            background: 'linear-gradient(90deg,#60a5fa 0%,#2563eb 100%)',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
             color: '#fff',
             borderRadius: 16,
             padding: '1.3rem 1.2rem',
             fontWeight: 700,
             textAlign: 'center',
             fontSize: '1.13rem',
-            boxShadow: '0 2px 12px 0 #2563eb22',
+            boxShadow: '0 2px 12px 0 #9F7AEA22',
             letterSpacing: '.01em',
             display: 'flex',
             alignItems: 'center',
@@ -230,14 +230,14 @@ const StudyApplication: React.FC = () => {
         {/* Call to Action Section */}
         <Section
           style={{
-            background: 'linear-gradient(90deg,#f1f5fd 0%,#e0e7ff 100%)',
-            color: '#1e293b',
+            background: 'linear-gradient(90deg,#f3e8ff 0%,#e0c3fc 100%)',
+            color: '#1B0044',
             textAlign: 'center',
             fontWeight: 700,
             fontSize: '1.18rem',
             cursor: 'pointer',
             transition: 'box-shadow 0.18s, transform 0.18s',
-            boxShadow: '0 4px 24px 0 #2563eb22, 0 2px 8px 0 #60a5fa11',
+            boxShadow: '0 4px 24px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
             border: 'none',
             padding: 0
           }}
@@ -258,7 +258,6 @@ const StudyApplication: React.FC = () => {
               outline: 'none',
               cursor: 'pointer',
               borderRadius: 24,
-              // Reduce top padding, add extra marginTop to image instead
               padding: '1.7rem 1.2rem 1.7rem 1.2rem',
               boxShadow: '0 2px 12px 0 #e0e7ef',
               userSelect: 'none',
@@ -271,7 +270,7 @@ const StudyApplication: React.FC = () => {
             }}
             onMouseEnter={e => {
               (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.025)';
-              (e.currentTarget as HTMLDivElement).style.boxShadow = '0 12px 40px 0 #60a5fa, 0 2px 12px 0 #e0e7ef';
+              (e.currentTarget as HTMLDivElement).style.boxShadow = '0 12px 40px 0 #9F7AEA, 0 2px 12px 0 #e0e7ef';
             }}
             onMouseLeave={e => {
               (e.currentTarget as HTMLDivElement).style.transform = '';
@@ -285,7 +284,6 @@ const StudyApplication: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               position: 'relative',
-              // Add marginTop here to push image down
               marginTop: 24
             }}>
               <img
@@ -297,7 +295,7 @@ const StudyApplication: React.FC = () => {
                   borderRadius: 22,
                   objectFit: 'cover',
                   marginBottom: '0',
-                  boxShadow: '0 4px 24px #e0e7ef, 0 2px 8px #2563eb22',
+                  boxShadow: '0 4px 24px #e0e7ef, 0 2px 8px #9F7AEA22',
                   border: '4px solid #fff',
                   transition: 'box-shadow 0.18s'
                 }}
@@ -310,7 +308,7 @@ const StudyApplication: React.FC = () => {
                 width: 130,
                 height: 130,
                 borderRadius: '50%',
-                border: '3px dashed #2563eb',
+                border: '3px dashed #9F7AEA',
                 opacity: 0.13,
                 transform: 'translate(-50%,-50%)',
                 animation: 'spin 6s linear infinite'
@@ -337,7 +335,7 @@ const StudyApplication: React.FC = () => {
                 fontWeight: 900,
                 letterSpacing: '-1px',
                 marginBottom: '.5rem',
-                background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+                background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 lineHeight: 1.1
@@ -347,12 +345,12 @@ const StudyApplication: React.FC = () => {
               <div style={{
                 fontSize: '1.08rem',
                 fontWeight: 600,
-                color: '#1e293b',
+                color: '#1B0044',
                 marginBottom: '.4rem',
                 lineHeight: 1.5,
                 textShadow: '0 2px 8px #e0e7ef'
               }}>
-                Contact us today for a <span style={{color:'#2563eb',fontWeight:700}}>free counselling session</span> and start your global journey with confidence!
+                Contact us today for a <span style={{color:'#5727A3',fontWeight:700}}>free counselling session</span> and start your global journey with confidence!
               </div>
               <span style={{
                 marginTop: '.9rem',
@@ -362,10 +360,10 @@ const StudyApplication: React.FC = () => {
                 fontWeight: 700,
                 color: '#fff',
                 fontSize: '1.13rem',
-                background: 'linear-gradient(90deg,#2563eb 0%,#60a5fa 100%)',
+                background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
                 borderRadius: 10,
                 padding: '.6rem 1.5rem',
-                boxShadow: '0 2px 8px #2563eb22',
+                boxShadow: '0 2px 8px #9F7AEA22',
                 transition: 'background 0.18s'
               }}>
                 <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
