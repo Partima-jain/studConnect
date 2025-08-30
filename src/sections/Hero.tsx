@@ -103,7 +103,8 @@ export const Hero: React.FC = () => {
 						display: 'flex',
 						flexDirection: 'column',
 						justifyContent: 'center',
-						padding: '0 8px',
+						padding: '10px 18px',
+						alignItems: 'flex-start',
 					}}
 					className={`hero-fadein-left ${
 						animating ? 'hero-slide-out-left' : 'hero-slide-in-left'
@@ -112,33 +113,56 @@ export const Hero: React.FC = () => {
 					<div
 						style={{
 							fontWeight: 700,
-							fontSize: 20,
 							color: '#000',
 							marginBottom: 0,
 							letterSpacing: 0,
 							lineHeight: '32px',
+							fontSize: 18,
 						}}
 					>
 						Your one stop solution for all study abroad needs
 					</div>
 					<div
 						style={{
-							fontWeight: 700,
-							fontSize: 'clamp(32px, 7vw, 64px)',
+							fontWeight: 800,
+							fontSize: 'clamp(1.3rem, 5vw, 2.2rem)',
 							color: '#5727A3',
-							padding: '0 0 30px 0',
-							lineHeight: '1.1',
+							padding: '12px 0 20px 0',
+							lineHeight: 1.25,
 							marginBottom: 0,
 							position: 'relative',
 							overflow: 'hidden',
-							textShadow: '0 8px 32px #9F7AEA33, 0 2px 8px #5727A355',
+							textShadow: '0 2px 8px #9F7AEA22, 0 1px 2px #5727A322',
 							animation: 'heroPop3D 1.2s cubic-bezier(.4,2,.6,1) 0.2s both',
+							wordBreak: 'break-word',
+							textAlign: 'left',
+							letterSpacing: '-0.01em',
+							maxWidth: '100%',
+							alignSelf: 'flex-start',
 						}}
 						className={`hero-shine-heading ${
 							animating ? 'hero-slide-out-up' : 'hero-slide-in-up'
 						}`}
 					>
-						{heroSlides[currentSlide].heading}
+						<span
+							style={{
+								display: 'inline-block',
+								background: 'linear-gradient(90deg, #5727A3 40%, #9F7AEA 60%, #5727A3 100%)',
+								WebkitBackgroundClip: 'text',
+								WebkitTextFillColor: 'transparent',
+								backgroundClip: 'text',
+								padding: '0 6px',
+								borderRadius: 8,
+								boxDecorationBreak: 'clone',
+								fontWeight: 800,
+								fontSize: 'inherit',
+								lineHeight: 'inherit',
+								letterSpacing: 'inherit',
+								textShadow: '0 2px 8px #9F7AEA22, 0 1px 2px #5727A322',
+							}}
+						>
+							{heroSlides[currentSlide].heading}
+						</span>
 						<span className="hero-shine-anim" />
 					</div>
 					<div
@@ -182,7 +206,9 @@ export const Hero: React.FC = () => {
 							position: 'relative',
 							overflow: 'hidden',
 							textAlign: 'center',
-							alignSelf: 'flex-start', // ensures button only as wide as content
+							alignSelf: 'flex-start',
+							width: 'auto', // Ensure button width is only as wide as content
+							maxWidth: '100%', // Prevent overflow
 						}}
 						onClick={handleScrollToContact}
 						onMouseOver={(e) => {
@@ -210,7 +236,7 @@ export const Hero: React.FC = () => {
 								whiteSpace: 'nowrap',
 								overflow: 'hidden',
 								textOverflow: 'ellipsis',
-								width: '100%',
+								width: 'auto', // Prevent span from stretching
 								textAlign: 'center',
 								display: 'block',
 							}}
@@ -257,12 +283,13 @@ export const Hero: React.FC = () => {
 						maxWidth: 800,
 						display: 'flex',
 						alignItems: 'center',
-						justifyContent: 'flex-start',
+						justifyContent: 'center', // center align image
 						position: 'relative',
 						height: 700,
 						minHeight: 320,
 						perspective: 1200,
 						perspectiveOrigin: '50% 40%',
+						border: 'None'
 					}}
 					className={`hero-fadein-right ${
 						animating ? 'hero-slide-out-right' : 'hero-slide-in-right'
@@ -272,11 +299,15 @@ export const Hero: React.FC = () => {
 						ref={imgRef}
 						style={{
 							position: 'relative',
-							width: 'clamp(220px, 40vw, 540px)',
-							height: 'clamp(220px, 40vw, 540px)',
+							width: 'clamp(400px, 40vw, 540px)',
+							height: 'clamp(400px, 40vw, 540px)',
 							top: '30px',
 							transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale3d(1.04,1.04,1.04)`,
 							transition: 'transform 0.25s cubic-bezier(.4,2,.6,1)',
+							margin: '0 auto',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
 						}}
 						className="hero-float-img"
 						onMouseMove={handleMouseMove}
@@ -516,6 +547,66 @@ export const Hero: React.FC = () => {
             min-width: 0 !important;
             text-align: center !important;
             justify-content: center !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .hero-shine-heading {
+            font-size: 1.25rem !important;
+            line-height: 1.18 !important;
+            padding-bottom: 18px !important;
+          }
+        }
+        @media (max-width: 900px) {
+          .hero-shine-heading {
+            font-size: clamp(1.1rem, 6vw, 1.7rem) !important;
+            line-height: 1.22 !important;
+            padding-bottom: 12px !important;
+            text-align: left !important;
+            align-self: flex-start !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .hero-shine-heading {
+            font-size: 1.05rem !important;
+            line-height: 1.22 !important;
+            padding-bottom: 10px !important;
+            text-align: center !important;
+            letter-spacing: 0 !important;
+            font-weight: 900 !important;
+            padding-left: 2px !important;
+            padding-right: 2px !important;
+            align-self: center !important;
+          }
+          .hero-shine-heading span {
+            padding: 0 2px !important;
+            border-radius: 6px !important;
+            font-size: 1.08rem !important;
+            font-weight: 900 !important;
+            background: linear-gradient(90deg, #5727A3 40%, #9F7AEA 60%, #5727A3 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            text-decoration: none !important; /* Prevent dotted underline */
+          }
+        }
+        @media (max-width: 420px) {
+          .hero-shine-heading {
+            font-size: 0.92rem !important;
+            padding-bottom: 6px !important;
+          }
+          .hero-shine-heading span {
+            font-size: 0.98rem !important;
+            padding: 0 1px !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .hero-fadein-btn {
+            width: auto !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            align-self: center !important;
+            padding-left: 22px !important;
+            padding-right: 22px !important;
           }
         }
         `}
