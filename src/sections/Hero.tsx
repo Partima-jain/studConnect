@@ -67,7 +67,8 @@ export const Hero: React.FC = () => {
 		<header
 			style={{
 				width: '100%',
-				background: 'linear-gradient(120deg, #D6C5F0 0%, #F0E6FF 100%)',
+				// Replace background with a more beautiful light pastel gradient
+				background: 'linear-gradient(120deg, #F8F6FF 0%, #e9f6ffff 40%, #F0E6FF 100%)',
 				padding: 0,
 				boxSizing: 'border-box',
 				backgroundImage:
@@ -80,6 +81,52 @@ export const Hero: React.FC = () => {
 			}}
 			className="hero-animated-bg"
 		>
+			{/* Decorative SVG pattern background */}
+			<div
+				aria-hidden="true"
+				style={{
+					position: 'absolute',
+					inset: 0,
+					width: '100%',
+					height: '100%',
+					zIndex: 0,
+					overflow: 'hidden',
+					pointerEvents: 'none',
+				}}
+			>
+				<svg
+					width="100%"
+					height="100%"
+					viewBox="0 0 1200 900"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					style={{
+						position: 'absolute',
+						top: 0,
+						left: 0,
+						width: '100%',
+						height: '100%',
+						opacity: 0.22,
+						filter: 'blur(2px)',
+					}}
+				>
+					<defs>
+						<radialGradient id="bg1" cx="50%" cy="40%" r="80%" fx="60%" fy="30%">
+							<stop offset="0%" stopColor="#E9D8FD" stopOpacity="0.7" />
+							<stop offset="60%" stopColor="#B2F0FF" stopOpacity="0.3" />
+							<stop offset="100%" stopColor="#F8F6FF" stopOpacity="0.1" />
+						</radialGradient>
+						<radialGradient id="bg2" cx="80%" cy="80%" r="60%">
+							<stop offset="0%" stopColor="#C7F5FF" stopOpacity="0.5" />
+							<stop offset="100%" stopColor="#F8F6FF" stopOpacity="0" />
+						</radialGradient>
+					</defs>
+					<circle cx="900" cy="200" r="320" fill="url(#bg1)" />
+					<ellipse cx="300" cy="700" rx="260" ry="180" fill="url(#bg2)" />
+					<circle cx="200" cy="200" r="120" fill="#F7E1FF" fillOpacity="0.18" />
+					<circle cx="1100" cy="800" r="90" fill="#B2F0FF" fillOpacity="0.13" />
+				</svg>
+			</div>
 			{/* Animated multi-color gradient background */}
 			<div className="hero-bg-gradient hero-bg-gradient-multicolor" />
 			<div
