@@ -19,32 +19,32 @@ const stepData = [
   {
     title: "Initial Consultation",
     desc: "Understanding your goals, background, and preferred destination.",
-    img: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80"
+    img: "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=400&q=80" // student and counselor talking
   },
   {
     title: "University & Course Selection",
     desc: "Tailored recommendations from globally recognised institutions.",
-    img: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80"
+    img: "https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/53290107561_347528b3d3_k_-2.jpg" // university campus
   },
   {
     title: "Document Collection & Review",
     desc: "We check, format, and ensure everything is compliant.",
-    img: "https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?auto=format&fit=crop&w=400&q=80"
+    img: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" // document review
   },
   {
     title: "Application Submission",
     desc: "We manage the process directly with institutions for faster results.",
-    img: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80"
+    img: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" // application submission
   },
   {
     title: "Offer Letter & Acceptance",
     desc: "Once successful, we assist with GTE/Genuine Intent statements if required.",
-    img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+    img: "https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=400&q=80" // offer letter/acceptance
   },
   {
     title: "Visa Assistance & Pre-departure Support",
     desc: "Guidance for visa, travel, and settling in your new country.",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+    img: "https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/308597795_10159867060511195_7794074239140869476_n.jpg" // visa/travel
   }
 ];
 
