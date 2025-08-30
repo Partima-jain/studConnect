@@ -17,8 +17,11 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children }) => {
-	const [token, setToken] = useState<string | null>(() => localStorage.getItem('sc_token'));
-	const [user, setUser] = useState<User | null>(null);
+	const [token, setToken] = useState<string | null>(() => localStorage.getItem('sc_token') || localStorage.getItem('access_token'));
+	const [user, setUser] = useState<User | null>(() => {
+		const stored = localStorage.getItem('user');
+		return stored ? JSON.parse(stored) : null;
+	});
 	const [loading, setLoading] = useState(false);
 	const [pendingEmail, setPendingEmail] = useState<string | null>(null);
 	const api = useApi(token);
@@ -26,15 +29,31 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
 	// Fetch current user when token changes
 	useEffect(() => {
 		let cancelled = false;
-		if (token && !user) { // added !user guard to prevent duplicate fetch & early 401
+		if (token) {
 			api.get<User>('/users/me')
 				.then(u => { if(!cancelled) setUser(u); })
 				.catch(() => { if(!cancelled) setUser(null); });
-		} else if(!token) {
+		} else {
 			setUser(null);
 		}
 		return () => { cancelled = true; };
-	}, [token]); // unchanged dependency
+	}, [token]);
+
+	// Sync token from localStorage on mount (for OAuth or reload)
+	useEffect(() => {
+		const storedToken = localStorage.getItem('sc_token') || localStorage.getItem('access_token');
+		if (storedToken && token !== storedToken) {
+			setToken(storedToken);
+		}
+	}, []);
+
+	// Keep user in sync with localStorage (for OAuth or reload)
+	useEffect(() => {
+		if (!user) {
+			const stored = localStorage.getItem('user');
+			if (stored) setUser(JSON.parse(stored));
+		}
+	}, []);
 
 	async function login(email:string, password:string) {
 		setLoading(true);
@@ -49,7 +68,7 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
 		setLoading(true);
 		try {
 			await api.post('/auth/register', { email, password, role, full_name });
-			setPendingEmail(email); // wait for OTP
+			setPendingEmail(email);
 		} finally { setLoading(false); }
 	}
 
@@ -67,6 +86,8 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
 	function logout() {
 		setToken(null);
 		localStorage.removeItem('sc_token');
+		localStorage.removeItem('access_token');
+		localStorage.removeItem('user');
 		setUser(null);
 		setPendingEmail(null);
 	}
@@ -78,8 +99,11 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
 	);
 };
 
-export const useAuth = () => {
+// For Vite HMR compatibility, use only one export style for useAuth:
+export function useAuth() {
 	const ctx = useContext(AuthContext);
 	if (!ctx) throw new Error('useAuth must be used within AuthProvider');
 	return ctx;
-};
+}
+
+// Do NOT use both `export const useAuth = ...` and `export function useAuth` in the same file.

@@ -81,9 +81,8 @@ const AuthLoginPage: React.FC = () => {
               if (data.user) {
                 localStorage.setItem('user', JSON.stringify(data.user));
               }
-              // Optionally: update your auth context so user is authenticated immediately
               if (typeof window !== "undefined") {
-                window.location.href = "/"; // Redirect to home or dashboard
+                window.location.href = "/";
               }
             } else {
               const msg = await res.text();
