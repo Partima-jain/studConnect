@@ -63,11 +63,11 @@ export const Hero: React.FC = () => {
 		};
 	}, []);
 
-	// Colors for each heading (solid colors)
+	// Colors for each heading (different shades of purple)
 	const headingColors = [
 		'#5727A3', // Slide 1: Deep purple
-		'#1CB5E0', // Slide 2: Blue
-		'#E75480', // Slide 3: Pinkish
+		'#7C3AED', // Slide 2: Medium purple
+		'#B794F4', // Slide 3: Light purple
 	];
 
 	return (
@@ -222,7 +222,7 @@ export const Hero: React.FC = () => {
 											padding: '0 6px',
 											borderRadius: 4,
 											fontWeight: 900,
-											fontSize: '1.25em', // Larger than rest of heading
+											fontSize: '1.25em',
 											lineHeight: '1.1',
 											boxShadow: '0 1px 8px #FFD70033',
 											marginRight: 4,
@@ -696,4 +696,3 @@ const navLinkStyleWhite: React.CSSProperties = {
 	transition: 'color 0.2s',
 	background: 'none',
 };
-	
