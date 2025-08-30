@@ -35,7 +35,9 @@ const AuthLoginPage: React.FC = () => {
 
   // --- Google Auth Handler ---
   async function handleGoogleLogin() {
-    const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID;
+    const GOOGLE_CLIENT_ID =
+      import.meta.env.VITE_GOOGLE_CLIENT_ID ||
+      import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID;
     if (!GOOGLE_CLIENT_ID) {
       alert("Google Client ID is not set. Please check your .env file and restart the dev server.");
       return;
@@ -70,7 +72,15 @@ const AuthLoginPage: React.FC = () => {
               body: JSON.stringify({ token: response.credential })
             });
             if (res.ok) {
-              // Optionally: get access token from backend and store in localStorage/cookie
+              const data = await res.json();
+              // Save access token in localStorage
+              if (data.access_token) {
+                localStorage.setItem('access_token', data.access_token);
+              }
+              // Save user info if present
+              if (data.user) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+              }
               window.location.reload();
             } else {
               const msg = await res.text();
