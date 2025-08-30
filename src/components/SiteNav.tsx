@@ -336,7 +336,6 @@ export const SiteNav: React.FC = () => {
                   setShowProfileMenu(v => !v);
                 }}
                 onBlur={e => {
-                  // Only close if focus moves outside the menu and icon
                   setTimeout(() => {
                     const active = document.activeElement as HTMLElement | null;
                     const menu = document.querySelector('.site-nav-profile-menu');
@@ -352,8 +351,8 @@ export const SiteNav: React.FC = () => {
                     }
                   }, 120);
                 }}
+                // Only open on hover, do not close on mouse leave if opened by click
                 onMouseEnter={() => setShowProfileMenu(true)}
-                onMouseLeave={() => setShowProfileMenu(false)}
                 aria-label="Profile"
               >
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -381,8 +380,13 @@ export const SiteNav: React.FC = () => {
                       gap: '.6rem',
                       animation: 'fadein .18s cubic-bezier(.4,2,.6,1)'
                     }}
-                    onMouseEnter={() => setShowProfileMenu(true)}
-                    onMouseLeave={() => setShowProfileMenu(false)}
+                    // Do not close on mouse leave if opened by click
+                    onMouseLeave={e => {
+                      // Only close if it was opened by hover, not by click
+                      if (!document.activeElement || !document.querySelector('.site-nav-profile-menu')?.contains(document.activeElement)) {
+                        setShowProfileMenu(false);
+                      }
+                    }}
                     onBlur={e => {
                       setTimeout(() => {
                         const active = document.activeElement as HTMLElement | null;
@@ -515,4 +519,4 @@ export const SiteNav: React.FC = () => {
     </nav>
   );
 };
-
+       
