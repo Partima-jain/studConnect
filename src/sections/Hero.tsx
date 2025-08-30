@@ -5,19 +5,19 @@ const heroSlides = [
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/76cc252f-7159-4921-ae75-bce70f6fb4cb.png',
 		heading: "India`s first Student powered Study abroad Community.",
 		sub: "Get real advice from students who’ve already made the journey.",
-		cta: { text: "Join the Community", href: "/community" }
+		cta: "Join the Community"
 	},
 	{
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/bbf1793a-34ae-49f0-a3ed-5da2a063bb29.png',
 		heading: "One-Stop Platform for Everything you need studying Abroad",
 		sub: "Admissions, visas, scholarships & mentorship — powered by students.",
-		cta: { text: "Start My Journey", href: "/start" }
+		cta: "Start My Journey"
 	},
 	{
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/25c0a6fb-539e-4be3-8041-c621a096dc23.png',
 		heading: "Because Studying Abroad Deserves Real Advice, Not Sales Pitches",
 		sub: "Advice, mentorship, community & tools — all in one place.",
-		cta: { text: "Explore All Services", href: "/services" }
+		cta: "Explore All Services"
 	},
 ];
 
@@ -49,14 +49,14 @@ export const Hero: React.FC = () => {
 	const [animating, setAnimating] = useState(false);
 
 	useEffect(() => {
-		const timeout = setTimeout(() => setAnimating(false), 700);
+		const timeout = setTimeout(() => setAnimating(false), 900);
 		const interval = setInterval(() => {
 			setAnimating(true);
 			setTimeout(() => {
 				setCurrentSlide((s) => (s + 1) % heroSlides.length);
 				setAnimating(false);
-			}, 700);
-		}, 3000);
+			}, 900);
+		}, 3500);
 		return () => {
 			clearInterval(interval);
 			clearTimeout(timeout);
@@ -122,7 +122,7 @@ export const Hero: React.FC = () => {
 							lineHeight: '32px',
 						}}
 					>
-						Your one stop solution for all study abroad
+						Your one stop solution for all study abroad needs
 					</div>
 					<div
 						style={{
@@ -159,7 +159,7 @@ export const Hero: React.FC = () => {
 						{heroSlides[currentSlide].sub}
 					</div>
 					<a
-						href={heroSlides[currentSlide].cta.href}
+						href="#contact"
 						style={{
 							display: 'inline-flex',
 							alignItems: 'center',
@@ -178,8 +178,6 @@ export const Hero: React.FC = () => {
 								'background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.18s',
 							height: 'clamp(48px,4vw,60px)',
 							minWidth: 0,
-							width: '100%',
-							maxWidth: 260,
 							boxShadow: '0 4px 24px #5727A355, 0 1.5px 8px #9F7AEA33',
 							gap: '0.7em',
 							letterSpacing: '.5px',
@@ -187,15 +185,9 @@ export const Hero: React.FC = () => {
 							position: 'relative',
 							overflow: 'hidden',
 							textAlign: 'center',
+							alignSelf: 'flex-start', // ensures button only as wide as content
 						}}
-						onClick={e => {
-							// Only smooth scroll for #contact, otherwise let link work
-							if (heroSlides[currentSlide].cta.href.startsWith('#')) {
-								e.preventDefault();
-								const el = document.getElementById(heroSlides[currentSlide].cta.href.replace('#', ''));
-								if (el) el.scrollIntoView({ behavior: 'smooth' });
-							}
-						}}
+						onClick={handleScrollToContact}
 						onMouseOver={(e) => {
 							e.currentTarget.style.background =
 								'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)';
@@ -226,7 +218,7 @@ export const Hero: React.FC = () => {
 								display: 'block',
 							}}
 						>
-							{heroSlides[currentSlide].cta.text}
+							{heroSlides[currentSlide].cta}
 						</span>
 						<svg
 							width="32"
@@ -443,46 +435,46 @@ export const Hero: React.FC = () => {
           100% { transform: none; opacity: 1; }
         }
         .hero-slide-in-left {
-          animation: heroSlideInLeft 0.7s cubic-bezier(.4,2,.6,1) both;
+          animation: heroSlideInLeft 0.9s cubic-bezier(.33,1,.68,1) both;
         }
         .hero-slide-out-left {
-          animation: heroSlideOutLeft 0.7s cubic-bezier(.4,2,.6,1) both;
+          animation: heroSlideOutLeft 0.9s cubic-bezier(.33,1,.68,1) both;
         }
         .hero-slide-in-right {
-          animation: heroSlideInRight 0.7s cubic-bezier(.4,2,.6,1) both;
+          animation: heroSlideInRight 0.9s cubic-bezier(.33,1,.68,1) both;
         }
         .hero-slide-out-right {
-          animation: heroSlideOutRight 0.7s cubic-bezier(.4,2,.6,1) both;
+          animation: heroSlideOutRight 0.9s cubic-bezier(.33,1,.68,1) both;
         }
         .hero-slide-in-up {
-          animation: heroSlideInUp 0.7s cubic-bezier(.4,2,.6,1) both;
+          animation: heroSlideInUp 0.9s cubic-bezier(.33,1,.68,1) both;
         }
         .hero-slide-out-up {
-          animation: heroSlideOutUp 0.7s cubic-bezier(.4,2,.6,1) both;
+          animation: heroSlideOutUp 0.9s cubic-bezier(.33,1,.68,1) both;
         }
         @keyframes heroSlideInLeft {
-          0% { opacity: 0; transform: translateX(-60px);}
+          0% { opacity: 0; transform: translateX(-80px);}
           100% { opacity: 1; transform: none;}
         }
         @keyframes heroSlideOutLeft {
           0% { opacity: 1; transform: none;}
-          100% { opacity: 0; transform: translateX(-60px);}
+          100% { opacity: 0; transform: translateX(-80px);}
         }
         @keyframes heroSlideInRight {
-          0% { opacity: 0; transform: translateX(60px);}
+          0% { opacity: 0; transform: translateX(80px);}
           100% { opacity: 1; transform: none;}
         }
         @keyframes heroSlideOutRight {
           0% { opacity: 1; transform: none;}
-          100% { opacity: 0; transform: translateX(60px);}
+          100% { opacity: 0; transform: translateX(80px);}
         }
         @keyframes heroSlideInUp {
-          0% { opacity: 0; transform: translateY(-60px);}
+          0% { opacity: 0; transform: translateY(-80px);}
           100% { opacity: 1; transform: none;}
         }
         @keyframes heroSlideOutUp {
           0% { opacity: 1; transform: none;}
-          100% { opacity: 0; transform: translateY(-60px);}
+          100% { opacity: 0; transform: translateY(-80px);}
         }
         @media (max-width: 900px) {
           header {
@@ -548,3 +540,4 @@ const navLinkStyleWhite: React.CSSProperties = {
 	transition: 'color 0.2s',
 	background: 'none',
 };
+
