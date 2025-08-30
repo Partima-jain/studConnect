@@ -88,7 +88,6 @@ export const Hero: React.FC = () => {
 					display: 'flex',
 					flexDirection: 'row',
 					justifyContent: 'space-between',
-					alignItems: 'flex-start',
 					gap: 50,
 					maxWidth: 1500,
 					margin: '0 auto',
@@ -100,7 +99,6 @@ export const Hero: React.FC = () => {
 				{/* Left: Text content */}
 				<div
 					style={{
-						flex: '1 1 400px',
 						minWidth: 280,
 						maxWidth: 700,
 						display: 'flex',
@@ -259,7 +257,6 @@ export const Hero: React.FC = () => {
 						minWidth: 280,
 						maxWidth: 800,
 						display: 'flex',
-						flexDirection: 'column',
 						alignItems: 'center',
 						justifyContent: 'flex-start',
 						position: 'relative',
