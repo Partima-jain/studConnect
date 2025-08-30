@@ -34,7 +34,10 @@ export const SiteNav: React.FC = () => {
   const [navIn, setNavIn] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
   const [visible, setVisible] = useState(true);
+  const [navOffset, setNavOffset] = useState(0);
   const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+  const navHeight = 110; // px, should match the CSS
 
   useEffect(() => {
     // Trigger animation on mount
@@ -49,15 +52,28 @@ export const SiteNav: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY > 10) {
-        setShowSticky(true);
-        setVisible(currentY < lastScrollY.current); // Show when scrolling up, hide when down
-      } else {
-        // setShowSticky(false);
-        setVisible(true);
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          const currentY = window.scrollY;
+          if (currentY > 10) {
+            setShowSticky(true);
+            // Calculate new offset
+            let diff = currentY - lastScrollY.current;
+            setNavOffset(prev => {
+              let next = prev + diff;
+              if (next < 0) next = 0;
+              if (next > navHeight) next = navHeight;
+              return next;
+            });
+          } else {
+            setShowSticky(false);
+            setNavOffset(0);
+          }
+          lastScrollY.current = currentY;
+          ticking.current = false;
+        });
+        ticking.current = true;
       }
-      lastScrollY.current = currentY;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -65,7 +81,7 @@ export const SiteNav: React.FC = () => {
 
   return (
     <nav
-      className={`site-nav${navIn ? ' site-nav-3d-in' : ''}${showSticky ? ' site-nav-sticky' : ''}${visible ? ' site-nav-visible' : ' site-nav-hidden'}`}
+      className={`site-nav${navIn ? ' site-nav-3d-in' : ''} site-nav-sticky`}
       role="navigation"
       aria-label="Main Navigation"
       style={{
@@ -74,17 +90,15 @@ export const SiteNav: React.FC = () => {
         borderRadius: '22px',
         margin: '1.2rem auto 1.5rem auto',
         maxWidth: '1200px',
-        position: showSticky ? 'fixed' : 'relative',
-        top: showSticky ? 0 : undefined,
-        left: showSticky ? 0 : undefined,
-        right: showSticky ? 0 : undefined,
-        width: showSticky ? '100%' : 'auto',
-        boxShadow: showSticky
-          ? '0 8px 32px 0 #5727A355, 0 1.5px 8px 0 #9F7AEA33'
-          : '0 4px 24px 0 #5727A355, 0 1.5px 8px 0 #9F7AEA33',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        width: '100%',
+        boxShadow: '0 8px 32px 0 #5727A355, 0 1.5px 8px 0 #9F7AEA33',
         zIndex: 100,
-        transition: 'box-shadow 0.3s, transform 0.3s, position 0s',
-        transform: !visible && showSticky ? 'translateY(-150%)' : undefined,
+        transition: 'box-shadow 0.3s, transform 0.7s cubic-bezier(.33,1,.68,1)',
+        transform: `translateY(-${navOffset}px)`,
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px) scale(1.01)';
@@ -396,12 +410,10 @@ export const SiteNav: React.FC = () => {
           opacity: 1;
           transform: none;
         }
-        .site-nav.site-nav-sticky {
+        .site-nav-sticky {
           animation: navStickyFadeIn .4s;
         }
-        .site-nav.site-nav-hidden {
-          pointer-events: none;
-        }
+        .site-nav.site-nav-hidden,
         .site-nav.site-nav-visible {
           pointer-events: auto;
         }
@@ -413,4 +425,4 @@ export const SiteNav: React.FC = () => {
     </nav>
   );
 };
-
+    
