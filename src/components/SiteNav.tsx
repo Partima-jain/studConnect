@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './SiteNav.css';
 import { useAuth } from '../context/AuthContext';
@@ -32,6 +32,9 @@ export const SiteNav: React.FC = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [navIn, setNavIn] = useState(false);
+  const [showSticky, setShowSticky] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     // Trigger animation on mount
@@ -44,9 +47,25 @@ export const SiteNav: React.FC = () => {
     return () => window.removeEventListener('resize', close);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY > 10) {
+        setShowSticky(true);
+        setVisible(currentY < lastScrollY.current); // Show when scrolling up, hide when down
+      } else {
+        // setShowSticky(false);
+        setVisible(true);
+      }
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <nav
-      className={`site-nav${navIn ? ' site-nav-3d-in' : ''}`}
+      className={`site-nav${navIn ? ' site-nav-3d-in' : ''}${showSticky ? ' site-nav-sticky' : ''}${visible ? ' site-nav-visible' : ' site-nav-hidden'}`}
       role="navigation"
       aria-label="Main Navigation"
       style={{
@@ -55,10 +74,17 @@ export const SiteNav: React.FC = () => {
         borderRadius: '22px',
         margin: '1.2rem auto 1.5rem auto',
         maxWidth: '1200px',
-        position: 'relative',
-        zIndex: 10,
-        boxShadow: '0 4px 24px 0 #5727A355, 0 1.5px 8px 0 #9F7AEA33',
-        transition: 'box-shadow 0.3s, transform 0.3s'
+        position: showSticky ? 'fixed' : 'relative',
+        top: showSticky ? 0 : undefined,
+        left: showSticky ? 0 : undefined,
+        right: showSticky ? 0 : undefined,
+        width: showSticky ? '100%' : 'auto',
+        boxShadow: showSticky
+          ? '0 8px 32px 0 #5727A355, 0 1.5px 8px 0 #9F7AEA33'
+          : '0 4px 24px 0 #5727A355, 0 1.5px 8px 0 #9F7AEA33',
+        zIndex: 100,
+        transition: 'box-shadow 0.3s, transform 0.3s, position 0s',
+        transform: !visible && showSticky ? 'translateY(-150%)' : undefined,
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px) scale(1.01)';
@@ -70,7 +96,6 @@ export const SiteNav: React.FC = () => {
       }}
     >
       <div className="container site-nav__inner" style={{
-        backdropFilter:'blur(8px)',
         WebkitBackdropFilter:'blur(8px)',
         display: 'flex',
         alignItems: 'center',
@@ -370,6 +395,19 @@ export const SiteNav: React.FC = () => {
         .site-nav.site-nav-3d-in {
           opacity: 1;
           transform: none;
+        }
+        .site-nav.site-nav-sticky {
+          animation: navStickyFadeIn .4s;
+        }
+        .site-nav.site-nav-hidden {
+          pointer-events: none;
+        }
+        .site-nav.site-nav-visible {
+          pointer-events: auto;
+        }
+        @keyframes navStickyFadeIn {
+          from { opacity: 0; transform: translateY(-24px);}
+          to { opacity: 1; transform: none;}
         }
       `}</style>
     </nav>
