@@ -35,7 +35,7 @@ const AuthLoginPage: React.FC = () => {
 
   // --- Google Auth Handler ---
   async function handleGoogleLogin() {
-    const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID;
     if (!GOOGLE_CLIENT_ID) {
       alert("Google Client ID is not set. Please check your .env file and restart the dev server.");
       return;
