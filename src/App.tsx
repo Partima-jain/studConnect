@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
 import { AboutPage } from './pages/AboutPage';
 import { ServicesPage } from './pages/ServicesPage';
@@ -21,6 +21,7 @@ import ProgramDetailsPage from './pages/ProgramDetailsPage';
 import AccommodationPage from './pages/AccommodationPage';
 import UniversityRepresentativeCounsellingPage from './pages/UniversityRepresentativeCounsellingPage';
 import AirportPickupPage from './pages/AirportPickupPage';
+import Footer from './sections/Footer';
 
 // RequireAuth component to protect routes
 const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -31,13 +32,22 @@ const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <>{children}</>;
 };
 
+// Add this component before <Routes>
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 export const App: React.FC = () => (
   <AuthProvider>
     <Router>
+      <ScrollToTop />
       <SiteNav />
       <Routes>
-        <Route path="/" element={<LandingPage />
-        } />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={
           <RequireAuth>
             <AboutPage />
@@ -58,12 +68,8 @@ export const App: React.FC = () => (
             <UniversitiesPage />
           </RequireAuth>
         } />
-        <Route path="/universities/:id" element={
-          <UniversityDetailPage />
-        } />
-        <Route path="/program-details/:id" element={
-           <ProgramDetailsPage />
-        } />
+        <Route path="/universities/:id" element={<UniversityDetailPage />} />
+        <Route path="/program-details/:id" element={<ProgramDetailsPage />} />
         <Route path="/contact" element={
           <RequireAuth>
             <ContactPage />
@@ -111,6 +117,8 @@ export const App: React.FC = () => (
         } />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>
+      <Footer />
     </Router>
   </AuthProvider>
 );
+           

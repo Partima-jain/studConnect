@@ -4,10 +4,8 @@ import { FeaturedUniversities } from '../sections/FeaturedUniversities';
 import { HowItWorks } from '../sections/HowItWorks';
 import { Testimonials } from '../sections/Testimonials';
 import { Contact } from '../sections/Contact';
-import { Footer } from '../sections/Footer';
 import { useNavigate } from 'react-router-dom';
 
-// Shortened and clear service names/descriptions
 const allServices = [
 	{
 		code: 'peer-counselling',
@@ -957,16 +955,6 @@ export const LandingPage: React.FC = () => {
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-				}}
-			/>
-			<Footer
-				style={{
-					background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
-					borderRadius: 0,
-					boxShadow: '0 -2px 16px 0 #9F7AEA22',
-					margin: 0,
-					padding: '2.5rem 1.5rem',
-					maxWidth: '100vw',
 				}}
 			/>
 			<style>{`
