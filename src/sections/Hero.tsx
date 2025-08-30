@@ -74,17 +74,15 @@ export const Hero: React.FC = () => {
 		<header
 			style={{
 				width: '100%',
-				// Replace background with a more beautiful light pastel gradient
-				background: 'linear-gradient(120deg, #F8F6FF 0%, #e9f6ffff 40%, #F0E6FF 100%)',
+				// Subtle pastel gradient background
+				background: 'linear-gradient(120deg, #F8F6FF 0%, #E9F6FF 40%, #F0E6FF 100%)',
 				padding: 0,
 				boxSizing: 'border-box',
-				backgroundImage:
-					'linear-gradient(180deg, rgba(255,255,255,0) 83.4%, rgb(255,255,255) 100%)',
 				minHeight: '900px',
 				display: 'flex',
 				alignItems: 'center',
 				position: 'relative',
-				overflow: 'hidden',// Add top padding to offset sticky nav height
+				overflow: 'hidden',
 			}}
 			className="hero-animated-bg"
 		>
@@ -113,23 +111,23 @@ export const Hero: React.FC = () => {
 						left: 0,
 						width: '100%',
 						height: '100%',
-						opacity: 0.22,
+						opacity: 0.18,
 						filter: 'blur(2px)',
 					}}
 				>
 					<defs>
-						<radialGradient id="bg1" cx="50%" cy="40%" r="80%" fx="60%" fy="30%">
+						<radialGradient id="heroBg1" cx="50%" cy="40%" r="80%" fx="60%" fy="30%">
 							<stop offset="0%" stopColor="#E9D8FD" stopOpacity="0.7" />
 							<stop offset="60%" stopColor="#B2F0FF" stopOpacity="0.3" />
 							<stop offset="100%" stopColor="#F8F6FF" stopOpacity="0.1" />
 						</radialGradient>
-						<radialGradient id="bg2" cx="80%" cy="80%" r="60%">
+						<radialGradient id="heroBg2" cx="80%" cy="80%" r="60%">
 							<stop offset="0%" stopColor="#C7F5FF" stopOpacity="0.5" />
 							<stop offset="100%" stopColor="#F8F6FF" stopOpacity="0" />
 						</radialGradient>
 					</defs>
-					<circle cx="900" cy="200" r="320" fill="url(#bg1)" />
-					<ellipse cx="300" cy="700" rx="260" ry="180" fill="url(#bg2)" />
+					<circle cx="900" cy="200" r="320" fill="url(#heroBg1)" />
+					<ellipse cx="300" cy="700" rx="260" ry="180" fill="url(#heroBg2)" />
 					<circle cx="200" cy="200" r="120" fill="#F7E1FF" fillOpacity="0.18" />
 					<circle cx="1100" cy="800" r="90" fill="#B2F0FF" fillOpacity="0.13" />
 				</svg>
@@ -694,5 +692,4 @@ const navLinkStyleWhite: React.CSSProperties = {
 	lineHeight: '26px',
 	textDecoration: 'none',
 	transition: 'color 0.2s',
-	background: 'none',
 };
