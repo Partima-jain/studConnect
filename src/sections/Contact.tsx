@@ -45,7 +45,10 @@ export const Contact: React.FC = () => {
     email: '',
     phone: '',
     dial_code: '+91',
-    nationality: 'India'
+    nationality: 'India',
+    preferred_destination: '',
+    preferred_study_level: '',
+    preferred_start_year: '',
   });
 
   async function submitConsultationToExcel(data: Record<string, any>) {
@@ -84,6 +87,10 @@ export const Contact: React.FC = () => {
     const firstNameInput = form.elements.namedItem('first_name') as HTMLInputElement;
     const lastNameInput = form.elements.namedItem('last_name') as HTMLInputElement;
     const nationalityInput = form.elements.namedItem('nationality') as HTMLSelectElement;
+    // New fields
+    const destinationInput = form.elements.namedItem('preferred_destination') as HTMLSelectElement;
+    const studyLevelInput = form.elements.namedItem('preferred_study_level') as HTMLSelectElement;
+    const startYearInput = form.elements.namedItem('preferred_start_year') as HTMLSelectElement;
 
     const phoneVal = phoneInput.value.trim();
     const emailVal = emailInput.value.trim();
@@ -91,6 +98,9 @@ export const Contact: React.FC = () => {
     const firstNameVal = firstNameInput.value.trim();
     const lastNameVal = lastNameInput.value.trim();
     const nationalityVal = nationalityInput.value;
+    const preferredDestinationVal = destinationInput.value;
+    const preferredStudyLevelVal = studyLevelInput.value;
+    const preferredStartYearVal = startYearInput.value;
 
     const nextErrors: { phone?: string; email?: string } = {};
     if(!validatePhone(phoneVal, dialVal)) {
@@ -110,7 +120,10 @@ export const Contact: React.FC = () => {
       email: emailVal,
       phone: phoneVal,
       dial_code: dialVal,
-      nationality: nationalityVal
+      nationality: nationalityVal,
+      preferred_destination: preferredDestinationVal,
+      preferred_study_level: preferredStudyLevelVal,
+      preferred_start_year: preferredStartYearVal,
     })
       .then(() => setStatus('submitted'))
       .catch(() => setStatus('idle'));
@@ -181,20 +194,66 @@ export const Contact: React.FC = () => {
         >
           Book Your Consultation
         </h2>
-        <form className="consultation" onSubmit={handleSubmit} noValidate style={{ background: 'linear-gradient(90deg,#fff 60%,#D6C5F0 100%)', borderRadius: 18, boxShadow: '0 2px 12px #9F7AEA11', padding: '2rem 1.5rem', color: '#1B0044' }}>
-          <div className="consultation__grid">
+        <form
+          className="consultation"
+          onSubmit={handleSubmit}
+          noValidate
+          style={{
+            background: 'linear-gradient(90deg,#fff 60%,#F3E8FF 100%)',
+            borderRadius: 22,
+            boxShadow: '0 4px 32px #9F7AEA22, 0 1.5px 8px #D6C5F044',
+            padding: '2.2rem 1.7rem 2.3rem 1.7rem',
+            color: '#1B0044',
+            maxWidth: 600,
+            margin: '0 auto',
+            border: '1.5px solid #E9D8FD',
+            position: 'relative',
+            zIndex: 2,
+          }}
+        >
+          <div className="consultation__grid" style={{ display: 'grid', gap: '1.3rem 1.2rem', gridTemplateColumns: '1fr 1fr', marginBottom: '1.3rem' }}>
             <div className="field">
-              <label style={{ color: '#5727A3', fontWeight: 700 }}>First Name<span>*</span></label>
-              <input required name="first_name" placeholder="John" style={{ background: '#fff', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 8 }} />
+              <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
+                First Name
+                {!formData.first_name && <span style={{ color: '#E75480' }}>*</span>}
+              </label>
+              <input
+                required
+                name="first_name"
+                placeholder="John"
+                style={{ background: '#F8F6FF', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
+                value={formData.first_name}
+                onChange={e => setFormData(f => ({ ...f, first_name: e.target.value }))}
+              />
             </div>
             <div className="field">
-              <label style={{ color: '#5727A3', fontWeight: 700 }}>Last Name<span>*</span></label>
-              <input required name="last_name" placeholder="Doe" style={{ background: '#fff', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 8 }} />
+              <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
+                Last Name
+                {!formData.last_name && <span style={{ color: '#E75480' }}>*</span>}
+              </label>
+              <input
+                required
+                name="last_name"
+                placeholder="Doe"
+                style={{ background: '#F8F6FF', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
+                value={formData.last_name}
+                onChange={e => setFormData(f => ({ ...f, last_name: e.target.value }))}
+              />
             </div>
             <div className="field phone">
-              <label style={{ color: '#5727A3', fontWeight: 700 }}>Phone Number<span>*</span></label>
+              <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
+                Phone Number
+                {(!phone || errors.phone) && <span style={{ color: '#E75480' }}>*</span>}
+              </label>
               <div className="phone__inner">
-                <select name="dial_code" defaultValue="+91" aria-label="Country code" style={{ background: '#fff', color: '#5727A3', border: '1.5px solid #D6C5F0', borderRadius: 8 }}>
+                <select
+                  name="dial_code"
+                  defaultValue="+91"
+                  aria-label="Country code"
+                  style={{ background: '#F8F6FF', color: '#5727A3', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
+                  value={formData.dial_code}
+                  onChange={e => setFormData(f => ({ ...f, dial_code: e.target.value }))}
+                >
                   <option value="+91">+91</option>
                   <option value="+1">+1</option>
                   <option value="+44">+44</option>
@@ -256,26 +315,49 @@ export const Contact: React.FC = () => {
                   pattern="[0-9]*"
                   maxLength={10}
                   value={phone}
-                  onChange={(e)=>{
-                    let digits = e.target.value.replace(/\D/g,'');
-                    if(digits.length === 1 && digits === '0') return; 
-                    if(digits.length > 10) digits = digits.slice(0,10);
+                  onChange={e => {
+                    let digits = e.target.value.replace(/\D/g, '');
+                    if (digits.length === 1 && digits === '0') return;
+                    if (digits.length > 10) digits = digits.slice(0, 10);
                     setPhone(digits);
-                    setErrors(prev => ({...prev, phone: undefined}));
+                    setFormData(f => ({ ...f, phone: digits }));
+                    setErrors(prev => ({ ...prev, phone: undefined }));
                   }}
-                  style={{ background: '#fff', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 8 }}
+                  style={{ background: '#F8F6FF', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
                 />
               </div>
               {errors.phone && <span className="field-error" role="alert" style={{ color: '#dc2626', fontWeight: 600 }}>{errors.phone}</span>}
             </div>
             <div className="field">
-              <label style={{ color: '#5727A3', fontWeight: 700 }}>Email<span>*</span></label>
-              <input required name="email" type="email" placeholder="you@example.com" aria-invalid={!!errors.email} style={{ background: '#fff', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 8 }} />
+              <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
+                Email
+                {(!formData.email || errors.email) && <span style={{ color: '#E75480' }}>*</span>}
+              </label>
+              <input
+                required
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                aria-invalid={!!errors.email}
+                style={{ background: '#F8F6FF', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
+                value={formData.email}
+                onChange={e => setFormData(f => ({ ...f, email: e.target.value }))}
+              />
               {errors.email && <span className="field-error" role="alert" style={{ color: '#dc2626', fontWeight: 600 }}>{errors.email}</span>}
             </div>
             <div className="field">
-              <label style={{ color: '#5727A3', fontWeight: 700 }}>Nationality<span>*</span></label>
-              <select required name="nationality" defaultValue="India" style={{ background: '#fff', color: '#5727A3', border: '1.5px solid #D6C5F0', borderRadius: 8 }}>
+              <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
+                Nationality
+                {!formData.nationality && <span style={{ color: '#E75480' }}>*</span>}
+              </label>
+              <select
+                required
+                name="nationality"
+                defaultValue="India"
+                style={{ background: '#F8F6FF', color: '#5727A3', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
+                value={formData.nationality}
+                onChange={e => setFormData(f => ({ ...f, nationality: e.target.value }))}
+              >
                 <option value="India">India</option>
                 <option value="United States">United States</option>
                 <option value="Canada">Canada</option>
@@ -323,8 +405,109 @@ export const Contact: React.FC = () => {
                 <option value="Argentina">Argentina</option>
               </select>
             </div>
+            <div className="field" style={{ gridColumn: '1 / -1' }}>
+              <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
+                Preferred Destination
+                {!formData.preferred_destination && <span style={{ color: '#E75480' }}>*</span>}
+              </label>
+              <select
+                required
+                name="preferred_destination"
+                defaultValue=""
+                style={{
+                  background: '#F8F6FF',
+                  color: '#5727A3',
+                  border: '1.5px solid #D6C5F0',
+                  borderRadius: 10,
+                  padding: '0.7em 1em',
+                  fontSize: '1.05rem',
+                  marginTop: 2,
+                  width: '100%',
+                  transition: 'border 0.18s, box-shadow 0.18s',
+                  boxShadow: '0 1px 6px #E9D8FD22',
+                }}
+                value={formData.preferred_destination}
+                onChange={e => setFormData(f => ({ ...f, preferred_destination: e.target.value }))}
+              >
+                <option value="" disabled>Select destination</option>
+                <option value="Australia">Australia</option>
+                <option value="Canada">Canada</option>
+                <option value="Germany">Germany</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Ireland">Ireland</option>
+                <option value="Singapore">Singapore</option>
+              </select>
+            </div>
+            <div className="field" style={{ gridColumn: '1 / -1' }}>
+              <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
+                Preferred Study Level
+                {!formData.preferred_study_level && <span style={{ color: '#E75480' }}>*</span>}
+              </label>
+              <select
+                required
+                name="preferred_study_level"
+                defaultValue=""
+                style={{
+                  background: '#F8F6FF',
+                  color: '#5727A3',
+                  border: '1.5px solid #D6C5F0',
+                  borderRadius: 10,
+                  padding: '0.7em 1em',
+                  fontSize: '1.05rem',
+                  marginTop: 2,
+                  width: '100%',
+                  transition: 'border 0.18s, box-shadow 0.18s',
+                  boxShadow: '0 1px 6px #E9D8FD22',
+                }}
+                value={formData.preferred_study_level}
+                onChange={e => setFormData(f => ({ ...f, preferred_study_level: e.target.value }))}
+              >
+                <option value="" disabled>Select study level</option>
+                <option value="Graduation">Graduation</option>
+                <option value="Post Graduation">Post Graduation</option>
+                <option value="Research">Research</option>
+              </select>
+            </div>
+            <div className="field" style={{ gridColumn: '1 / -1' }}>
+              <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
+                When would you like to start studying?
+                {!formData.preferred_start_year && <span style={{ color: '#E75480' }}>*</span>}
+              </label>
+              <select
+                required
+                name="preferred_start_year"
+                defaultValue=""
+                style={{
+                  background: '#F8F6FF',
+                  color: '#5727A3',
+                  border: '1.5px solid #D6C5F0',
+                  borderRadius: 10,
+                  padding: '0.7em 1em',
+                  fontSize: '1.05rem',
+                  marginTop: 2,
+                  width: '100%',
+                  transition: 'border 0.18s, box-shadow 0.18s',
+                  boxShadow: '0 1px 6px #E9D8FD22',
+                }}
+                value={formData.preferred_start_year}
+                onChange={e => setFormData(f => ({ ...f, preferred_start_year: e.target.value }))}
+              >
+                <option value="" disabled>Select year</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+              </select>
+            </div>
           </div>
-          <div className="consultation__actions" style={{display:'flex', justifyContent:'center', marginTop:'1.2rem'}}>
+          {/* Divider */}
+          <div style={{
+            height: 1,
+            background: 'linear-gradient(90deg,#E9D8FD 0%,#fff 100%)',
+            opacity: 0.7,
+            margin: '1.2rem 0 1.7rem 0',
+            borderRadius: 2,
+          }} />
+          <div className="consultation__actions" style={{display:'flex', justifyContent:'center', marginTop:'0'}}>
             <button
               className="btn btn-primary"
               disabled={status !== 'idle'}
@@ -332,20 +515,25 @@ export const Contact: React.FC = () => {
               style={{
                 background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
                 color: '#fff',
-                borderRadius: 14,
-                fontWeight: 700,
+                borderRadius: 16,
+                fontWeight: 800,
                 fontSize: '1.13rem',
-                padding: '.7rem 2.2rem',
+                padding: '.8rem 2.5rem',
                 border: 'none',
-                boxShadow: '0 2px 8px #9F7AEA22',
+                boxShadow: '0 2px 12px #9F7AEA33',
                 cursor: status === 'idle' ? 'pointer' : 'not-allowed',
-                transition: 'background 0.18s'
+                transition: 'background 0.18s, box-shadow 0.18s, transform 0.18s',
+                letterSpacing: '.01em',
               }}
               onMouseOver={e => {
                 e.currentTarget.style.background = 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)';
+                e.currentTarget.style.boxShadow = '0 4px 18px #9F7AEA44';
+                e.currentTarget.style.transform = 'scale(1.04)';
               }}
               onMouseOut={e => {
                 e.currentTarget.style.background = 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)';
+                e.currentTarget.style.boxShadow = '0 2px 12px #9F7AEA33';
+                e.currentTarget.style.transform = '';
               }}
             >
               {status === 'submitting' ? 'Submitting...' : status === 'submitted' ? 'Submitted!' : 'Submit'}
@@ -357,74 +545,6 @@ export const Contact: React.FC = () => {
             </div>
           )}
         </form>
-        <div
-          className="newsletter"
-          style={{
-            margin: '2.5rem auto 0',
-            maxWidth: 420,
-            borderRadius: 16,
-            boxShadow: '0 2px 16px 0 #9F7AEA22',
-            padding: '2rem 1.5rem 1.5rem 1.5rem',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            background: 'linear-gradient(90deg,#fff 60%,#D6C5F0 100%)',
-            color: '#1B0044'
-          }}
-        >
-          <h3 style={{
-            marginBottom:'.7rem',
-            fontWeight:700,
-            fontSize:'1.25rem',
-            color:'#5727A3',
-            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>Stay Updated</h3>
-          <p style={{margin:'0 0 1.1rem 0', color:'#5727A3', fontSize:'.97rem'}}>Subscribe to get the latest updates, tips, and university news.</p>
-          <form
-            className="newsletter__form"
-            style={{display:'flex', gap:'.6rem', width:'100%', justifyContent:'center'}}
-            onSubmit={e => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="Email for updates"
-              required
-              style={{
-                flex:1,
-                minWidth:0,
-                padding:'.7rem 1rem',
-                borderRadius:'8px',
-                border:'1.5px solid #D6C5F0',
-                fontSize:'.98rem',
-                background: '#fff',
-                color: '#1B0044'
-              }}
-            />
-            <button
-              className="btn"
-              style={{
-                background:'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
-                color:'#fff',
-                borderRadius:'8px',
-                padding:'.7rem 1.2rem',
-                fontWeight:700,
-                fontSize:'.98rem',
-                border: 'none',
-                boxShadow: '0 2px 8px #9F7AEA22',
-                transition: 'background 0.18s'
-              }}
-              onMouseOver={e => {
-                e.currentTarget.style.background = 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)';
-              }}
-              onMouseOut={e => {
-                e.currentTarget.style.background = 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)';
-              }}
-            >Subscribe</button>
-          </form>
-        </div>
       </div>
     </section>
   );
