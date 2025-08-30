@@ -653,7 +653,7 @@ export const AboutPage: React.FC = () => {
           zIndex: 2,
           position: 'relative'
         }}>
-          Short Bio
+          We’re <b>Yournextuniversity</b> — the Amazon for Studying Abroad.
         </span>
         <div style={{
           margin: '1.1rem 0 0 0',
@@ -667,7 +667,7 @@ export const AboutPage: React.FC = () => {
           boxShadow: '0 2px 8px 0 #5727A322',
           lineHeight: 1.6
         }}>
-          We’re <b>Yournextuniversity</b> — the Amazon for Studying Abroad. Tired of overpriced packages, fake promises, and confusing agents? We give you <b>real students</b>, <b>verified housing</b>, <b>scholarships</b>, and guidance that actually works. Pick what you need. Skip the hype. Own your journey.
+        Tired of overpriced packages, fake promises, and confusing agents? We give you <b>real students</b>, <b>verified housing</b>, <b>scholarships</b>, and guidance that actually works. Pick what you need. Skip the hype. Own your journey.
         </div>
         <style>{`
           @keyframes bio-bounce {

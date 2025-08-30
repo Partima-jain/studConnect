@@ -84,11 +84,39 @@ const PeerCounsellingPage: React.FC = () => {
   const [bookingStep, setBookingStep] = useState<'profile'|'calendly'|'payment'|'confirmed'|null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>('upi');
   const [bookingLoading, setBookingLoading] = useState(false);
+  // Stripe loader
+  const [stripeLoaded, setStripeLoaded] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [slots, setSlots] = useState<{time: string, booked: boolean}[]>([]);
+  const [selectedSlot, setSelectedSlot] = useState<string>('');
+  const [meetingLink, setMeetingLink] = useState<string>('');
+
+  useEffect(() => {
+    // Load Stripe.js script if not already present
+    if (!window.Stripe) {
+      const script = document.createElement('script');
+      script.src = 'https://js.stripe.com/v3/';
+      script.async = true;
+      script.onload = () => setStripeLoaded(true);
+      document.body.appendChild(script);
+    } else {
+      setStripeLoaded(true);
+    }
+  }, []);
 
   // Use dummy data for now
   useEffect(() => {
     setCounsellors(DUMMY_COUNSELLORS);
   }, []);
+
+  // Fetch slots when date or counsellor changes
+  useEffect(() => {
+    if (selected && bookingStep === 'calendly' && selectedDate) {
+      fetch(`/api/counsellors/${selected.id}/slots?date=${selectedDate}`)
+        .then(r => r.json())
+        .then(data => setSlots(data.slots || []));
+    }
+  }, [selected, bookingStep, selectedDate]);
 
   // Booking workflow handlers
   const startBooking = (c: any) => {
@@ -105,6 +133,49 @@ const PeerCounsellingPage: React.FC = () => {
     setBookingLoading(false);
   };
 
+  // Payment with Stripe (after slot selection)
+  const handleStripePayment = async () => {
+    setBookingLoading(true);
+    // Replace with your Stripe publishable key and price ID
+    const STRIPE_PK = 'pk_test_51Nw...yourkey...'; // TODO: Replace with your key
+    const PRICE_ID = 'price_1Nw...yourpriceid...'; // TODO: Replace with your price id
+
+    if (!window.Stripe && !stripeLoaded) {
+      alert('Stripe is loading. Please wait a moment and try again.');
+      setBookingLoading(false);
+      return;
+    }
+    // Create Stripe instance
+    const stripe = window.Stripe ? window.Stripe(STRIPE_PK) : (window as any).Stripe(STRIPE_PK);
+
+    // Optionally, create Checkout Session on backend for security.
+    // For demo, use client-only mode (test mode).
+    await stripe.redirectToCheckout({
+      lineItems: [{ price: PRICE_ID, quantity: 1 }],
+      mode: 'payment',
+      successUrl: window.location.origin + '/peer-counselling?payment=success',
+      cancelUrl: window.location.origin + '/peer-counselling?payment=cancel',
+      customerEmail: '', // Optionally prefill
+    });
+
+    // After payment success, book slot and get meeting link
+    // (simulate here, replace with real API call)
+    const res = await fetch('/api/book-slot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        counsellorId: selected.id,
+        date: selectedDate,
+        slot: selectedSlot,
+        // ...user info...
+      })
+    });
+    const result = await res.json();
+    setMeetingLink(result.meetingLink || '');
+    setBookingStep('confirmed');
+    setBookingLoading(false);
+  };
+
   // Scroll to counsellor section on Book Session click
   const goContact = () => {
     if (counsellorSectionRef.current) {
@@ -114,6 +185,17 @@ const PeerCounsellingPage: React.FC = () => {
       requestAnimationFrame(()=>document.querySelector('#contact')?.scrollIntoView({ behavior:'smooth'}));
     }
   };
+
+  // Handle Stripe redirect result
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('payment') === 'success') {
+      setBookingStep('confirmed');
+      setSelected(selected => selected); // keep selected
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   return (
     <main className="peer-page" style={{ background: 'radial-gradient(at 70% 0%, rgb(224, 195, 252) 0%, rgb(223 196 255) 35%, rgb(240, 230, 255) 70%, rgb(255, 255, 255) 100%)', minHeight: '100vh' }}>
       <section className="peer-hero" style={{
@@ -267,35 +349,64 @@ const PeerCounsellingPage: React.FC = () => {
             )}
             {bookingStep === 'calendly' && (
               <>
-                <h3 style={{color:'#6366f1'}}>Select a Time Slot</h3>
-                <iframe
-                  src={selected.calendlyUrl}
-                  style={{minWidth: '100%', width:'100%', height:'320px', border:'none', marginBottom:'1rem'}}
-                  title="Calendly"
+                <h3 style={{color:'#6366f1'}}>Select a Date & Time Slot</h3>
+                {/* Date Picker */}
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={e => { setSelectedDate(e.target.value); setSelectedSlot(''); }}
+                  style={{marginBottom: '1rem', padding: '0.5rem', borderRadius: 6, border: '1px solid #ddd'}}
                 />
-                <button className="btn btn-primary" onClick={()=>setBookingStep('payment')}>Proceed to Payment</button>
+                {/* Slot Picker */}
+                {selectedDate && (
+                  <div style={{display:'flex', flexWrap:'wrap', gap:'.5rem', marginBottom:'1rem'}}>
+                    {slots.length === 0 && <span style={{color:'#64748b'}}>No slots available</span>}
+                    {slots.map(slot => (
+                      <button
+                        key={slot.time}
+                        disabled={slot.booked}
+                        style={{
+                          padding: '.5rem 1.1rem',
+                          borderRadius: 8,
+                          border: slot.booked ? '1.5px solid #e5e7eb' : '1.5px solid #9F7AEA',
+                          background: slot.booked ? '#f1f5f9' : (selectedSlot === slot.time ? '#9F7AEA' : '#fff'),
+                          color: slot.booked ? '#a1a1aa' : (selectedSlot === slot.time ? '#fff' : '#5727A3'),
+                          fontWeight: 600,
+                          cursor: slot.booked ? 'not-allowed' : 'pointer',
+                          opacity: slot.booked ? 0.5 : 1
+                        }}
+                        onClick={() => setSelectedSlot(slot.time)}
+                      >
+                        {slot.time}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <button
+                  className="btn btn-primary"
+                  onClick={()=>setBookingStep('payment')}
+                  disabled={!selectedSlot}
+                >
+                  Proceed to Payment
+                </button>
               </>
             )}
             {bookingStep === 'payment' && (
               <>
                 <h3 style={{color:'#6366f1'}}>Payment</h3>
                 <p>Session Fee: <strong>₹999 / $20</strong></p>
-                <div style={{display:'flex', flexDirection:'column', gap:'.7rem', margin:'1rem 0'}}>
-                  {PAYMENT_METHODS.map(m => (
-                    <label key={m.id} style={{display:'flex', alignItems:'center', gap:'.5rem'}}>
-                      <input
-                        type="radio"
-                        name="payment"
-                        value={m.id}
-                        checked={paymentMethod === m.id}
-                        onChange={()=>setPaymentMethod(m.id)}
-                      />
-                      {m.label}
-                    </label>
-                  ))}
+                <div style={{marginBottom:'.7rem', color:'#6366f1', fontWeight:600}}>
+                  Date: {selectedDate} <br />
+                  Slot: {selectedSlot}
                 </div>
-                <button className="btn btn-primary" onClick={handlePayment} disabled={bookingLoading}>
-                  {bookingLoading ? 'Processing...' : 'Pay & Confirm'}
+                {/* Stripe payment button */}
+                <button
+                  className="btn btn-primary"
+                  style={{marginBottom:'.7rem'}}
+                  onClick={handleStripePayment}
+                  disabled={bookingLoading || !stripeLoaded}
+                >
+                  {bookingLoading ? 'Processing...' : 'Pay with Card (Stripe)'}
                 </button>
                 <div style={{fontSize:'.85rem', color:'#64748b', marginTop:'.7rem'}}>
                   Payment confirmation triggers a booking confirmation email and WhatsApp message.
@@ -305,11 +416,19 @@ const PeerCounsellingPage: React.FC = () => {
             {bookingStep === 'confirmed' && (
               <>
                 <h3 style={{color:'#22c55e'}}>Booking Confirmed!</h3>
-                <p>You will receive a confirmation email and WhatsApp message with your Zoom link and reminders.</p>
-                <button className="btn btn-primary" onClick={()=>{setSelected(null); setBookingStep(null);}}>Done</button>
+                <p>
+                  You will receive a confirmation email and WhatsApp message with your Zoom/Google Meet link and reminders.
+                  <br />
+                  {meetingLink && (
+                    <span>
+                      <b>Meeting Link:</b> <a href={meetingLink} target="_blank" rel="noopener">{meetingLink}</a>
+                    </span>
+                  )}
+                </p>
+                <button className="btn btn-primary" onClick={()=>{setSelected(null); setBookingStep(null); setSelectedDate(''); setSelectedSlot(''); setMeetingLink('');}}>Done</button>
               </>
             )}
-            <button className="btn btn-small" style={{marginTop:'1rem'}} onClick={()=>{setSelected(null); setBookingStep(null);}}>Close</button>
+            <button className="btn btn-small" style={{marginTop:'1rem'}} onClick={()=>{setSelected(null); setBookingStep(null); setSelectedDate(''); setSelectedSlot(''); setMeetingLink('');}}>Close</button>
           </div>
         </div>
       )}
