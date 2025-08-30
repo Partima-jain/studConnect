@@ -38,6 +38,7 @@ export const SiteNav: React.FC = () => {
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
   const navHeight = 110; // px, should match the CSS
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   useEffect(() => {
     // Trigger animation on mount
@@ -309,35 +310,124 @@ export const SiteNav: React.FC = () => {
           >Contact</NavLink>
           {/* <ThemeToggle /> */}
           {user ? (
-            <div style={{display:'flex',alignItems:'center',gap:'.5rem', flexWrap: 'nowrap'}}>
-              <span style={{
-                fontSize:'.9rem',
-                opacity:.85,
-                color:'#5727A3',
-                background:'#E9D8FD',
-                borderRadius:'12px',
-                padding:'.4rem 1rem',
-                fontWeight:700,
-                boxShadow:'0 1px 6px #9F7AEA22',
-                whiteSpace: 'nowrap'
-              }}>{user.full_name || user.email}</span>
-              <button
-                className="btn btn-small"
-                type="button"
-                onClick={logout}
+            <div style={{display:'flex',alignItems:'center',gap:'.5rem', flexWrap: 'nowrap', position: 'relative'}}>
+              {/* Profile Icon */}
+              <div
+                className="site-nav-profile-icon"
+                tabIndex={0}
                 style={{
-                  background: 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '18px',
-                  fontWeight: 700,
-                  fontSize: '1.05rem',
-                  padding: '.55rem 1.1rem',
-                  boxShadow: '0 6px 18px -4px #5727A355, 0 2px 8px 0 #9F7AEA33',
-                  transition: 'all 0.25s',
-                  whiteSpace: 'nowrap'
+                  width: 38,
+                  height: 38,
+                  borderRadius: '50%',
+                  background: '#E9D8FD',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  boxShadow: '0 1px 6px #9F7AEA22',
+                  color: '#5727A3',
+                  fontWeight: 900,
+                  fontSize: '1.15rem',
+                  position: 'relative',
+                  outline: 'none',
+                  border: '2px solid #D6C5F0'
                 }}
-              >Logout</button>
+                onClick={e => {
+                  setShowProfileMenu(v => !v);
+                }}
+                onBlur={e => {
+                  // Only close if focus moves outside the menu and icon
+                  setTimeout(() => {
+                    const active = document.activeElement as HTMLElement | null;
+                    const menu = document.querySelector('.site-nav-profile-menu');
+                    const icon = document.querySelector('.site-nav-profile-icon');
+                    if (
+                      active &&
+                      menu &&
+                      icon &&
+                      !menu.contains(active) &&
+                      !icon.contains(active)
+                    ) {
+                      setShowProfileMenu(false);
+                    }
+                  }, 120);
+                }}
+                onMouseEnter={() => setShowProfileMenu(true)}
+                onMouseLeave={() => setShowProfileMenu(false)}
+                aria-label="Profile"
+              >
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="11" cy="11" r="11" fill="#9F7AEA" />
+                  <ellipse cx="11" cy="8.2" rx="3.2" ry="3.2" fill="#fff" />
+                  <ellipse cx="11" cy="15.2" rx="5.2" ry="2.2" fill="#fff" />
+                </svg>
+                {/* Profile dropdown menu */}
+                {showProfileMenu && (
+                  <div
+                    className="site-nav-profile-menu"
+                    tabIndex={0}
+                    style={{
+                      position: 'absolute',
+                      top: 46,
+                      right: 0,
+                      minWidth: 210,
+                      background: '#fff',
+                      borderRadius: 14,
+                      boxShadow: '0 8px 32px #9F7AEA22, 0 2px 8px #D6C5F022',
+                      padding: '1rem 1.2rem',
+                      zIndex: 200,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '.6rem',
+                      animation: 'fadein .18s cubic-bezier(.4,2,.6,1)'
+                    }}
+                    onMouseEnter={() => setShowProfileMenu(true)}
+                    onMouseLeave={() => setShowProfileMenu(false)}
+                    onBlur={e => {
+                      setTimeout(() => {
+                        const active = document.activeElement as HTMLElement | null;
+                        const menu = document.querySelector('.site-nav-profile-menu');
+                        const icon = document.querySelector('.site-nav-profile-icon');
+                        if (
+                          active &&
+                          menu &&
+                          icon &&
+                          !menu.contains(active) &&
+                          !icon.contains(active)
+                        ) {
+                          setShowProfileMenu(false);
+                        }
+                      }, 120);
+                    }}
+                  >
+                    <div style={{ fontWeight: 800, color: '#5727A3', fontSize: '1.08rem', marginBottom: 2 }}>
+                      {user.full_name || 'User'}
+                    </div>
+                    <div style={{ color: '#64748b', fontSize: '.97rem', marginBottom: 6 }}>
+                      {user.email}
+                    </div>
+                    <button
+                      className="btn btn-small"
+                      type="button"
+                      onClick={logout}
+                      style={{
+                        background: 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700,
+                        fontSize: '1.01rem',
+                        padding: '.55rem 1.1rem',
+                        boxShadow: '0 6px 18px -4px #5727A355, 0 2px 8px 0 #9F7AEA33',
+                        transition: 'all 0.25s',
+                        marginTop: 4,
+                        width: '100%',
+                        textAlign: 'center'
+                      }}
+                    >Logout</button>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
             <div style={{display:'flex', gap:'.5rem', flexWrap: 'nowrap'}}>
@@ -425,4 +515,4 @@ export const SiteNav: React.FC = () => {
     </nav>
   );
 };
-    
+
