@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ParallaxBackground } from '../components/ParallaxBackground'; // <-- Add this import
 import { Hero } from '../sections/Hero';
 import { FeaturedUniversities } from '../sections/FeaturedUniversities';
 import { HowItWorks } from '../sections/HowItWorks';
@@ -509,7 +508,7 @@ export const LandingPage: React.FC = () => {
 				onClick={onClick}
 				onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
 				style={{
-					background: 'rgba(255,255,255,0.95)',
+					background: 'rgba(255,255,255,0.82)',
 					borderRadius: 22,
 					boxShadow: '0 8px 32px 0 #9F7AEA11, 0 2px 8px 0 #D6C5F011',
 					border: '1.5px solid #D6C5F0',
@@ -602,8 +601,9 @@ export const LandingPage: React.FC = () => {
 			className={`services-section${servicesInView ? ' services-3d-inview' : ''}`}
 			style={{
 				maxWidth: 1400,
-				background: 'transparent', // <-- Make background transparent
-				boxShadow: 'none', // <-- Remove box shadow for clarity
+				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+				boxShadow: '0 4px 24px #9F7AEA22',
+				border: '2px solid #D6C5F0',
 				textAlign: 'center',
 				position: 'relative',
 				margin: '2.5rem auto 0 auto',
@@ -686,8 +686,8 @@ export const LandingPage: React.FC = () => {
 			<style>{responsiveStyle}</style>
 			<section className="accom-hero-section" style={{
 				...heroSectionStyle,
-				background: 'transparent', // <-- Make background transparent
-				boxShadow: 'none', // <-- Remove box shadow for clarity
+				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+				boxShadow: '0 8px 32px 0 #9F7AEA22',
 				margin: '2.5rem auto 0 auto',
 			}}>
 				{/* Decorative Globe/Blob */}
@@ -914,65 +914,59 @@ export const LandingPage: React.FC = () => {
 
 	return (
 		<>
-			<ParallaxBackground /> {/* <-- Add this at the very top */}
-			<Hero
-				style={{
-					background: 'transparent', // <-- Make background transparent
-					boxShadow: 'none',
-				}}
-			/>
+			<Hero/>
 			{aboutHeroSection}
 			{servicesSection}
 			<FeaturedUniversities
 				style={{
-					background: 'transparent', // <-- Make background transparent
-					boxShadow: 'none',
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px 0 #9F7AEA22',
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-					overflow: 'hidden',
 				}}
 			/>
 			{accommodationHeroSection}
 			{financialServicesSection}
 			<HowItWorks
 				style={{
-					background: 'transparent', // <-- Make background transparent
-					boxShadow: 'none',
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px 0 #9F7AEA22',
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-					overflow: 'hidden',
 				}}
 			/>
 			<Testimonials
 				style={{
-					background: 'transparent', // <-- Make background transparent
-					boxShadow: 'none',
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px 0 #9F7AEA22',
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-					overflow: 'hidden',
 				}}
 			/>
 			<Contact
 				style={{
-					background: 'transparent', // <-- Make background transparent
-					boxShadow: 'none',
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px 0 #9F7AEA22',
 					margin: '2.5rem auto 0 auto',
 					padding: '2.5rem 1.5rem',
 					maxWidth: 1400,
-					overflow: 'hidden',
 				}}
 			/>
 			<Footer
 				style={{
-					background: 'transparent', // <-- Make background transparent
-					boxShadow: 'none',
+					background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
+					borderRadius: 0,
+					boxShadow: '0 -2px 16px 0 #9F7AEA22',
 					margin: 0,
 					padding: '2.5rem 1.5rem',
 					maxWidth: '100vw',
-					overflow: 'hidden',
 				}}
 			/>
 			<style>{`

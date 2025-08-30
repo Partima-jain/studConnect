@@ -36,9 +36,12 @@ export const HowItWorks: React.FC = () => {
 			style={{
 				position: 'relative',
 				zIndex: 1,
-				padding: '0 0 4rem 0',
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				minHeight: '100vh',
+				background: 'radial-gradient(circle at 50% 50%, #D6C5F0 0%, #9F7AEA88 40%, #5727A333 70%, #fff 100%)',
 				overflow: 'hidden',
-				minHeight: 600,
 			}}
 		>
 			{/* Dreamy overlay */}
@@ -48,6 +51,7 @@ export const HowItWorks: React.FC = () => {
 					position: 'absolute',
 					inset: 0,
 					zIndex: 0,
+					background: 'linear-gradient(120deg, #5727A322 0%, #9F7AEA22 60%, #fff 100%)',
 					backdropFilter: 'blur(2.5px)',
 					WebkitBackdropFilter: 'blur(2.5px)',
 					pointerEvents: 'none',
@@ -88,7 +92,12 @@ export const HowItWorks: React.FC = () => {
 						d="M0,80 Q360,160 720,80 T1440,80 V180 H0 Z"
 						fill="url(#howitworks-wave1)"
 					/>
-					
+					<defs>
+						<linearGradient id="howitworks-wave1" x1="0" y1="0" x2="1" y2="1">
+							<stop offset="0%" stopColor="#5727A3" />
+							<stop offset="100%" stopColor="#9F7AEA" />
+						</linearGradient>
+					</defs>
 				</svg>
 				{/* Subtle bottom wave */}
 				<svg
@@ -112,8 +121,8 @@ export const HowItWorks: React.FC = () => {
 					/>
 					<defs>
 						<linearGradient id="howitworks-wave2" x1="0" y1="0" x2="1" y2="1">
-							<stop offset="0%" stopColor="#fbbf24" />
-							<stop offset="100%" stopColor="#9f7aea" />
+							<stop offset="0%" stopColor="#9F7AEA" />
+							<stop offset="100%" stopColor="#5727A3" />
 						</linearGradient>
 					</defs>
 				</svg>
@@ -127,7 +136,7 @@ export const HowItWorks: React.FC = () => {
 							top: `${10 + Math.random() * 75}%`,
 							width: 2 + Math.random() * 3,
 							height: 2 + Math.random() * 3,
-							background: 'linear-gradient(90deg,#fbbf24 0%,#fff 100%)',
+							background: 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)',
 							borderRadius: '50%',
 							opacity: 0.13 + Math.random() * 0.18,
 							filter: 'blur(0.5px)',
@@ -144,6 +153,7 @@ export const HowItWorks: React.FC = () => {
 						width: 110,
 						height: 110,
 						borderRadius: '50%',
+						background: 'radial-gradient(circle at 30% 30%, #5727A3cc 0%, #5727A300 80%)',
 						filter: 'blur(8px)',
 						opacity: 0.45,
 						animation: 'orbFloat1 9s ease-in-out infinite alternate'
@@ -157,7 +167,7 @@ export const HowItWorks: React.FC = () => {
 						width: 140,
 						height: 140,
 						borderRadius: '50%',
-						background: 'radial-gradient(circle at 70% 70%, #60a5fa99 0%, #60a5fa00 80%)',
+						background: 'radial-gradient(circle at 70% 70%, #9F7AEA99 0%, #9F7AEA00 80%)',
 						filter: 'blur(12px)',
 						opacity: 0.38,
 						animation: 'orbFloat2 11s ease-in-out infinite alternate'
@@ -171,7 +181,7 @@ export const HowItWorks: React.FC = () => {
 						width: 70,
 						height: 70,
 						borderRadius: '50%',
-						background: 'radial-gradient(circle at 50% 50%, #a5b4fcbb 0%, #a5b4fc00 80%)',
+						background: 'radial-gradient(circle at 50% 50%, #D6C5F0cc 0%, #D6C5F000 80%)',
 						filter: 'blur(6px)',
 						opacity: 0.32,
 						animation: 'orbFloat3 13s ease-in-out infinite alternate'
@@ -206,9 +216,14 @@ export const HowItWorks: React.FC = () => {
 					zIndex: 1,
 					maxWidth: 1300,
 					margin: '0 auto',
+					borderRadius: 32,
+					background: 'rgba(214,197,240,0.92)', // #D6C5F0
+					boxShadow: '0 8px 48px #5727A318, 0 1.5px 0 #9F7AEA33',
+					border: '1.5px solid #D6C5F0',
 					backdropFilter: 'blur(1.5px)',
 					WebkitBackdropFilter: 'blur(1.5px)',
 					overflow: 'hidden',
+					paddingBottom: '2rem', // moved padding here
 				}}
 			>
 				{/* Section Heading */}
@@ -225,11 +240,11 @@ export const HowItWorks: React.FC = () => {
 							fontWeight: 900,
 							textAlign: 'center',
 							letterSpacing: '-1px',
-							color: '#5727A3', // updated to match main theme
+							color: '#5727A3',
 							marginBottom: '2.2rem',
 							perspective: 400,
 							lineHeight: 1.1,
-							textShadow: '0 2px 8px #9f7aea22',
+							textShadow: '0 2px 8px #5727A311',
 							position: 'relative',
 						}}
 					>
@@ -277,7 +292,7 @@ export const HowItWorks: React.FC = () => {
 									maxWidth: 320,
 									background: '#fff',
 									borderRadius: 22,
-									boxShadow: '0 4px 24px #9F7AEA22',
+									boxShadow: '0 4px 24px #5727A311',
 									padding: '2.2rem 1.5rem 1.5rem 1.5rem',
 									display: 'flex',
 									flexDirection: 'column',
@@ -293,13 +308,13 @@ export const HowItWorks: React.FC = () => {
 								}}
 								onMouseOver={(e) => {
 									(e.currentTarget as HTMLDivElement).style.boxShadow =
-										'0 8px 32px #9F7AEA44';
+										'0 8px 32px #5727A322';
 									(e.currentTarget as HTMLDivElement).style.transform =
 										'translateY(-4px) scale(1.03)';
 								}}
 								onMouseOut={(e) => {
 									(e.currentTarget as HTMLDivElement).style.boxShadow =
-										'0 4px 24px #9F7AEA22';
+										'0 4px 24px #5727A311';
 									(e.currentTarget as HTMLDivElement).style.transform = '';
 								}}
 							>
@@ -321,7 +336,7 @@ export const HowItWorks: React.FC = () => {
 										justifyContent: 'center',
 										fontWeight: 800,
 										fontSize: '1.3rem',
-										boxShadow: '0 2px 12px #9F7AEA33',
+										boxShadow: '0 2px 12px #5727A322',
 										border: '3px solid #fff',
 										zIndex: 2,
 									}}
@@ -337,12 +352,12 @@ export const HowItWorks: React.FC = () => {
 										borderRadius: '50%',
 										background:
 											idx % 2 === 0
-												? 'linear-gradient(135deg, rgb(237 225 241) 60%, rgb(196 171 242) 100%)'
-												: 'linear-gradient(135deg,#f1f5f9 60%,rgb(226 209 244) 100%)',
+												? 'linear-gradient(135deg,#D6C5F0 60%,#9F7AEA 100%)'
+												: 'linear-gradient(135deg,#fff 60%,#D6C5F0 100%)',
 										display: 'flex',
 										alignItems: 'center',
 										justifyContent: 'center',
-										boxShadow: '0 4px 16px #9F7AEA18',
+										boxShadow: '0 4px 16px #5727A318',
 									}}
 								>
 									{idx === 0 && (
@@ -383,7 +398,7 @@ export const HowItWorks: React.FC = () => {
 								<h4
 									style={{
 										fontSize: '1.13rem',
-										color: '#5727A3', // updated to main theme
+										color: '#5727A3',
 										fontWeight: 800,
 										margin: '0 0 .5rem 0',
 										textAlign: 'center',
@@ -395,7 +410,7 @@ export const HowItWorks: React.FC = () => {
 								<p
 									style={{
 										fontSize: '1.07rem',
-										color: '#1B0044', // darker for contrast
+										color: '#3B2562',
 										textAlign: 'center',
 										margin: 0,
 										fontWeight: 500,
@@ -437,4 +452,3 @@ export const HowItWorks: React.FC = () => {
 		</div>
 	);
 };
-	
