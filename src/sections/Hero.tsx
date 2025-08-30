@@ -63,6 +63,13 @@ export const Hero: React.FC = () => {
 		};
 	}, []);
 
+	// Colors for each heading (solid colors)
+	const headingColors = [
+		'#5727A3', // Slide 1: Deep purple
+		'#1CB5E0', // Slide 2: Blue
+		'#E75480', // Slide 3: Pinkish
+	];
+
 	return (
 		<header
 			style={{
@@ -194,10 +201,7 @@ export const Hero: React.FC = () => {
 						<span
 							style={{
 								display: 'inline-block',
-								background: 'linear-gradient(90deg, #5727A3 40%, #9F7AEA 60%, #5727A3 100%)',
-								WebkitBackgroundClip: 'text',
-								WebkitTextFillColor: 'transparent',
-								backgroundClip: 'text',
+								color: headingColors[currentSlide],
 								padding: '0 6px',
 								borderRadius: 8,
 								boxDecorationBreak: 'clone',
@@ -206,9 +210,32 @@ export const Hero: React.FC = () => {
 								lineHeight: 'inherit',
 								letterSpacing: 'inherit',
 								textShadow: '0 2px 8px #9F7AEA22, 0 1px 2px #5727A322',
+								transition: 'color 0.6s cubic-bezier(.4,2,.6,1)',
 							}}
 						>
-							{heroSlides[currentSlide].heading}
+							{currentSlide === 0 ? (
+								<>
+									<mark
+										style={{
+											background: 'transparent',
+											color: '#5727A3',
+											padding: '0 6px',
+											borderRadius: 4,
+											fontWeight: 900,
+											fontSize: '1.25em', // Larger than rest of heading
+											lineHeight: '1.1',
+											boxShadow: '0 1px 8px #FFD70033',
+											marginRight: 4,
+											display: 'inline-block',
+										}}
+									>
+										India`s first
+									</mark>
+									{" Student powered Study abroad Community."}
+								</>
+							) : (
+								heroSlides[currentSlide].heading
+							)}
 						</span>
 						<span className="hero-shine-anim" />
 					</div>
@@ -430,11 +457,6 @@ export const Hero: React.FC = () => {
         .hero-shine-heading {
           position: relative;
           display: inline-block;
-          background: linear-gradient(90deg, #5727A3 40%, #9F7AEA 60%, #5727A3 100%);
-          background-clip: text;
-          -webkit-background-clip: text;
-          color: transparent;
-          -webkit-text-fill-color: transparent;
         }
         .hero-shine-anim {
           position: absolute;
@@ -674,4 +696,4 @@ const navLinkStyleWhite: React.CSSProperties = {
 	transition: 'color 0.2s',
 	background: 'none',
 };
-
+	
