@@ -1,20 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 
 const AuthLoginPage: React.FC = () => {
   const { login, loading, user } = useAuth();
-  const [form,setForm] = useState({ email:'', password:'' });
-  const [err,setErr] = useState<string | null>(null);
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [err, setErr] = useState<string | null>(null);
+
+  // --- Google One Tap: Load script if not present ---
+  useEffect(() => {
+    if (!window.google || !window.google.accounts || !window.google.accounts.id) {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+  }, []);
 
   if (user) return <Navigate to="/" replace />;
 
-  async function submit(e:React.FormEvent){
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     setErr(null);
     try {
       await login(form.email, form.password);
-    } catch (e:any){ setErr(e.message || 'Login failed'); }
+    } catch (e: any) {
+      setErr(e.message || 'Login failed');
+    }
+  }
+
+  // --- Google Auth Handler ---
+  async function handleGoogleLogin() {
+    const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (!GOOGLE_CLIENT_ID) {
+      alert("Google Client ID is not set. Please check your .env file and restart the dev server.");
+      return;
+    }
+    // Wait for the script to be loaded
+    function waitForGoogleScript(retries = 10) {
+      return new Promise<void>((resolve, reject) => {
+        if (
+          typeof window !== "undefined" &&
+          window.google &&
+          window.google.accounts &&
+          window.google.accounts.id
+        ) {
+          resolve();
+        } else if (retries > 0) {
+          setTimeout(() => resolve(waitForGoogleScript(retries - 1)), 300);
+        } else {
+          reject();
+        }
+      });
+    }
+    try {
+      await waitForGoogleScript();
+      window.google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: async (response: any) => {
+          if (response.credential) {
+            // Send the token to backend
+            const res = await fetch('https://studconnect-backend.onrender.com/api/auth/google', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token: response.credential })
+            });
+            if (res.ok) {
+              // Optionally: get access token from backend and store in localStorage/cookie
+              window.location.reload();
+            } else {
+              const msg = await res.text();
+              alert('Google login failed: ' + msg);
+            }
+          }
+        }
+      });
+      window.google.accounts.id.prompt();
+    } catch {
+      alert(
+        "Google login is not available. Please ensure you have included the Google Identity script in your index.html:\n\n<script src=\"https://accounts.google.com/gsi/client\" async defer></script>"
+      );
+    }
   }
 
   return (
@@ -44,9 +114,44 @@ const AuthLoginPage: React.FC = () => {
           backgroundClip: 'text',
           fontWeight: 800
         }}>Login</h2>
+        {/* OAuth Buttons */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem', marginBottom: '1.2rem' }}>
+          <button
+            type="button"
+            style={{
+              background: '#fff',
+              color: '#1B0044',
+              border: '1.5px solid #D6C5F0',
+              borderRadius: 10,
+              fontWeight: 700,
+              fontSize: '1.07rem',
+              padding: '0.7rem 0',
+              boxShadow: '0 2px 8px #9F7AEA11',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              transition: 'background 0.18s'
+            }}
+            onClick={handleGoogleLogin}
+          >
+            Continue with Google
+          </button>
+        </div>
+        {/* Divider */}
+        <div style={{
+          textAlign: 'center',
+          margin: '1.2rem 0 1.2rem 0',
+          color: '#9F7AEA',
+          fontWeight: 600,
+          fontSize: '1rem'
+        }}>
+          or
+        </div>
         <form onSubmit={submit} className="auth-form">
-          <input required type="email" placeholder="Email" value={form.email} onChange={e=>setForm(f=>({...f, email:e.target.value}))} />
-          <input required type="password" placeholder="Password" value={form.password} onChange={e=>setForm(f=>({...f, password:e.target.value}))} />
+          <input required type="email" placeholder="Email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} />
+          <input required type="password" placeholder="Password" value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} />
           {err && <div className="auth-error">{err}</div>}
           <button
             className="btn btn-primary"
@@ -62,7 +167,7 @@ const AuthLoginPage: React.FC = () => {
               transition: 'background 0.2s, transform 0.2s'
             }}
           >
-            {loading?'Please wait...':'Login'}
+            {loading ? 'Please wait...' : 'Login'}
           </button>
         </form>
         <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: 14 }}>
