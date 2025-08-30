@@ -353,7 +353,8 @@ export const ProgramDetailsPage: React.FC = () => {
         position: 'relative',
         zIndex: 1,
         overflow: 'hidden',
-        fontFamily: 'Inter, Segoe UI, Arial, sans-serif'
+        fontFamily: 'Inter, Segoe UI, Arial, sans-serif',
+        paddingTop: '90px', // Add space for fixed header
       }}
     >
       {/* --- 3D/Glassmorphism/Animated Background Elements --- */}

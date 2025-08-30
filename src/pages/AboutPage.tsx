@@ -384,7 +384,8 @@ export const AboutPage: React.FC = () => {
         width: '100vw',
         maxWidth: '100vw',
         boxSizing: 'border-box',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        paddingTop: '90px', // Add space for fixed header
       }}
     >
       {/* Hero Section */}

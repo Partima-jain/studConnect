@@ -75,41 +75,6 @@ const globalStyles = `
 }
 `;
 
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Float, Html } from '@react-three/drei';
-
-// 3D Globe Component
-const AnimatedGlobe: React.FC<{ logoUrl?: string }> = ({ logoUrl }) => (
-  <Canvas style={{ width: 220, height: 220, background: 'transparent' }}>
-    <ambientLight intensity={0.7} />
-    <directionalLight position={[3, 3, 3]} intensity={0.7} />
-    <Float speed={2} rotationIntensity={1.2} floatIntensity={1.5}>
-      <mesh>
-        <sphereGeometry args={[1.6, 64, 64]} />
-        <meshStandardMaterial color="#2563eb" roughness={0.45} metalness={0.25} />
-      </mesh>
-      {/* If logoUrl, show as floating image */}
-      {logoUrl && (
-        <Html center style={{ pointerEvents: 'none', width: 90, height: 90 }}>
-          <img
-            src={logoUrl}
-            alt="Logo"
-            style={{
-              width: 90,
-              height: 90,
-              borderRadius: '50%',
-              boxShadow: '0 2px 12px #2563eb33',
-              border: '2.5px solid #e0e7ff',
-              background: '#fff'
-            }}
-          />
-        </Html>
-      )}
-    </Float>
-    <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.7} />
-  </Canvas>
-);
-
 const FactCard: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) => (
   <div
     className="card-3d"
@@ -490,7 +455,8 @@ export const UniversityDetailPage: React.FC = () => {
         overflow: 'hidden',
         border: `2.5px solid ${BORDER}`,
         minHeight: 800,
-        background: BG
+        background: BG,
+        paddingTop: '90px', // Add space for fixed header
       }}
     >
 

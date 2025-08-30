@@ -123,7 +123,8 @@ const StudyApplication: React.FC = () => {
         paddingBottom: '2rem',
         width: '100vw',
         boxSizing: 'border-box',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        paddingTop: '90px', // Add space for fixed header
       }}
     >
       <div

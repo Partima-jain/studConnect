@@ -126,7 +126,13 @@ export const AccommodationPage: React.FC = () => {
 
   // Update hero and all sections to match the blue/purple hero palette
   return (
-    <main style={{ background: 'radial-gradient(ellipse at 70% 0%, #e0c3fc 0%, #b790f3 35%, #f0e6ff 70%, #fff 100%)', minHeight: '100vh' }}>
+    <main
+      style={{
+        background: 'radial-gradient(ellipse at 70% 0%, #e0c3fc 0%, #b790f3 35%, #f0e6ff 70%, #fff 100%)',
+        minHeight: '100vh',
+        paddingTop: '90px', // Add space for fixed header
+      }}
+    >
       <style>{responsiveStyle}</style>
       {/* Hero Section */}
       <section

@@ -9,7 +9,7 @@ export const CounsellorDashboard: React.FC = () => {
   ]);
 
   return (
-    <main className="page container">
+    <main className="page container" style={{ paddingTop: '90px' }}>
       <h1>Counsellor Dashboard</h1>
       <section style={{marginTop:'2rem'}}>
         <h2 style={{margin:'0 0 1rem'}}>Upcoming Sessions</h2>

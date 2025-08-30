@@ -7,7 +7,8 @@ export const ContactPage: React.FC = () => (
       position: 'relative',
       minHeight: '100vh',
       background: 'linear-gradient(135deg, rgb(255 255 255) 0%, rgb(197 185 234) 100%)', // Updated to hero section theme
-      overflow: 'hidden'
+      overflow: 'hidden',
+      paddingTop: '45px', // Add space for fixed header
     }}
   >
     {/* 3D/Luxury Background Elements */}

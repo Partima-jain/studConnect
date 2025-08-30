@@ -5,7 +5,15 @@ export const FinancialServicesPage: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
 
   return (
-    <main className="page container" style={{ position: 'relative', zIndex: 1, background: 'radial-gradient(ellipse at 70% 0%, #e0c3fc 0%, #a5b4fc 35%, #f0e6ff 70%, #fff 100%)', minHeight: '100vh' }}>
+    <main
+      className="page container"
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        minHeight: '100vh',
+        paddingTop: '90px', // Add space for fixed header
+      }}
+    >
       {/* Funding & Loans Made Easy */}
       <section style={{
         background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',

@@ -126,7 +126,16 @@ export const UniversitiesPage: React.FC = () => {
   };
 
   return (
-    <main style={{ background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)', minHeight: '100vh', paddingBottom: '2rem', position: 'relative', zIndex: 1 }}>
+    <main
+      style={{
+        background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
+        minHeight: '100vh',
+        paddingBottom: '2rem',
+        position: 'relative',
+        zIndex: 1,
+        paddingTop: '90px', // Add space for fixed header
+      }}
+    >
       <div style={{
         maxWidth: 1280,
         margin: '0 auto',

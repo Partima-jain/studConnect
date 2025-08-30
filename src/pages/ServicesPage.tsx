@@ -8,18 +8,11 @@ interface Service { code:string; name:string; category:string; description:strin
 const allServices = [
   {
     code: 'peer-counselling',
-    name: 'Main Counsellor Counselling & Peer Counselling',
+    name: 'Peer Counselling',
     desc: 'Talk to experienced counsellors and real international students for authentic guidance.',
     path: '/services/peer-counselling',
     img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/meeting-5395615_1920.jpg'
   },
-  // {
-  //   code: 'university-representative',
-  //   name: 'University Representative Counselling',
-  //   desc: 'Official sessions with university representatives for program clarity.',
-  //   path: '/services/university-representative',
-  //   img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/308597795_10159867060511195_7794074239140869476_n.jpg'
-  // },
   {
     code: 'accommodation-assistance',
     name: 'Accommodation Assistance',
@@ -27,13 +20,7 @@ const allServices = [
     path: '/accommodation', // updated path
     img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/hotel-6862159_1920.jpg'
   },
-  {
-    code: 'airport-pickup',
-    name: 'Airport Pickup',
-    desc: 'Book airport pickup and arrival support for a smooth landing.',
-    path: '/services/airport-pickup',
-    img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/airplane-7359232.jpg'
-  },
+  
   {
     code: 'financial',
     name: 'Financial Services / Education Loans',
@@ -47,6 +34,20 @@ const allServices = [
     desc: 'Step-by-step guidance through the entire international study application process.',
     path: '/services/international-application-process',
     img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/desk-3139127_1920.jpg'
+  },
+  {
+    code: 'airport-pickup',
+    name: 'Airport Pickup',
+    desc: 'Book airport pickup and arrival support for a smooth landing.',
+    path: '/services/airport-pickup',
+    img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/airplane-7359232.jpg'
+  },
+  {
+    code: 'university-representative',
+    name: 'University Representative Counselling',
+    desc: 'Official sessions with university representatives for program clarity.',
+    path: '/services/university-representative',
+    img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/school_photos/original/308597795_10159867060511195_7794074239140869476_n.jpg'
   }
 ];
 
@@ -72,7 +73,15 @@ export const ServicesPage: React.FC = () => {
   const categories = useMemo(() => Array.from(new Set(data.map(s=>s.category))), [data]);
 
   return (
-    <main className="page container" style={{ paddingBottom: '3rem', position: 'relative', zIndex: 1 }}>
+    <main
+      className="page container"
+      style={{
+        paddingBottom: '3rem',
+        position: 'relative',
+        zIndex: 1,
+        paddingTop: '90px', // Add space for fixed header
+      }}
+    >
       {/* Removed 3D/Glassmorphism/Animated Background Elements */}
       <h1 style={{
         fontSize: '2.7rem',

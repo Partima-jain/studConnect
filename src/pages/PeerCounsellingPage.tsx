@@ -197,7 +197,14 @@ const PeerCounsellingPage: React.FC = () => {
   }, []);
 
   return (
-    <main className="peer-page" style={{ background: 'radial-gradient(at 70% 0%, rgb(224, 195, 252) 0%, rgb(223 196 255) 35%, rgb(240, 230, 255) 70%, rgb(255, 255, 255) 100%)', minHeight: '100vh' }}>
+    <main
+      className="peer-page"
+      style={{
+        background: 'radial-gradient(at 70% 0%, rgb(224, 195, 252) 0%, rgb(223 196 255) 35%, rgb(240, 230, 255) 70%, rgb(255, 255, 255) 100%)',
+        minHeight: '100vh',
+        paddingTop: '90px', // Add space for fixed header
+      }}
+    >
       <section className="peer-hero" style={{
         background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
         color: '#fff',
