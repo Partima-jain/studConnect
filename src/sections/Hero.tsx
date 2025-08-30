@@ -76,8 +76,7 @@ export const Hero: React.FC = () => {
 				display: 'flex',
 				alignItems: 'center',
 				position: 'relative',
-				overflow: 'hidden',
-				paddingTop: '110px', // Add top padding to offset sticky nav height
+				overflow: 'hidden',// Add top padding to offset sticky nav height
 			}}
 			className="hero-animated-bg"
 		>
@@ -476,7 +475,7 @@ export const Hero: React.FC = () => {
         @media (max-width: 900px) {
           header {
             min-height: 600px !important;
-            padding-top: 110px !important; /* Offset sticky nav */
+            // padding-top: 110px !important; /* Offset sticky nav */
           }
           header > div {
             flex-direction: column !important;
