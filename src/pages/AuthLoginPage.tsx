@@ -81,7 +81,10 @@ const AuthLoginPage: React.FC = () => {
               if (data.user) {
                 localStorage.setItem('user', JSON.stringify(data.user));
               }
-              window.location.reload();
+              // Optionally: update your auth context so user is authenticated immediately
+              if (typeof window !== "undefined") {
+                window.location.href = "/"; // Redirect to home or dashboard
+              }
             } else {
               const msg = await res.text();
               alert('Google login failed: ' + msg);
