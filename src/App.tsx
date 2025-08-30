@@ -19,6 +19,8 @@ import UniversityDetailPage from './pages/UniversityDetailPage';
 import StudyApplication from './pages/StudyApplication';
 import ProgramDetailsPage from './pages/ProgramDetailsPage';
 import AccommodationPage from './pages/AccommodationPage';
+import UniversityRepresentativeCounsellingPage from './pages/UniversityRepresentativeCounsellingPage';
+import AirportPickupPage from './pages/AirportPickupPage';
 
 // RequireAuth component to protect routes
 const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -95,6 +97,16 @@ export const App: React.FC = () => (
         <Route path="/accommodation" element={
           <RequireAuth>
             <AccommodationPage />
+          </RequireAuth>
+        } />
+        <Route path="/services/university-representative-counselling" element={
+          <RequireAuth>
+            <UniversityRepresentativeCounsellingPage />
+          </RequireAuth>
+        } />
+        <Route path="/services/airport-pickup" element={
+          <RequireAuth>
+            <AirportPickupPage />
           </RequireAuth>
         } />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />

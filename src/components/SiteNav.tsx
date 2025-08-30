@@ -5,16 +5,12 @@ import { useAuth } from '../context/AuthContext';
 
 const servicesDropdown = [
   {
-    name: 'Main Counsellor Counselling & Peer Counselling',
+    name: 'Peer Counselling',
     path: '/services/peer-counselling',
   },
   {
     name: 'Accommodation Assistance',
     path: '/accommodation',
-  },
-  {
-    name: 'Airport Pickup',
-    path: '/services/airport-pickup',
   },
   {
     name: 'Financial Services / Education Loans',
@@ -23,6 +19,14 @@ const servicesDropdown = [
   {
     name: 'International Study Application Process',
     path: '/services/international-application-process',
+  },
+  {
+    name: 'Airport Pickup',
+    path: '/services/airport-pickup',
+  },
+  {
+    name: 'University Representative Counselling',
+    path: '/services/university-representative-counselling',
   },
 ];
 
