@@ -144,13 +144,13 @@ export const LandingPage: React.FC = () => {
 		return () => observer.disconnect();
 	}, []);
 
-	// Observe services section for 3D animation
+	// Observe services section for animation (fade/slide-in)
 	useEffect(() => {
 		const el = servicesSectionRef.current;
 		if (!el) return;
 		const observer = new window.IntersectionObserver(
 			([entry]) => setServicesInView(entry.isIntersecting),
-			{ threshold: 0.3 }
+			{ threshold: 0.2 }
 		);
 		observer.observe(el);
 		return () => observer.disconnect();
@@ -501,7 +501,7 @@ export const LandingPage: React.FC = () => {
 		return (
 			<div
 				ref={cardRef}
-				className={`simple-service-card${servicesInView ? ' service-3d-inview' : ''}`}
+				className={`simple-service-card${servicesInView ? ' service-animate-in' : ''}`}
 				tabIndex={0}
 				onClick={onClick}
 				onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
@@ -577,16 +577,16 @@ export const LandingPage: React.FC = () => {
 					.simple-service-card:focus {
 						transform: perspective(600px) rotateX(0deg) rotateY(0deg) scale(1.04) !important;
 					}
-					/* 3D entrance animation for service cards */
+					/* Fade-in + slide-up animation for service cards */
 					.simple-service-card {
 						opacity: 0;
-						transform: perspective(800px) rotateY(24deg) scale3d(0.93,0.93,1) translateY(60px);
+						transform: translateY(40px);
 						transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
 					}
-					.service-3d-inview.simple-service-card {
+					.service-animate-in.simple-service-card {
 						opacity: 1;
 						transform: none;
-						transition-delay: ${index * 0.09 + 0.1}s;
+						transition-delay: ${index * 0.13 + 0.2}s;
 					}
 				`}</style>
 			</div>
@@ -596,7 +596,7 @@ export const LandingPage: React.FC = () => {
 	const servicesSection = (
 		<section
 			ref={servicesSectionRef}
-			className={`services-section${servicesInView ? ' services-3d-inview' : ''}`}
+			className={`services-section${servicesInView ? ' services-animate-in' : ''}`}
 			style={{
 				maxWidth: 1400,
 				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
@@ -653,26 +653,26 @@ export const LandingPage: React.FC = () => {
 				))}
 			</div>
 			<style>{`
-				/* 3D entrance for the whole section */
+				/* Section fade-in + slide-up animation */
 				.services-section {
 					opacity: 0;
-					transform: perspective(900px) rotateX(12deg) scale3d(0.97,0.97,1) translateY(60px);
-					transition: opacity 0.8s cubic-bezier(.4,2,.6,1), transform 0.8s cubic-bezier(.4,2,.6,1);
+					transform: translateY(60px);
+					transition: opacity 0.9s cubic-bezier(.4,2,.6,1), transform 0.9s cubic-bezier(.4,2,.6,1);
 				}
-				.services-3d-inview.services-section {
+				.services-animate-in.services-section {
 					opacity: 1;
 					transform: none;
 				}
-				/* 3D entrance for section title */
+				/* Fade-in for section title */
 				.services-section-title {
 					opacity: 0;
-					transform: perspective(900px) rotateY(-18deg) scale3d(0.96,0.96,1) translateY(40px);
+					transform: translateY(30px);
 					transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
 				}
-				.services-3d-inview .services-section-title {
+				.services-animate-in .services-section-title {
 					opacity: 1;
 					transform: none;
-					transition-delay: 0.1s;
+					transition-delay: 0.15s;
 				}
 			`}</style>
 		</section>
