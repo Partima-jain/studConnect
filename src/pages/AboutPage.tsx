@@ -251,9 +251,9 @@ const features = [
         }}
       />
     ),
-    title: 'Book Mentors',
+    title: 'Peer Coun',
     desc: "Book real students and alumni as mentors—people who’ve lived the journey, not just sold it.",
-    to: '/services#mentors'
+    to: '/services/peer-counselling'
   },
   {
     icon: (
@@ -271,7 +271,7 @@ const features = [
     ),
     title: 'Verified Housing',
     desc: "Secure verified housing before you even board the flight.",
-    to: '/services#housing'
+    to: '/accommodation'
   },
   {
     icon: (
@@ -289,7 +289,7 @@ const features = [
     ),
     title: 'Scholarships & Loans',
     desc: "Compare loans, find scholarships, and manage your finances smartly.",
-    to: '/services#finance'
+    to: '/financial-services'
   }
 ];
 

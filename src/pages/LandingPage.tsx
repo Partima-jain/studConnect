@@ -42,6 +42,13 @@ const allServices = [
 		path: '/services/international-application-process',
 		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/desk-3139127_1920.jpg',
 	},
+	{
+		code: 'university-counsellors',
+		name: 'University Counsellors',
+		desc: 'Get guidance from official university representatives for your application and admission process.',
+		path: '/services/university-representative-counselling',
+		img: 'https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/university-counsellor.jpg',
+	},
 ];
 
 const heroSectionStyle: React.CSSProperties = {
@@ -653,7 +660,7 @@ export const LandingPage: React.FC = () => {
 		return (
 			<div
 				ref={cardRef}
-				className={`simple-service-card${servicesInView ? ' service-animate-in' : ''}`}
+				className="simple-service-card"
 				tabIndex={0}
 				onClick={onClick}
 				onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
@@ -729,17 +736,6 @@ export const LandingPage: React.FC = () => {
 					.simple-service-card:focus {
 						transform: perspective(600px) rotateX(0deg) rotateY(0deg) scale(1.04) !important;
 					}
-					/* Fade-in + slide-up animation for service cards */
-					.simple-service-card {
-						opacity: 0;
-						transform: translateY(40px);
-						transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
-					}
-					.service-animate-in.simple-service-card {
-						opacity: 1;
-						transform: none;
-						transition-delay: ${index * 0.13 + 0.2}s;
-					}
 				`}</style>
 			</div>
 		);
@@ -747,8 +743,7 @@ export const LandingPage: React.FC = () => {
 
 	const servicesSection = (
 		<section
-			ref={servicesSectionRef}
-			className={`services-section${servicesInView ? ' services-animate-in' : ''}`}
+			className="services-section"
 			style={{
 				maxWidth: 1400,
 				background: 'linear-gradient(90deg,#D6C5F0 0%,#fff 100%)',
@@ -804,29 +799,6 @@ export const LandingPage: React.FC = () => {
 					/>
 				))}
 			</div>
-			<style>{`
-				/* Section fade-in + slide-up animation */
-				.services-section {
-					opacity: 0;
-					transform: translateY(60px);
-					transition: opacity 0.9s cubic-bezier(.4,2,.6,1), transform 0.9s cubic-bezier(.4,2,.6,1);
-				}
-				.services-animate-in.services-section {
-					opacity: 1;
-					transform: none;
-				}
-				/* Fade-in for section title */
-				.services-section-title {
-					opacity: 0;
-					transform: translateY(30px);
-					transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
-				}
-				.services-animate-in .services-section-title {
-					opacity: 1;
-					transform: none;
-					transition-delay: 0.15s;
-				}
-			`}</style>
 		</section>
 	);
 
@@ -1134,3 +1106,4 @@ export const LandingPage: React.FC = () => {
 		</>
 	);
 };
+				

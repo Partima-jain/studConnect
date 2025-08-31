@@ -208,7 +208,7 @@ export const Footer: React.FC = () => {
         >
           Made with
           <span style={{ color: '#ff6bcb', fontSize: '1.2em', verticalAlign: 'middle' }}>♥</span>
-          by yournextuniversity
+          
         </div>
       </div>
       {/* Divider */}
@@ -248,14 +248,20 @@ export const Footer: React.FC = () => {
           minWidth: 100,
           padding: '0.4rem 0',
         }}>
-          <a href="https://www.linkedin.com/company/Yournextuniversity" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ opacity: 0.7 }}>
-            <img src="https://framerusercontent.com/images/ZpT8bMO49zmr6fuez0lPZ3M.png" alt="LinkedIn" width={28} height={28} style={{ borderRadius: '50%' }} />
-          </a>
-          <a href="https://www.instagram.com/Yournextuniversity" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ opacity: 0.7 }}>
+          <a href="https://www.instagram.com/yournextuniversity/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ opacity: 0.7 }}>
             <img src="https://framerusercontent.com/images/2SwbRWBkLWqfbe0SoyPLo4gomA.png" alt="Instagram" width={28} height={28} style={{ borderRadius: '50%' }} />
           </a>
-          <a href="https://x.com/Yournextuniversity" target="_blank" rel="noopener noreferrer" aria-label="Twitter" style={{ opacity: 0.7 }}>
-            <img src="https://framerusercontent.com/images/tYmJjzMKDE8AlzuzRQRFQh4FkY.png" alt="Twitter" width={28} height={28} style={{ borderRadius: '50%' }} />
+          <a href="https://www.reddit.com/user/Few_Comfortable9627/" target="_blank" rel="noopener noreferrer" aria-label="Reddit" style={{ opacity: 0.7 }}>
+            <img src="https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/Screenshot%202025-09-01%20at%2012.59.33%E2%80%AFAM.png" alt="Reddit" width={28} height={28} style={{ borderRadius: '50%', background: '#fff' }} />
+          </a>
+          <a href="https://www.quora.com/profile/Your-Next-University" target="_blank" rel="noopener noreferrer" aria-label="Quora" style={{ opacity: 0.7 }}>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Quora_logo_2015.svg" alt="Quora" width={28} height={28} style={{ borderRadius: '50%', background: '#fff' }} />
+          </a>
+          <a href="https://t.me/YourNextUniversity" target="_blank" rel="noopener noreferrer" aria-label="Telegram" style={{ opacity: 0.7 }}>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" width={28} height={28} style={{ borderRadius: '50%', background: '#fff' }} />
+          </a>
+          <a href="https://x.com/YourNextUni" target="_blank" rel="noopener noreferrer" aria-label="X" style={{ opacity: 0.7 }}>
+            <img src="https://framerusercontent.com/images/tYmJjzMKDE8AlzuzRQRFQh4FkY.png" alt="X" width={28} height={28} style={{ borderRadius: '50%' }} />
           </a>
         </div>
         {/* Center: Copyright */}

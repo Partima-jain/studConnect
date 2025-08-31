@@ -367,7 +367,7 @@ export const FinancialServicesPage: React.FC = () => {
             }}
           >
             {/* Bank of India */}
-            <a href="./education-loan/bank-of-india" style={{
+            <div style={{
               background: '#fff',
               borderRadius: 12,
               border: '1px solid #dbdbdb',
@@ -383,387 +383,349 @@ export const FinancialServicesPage: React.FC = () => {
             }}>
               <img src="https://framerusercontent.com/images/pnrcAvqYHiL4EGmFRwEm8D3x22Y.png" alt="Bank of India" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Bank of India</span>
-            </a>
+            </div>
             {/* Punjab National Bank */}
-            <a href="./education-loan/punjab-national-bank" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/9bnCNN9JC4zodgwmRW7QVZqlQRs.png" alt="Punjab National Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Punjab National Bank</span>
-            </a>
+            </div>
             {/* Bank of Maharashtra */}
-            <a href="./education-loan/bank-of-maharashtra" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/LtAg8KaEuIyS6GzfMSGuGkOf6E.png" alt="Bank of Maharashtra" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Bank of Maharashtra</span>
-            </a>
+            </div>
             {/* Bank of Baroda */}
-            <a href="./education-loan/bank-of-baroda" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/OTI8KjM7YMqNLl4AJKlkYdeMLZs.png" alt="Bank of Baroda" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Bank of Baroda</span>
-            </a>
+            </div>
             {/* Union Bank of India */}
-            <a href="./education-loan/union-bank-of-india" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/sR4martDokWyDYXuP6dgIiWCJk0.png" alt="Union Bank of India" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Union Bank of India</span>
-            </a>
+            </div>
             {/* State Bank of India */}
-            <a href="./education-loan/state-bank-of-india" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/nKrsZ25sbMcxfh2OF83P4X9DGWI.png" alt="State Bank of India" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>State Bank of India</span>
-            </a>
+            </div>
             {/* MPower Financing */}
-            <a href="./education-loan/mpower-financing" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/fKN6SakWdLFVLEYSOtSr1eeNaFM.png" alt="MPower Financing" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>MPower Financing</span>
-            </a>
+            </div>
             {/* Prodigy Finance */}
-            <a href="./education-loan/prodigy-finance" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/N4ujbId7eTBtfnM2rXq4LSrRY.png" alt="Prodigy Finance" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Prodigy Finance</span>
-            </a>
+            </div>
             {/* Avanse Global */}
-            <a href="./education-loan/avanse-global" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/vOiWo2sc2ycx4bv1B3tsruQeYGw.png" alt="Avanse Global" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Avanse Global</span>
-            </a>
+            </div>
             {/* IDFC First Bank */}
-            <a href="./education-loan/idfc-first-bank" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/a300mMgfMmpH6TV5Z0NT0R8XAAI.png" alt="IDFC First Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>IDFC First Bank</span>
-            </a>
+            </div>
             {/* Axis Bank */}
-            <a href="./education-loan/axis-bank" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/wCqqbT8gRAprZQfkyO9ExayTzg.png" alt="Axis Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Axis Bank</span>
-            </a>
+            </div>
             {/* ICICI Bank */}
-            <a href="./education-loan/icici-bank" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/xnz5iwGEzPTl9AYAvH3OKn4q5e4.png" alt="ICICI Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>ICICI Bank</span>
-            </a>
+            </div>
             {/* Yes Bank */}
-            <a href="./education-loan/yes-bank" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/K2DjcIyk3AtIycmbQDQM6tJiV4.png" alt="Yes Bank" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Yes Bank</span>
-            </a>
+            </div>
             {/* Credila */}
-            <a href="./education-loan/hdfc-credilea" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/EZijcqgZEmADwJDAmCXmyv5XI.png" alt="Credila" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Credila</span>
-            </a>
+            </div>
             {/* Avanse */}
-            <a href="./education-loan/avanse" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/vOiWo2sc2ycx4bv1B3tsruQeYGw.png" alt="Avanse" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Avanse</span>
-            </a>
+            </div>
             {/* Incred */}
-            <a href="./education-loan/incred" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/ddHfKK2QwWo6VAgwr6JTZ248GzM.png" alt="Incred" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Incred</span>
-            </a>
+            </div>
             {/* Auxilo */}
-            <a href="./education-loan/auxilo" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/9ISe0CbmNRBF0EO14z8RfGPgkA.png" alt="Auxilo" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Auxilo</span>
-            </a>
+            </div>
             {/* Tata Capital */}
-            <a href="./education-loan/tata-capital" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/M6zUrrd1bvOV2fBqXL47qMOZ0Vo.png" alt="Tata Capital" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Tata Capital</span>
-            </a>
+            </div>
             {/* Propelld */}
-            <a href="./education-loan/propelld" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/JxNDywcvwxLs9yPBKXwxcWNFmg.png" alt="Propelld" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Propelld</span>
-            </a>
+            </div>
             {/* Poonawalla Fincorp */}
-            <a href="./education-loan/poonahwalla-fincorp" style={{
-              ...{
-                background: '#fff',
-                borderRadius: 12,
-                border: '1px solid #dbdbdb',
-                boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
-                padding: '1rem .5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: '#1e293b',
-                minWidth: 110,
-                transition: 'box-shadow .15s'
-              }
+            <div style={{
+              background: '#fff',
+              borderRadius: 12,
+              border: '1px solid #dbdbdb',
+              boxShadow: '0 0 16px 0 rgba(0,0,0,0.04)',
+              padding: '1rem .5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: '#1e293b',
+              minWidth: 110,
+              transition: 'box-shadow .15s'
             }}>
               <img src="https://framerusercontent.com/images/L4rXvu1MsEySvYQrIELyeQbKihw.png" alt="Poonawalla Fincorp" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }} />
               <span style={{ fontSize: 15, fontWeight: 500, textAlign: 'center', letterSpacing: '-0.04em' }}>Poonawalla Fincorp</span>
-            </a>
+            </div>
           </div>
         </div>
         {/* End Partner Banks */}
@@ -1370,4 +1332,4 @@ export const FinancialServicesPage: React.FC = () => {
     </main>
   );
 };
-
+               
