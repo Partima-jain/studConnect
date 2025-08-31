@@ -96,10 +96,10 @@ const PeerCounsellingPage: React.FC = () => {
     }
   }, [selected, bookingStep, selectedDate]);
 
-  // Start booking: show profile modal
+  // Start booking: directly show slot modal (skip profile modal)
   const startBooking = (c: any) => {
     setSelected(c);
-    setBookingStep('profile');
+    setBookingStep('slot'); // jump directly to slot selection
     setSelectedDate('');
     setSelectedSlot(null);
     setBookingId(null);
@@ -695,26 +695,7 @@ const PeerCounsellingPage: React.FC = () => {
             maxWidth:400,
             position:'relative'
           }} onClick={e=>e.stopPropagation()}>
-            {bookingStep === 'profile' && (
-              <>
-                <h3 style={{color:'#6366f1'}}>Book Session with {selected.name}</h3>
-                <img src={selected.profile_image_url} alt={selected.name} style={{width:60, borderRadius:30, margin:'1rem auto'}} />
-                <div style={{fontSize:'.97rem', color:'#334155'}}>{selected.university}, {selected.program}</div>
-                <div style={{margin:'1rem 0', color:'#475569'}}>{selected.about}</div>
-                <button
-                  className="btn btn-primary"
-                  style={{
-                    background: 'linear-gradient(90deg, #5727A3 0%, #2d1457 100%)',
-                    color: '#fff',
-                    border: 'none',
-                    fontWeight: 800
-                  }}
-                  onClick={()=>setBookingStep('slot')}
-                >
-                  Choose Time Slot
-                </button>
-              </>
-            )}
+            {/* Remove the profile step/modal entirely */}
             {bookingStep === 'slot' && (
               <>
                 <div style={{
@@ -1097,3 +1078,4 @@ const PeerCounsellingPage: React.FC = () => {
 };
 
 export default PeerCounsellingPage;
+            
