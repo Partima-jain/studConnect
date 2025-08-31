@@ -41,7 +41,7 @@ const testimonials = [
   { name:'Fatima • UK Health', text:'Left with a concrete 6‑week prep checklist. Removed uncertainty.' }
 ];
 
-const API_BASE = 'http://localhost:8000'; // Change to your backend URL if needed
+const API_BASE = 'https://studconnect-backend.onrender.com'; // Change to your backend URL if needed
 
 const PeerCounsellingPage: React.FC = () => {
   const nav = useNavigate();
@@ -106,8 +106,7 @@ const PeerCounsellingPage: React.FC = () => {
   // Book slot (status: pending)
   const handleBookSlot = async () => {
     setBookingLoading(true);
-    // Replace this with your actual user context/hook if available
-    const user = { id: 1, email: 'user@example.com' }; // TODO: Replace with real user
+    // Use the real logged-in user email
     const payload = {
       user_id: user.id,
       user_email: user.email,
@@ -768,7 +767,7 @@ const PeerCounsellingPage: React.FC = () => {
                         justifyContent:'center',
                         marginBottom:'1rem'
                       }}>
-                        {slots.length === 0 && (
+                        {selectedDate && slots.length === 0 && (
                           <span style={{color:'#64748b', fontWeight:500, fontSize:'.98rem'}}>No slots available for this date.</span>
                         )}
                         {slots.map(slot => (
