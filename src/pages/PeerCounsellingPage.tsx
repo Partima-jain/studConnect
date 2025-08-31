@@ -256,8 +256,8 @@ const PeerCounsellingPage: React.FC = () => {
           </div>
           <div className="peer-stats" style={{ display: 'flex', gap: '2.5rem', justifyContent: 'center', marginTop: '2rem' }}>
             <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>3k+</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Peer Sessions</span></div>
-            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>40+</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Universities</span></div>
-            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>32</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Countries</span></div>
+            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>800+</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Universities</span></div>
+            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>6</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Countries</span></div>
           </div>
         </div>
       </section>
