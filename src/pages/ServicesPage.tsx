@@ -80,6 +80,8 @@ export const ServicesPage: React.FC = () => {
         position: 'relative',
         zIndex: 1,
         paddingTop: '90px', // Add space for fixed header
+        minHeight: '100vh',
+        background: 'radial-gradient(at 70% 0%, #ede9fe 0%, #fff 100%)'
       }}
     >
       {/* Removed 3D/Glassmorphism/Animated Background Elements */}
@@ -122,8 +124,8 @@ export const ServicesPage: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '5.5rem 3.2rem', // Increased row gap
+            gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+            gap: '3rem 1.5rem',
             padding: '1.5rem 0',
             marginBottom: '1.5rem'
           }}
@@ -187,7 +189,7 @@ export const ServicesPage: React.FC = () => {
               </div>
               {/* Card content */}
               <div style={{
-                padding: '5.5rem 1.7rem 1.7rem 1.7rem',
+                padding: '5.5rem 1.2rem 1.7rem 1.2rem',
                 textAlign: 'center',
                 flex: 1,
                 display: 'flex',
@@ -309,12 +311,201 @@ export const ServicesPage: React.FC = () => {
                 .landing-service-card:hover .bottom-bar, .landing-service_card:focus .bottom-bar {
                   background: linear-gradient(90deg, #9F7AEA 0%, #5727A3 100%);
                 }
+                @media (max-width: 900px) {
+                  .landing-service-card {
+                    min-width: 0 !important;
+                  }
+                }
+                @media (max-width: 700px) {
+                  .landing-service-card {
+                    border-radius: 18px !important;
+                  }
+                  .landing-service-card > div[style*="position: absolute"] {
+                    width: 80px !important;
+                    height: 80px !important;
+                    top: -36px !important;
+                  }
+                  .landing-service-card img {
+                    width: 65px !important;
+                    height: 65px !important;
+                  }
+                  .landing-service-card > div[style*="padding: 5.5rem"] {
+                    padding: 4.2rem 0.7rem 1.2rem 0.7rem !important;
+                  }
+                }
+                @media (max-width: 500px) {
+                  .landing-service-card {
+                    border-radius: 12px !important;
+                  }
+                  .landing-service-card > div[style*="position: absolute"] {
+                    width: 60px !important;
+                    height: 60px !important;
+                    top: -24px !important;
+                  }
+                  .landing-service-card img {
+                    width: 45px !important;
+                    height: 45px !important;
+                  }
+                  .landing-service-card > div[style*="padding: 5.5rem"] {
+                    padding: 3.2rem 0.5rem 1rem 0.5rem !important;
+                  }
+                  .landing-service-card h3 {
+                    font-size: 1.05rem !important;
+                  }
+                  .landing-service-card .bottom-bar {
+                    font-size: .97rem !important;
+                  }
+                }
               `}</style>
             </div>
           ))}
         </div>
       </section>
+
+      {/* Experience & Journey Section - Beautifully formatted */}
+      <section
+        style={{
+          maxWidth: 800,
+          margin: '3.5rem auto 2.5rem auto',
+          background: 'linear-gradient(120deg, #ede9fe 0%, #fff 100%)',
+          borderRadius: 32,
+          boxShadow: '0 8px 32px #9F7AEA22',
+          padding: '2.5rem 2rem',
+          position: 'relative',
+          zIndex: 2,
+        }}
+      >
+        <h2 style={{
+          color: '#7c3aed',
+          fontWeight: 900,
+          fontSize: '2.1rem',
+          marginBottom: '1.2rem',
+          letterSpacing: '-1px',
+          textAlign: 'center',
+          background: 'linear-gradient(90deg, #a21caf 0%, #7c3aed 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}>
+          Experience & Journey
+        </h2>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '2.2rem',
+          justifyContent: 'center',
+          marginBottom: '2.2rem'
+        }}>
+          {/* Work */}
+          <div style={{
+            flex: '1 1 320px',
+            background: 'linear-gradient(135deg, #fff 60%, #e0c3fc 100%)',
+            borderRadius: 18,
+            boxShadow: '0 2px 12px #9F7AEA11',
+            padding: '1.3rem 1.2rem',
+            minWidth: 260,
+            maxWidth: 370,
+            margin: '0 auto'
+          }}>
+            <h3 style={{
+              color: '#a21caf',
+              fontWeight: 800,
+              fontSize: '1.13rem',
+              margin: '0 0 .5rem 0',
+              letterSpacing: '-0.5px'
+            }}>Work</h3>
+            <p style={{
+              color: '#475569',
+              fontSize: '1.01rem',
+              fontWeight: 500,
+              margin: 0
+            }}>
+              Completed Diploma in Business (Niagara College, Toronto) and certified in Digital Marketing & Information Technology, gaining practical knowledge in communication, SEO, and Microsoft Office tools.
+            </p>
+          </div>
+          {/* Peer Support */}
+          <div style={{
+            flex: '1 1 320px',
+            background: 'linear-gradient(135deg, #fff 60%, #e0c3fc 100%)',
+            borderRadius: 18,
+            boxShadow: '0 2px 12px #9F7AEA11',
+            padding: '1.3rem 1.2rem',
+            minWidth: 260,
+            maxWidth: 370,
+            margin: '0 auto'
+          }}>
+            <h3 style={{
+              color: '#a21caf',
+              fontWeight: 800,
+              fontSize: '1.13rem',
+              margin: '0 0 .5rem 0',
+              letterSpacing: '-0.5px'
+            }}>Peer Support</h3>
+            <p style={{
+              color: '#475569',
+              fontSize: '1.01rem',
+              fontWeight: 500,
+              margin: 0
+            }}>
+              Proactively supported peers and acquaintances by sharing practical knowledge about studying and working in Canada, helping them make informed choices.
+            </p>
+          </div>
+        </div>
+        {/* Projects */}
+        <div style={{
+          background: 'linear-gradient(135deg, #fff 60%, #e0c3fc 100%)',
+          borderRadius: 18,
+          boxShadow: '0 2px 12px #9F7AEA11',
+          padding: '1.3rem 1.2rem',
+          marginBottom: '2.2rem'
+        }}>
+          <h3 style={{
+            color: '#a21caf',
+            fontWeight: 800,
+            fontSize: '1.13rem',
+            margin: '0 0 .5rem 0',
+            letterSpacing: '-0.5px'
+          }}>Projects</h3>
+          <ul style={{
+            color: '#475569',
+            fontSize: '1.01rem',
+            fontWeight: 500,
+            margin: 0,
+            paddingLeft: '1.2rem',
+            listStyle: 'disc'
+          }}>
+            <li style={{marginBottom:'.5rem'}}>
+              Completed a climate activism project highlighting environmental awareness by designing a community campaign with public interviews, waste collection drives, and social media engagement.
+            </li>
+            <li>
+              Participated in academic projects at Niagara College, involving financial analysis, marketing research, and group presentations that developed teamwork and problem-solving skills.
+            </li>
+          </ul>
+        </div>
+        {/* Journey */}
+        <div style={{
+          background: 'linear-gradient(135deg, #fff 60%, #e0c3fc 100%)',
+          borderRadius: 18,
+          boxShadow: '0 2px 12px #9F7AEA11',
+          padding: '1.3rem 1.2rem'
+        }}>
+          <h3 style={{
+            color: '#a21caf',
+            fontWeight: 800,
+            fontSize: '1.13rem',
+            margin: '0 0 .5rem 0',
+            letterSpacing: '-0.5px'
+          }}>Journey</h3>
+          <p style={{
+            color: '#475569',
+            fontSize: '1.01rem',
+            fontWeight: 500,
+            margin: 0
+          }}>
+            My journey is fueled by resilience, adaptability, and a strong desire to grow. From managing part-time roles in Canada to assisting students in their academic planning, I’ve learned the value of hard work, clear communication, and problem-solving. I strive to bring a positive impact wherever I contribute, with a vision of continuous learning and helping others succeed.
+          </p>
+        </div>
+      </section>
     </main>
   );
 };
-                  

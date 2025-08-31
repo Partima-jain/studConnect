@@ -106,6 +106,7 @@ const PeerCounsellingPage: React.FC = () => {
   // Book slot (status: pending)
   const handleBookSlot = async () => {
     setBookingLoading(true);
+    // Replace this with your actual user context/hook if available
     const user = { id: 1, email: 'user@example.com' }; // TODO: Replace with real user
     const payload = {
       user_id: user.id,
@@ -153,7 +154,7 @@ const PeerCounsellingPage: React.FC = () => {
         setBookingLoading(false);
       },
       prefill: {
-        email: 'user@example.com'
+        email: user.email // Use logged in user's email
       }
     };
     // Load Razorpay script if not loaded
@@ -334,6 +335,7 @@ const PeerCounsellingPage: React.FC = () => {
             <div
               key={c.id}
               className="peer-profile-card"
+              tabIndex={0}
               style={{
                 background:'linear-gradient(135deg,#fff 60%,#e0c3fc 100%)',
                 borderRadius:20,
@@ -451,7 +453,7 @@ const PeerCounsellingPage: React.FC = () => {
           <div className="modal-overlay" style={{
             position:'fixed', top:0, left:0, right:0, bottom:0, background:'rgba(87,39,163,0.13)', zIndex:2000, display:'flex', alignItems:'center', justifyContent:'center'
           }} onClick={()=>setShowDetails(null)}>
-            <div className="modal" style={{
+            <div className="modal peer-modal-3d" style={{
               background:'linear-gradient(135deg,#fff 60%,#e0c3fc 100%)',
               borderRadius:22,
               boxShadow:'0 8px 48px #9F7AEA22, 0 2px 16px #9F7AEA33',
@@ -633,6 +635,28 @@ const PeerCounsellingPage: React.FC = () => {
               0% { opacity: 0.7; }
               100% { opacity: 1; }
             }
+            .peer-profile-card {
+              will-change: transform;
+              transition: box-shadow 0.18s, transform 0.18s;
+            }
+            .peer-profile-card:focus {
+              outline: 2px solid #a21caf;
+              outline-offset: 2px;
+            }
+            .peer-profile-card:hover, .peer-profile-card:focus {
+              transform: perspective(900px) rotateY(8deg) scale(1.04);
+              box-shadow: 0 12px 36px #a78bfa55, 0 4px 16px #f472b655;
+              z-index: 2;
+            }
+            .peer-modal-3d {
+              will-change: transform;
+              transition: box-shadow 0.18s, transform 0.18s;
+            }
+            .peer-modal-3d:hover, .peer-modal-3d:focus {
+              transform: perspective(1200px) rotateX(4deg) scale(1.01);
+              box-shadow: 0 12px 36px #9F7AEA33, 0 4px 16px #a21caf33;
+              z-index: 10;
+            }
           `}
         </style>
       </section>
@@ -642,7 +666,7 @@ const PeerCounsellingPage: React.FC = () => {
         <div className="modal-overlay" style={{
           position:'fixed', top:0, left:0, right:0, bottom:0, background:'rgba(87,39,163,0.13)', zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center'
         }} onClick={()=>{setSelected(null); setBookingStep(null);}}>
-          <div className="modal" style={{
+          <div className="modal peer-modal-3d" style={{
             background:'linear-gradient(135deg,#fff 60%,#e0c3fc 100%)',
             borderRadius:16,
             boxShadow:'0 2px 24px #9F7AEA22',
@@ -673,50 +697,162 @@ const PeerCounsellingPage: React.FC = () => {
             )}
             {bookingStep === 'slot' && (
               <>
-                <h3 style={{color:'#6366f1'}}>Select a Date</h3>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={e => { setSelectedDate(e.target.value); setSelectedSlot(null); }}
-                  style={{marginBottom: '1rem', padding: '0.5rem', borderRadius: 6, border: '1px solid #ddd'}}
-                />
-                {/* Slot Picker */}
-                {selectedDate && (
-                  <div style={{display:'flex', flexWrap:'wrap', gap:'.5rem', marginBottom:'1rem'}}>
-                    {selectedSlot && slots.length === 0 && <span style={{color:'#64748b'}}>No slots available</span>}
-                    {slots.map(slot => (
-                      <button
-                        key={slot.slot_id}
-                        disabled={false}
-                        style={{
-                          padding: '.5rem 1.1rem',
-                          borderRadius: 8,
-                          border: selectedSlot && selectedSlot.slot_id === slot.slot_id ? '1.5px solid #9F7AEA' : '1.5px solid #e5e7eb',
-                          background: selectedSlot && selectedSlot.slot_id === slot.slot_id ? '#9F7AEA' : '#fff',
-                          color: selectedSlot && selectedSlot.slot_id === slot.slot_id ? '#fff' : '#5727A3',
-                          fontWeight: 600,
-                          cursor: 'pointer'
-                        }}
-                        onClick={() => setSelectedSlot(slot)}
-                      >
-                        {slot.start_time} - {slot.end_time}
-                      </button>
-                    ))}
+                <div style={{
+                  background: 'linear-gradient(90deg,#ede9fe 0%,#c7d2fe 100%)',
+                  borderRadius: 12,
+                  boxShadow: '0 2px 12px #9F7AEA11',
+                  padding: '1.2rem 1.1rem 1.7rem 1.1rem',
+                  marginBottom: '1.2rem',
+                  marginTop: '-1rem'
+                }}>
+                  <h3 style={{
+                    color:'#5727A3',
+                    fontWeight:900,
+                    fontSize:'1.25rem',
+                    marginBottom:'.7rem',
+                    letterSpacing:'-0.5px',
+                    textAlign:'center'
+                  }}>Select a Date</h3>
+                  <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'1.1rem'}}>
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={e => { setSelectedDate(e.target.value); setSelectedSlot(null); }}
+                      style={{
+                        marginBottom: 0,
+                        padding: '0.7rem 1.2rem',
+                        borderRadius: 8,
+                        border: '1.5px solid #9F7AEA',
+                        fontSize: '1.09rem',
+                        fontWeight: 600,
+                        color: '#5727A3',
+                        background: '#fff',
+                        boxShadow: '0 1px 4px #9F7AEA11',
+                        outline: 'none',
+                        width: '100%',
+                        maxWidth: 220,
+                        letterSpacing: '1px'
+                      }}
+                      placeholder="dd/mm/yyyy"
+                    />
+                    <span style={{
+                      fontSize: '.97rem',
+                      color: '#64748b',
+                      fontWeight: 500,
+                      marginTop: '-0.5rem'
+                    }}>
+                      {selectedDate ? new Date(selectedDate).toLocaleDateString('en-GB') : 'dd/mm/yyyy'}
+                    </span>
                   </div>
-                )}
-                <button
-                  className="btn btn-primary"
-                  style={{
-                    background: 'linear-gradient(90deg, #5727A3 0%, #2d1457 100%)',
-                    color: '#fff',
-                    border: 'none',
-                    fontWeight: 800
-                  }}
-                  onClick={handleBookSlot}
-                  disabled={!selectedSlot || bookingLoading}
-                >
-                  {bookingLoading ? 'Booking...' : 'Proceed to Payment'}
-                </button>
+                  {/* Slot Picker */}
+                  <div style={{
+                    marginTop: '1.5rem',
+                    marginBottom: '1.2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}>
+                    <div style={{
+                      fontWeight: 700,
+                      color: '#7c3aed',
+                      fontSize: '1.08rem',
+                      marginBottom: '.7rem'
+                    }}>
+                      Available Time Slots
+                    </div>
+                    {selectedDate && (
+                      <div style={{
+                        display:'flex',
+                        flexWrap:'wrap',
+                        gap:'.7rem',
+                        justifyContent:'center',
+                        marginBottom:'1rem'
+                      }}>
+                        {slots.length === 0 && (
+                          <span style={{color:'#64748b', fontWeight:500, fontSize:'.98rem'}}>No slots available for this date.</span>
+                        )}
+                        {slots.map(slot => (
+                          <button
+                            key={slot.slot_id}
+                            disabled={false}
+                            style={{
+                              padding: '.7rem 1.3rem',
+                              borderRadius: 10,
+                              border: selectedSlot && selectedSlot.slot_id === slot.slot_id ? '2px solid #9F7AEA' : '1.5px solid #e5e7eb',
+                              background: selectedSlot && selectedSlot.slot_id === slot.slot_id ? 'linear-gradient(90deg,#7c3aed 0%,#a21caf 100%)' : '#fff',
+                              color: selectedSlot && selectedSlot.slot_id === slot.slot_id ? '#fff' : '#5727A3',
+                              fontWeight: 700,
+                              fontSize: '1.07rem',
+                              cursor: 'pointer',
+                              boxShadow: selectedSlot && selectedSlot.slot_id === slot.slot_id ? '0 2px 8px #a21caf33' : '0 1px 4px #9F7AEA11',
+                              transition: 'all 0.16s'
+                            }}
+                            onClick={() => setSelectedSlot(slot)}
+                          >
+                            {slot.start_time} - {slot.end_time}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {selectedSlot && (
+                      <div style={{
+                        marginTop: '.7rem',
+                        background: 'linear-gradient(90deg,#ede9fe 0%,#c7d2fe 100%)',
+                        borderRadius: 8,
+                        padding: '0.7rem 1.2rem',
+                        color: '#5727A3',
+                        fontWeight: 700,
+                        fontSize: '1.05rem',
+                        boxShadow: '0 1px 4px #9F7AEA11'
+                      }}>
+                        <span>
+                          <b>Date:</b> {selectedDate ? new Date(selectedDate).toLocaleDateString('en-GB') : ''} &nbsp; | &nbsp;
+                          <b>Time:</b> {selectedSlot.start_time} - {selectedSlot.end_time}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    gap: '1.1rem',
+                    justifyContent: 'center',
+                    marginTop: '1.2rem'
+                  }}>
+                    <button
+                      className="btn btn-primary"
+                      style={{
+                        background: 'linear-gradient(90deg, #5727A3 0%, #2d1457 100%)',
+                        color: '#fff',
+                        border: 'none',
+                        fontWeight: 800,
+                        fontSize: '1.09rem',
+                        padding: '0.8rem 2.2rem',
+                        borderRadius: 10,
+                        minWidth: 170
+                      }}
+                      onClick={handleBookSlot}
+                      disabled={!selectedSlot || bookingLoading}
+                    >
+                      {bookingLoading ? 'Booking...' : 'Proceed to Payment'}
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      style={{
+                        background: '#fff',
+                        color: '#5727A3',
+                        border: '1.5px solid #9F7AEA',
+                        borderRadius: 10,
+                        fontWeight: 700,
+                        fontSize: '1.09rem',
+                        padding: '0.8rem 2.2rem',
+                        minWidth: 110
+                      }}
+                      onClick={()=>{setSelected(null); setBookingStep(null); setSelectedDate(''); setSelectedSlot(null); setMeetingLink('');}}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
               </>
             )}
             {bookingStep === 'payment' && (
