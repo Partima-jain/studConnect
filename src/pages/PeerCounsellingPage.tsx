@@ -329,18 +329,6 @@ const PeerCounsellingPage: React.FC = () => {
             />
           </svg>
           {/* Sparkle */}
-          <svg width="60" height="60" style={{
-            position: 'absolute',
-            top: '30%',
-            left: '60%',
-            opacity: 0.7,
-            animation: 'sparkleHero 3.5s ease-in-out infinite alternate'
-          }}>
-            <g>
-              <circle cx="30" cy="30" r="8" fill="#fff" fillOpacity="0.7" />
-              <circle cx="30" cy="30" r="3" fill="#a78bfa" />
-            </g>
-          </svg>
           {/* Keyframes */}
           <style>
             {`

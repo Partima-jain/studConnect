@@ -409,6 +409,158 @@ export const LandingPage: React.FC = () => {
 		</section>
 	);
 
+	// --- Peer Counselling Hero Section ---
+	const peerCounsellingSection = (
+		<section
+			style={{
+				width: '100%',
+				maxWidth: 1300,
+				margin: '2.5rem auto 0 auto',
+				padding: '2.5rem 1.5rem 2.5rem 1.5rem',
+				borderRadius: 36,
+				background: 'linear-gradient(100deg, #F0E6FF 0%, #D6C5F0 60%, #fff 100%)',
+				boxShadow: '0 8px 32px 0 #9F7AEA22',
+				display: 'flex',
+				flexWrap: 'wrap',
+				alignItems: 'center',
+				justifyContent: 'center',
+				gap: '2.5rem',
+				position: 'relative',
+				overflow: 'hidden',
+			}}
+			className="peer-counselling-hero-section"
+		>
+			{/* Decorative background blobs */}
+			<div style={{
+				position: 'absolute',
+				top: -80,
+				left: -120,
+				width: 320,
+				height: 320,
+				background: 'radial-gradient(circle at 60% 40%, #9F7AEA33 0%, #fff0 100%)',
+				borderRadius: '50%',
+				filter: 'blur(40px)',
+				zIndex: 0,
+				opacity: 0.7,
+				pointerEvents: 'none',
+			}} />
+			<div style={{
+				position: 'absolute',
+				bottom: -100,
+				right: -120,
+				width: 320,
+				height: 320,
+				background: 'radial-gradient(circle at 40% 60%, #5727A322 0%, #fff0 100%)',
+				borderRadius: '50%',
+				filter: 'blur(40px)',
+				zIndex: 0,
+				opacity: 0.6,
+				pointerEvents: 'none',
+			}} />
+			{/* Text content */}
+			<div style={{
+				flex: 1,
+				minWidth: 320,
+				maxWidth: 600,
+				zIndex: 2,
+				display: 'flex',
+				flexDirection: 'column',
+				justifyContent: 'center',
+			}}>
+				<h1 style={{
+					fontSize: '2.7rem',
+					fontWeight: 900,
+					letterSpacing: '-2px',
+					lineHeight: 1.08,
+					marginBottom: '1.1rem',
+					// background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+					// WebkitBackgroundClip: 'text',
+					// WebkitTextFillColor: 'transparent',
+					color: '#1B0044', // <-- dark color
+					textShadow: '0 4px 24px #9F7AEA22, 0 1px 2px #fff8',
+				}}>
+					India’s 1st <span style={{color:'#7e22c5ff'}}>Peer Counselling</span> Platform for Study Abroad
+				</h1>
+				<h2 style={{
+					fontSize: '1.45rem',
+					fontWeight: 700,
+					color: '#1e3a8a',
+					marginBottom: '1.1rem',
+					lineHeight: 1.3,
+					textShadow: '0 2px 8px #fff8, 0 1px 2px #0002',
+				}}>
+					Real Students. Real Stories. Real Guidance.<br/>
+					No Agents. No Gimmicks. Just Honest Help.
+				</h2>
+				<p style={{
+					fontSize: '1.13rem',
+					color: '#334155',
+					fontWeight: 500,
+					marginBottom: '1.5rem',
+					lineHeight: 1.6,
+				}}>
+					Connect directly with students who’ve already walked the path you’re about to take. Get answers, clarity, and confidence from those who know the journey best—your peers. <br />
+					<b>Book a 1:1 call and get the truth, not the sales pitch.</b>
+				</p>
+				<button
+					onClick={() => navigate('/services/peer-counselling')}
+					style={{
+						background: 'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
+						color: '#fff',
+						border: 'none',
+						borderRadius: 14,
+						padding: '1.1rem 2.7rem',
+						fontWeight: 800,
+						fontSize: '1.18rem',
+						cursor: 'pointer',
+						boxShadow: '0 4px 18px #22c55e33',
+						transition: 'background 0.18s',
+						letterSpacing: '.5px',
+						marginTop: '0.2rem',
+					}}
+				>
+					Book Session Now !!
+				</button>
+			</div>
+			{/* Illustration */}
+			<div style={{
+				flex: 1,
+				minWidth: 320,
+				maxWidth: 420,
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				zIndex: 2,
+				position: 'relative',
+			}}>
+				<div style={{
+					background: 'rgba(255,255,255,0.85)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px #9F7AEA22',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					position: 'relative',
+					width: '100%',
+					maxWidth: 380,
+					backdropFilter: 'blur(6px) saturate(1.1)',
+					WebkitBackdropFilter: 'blur(6px) saturate(1.1)',
+				}}>
+					<img
+						src="https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/Screenshot%202025-08-31%20at%209.03.17%E2%80%AFPM.png"
+						alt="Peer Counselling Illustration"
+						style={{
+							width: '100%',
+							display: 'block',
+							borderRadius: 24,
+							boxShadow: '0 4px 24px #9F7AEA22'
+						}}
+					/>
+				</div>
+			</div>
+		</section>
+	);
+
 	// --- Simple Services Grid Section ---
 	const SimpleServiceCard: React.FC<{
 		service: typeof allServices[0];
@@ -914,6 +1066,7 @@ export const LandingPage: React.FC = () => {
 		<>
 			<Hero/>
 			{aboutHeroSection}
+			{peerCounsellingSection}
 			{servicesSection}
 			<FeaturedUniversities
 				style={{
