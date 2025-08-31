@@ -49,14 +49,10 @@ export const App: React.FC = () => (
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={
-          <RequireAuth>
             <AboutPage />
-          </RequireAuth>
         } />
         <Route path="/services" element={
-          <RequireAuth>
             <ServicesPage />
-          </RequireAuth>
         } />
         <Route path="/services/peer-counselling" element={
           <RequireAuth>
@@ -64,25 +60,16 @@ export const App: React.FC = () => (
           </RequireAuth>
         } />
         <Route path="/universities" element={
-          <RequireAuth>
             <UniversitiesPage />
-          </RequireAuth>
         } />
         <Route path="/universities/:id" element={<UniversityDetailPage />} />
         <Route path="/program-details/:id" element={<ProgramDetailsPage />} />
         <Route path="/contact" element={
-          <RequireAuth>
             <ContactPage />
-          </RequireAuth>
         } />
         <Route path="/student" element={
           <RequireAuth>
             <StudentDashboard />
-          </RequireAuth>
-        } />
-        <Route path="/counsellor" element={
-          <RequireAuth>
-            <CounsellorDashboard />
           </RequireAuth>
         } />
         {/* Auth pages are public */}
