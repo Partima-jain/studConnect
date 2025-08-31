@@ -47,7 +47,7 @@ export const FinancialServicesPage: React.FC = () => {
             marginBottom: '1.2rem',
             fontWeight: 500
           }}>
-            Studying abroad is a dream—but funding it shouldn’t be stressful. <b style={{ color: '#fff' }}>StudConnect</b> helps you plan, compare, and secure loans and scholarships so you can focus on your journey, not your finances.
+            Studying abroad is a dream—but funding it shouldn’t be stressful. <b style={{ color: '#fff' }}>Yournextuniversity</b> helps you plan, compare, and secure loans and scholarships so you can focus on your journey, not your finances.
           </p>
           {/* Explore Funding Options Button */}
           <a
@@ -1361,7 +1361,7 @@ export const FinancialServicesPage: React.FC = () => {
             textAlign: 'center',
             fontSize: '1.08rem'
           }}>
-            “I was stressed about paying for my course abroad, but StudConnect guided me through loans and scholarships. The process was fast and easy thanks to their partnered loan provider!”<br />
+            “I was stressed about paying for my course abroad, but Yournextuniversity guided me through loans and scholarships. The process was fast and easy thanks to their partnered loan provider!”<br />
             <span style={{fontWeight: 700, color: '#9F7AEA'}}>– Student Ambassador</span>
           </blockquote>
         </div>

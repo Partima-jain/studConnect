@@ -69,6 +69,7 @@ const PeerCounsellingPage: React.FC = () => {
   const [stripeLoaded, setStripeLoaded] = useState(false);
   const [showDetails, setShowDetails] = useState<any | null>(null);
   const [slotsLoading, setSlotsLoading] = useState(false);
+  const [razorpayOrderId, setRazorpayOrderId] = useState<string | null>(null);
 
   useEffect(() => {
     // Load Stripe.js script if not already present
@@ -187,7 +188,7 @@ const PeerCounsellingPage: React.FC = () => {
     setBookingLoading(false);
   };
 
-  // Razorpay payment integration
+  // Razorpay payment integration (real flow)
   const handleRazorpayPayment = async () => {
     setBookingLoading(true);
     if (!user || !user.email) {
@@ -195,44 +196,77 @@ const PeerCounsellingPage: React.FC = () => {
       setBookingLoading(false);
       return;
     }
-    // TODO: Replace with your Razorpay key and amount
-    const razorpayKey = 'rzp_test_xxxxxxxx';
-    const amount = 99900; // in paise (₹999)
-    const options = {
-      key: razorpayKey,
-      amount,
-      currency: 'INR',
-      name: 'Peer Counselling Session',
-      description: 'Session Fee',
-      handler: async function (response: any) {
-        // On payment success, confirm payment
-        await fetch(`${API_BASE}/peer-counsellors/confirm-payment`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            booking_id: bookingId,
-            // meeting_link: ... // Optionally set
-          })
-        });
-        setBookingStep('confirmed');
-        setBookingLoading(false);
-      },
-      prefill: {
-        email: user.email // Use logged in user's email
-      }
-    };
-    // Load Razorpay script if not loaded
-    if (!(window as any).Razorpay) {
-      const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.onload = () => {
+    if (!bookingId) {
+      alert('Booking not found. Please try again.');
+      setBookingLoading(false);
+      return;
+    }
+    try {
+      // 1. Create Razorpay order via backend
+      const orderRes = await fetch(`${API_BASE}/payments/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: selected.charges, // in INR
+          currency: 'INR',
+          receipt: `booking_${bookingId}`,
+          notes: { booking_id: bookingId }
+        })
+      });
+      if (!orderRes.ok) throw new Error('Failed to create payment order');
+      const orderData = await orderRes.json();
+      setRazorpayOrderId(orderData.order_id);
+
+      // 2. Open Razorpay checkout
+      const razorpayKey = process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_xxxxxxxx';
+      const options = {
+        key: razorpayKey,
+        amount: orderData.amount, // in paise
+        currency: orderData.currency,
+        name: 'Peer Counselling Session',
+        description: 'Session Fee',
+        order_id: orderData.order_id,
+        handler: async function (response: any) {
+          // 3. Verify payment signature via backend
+          try {
+            const verifyRes = await fetch(`${API_BASE}/payments/verify`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                booking_id: bookingId
+              })
+            });
+            if (!verifyRes.ok) throw new Error('Payment verification failed');
+            setBookingStep('confirmed');
+          } catch (err) {
+            alert('Payment verification failed. Please contact support.');
+          }
+          setBookingLoading(false);
+        },
+        prefill: {
+          email: user.email
+        },
+        notes: { booking_id: bookingId }
+      };
+      // Load Razorpay script if not loaded
+      if (!(window as any).Razorpay) {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = () => {
+          const rzp = new (window as any).Razorpay(options);
+          rzp.open();
+        };
+        document.body.appendChild(script);
+      } else {
         const rzp = new (window as any).Razorpay(options);
         rzp.open();
-      };
-      document.body.appendChild(script);
-    } else {
-      const rzp = new (window as any).Razorpay(options);
-      rzp.open();
+      }
+    } catch (err) {
+      alert('Payment initiation failed. Please try again.');
+      setBookingLoading(false);
     }
   };
 

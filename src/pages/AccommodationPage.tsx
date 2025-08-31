@@ -1161,7 +1161,7 @@ export const AccommodationPage: React.FC = () => {
           textAlign: 'center',
           fontSize: '1.08rem'
         }}>
-          “Finding a place was the hardest part—until I found StudConnect. Booking my apartment was literally a 10-minute process, and I felt safe and prepared!”<br />
+          “Finding a place was the hardest part—until I found Yournextuniversity. Booking my apartment was literally a 10-minute process, and I felt safe and prepared!”<br />
           <span style={{fontWeight: 700, color: '#9F7AEA'}}>– Student Ambassador</span>
         </blockquote>
       </section>

@@ -248,13 +248,13 @@ export const Footer: React.FC = () => {
           minWidth: 100,
           padding: '0.4rem 0',
         }}>
-          <a href="https://www.linkedin.com/company/studconnect" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ opacity: 0.7 }}>
+          <a href="https://www.linkedin.com/company/Yournextuniversity" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ opacity: 0.7 }}>
             <img src="https://framerusercontent.com/images/ZpT8bMO49zmr6fuez0lPZ3M.png" alt="LinkedIn" width={28} height={28} style={{ borderRadius: '50%' }} />
           </a>
-          <a href="https://www.instagram.com/studconnect" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ opacity: 0.7 }}>
+          <a href="https://www.instagram.com/Yournextuniversity" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ opacity: 0.7 }}>
             <img src="https://framerusercontent.com/images/2SwbRWBkLWqfbe0SoyPLo4gomA.png" alt="Instagram" width={28} height={28} style={{ borderRadius: '50%' }} />
           </a>
-          <a href="https://x.com/studconnect" target="_blank" rel="noopener noreferrer" aria-label="Twitter" style={{ opacity: 0.7 }}>
+          <a href="https://x.com/Yournextuniversity" target="_blank" rel="noopener noreferrer" aria-label="Twitter" style={{ opacity: 0.7 }}>
             <img src="https://framerusercontent.com/images/tYmJjzMKDE8AlzuzRQRFQh4FkY.png" alt="Twitter" width={28} height={28} style={{ borderRadius: '50%' }} />
           </a>
         </div>

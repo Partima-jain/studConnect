@@ -5,17 +5,17 @@ const testimonials = [
 	{
 		name: 'Aarav',
 		result: 'UC Berkeley (MS CS) — Scholarship Winner',
-		text: '“StudConnect’s mentors didn’t just review my essays—they helped me find my unique story. The honest feedback from real students made all the difference. I never felt like just another applicant.”',
+		text: '“Yournextuniversity’s mentors didn’t just review my essays—they helped me find my unique story. The honest feedback from real students made all the difference. I never felt like just another applicant.”',
 	},
 	{
 		name: 'Meera',
 		result: 'Full Tuition Scholarship — Germany',
-		text: '“I was overwhelmed by the DAAD process, but StudConnect broke it down step by step. Their document checks and real-life tips made my application stand out. I got in, and with funding!”',
+		text: '“I was overwhelmed by the DAAD process, but Yournextuniversity broke it down step by step. Their document checks and real-life tips made my application stand out. I got in, and with funding!”',
 	},
 	{
 		name: 'Yusuf',
 		result: 'Visa Approved & Scholarship',
-		text: '“From SOPs to mock interviews, StudConnect made the whole process stress-free. I got my visa and a scholarship—couldn’t have done it alone.”',
+		text: '“From SOPs to mock interviews, Yournextuniversity made the whole process stress-free. I got my visa and a scholarship—couldn’t have done it alone.”',
 	},
 	{
 		name: 'Fatima',
@@ -75,7 +75,7 @@ export const Testimonials: React.FC = () => {
 									marginRight: 'auto',
 								}}
 							>
-								At <b style={{ color: '#9F7AEA' }}>StudConnect</b>, your journey is our mission. Our students have earned admits to world-class universities, won life-changing scholarships, and built new lives abroad. Every story is unique—every achievement, a testament to honest guidance and real support.
+								At <b style={{ color: '#9F7AEA' }}>Yournextuniversity</b>, your journey is our mission. Our students have earned admits to world-class universities, won life-changing scholarships, and built new lives abroad. Every story is unique—every achievement, a testament to honest guidance and real support.
 							</p>
 						</div>
 					</div>
