@@ -126,22 +126,6 @@ export const SiteNav: React.FC = () => {
           alignItems: 'center',
           display: 'flex'
         }}>
-          <button
-            className="hamburger"
-            aria-label="Menu"
-            aria-expanded={open}
-            onClick={() => setOpen(o => !o)}
-            style={{
-              background: '#fff',
-              boxShadow: open ? '0 2px 12px 0 #9F7AEA44' : '0 1px 4px 0 #5727A322',
-              borderRadius: '50%',
-              border: 'none',
-              transition: 'box-shadow 0.3s, background 0.3s',
-              outline: open ? '2px solid #9F7AEA' : 'none'
-            }}
-          >
-            <span /><span /><span />
-          </button>
           <NavLink
             to="/"
             className="logo"
@@ -161,6 +145,25 @@ export const SiteNav: React.FC = () => {
             Yournextuniversity
           </NavLink>
         </div>
+        {/* Hamburger moved here for mobile right alignment */}
+        <button
+          className="hamburger"
+          aria-label="Menu"
+          aria-expanded={open}
+          onClick={() => setOpen(o => !o)}
+          style={{
+            background: '#fff',
+            boxShadow: open ? '0 2px 12px 0 #9F7AEA44' : '0 1px 4px 0 #5727A322',
+            borderRadius: '50%',
+            border: 'none',
+            transition: 'box-shadow 0.3s, background 0.3s',
+            outline: open ? '2px solid #9F7AEA' : 'none',
+            marginLeft: 'auto',
+            display: 'none' // default hidden, shown in mobile via CSS
+          }}
+        >
+          <span /><span /><span />
+        </button>
         <div
           className={`links ${open ? 'links--open' : ''}`}
           style={{
@@ -519,8 +522,52 @@ export const SiteNav: React.FC = () => {
           from { opacity: 0; transform: translateY(-24px);}
           to { opacity: 1; transform: none;}
         }
+        /* Responsive nav layout */
+        @media (max-width: 900px) {
+          .site-nav__inner {
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+          }
+          .site-nav__left {
+            flex: 1 1 auto !important;
+            justify-content: flex-start !important;
+          }
+          .logo {
+            margin-left: 0 !important;
+          }
+          .hamburger {
+            display: flex !important;
+            margin-left: auto !important;
+            margin-right: 0 !important;
+            align-items: center;
+            justify-content: center;
+          }
+          .links {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #ceacf5ff;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            padding: 1rem 1.5rem;
+            border-radius: 0 0 18px 18px;
+            box-shadow: 0 8px 32px #9F7AEA22, 0 2px 8px #D6C5F022;
+            z-index: 99;
+            display: none !important;
+          }
+          .links.links--open {
+            display: flex !important;
+          }
+        }
+        @media (min-width: 901px) {
+          .hamburger {
+            display: none !important;
+          }
+        }
       `}</style>
     </nav>
   );
 };
-       
