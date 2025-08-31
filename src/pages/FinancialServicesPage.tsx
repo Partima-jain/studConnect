@@ -1076,13 +1076,37 @@ export const FinancialServicesPage: React.FC = () => {
       
       {/* Funding Options Table/Content */}
       <div id="funding-options" style={{
-        marginTop:'2rem',
+        margin:'2rem',
         display:'grid',
         gap:'2rem',
         gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
         position: 'relative',
         zIndex: 2
       }}>
+        <div style={{
+          padding:'1.5rem',
+          borderRadius:'1.5rem',
+          background: '#f8fafc',
+          boxShadow: '0 8px 32px 0 #9F7AEA22, 0 1.5px 8px 0 #9F7AEA22',
+          border: '1.5px solid #e0e7ef',
+        }}>
+          <h3 style={{ color: '#5727A3', fontWeight: 700, fontSize: '1.15rem', marginBottom: '.7rem' }}>ForeignAdmits</h3>
+          <ul style={{ fontSize: '1.02rem', color: '#334155', marginBottom: '.7rem', paddingLeft: '1.1rem' }}>
+            <li>Compare 15+ banks &amp; NBFCs</li>
+            <li>Secured &amp; unsecured loan options</li>
+            <li>Fast, digital process</li>
+            <li>Personalized support for study abroad</li>
+          </ul>
+          <a href="https://www.foreignadmits.com/" target="_blank" rel="noopener" style={{
+            color: '#fff',
+            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+            borderRadius: 8,
+            padding: '.7rem 1.5rem',
+            fontWeight: 700,
+            textDecoration: 'none',
+            display: 'inline-block'
+          }}>Apply with ForeignAdmits</a>
+        </div>
         {/* Example: Multiple Lenders/Providers */}
         <div style={{
           padding:'1.5rem',
@@ -1108,30 +1132,7 @@ export const FinancialServicesPage: React.FC = () => {
             display: 'inline-block'
           }}>Apply with Leap Finance</a>
         </div>
-        <div style={{
-          padding:'1.5rem',
-          borderRadius:'1.5rem',
-          background: '#f8fafc',
-          boxShadow: '0 8px 32px 0 #9F7AEA22, 0 1.5px 8px 0 #9F7AEA22',
-          border: '1.5px solid #e0e7ef',
-        }}>
-          <h3 style={{ color: '#5727A3', fontWeight: 700, fontSize: '1.15rem', marginBottom: '.7rem' }}>ForeignAdmits</h3>
-          <ul style={{ fontSize: '1.02rem', color: '#334155', marginBottom: '.7rem', paddingLeft: '1.1rem' }}>
-            <li>Compare 15+ banks &amp; NBFCs</li>
-            <li>Secured &amp; unsecured loan options</li>
-            <li>Fast, digital process</li>
-            <li>Personalized support for study abroad</li>
-          </ul>
-          <a href="https://www.foreignadmits.com/" target="_blank" rel="noopener" style={{
-            color: '#fff',
-            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
-            borderRadius: 8,
-            padding: '.7rem 1.5rem',
-            fontWeight: 700,
-            textDecoration: 'none',
-            display: 'inline-block'
-          }}>Apply with ForeignAdmits</a>
-        </div>
+        
         {/* ...existing code for university scholarships... */}
         {data.map((uni, idx) => (
           <div
