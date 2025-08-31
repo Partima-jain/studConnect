@@ -84,6 +84,33 @@ const PeerCounsellingPage: React.FC = () => {
       .then(setCounsellors);
   }, []);
 
+  // Helper: get next available date with future slots
+  const getNextAvailableDate = async (counsellorId: number) => {
+    const res = await fetch(`${API_BASE}/peer-counsellors/${counsellorId}/available-slots`);
+    const data = await res.json();
+    const now = new Date();
+    // Find the first slot whose date+start_time is in the future
+    for (const slot of data) {
+      const slotDateTime = new Date(`${slot.date}T${slot.start_time}`);
+      if (slotDateTime > now) {
+        return slot.date;
+      }
+    }
+    return ''; // No future slots
+  };
+
+  // Modified startBooking: preselect next available date with future slots
+  const startBooking = async (c: any) => {
+    setSelected(c);
+    setBookingStep('slot');
+    setSelectedSlot(null);
+    setBookingId(null);
+    setMeetingLink('');
+    // Find next available date with future slot
+    const nextDate = await getNextAvailableDate(c.id);
+    setSelectedDate(nextDate);
+  };
+
   // Fetch available slots when counsellor or date changes
   useEffect(() => {
     if (selected && bookingStep === 'slot' && selectedDate) {
@@ -95,16 +122,6 @@ const PeerCounsellingPage: React.FC = () => {
         });
     }
   }, [selected, bookingStep, selectedDate]);
-
-  // Start booking: directly show slot modal (skip profile modal)
-  const startBooking = (c: any) => {
-    setSelected(c);
-    setBookingStep('slot'); // jump directly to slot selection
-    setSelectedDate('');
-    setSelectedSlot(null);
-    setBookingId(null);
-    setMeetingLink('');
-  };
 
   // Book slot (status: pending)
   const handleBookSlot = async () => {
@@ -1078,4 +1095,4 @@ const PeerCounsellingPage: React.FC = () => {
 };
 
 export default PeerCounsellingPage;
-            
+             
