@@ -130,7 +130,20 @@ export const Contact: React.FC = () => {
   }
 
   return (
-    <section className="section reveal" id="contact" ref={ref as any} style={{ position: 'relative', zIndex: 1, margin: '2.5rem auto 0 auto', padding: '2.5rem 0', overflow: 'hidden' }}>
+    <section
+      className="section reveal"
+      id="contact"
+      ref={ref as any}
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        margin: '2.5rem auto 0 auto',
+        padding: '2.5rem 0',
+        overflow: 'hidden',
+        width: '100%',
+        maxWidth: 900,
+      }}
+    >
       {/* 3D Globe background */}
       <div style={{ position: 'absolute', top: 0, right: 0, zIndex: 0, pointerEvents: 'none' }}>
         <ContactGlobe />
@@ -168,7 +181,16 @@ export const Contact: React.FC = () => {
           pointerEvents: 'none'
         }}
       />
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="container contact-container" style={{
+        position: 'relative',
+        zIndex: 2,
+        maxWidth: 600,
+        margin: '0 auto',
+        padding: '0 1.2rem',
+        width: '100%',
+        boxSizing: 'border-box',
+        overflow: 'visible' // <-- add this to prevent grid overflow
+      }}>
         <h2
           className="section__title"
           style={{
@@ -209,9 +231,19 @@ export const Contact: React.FC = () => {
             border: '1.5px solid #E9D8FD',
             position: 'relative',
             zIndex: 2,
+            width: '100%',
+            boxSizing: 'border-box',
+            overflow: 'visible' // <-- add this to prevent grid overflow
           }}
         >
-          <div className="consultation__grid" style={{ display: 'grid', gap: '1.3rem 1.2rem', gridTemplateColumns: '1fr 1fr', marginBottom: '1.3rem' }}>
+          <div className="consultation__grid" style={{
+            display: 'grid',
+            gap: '1.3rem 1.2rem',
+            gridTemplateColumns: '1fr 1fr',
+            marginBottom: '1.3rem',
+            width: '100%',
+            boxSizing: 'border-box'
+          }}>
             <div className="field">
               <label style={{ color: '#5727A3', fontWeight: 800, fontSize: '1.08rem', marginBottom: 6, display: 'block', letterSpacing: '-0.01em' }}>
                 First Name
@@ -546,6 +578,52 @@ export const Contact: React.FC = () => {
           )}
         </form>
       </div>
+      <style>{`
+        @media (max-width: 900px) {
+          .contact-container {
+            max-width: 98vw !important;
+            padding: 0 0.5rem !important;
+          }
+          .consultation {
+            padding: 1.2rem 0.5rem 1.5rem 0.5rem !important;
+            border-radius: 1rem !important;
+            box-shadow: 0 2px 8px #9F7AEA22, 0 1px 4px #D6C5F011 !important;
+          }
+          .consultation__grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .contact-container {
+            max-width: 100vw !important;
+            padding: 0 !important;
+          }
+          .consultation {
+            padding: 0.7rem 0.9rem 1rem 0.9rem !important;
+            border-radius: 0.7rem !important;
+            box-shadow: 0 1px 4px #9F7AEA22, 0 1px 2px #D6C5F011 !important;
+          }
+          .consultation__grid {
+            grid-template-columns: 1fr !important;
+            gap: 0.7rem !important;
+          }
+          .section__title {
+            font-size: 1.35rem !important;
+            padding: 0.1em 0 !important;
+          }
+        }
+        /* Fix input overflow in grid for all screens */
+        .consultation__grid > .field {
+          min-width: 0;
+        }
+        .consultation__grid input,
+        .consultation__grid select {
+          width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
+        }
+      `}</style>
     </section>
   );
 };
