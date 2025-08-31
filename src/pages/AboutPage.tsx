@@ -614,7 +614,7 @@ export const AboutPage: React.FC = () => {
       <section
         style={{
           maxWidth: 700,
-          margin: '2.5rem auto 0 auto',
+          margin: '2.5rem auto 10px auto',
           padding: '2.2rem 1.5rem 2.5rem 1.5rem',
           background: 'linear-gradient(90deg,#D6C5F0 0%,#9F7AEA 100%)',
           borderRadius: '1.5rem',
