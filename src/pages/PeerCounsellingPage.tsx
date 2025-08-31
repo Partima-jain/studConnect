@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const valuePoints = [
   { title:'Real Student Insights', text:'Current international students share up‑to‑date campus & lifestyle realities.' },
@@ -41,10 +42,12 @@ const testimonials = [
   { name:'Fatima • UK Health', text:'Left with a concrete 6‑week prep checklist. Removed uncertainty.' }
 ];
 
-const API_BASE = 'https://studconnect-backend.onrender.com'; // Change to your backend URL if needed
+const API_BASE = 'https://studconnect-backend.onrender.com'; 
+// const API_BASE = 'http://localhost:8000';
 
 const PeerCounsellingPage: React.FC = () => {
   const nav = useNavigate();
+  const { user } = useAuth(); // <-- Get user from AuthContext
   // Add ref for counsellor section
   const counsellorSectionRef = useRef<HTMLDivElement>(null);
   // Directory state
@@ -106,30 +109,48 @@ const PeerCounsellingPage: React.FC = () => {
   // Book slot (status: pending)
   const handleBookSlot = async () => {
     setBookingLoading(true);
-    // Use the real logged-in user email
+    if (!user || !user.id || !user.email) {
+      alert('Please log in to book a session.');
+      setBookingLoading(false);
+      return;
+    }
+    // Ensure correct types for backend (id as string or number as required)
     const payload = {
-      user_id: user.id,
+      user_id: String(user.id), // ensure string if backend expects string
       user_email: user.email,
-      counsellor_id: selected.id,
+      counsellor_id: Number(selected.id), // ensure number if backend expects number
       counsellor_email: selected.email,
-      slot_id: selectedSlot.slot_id,
+      slot_id: Number(selectedSlot.slot_id), // ensure number if backend expects number
       slot_date: `${selectedSlot.date}T${selectedSlot.start_time}`,
       payment_status: 'pending'
     };
-    const res = await fetch(`${API_BASE}/peer-counsellors/book-slot`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const data = await res.json();
-    setBookingId(data.id);
-    setBookingStep('payment');
+    try {
+      const res = await fetch(`${API_BASE}/peer-counsellors/book-slot`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Server error: ${res.status} - ${errText}`);
+      }
+      const data = await res.json();
+      setBookingId(data.id);
+      setBookingStep('payment');
+    } catch (err) {
+      alert('Booking failed. Please try again.');
+    }
     setBookingLoading(false);
   };
 
   // Razorpay payment integration
   const handleRazorpayPayment = async () => {
     setBookingLoading(true);
+    if (!user || !user.email) {
+      alert('Please log in to continue payment.');
+      setBookingLoading(false);
+      return;
+    }
     // TODO: Replace with your Razorpay key and amount
     const razorpayKey = 'rzp_test_xxxxxxxx';
     const amount = 99900; // in paise (₹999)
