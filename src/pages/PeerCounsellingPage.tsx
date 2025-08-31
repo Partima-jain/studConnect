@@ -63,6 +63,7 @@ const PeerCounsellingPage: React.FC = () => {
   // Stripe loader
   const [stripeLoaded, setStripeLoaded] = useState(false);
   const [showDetails, setShowDetails] = useState<any | null>(null);
+  const [slotsLoading, setSlotsLoading] = useState(false);
 
   useEffect(() => {
     // Load Stripe.js script if not already present
@@ -99,27 +100,48 @@ const PeerCounsellingPage: React.FC = () => {
     return ''; // No future slots
   };
 
-  // Modified startBooking: preselect next available date with future slots
+  // Modified startBooking: preselect next available date with future slots and first slot
   const startBooking = async (c: any) => {
     setSelected(c);
     setBookingStep('slot');
-    setSelectedSlot(null);
     setBookingId(null);
     setMeetingLink('');
+    setSlots([]); // clear previous slots
+    setSelectedSlot(null);
     // Find next available date with future slot
-    const nextDate = await getNextAvailableDate(c.id);
-    setSelectedDate(nextDate);
+    const res = await fetch(`${API_BASE}/peer-counsellors/${c.id}/available-slots`);
+    const data = await res.json();
+    const now = new Date();
+    // Find the first slot whose date+start_time is in the future
+    const nextSlot = data.find((slot: any) => new Date(`${slot.date}T${slot.start_time}`) > now);
+    if (nextSlot) {
+      setSelectedDate(nextSlot.date);
+      setSlots(data.filter((s: any) => s.date === nextSlot.date));
+      setSelectedSlot(nextSlot);
+    } else {
+      setSelectedDate('');
+      setSlots([]);
+      setSelectedSlot(null);
+    }
   };
 
-  // Fetch available slots when counsellor or date changes
+  // Fetch available slots when counsellor or date changes (but don't auto-select slot if already set)
   useEffect(() => {
     if (selected && bookingStep === 'slot' && selectedDate) {
+      setSlotsLoading(true);
       fetch(`${API_BASE}/peer-counsellors/${selected.id}/available-slots`)
         .then(r => r.json())
         .then(data => {
-          // Filter slots for selectedDate
-          setSlots(data.filter((s:any) => s.date === selectedDate));
-        });
+          const filtered = data.filter((s:any) => s.date === selectedDate);
+          setSlots(filtered);
+          // If user changed date, auto-select first slot for that date
+          if (filtered.length > 0 && (!selectedSlot || filtered.every((s:any) => s.slot_id !== selectedSlot.slot_id))) {
+            setSelectedSlot(filtered[0]);
+          } else if (filtered.length === 0) {
+            setSelectedSlot(null);
+          }
+        })
+        .finally(() => setSlotsLoading(false));
     }
   }, [selected, bookingStep, selectedDate]);
 
@@ -530,7 +552,7 @@ const PeerCounsellingPage: React.FC = () => {
                     margin:0,
                     letterSpacing:'-1px'
                   }}>{showDetails.name}</h2>
-                  <div style={{color:'#7c3aed', fontWeight:700, fontSize:'1.08rem', marginTop:'.2rem'}}>{showDetails.university}</div>
+                  <div style={{color:'#7c3aed', fontWeight:700, fontSize: '1.08rem', marginTop:'.2rem'}}>{showDetails.university}</div>
                   <div style={{color:'#1B0044', fontWeight:500, fontSize:'.98rem'}}>{showDetails.program}</div>
                   <div style={{color:'#475569', fontWeight:500, fontSize:'.97rem'}}>{showDetails.location}</div>
                 </div>
@@ -752,6 +774,7 @@ const PeerCounsellingPage: React.FC = () => {
                         letterSpacing: '1px'
                       }}
                       placeholder="dd/mm/yyyy"
+                      disabled={slotsLoading}
                     />
                     <span style={{
                       fontSize: '.97rem',
@@ -778,21 +801,36 @@ const PeerCounsellingPage: React.FC = () => {
                     }}>
                       Available Time Slots
                     </div>
-                    {selectedDate && (
-                      <div style={{
-                        display:'flex',
-                        flexWrap:'wrap',
-                        gap:'.7rem',
-                        justifyContent:'center',
-                        marginBottom:'1rem'
-                      }}>
+                    {slotsLoading ? (
+                      <div style={{margin: '1.2rem 0'}}>
+                        <div className="slot-spinner" style={{
+                          width: 32, height: 32, border: '4px solid #e9d5ff', borderTop: '4px solid #a21caf',
+                          borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto'
+                        }} />
+                        <style>
+                          {`@keyframes spin { 100% { transform: rotate(360deg); } }`}
+                        </style>
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          display:'flex',
+                          flexWrap:'wrap',
+                          gap:'.7rem',
+                          justifyContent:'center',
+                          marginBottom:'1rem',
+                          opacity: slotsLoading ? 0 : 1,
+                          transition: 'opacity 0.3s'
+                        }}
+                        className="slot-fadein"
+                      >
                         {selectedDate && slots.length === 0 && (
                           <span style={{color:'#64748b', fontWeight:500, fontSize:'.98rem'}}>No slots available for this date.</span>
                         )}
                         {slots.map(slot => (
                           <button
                             key={slot.slot_id}
-                            disabled={false}
+                            disabled={slotsLoading}
                             style={{
                               padding: '.7rem 1.3rem',
                               borderRadius: 10,
@@ -801,7 +839,7 @@ const PeerCounsellingPage: React.FC = () => {
                               color: selectedSlot && selectedSlot.slot_id === slot.slot_id ? '#fff' : '#5727A3',
                               fontWeight: 700,
                               fontSize: '1.07rem',
-                              cursor: 'pointer',
+                              cursor: slotsLoading ? 'not-allowed' : 'pointer',
                               boxShadow: selectedSlot && selectedSlot.slot_id === slot.slot_id ? '0 2px 8px #a21caf33' : '0 1px 4px #9F7AEA11',
                               transition: 'all 0.16s'
                             }}
@@ -812,7 +850,7 @@ const PeerCounsellingPage: React.FC = () => {
                         ))}
                       </div>
                     )}
-                    {selectedSlot && (
+                    {selectedSlot && !slotsLoading && (
                       <div style={{
                         marginTop: '.7rem',
                         background: 'linear-gradient(90deg,#ede9fe 0%,#c7d2fe 100%)',
@@ -849,7 +887,7 @@ const PeerCounsellingPage: React.FC = () => {
                         minWidth: 170
                       }}
                       onClick={handleBookSlot}
-                      disabled={!selectedSlot || bookingLoading}
+                      disabled={!selectedSlot || bookingLoading || slotsLoading}
                     >
                       {bookingLoading ? 'Booking...' : 'Proceed to Payment'}
                     </button>
@@ -866,6 +904,7 @@ const PeerCounsellingPage: React.FC = () => {
                         minWidth: 110
                       }}
                       onClick={()=>{setSelected(null); setBookingStep(null); setSelectedDate(''); setSelectedSlot(null); setMeetingLink('');}}
+                      disabled={slotsLoading}
                     >
                       Close
                     </button>
@@ -875,23 +914,162 @@ const PeerCounsellingPage: React.FC = () => {
             )}
             {bookingStep === 'payment' && (
               <>
-                <h3 style={{color:'#6366f1'}}>Payment</h3>
-                <p>Session Fee: <strong>₹{selected.charges}</strong></p>
-                <div style={{marginBottom:'.7rem', color:'#6366f1', fontWeight:600}}>
-                  Date: {selectedSlot?.date} <br />
-                  Slot: {selectedSlot?.start_time} - {selectedSlot?.end_time}
-                </div>
-                <button
-                  className="btn btn-primary"
-                  style={{marginBottom:'.7rem', background: 'linear-gradient(90deg, #5727A3 0%, #2d1457 100%)',
-                    color: '#fff'}}
-                  onClick={handleRazorpayPayment}
-                  disabled={bookingLoading}
+                {/* 3D Animation Background */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 0,
+                    pointerEvents: 'none',
+                    overflow: 'hidden'
+                  }}
+                  aria-hidden
                 >
-                  {bookingLoading ? 'Processing...' : 'Pay with Razorpay'}
-                </button>
-                <div style={{fontSize:'.85rem', color:'#64748b', marginTop:'.7rem'}}>
-                  Payment confirmation triggers a booking confirmation email.
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '-80px',
+                      left: '-80px',
+                      width: 220,
+                      height: 220,
+                      background: 'radial-gradient(circle at 30% 30%, #A78BFA99 0%, #6D28D933 100%)',
+                      filter: 'blur(60px)',
+                      borderRadius: '50%',
+                      opacity: 0.7,
+                      animation: 'float3d1 12s ease-in-out infinite alternate'
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '-80px',
+                      right: '-80px',
+                      width: 180,
+                      height: 180,
+                      background: 'radial-gradient(circle at 70% 70%, #C4B5FDbb 0%, #A78BFA55 100%)',
+                      filter: 'blur(60px)',
+                      borderRadius: '50%',
+                      opacity: 0.6,
+                      animation: 'float3d2 14s ease-in-out infinite alternate'
+                    }}
+                  />
+                  <svg
+                    width="180"
+                    height="180"
+                    viewBox="0 0 320 320"
+                    style={{
+                      position: 'absolute',
+                      top: '60%',
+                      left: '-60px',
+                      opacity: 0.18,
+                      filter: 'blur(1.5px)',
+                      transform: 'rotate(-18deg)',
+                      animation: 'spin3d 22s linear infinite'
+                    }}
+                  >
+                    <defs>
+                      <linearGradient id="goldring2" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#FBBF24" />
+                        <stop offset="100%" stopColor="#F59E42" />
+                      </linearGradient>
+                    </defs>
+                    <ellipse
+                      cx="90"
+                      cy="90"
+                      rx="70"
+                      ry="28"
+                      fill="none"
+                      stroke="url(#goldring2)"
+                      strokeWidth="12"
+                    />
+                  </svg>
+                  <style>
+                    {`
+                      @keyframes float3d1 {
+                        0% { transform: translateY(0) scale(1);}
+                        100% { transform: translateY(40px) scale(1.08);}
+                      }
+                      @keyframes float3d2 {
+                        0% { transform: translateY(0) scale(1);}
+                        100% { transform: translateY(-30px) scale(1.12);}
+                      }
+                      @keyframes spin3d {
+                        100% { transform: rotate(342deg);}
+                      }
+                    `}
+                  </style>
+                </div>
+                <div style={{
+                  textAlign: 'center',
+                  position: 'relative',
+                  zIndex: 1,
+                  minHeight: 220,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <h3 style={{color:'#6366f1', textAlign: 'center'}}>Payment</h3>
+                  <p style={{textAlign: 'center'}}>Session Fee: <strong>₹{selected.charges}</strong></p>
+                  <div style={{marginBottom:'.7rem', color:'#6366f1', fontWeight:600, textAlign: 'center'}}>
+                    Date: {selectedSlot?.date} <br />
+                    Slot: {selectedSlot?.start_time} - {selectedSlot?.end_time}
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '1.2rem',
+                    margin: '1.2rem 0'
+                  }}>
+                    <button
+                      className="btn btn-primary"
+                      style={{
+                        background: 'linear-gradient(90deg, #5727A3 0%, #2d1457 100%)',
+                        color: '#fff',
+                        fontWeight: 700,
+                        fontSize: '1.09rem',
+                        borderRadius: 10,
+                        padding: '0.8rem 2.2rem',
+                        minWidth: 170,
+                        boxShadow: '0 6px 24px #a78bfa44, 0 2px 8px #9F7AEA22',
+                        transform: 'perspective(600px) rotateY(-6deg) scale(1.04)',
+                        transition: 'transform 0.18s, box-shadow 0.18s'
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.transform = 'perspective(600px) rotateY(-2deg) scale(1.07)')}
+                      onMouseLeave={e => (e.currentTarget.style.transform = 'perspective(600px) rotateY(-6deg) scale(1.04)')}
+                      onClick={handleRazorpayPayment}
+                      disabled={bookingLoading}
+                    >
+                      {bookingLoading ? 'Processing...' : 'Pay with Razorpay'}
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      style={{
+                        background: '#fff',
+                        color: '#5727A3',
+                        border: '1.5px solid #9F7AEA',
+                        borderRadius: 10,
+                        fontWeight: 700,
+                        fontSize: '1.09rem',
+                        padding: '0.8rem 2.2rem',
+                        minWidth: 110,
+                        boxShadow: '0 6px 24px #a78bfa22, 0 2px 8px #9F7AEA11',
+                        transform: 'perspective(600px) rotateY(6deg) scale(1.04)',
+                        transition: 'transform 0.18s, box-shadow 0.18s'
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.transform = 'perspective(600px) rotateY(2deg) scale(1.07)')}
+                      onMouseLeave={e => (e.currentTarget.style.transform = 'perspective(600px) rotateY(6deg) scale(1.04)')}
+                      onClick={() => setBookingStep('slot')}
+                      disabled={bookingLoading}
+                    >
+                      Change Slot
+                    </button>
+                  </div>
+                  <div style={{fontSize:'.85rem', color:'#64748b', marginTop:'.7rem', textAlign: 'center'}}>
+                    Payment confirmation triggers a booking confirmation email.
+                  </div>
                 </div>
               </>
             )}
@@ -915,12 +1093,12 @@ const PeerCounsellingPage: React.FC = () => {
                 >Done</button>
               </>
             )}
-            <button
+            {/* <button
               className="btn btn-small"
               style={{marginTop:'1.2rem',
                 margin: '0.3rem',}} // Add marginTop for spacing
               onClick={()=>{setSelected(null); setBookingStep(null); setSelectedDate(''); setSelectedSlot(null); setMeetingLink('');}}
-            >Close</button>
+            >Close</button> */}
           </div>
         </div>
       )}
@@ -1095,4 +1273,3 @@ const PeerCounsellingPage: React.FC = () => {
 };
 
 export default PeerCounsellingPage;
-             
