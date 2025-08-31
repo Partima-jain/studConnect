@@ -9,22 +9,27 @@ const valuePoints = [
   { title:'Actionable Next Steps', text:'Leave every session with prioritized, time‑bound tasks.' }
 ];
 
-// Combine flow into 3 wrapped steps for better readability and no overflow
+// Update the flow array to match your actual peer counselling flow
 const flow = [
   {
     step: 1,
-    title: 'Book & Match',
-    text: 'Request a session, share your goals, and we’ll pair you with a relevant mentor. You’ll get a mini prep brief before your call.',
+    title: 'Choose Mentor',
+    text: 'Browse our directory and select a peer counsellor whose background matches your goals, country, or university of interest.',
   },
   {
     step: 2,
-    title: 'Live Peer Call',
-    text: '45–50 min structured conversation with open Q&A. Get candid feedback, compare options, and receive actionable next steps.',
+    title: 'Pick Time Slot',
+    text: 'View the mentor’s available slots and choose a date and time that works best for you.',
   },
   {
     step: 3,
-    title: 'Recap & Support',
-    text: 'Receive a session recap, key links, and a next-step checklist. Enjoy 72h of follow-up support for any clarifications.',
+    title: 'Book Session',
+    text: 'Confirm your booking and complete payment. You’ll receive a confirmation email with your session details and Google Meet link.',
+  },
+  {
+    step: 4,
+    title: 'Connect & Learn',
+    text: 'Join the session using the meeting link sent to your email. Have a candid conversation, get real insights, and actionable advice from your peer mentor.',
   },
 ];
 
@@ -257,62 +262,230 @@ const PeerCounsellingPage: React.FC = () => {
       style={{
         background: 'radial-gradient(at 70% 0%, rgb(224, 195, 252) 0%, rgb(223 196 255) 35%, rgb(240, 230, 255) 70%, rgb(255, 255, 255) 100%)',
         minHeight: '100vh',
-        paddingTop: '90px', // Add space for fixed header
+        paddingTop: '90px',
       }}
     >
+      {/* --- HERO BANNER --- */}
       <section className="peer-hero" style={{
-        background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
+        background: 'linear-gradient(100deg, #5727A3 0%, #9F7AEA 70%, #7c3aed 100%)',
         color: '#fff',
-        padding: '3.5rem 0 2.5rem 0',
-        borderRadius: '0 0 36px 36px',
-        boxShadow: '0 8px 48px #9F7AEA22',
-        marginBottom: '2.5rem'
+        padding: '4.5rem 0 3.5rem 0',
+        borderRadius: '0 0 48px 48px',
+        boxShadow: '0 12px 64px #9F7AEA33',
+        marginBottom: '2.5rem',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <div className="peer-hero__inner" style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
-          <h1>
-            <span className="gradient-text" style={{
-              background: 'linear-gradient(90deg, #fff 0%, #9F7AEA 100%)',
+        {/* 3D Animated Blobs and Sparkles */}
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            zIndex: 0,
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+            overflow: 'hidden'
+          }}
+        >
+          {/* Main floating blob */}
+          <div style={{
+            position: 'absolute',
+            top: '-120px',
+            left: '-120px',
+            width: 420,
+            height: 420,
+            background: 'radial-gradient(circle at 30% 30%, #A78BFA99 0%, #6D28D933 100%)',
+            filter: 'blur(90px)',
+            borderRadius: '50%',
+            opacity: 0.55,
+            animation: 'floatHero1 16s ease-in-out infinite alternate'
+          }} />
+          {/* Purple ring */}
+          <svg
+            width="320"
+            height="320"
+            viewBox="0 0 320 320"
+            style={{
+              position: 'absolute',
+              top: '60%',
+              left: '-100px',
+              opacity: 0.13,
+              filter: 'blur(2.5px)',
+              transform: 'rotate(-18deg)',
+              animation: 'spinHero 28s linear infinite'
+            }}
+          >
+            <ellipse
+              cx="160"
+              cy="160"
+              rx="120"
+              ry="48"
+              fill="none"
+              stroke="#a78bfa"
+              strokeWidth="18"
+            />
+          </svg>
+          {/* Sparkle */}
+          <svg width="60" height="60" style={{
+            position: 'absolute',
+            top: '30%',
+            left: '60%',
+            opacity: 0.7,
+            animation: 'sparkleHero 3.5s ease-in-out infinite alternate'
+          }}>
+            <g>
+              <circle cx="30" cy="30" r="8" fill="#fff" fillOpacity="0.7" />
+              <circle cx="30" cy="30" r="3" fill="#a78bfa" />
+            </g>
+          </svg>
+          {/* Keyframes */}
+          <style>
+            {`
+              @keyframes floatHero1 {
+                0% { transform: translateY(0) scale(1);}
+                100% { transform: translateY(60px) scale(1.08);}
+              }
+              @keyframes spinHero {
+                100% { transform: rotate(342deg);}
+              }
+              @keyframes sparkleHero {
+                0% { opacity: 0.7; transform: scale(1);}
+                100% { opacity: 1; transform: scale(1.18);}
+              }
+              /* 3D entrance animations for hero elements */
+              @keyframes heroFadeInUp {
+                0% { opacity: 0; transform: translate3d(0, 60px, 0) scale3d(0.95,0.95,1) rotateX(18deg);}
+                80% { opacity: 1; transform: translate3d(0, -8px, 0) scale3d(1.03,1.03,1) rotateX(-2deg);}
+                100% { opacity: 1; transform: translate3d(0, 0, 0) scale3d(1,1,1) rotateX(0);}
+              }
+              @keyframes heroFadeIn {
+                0% { opacity: 0; transform: scale3d(0.95,0.95,1) rotateY(-18deg);}
+                80% { opacity: 1; transform: scale3d(1.03,1.03,1) rotateY(2deg);}
+                100% { opacity: 1; transform: scale3d(1,1,1) rotateY(0);}
+              }
+              @keyframes heroFadeInRight {
+                0% { opacity: 0; transform: translate3d(60px,0,0) scale3d(0.95,0.95,1) rotateY(-18deg);}
+                80% { opacity: 1; transform: translate3d(-8px,0,0) scale3d(1.03,1.03,1) rotateY(2deg);}
+                100% { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1) rotateY(0);}
+              }
+              @keyframes heroFadeInLeft {
+                0% { opacity: 0; transform: translate3d(-60px,0,0) scale3d(0.95,0.95,1) rotateY(18deg);}
+                80% { opacity: 1; transform: translate3d(8px,0,0) scale3d(1.03,1.03,1) rotateY(-2deg);}
+                100% { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1) rotateY(0);}
+              }
+            `}
+          </style>
+        </div>
+        <div className="peer-hero__inner" style={{
+          maxWidth: 900,
+          margin: '0 auto',
+          textAlign: 'center',
+          position: 'relative',
+          zIndex: 1
+        }}>
+          <h1
+            style={{
+              fontWeight: 900,
+              fontSize: '2.9rem',
+              letterSpacing: '-1.5px',
+              marginBottom: '1.1rem',
+              lineHeight: 1.1,
+              background: 'linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(222 211 255) 30%, rgb(255 255 255) 100%) text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              fontWeight: 900,
-              fontSize: '2.5rem',
-              letterSpacing: '-1px',
-              display: 'inline-block'
-            }}>Peer Counselling</span>
-            <span style={{ display: 'block', fontWeight: 700, fontSize: '1.3rem', marginTop: '.7rem', color: '#e0e7ff' }}>
-              Connect With Current International Students
-            </span>
+              backgroundClip: 'text',
+              display: 'inline-block',
+              animation: 'heroFadeInUp 1.1s cubic-bezier(.4,1.6,.6,1) both'
+            }}
+          >
+            India’s 1<sup style={{fontSize:'1.3rem', color:'#a78bfa', verticalAlign:'top'}}>st</sup> Peer Counselling Platform
           </h1>
-          <p className="peer-lead" style={{ color: '#e0e7ff', fontSize: '1.18rem', margin: '1.2rem 0 2rem 0', fontWeight: 500 }}>
-            Validate your plan, compare countries & programs, and avoid costly mistakes by speaking to students already living your next step.
-          </p>
-          <div className="peer-cta-group" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            <button className="btn btn-primary" style={{
-              background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 12,
+          <div
+            style={{
               fontWeight: 700,
+              fontSize: '1.45rem',
+              margin: '0 0 1.7rem 0',
+              color: '#f3e8ff',
+              textShadow: '0 2px 16px #a78bfa44',
+              animation: 'heroFadeIn 1.3s 0.2s cubic-bezier(.4,1.6,.6,1) both'
+            }}
+          >
+            Talk to Real Students. Get Unfiltered Advice. <br />
+            <span style={{color:'#d0c1fbff', fontWeight:900}}>No Agents. No Guesswork. Just Real Experience.</span>
+          </div>
+          <div
+            style={{
+              fontWeight: 500,
               fontSize: '1.13rem',
-              padding: '0.8rem 2.2rem',
-              boxShadow: '0 2px 8px #9F7AEA33',
-              cursor: 'pointer'
-            }} onClick={goContact}>Book Session</button>
-            <button className="btn btn-small" style={{
+              margin: '0 0 2.2rem 0',
+              color: '#e0e7ff',
+              textShadow: '0 1px 8px #9F7AEA33',
+              animation: 'heroFadeInLeft 1.1s 0.4s cubic-bezier(.4,1.6,.6,1) both'
+            }}
+          >
+            <span style={{background:'#fff', color:'#7c3aed', borderRadius:8, padding:'0.2em 0.7em', fontWeight:700, fontSize:'1.08rem', marginRight:'.7em'}}>New</span>
+            <span>
+              Book a 1:1 video session with a current international student and get honest, actionable guidance for your study abroad journey.
+            </span>
+          </div>
+          <div
+            className="peer-cta-group"
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              justifyContent: 'center',
+              marginBottom: '1.5rem',
+              animation: 'heroFadeInRight 1.1s 0.6s cubic-bezier(.4,1.6,.6,1) both'
+            }}
+          >
+            <button className="btn btn-primary" style={{
               background: '#fff',
               color: '#5727A3',
-              border: '1.5px solid #9F7AEA',
-              borderRadius: 12,
+              border: 'none',
+              borderRadius: 16,
+              fontWeight: 800,
+              fontSize: '1.18rem',
+              padding: '1rem 2.6rem',
+              boxShadow: '0 2px 12px #a78bfa33',
+              cursor: 'pointer',
+              letterSpacing: '0.5px'
+            }} onClick={goContact}>Book Session Now</button>
+            <button className="btn btn-small" style={{
+              background: 'linear-gradient(90deg, #a78bfa 0%, #9F7AEA 100%)',
+              color: '#5727A3',
+              border: '1.5px solid #a78bfa',
+              borderRadius: 16,
               fontWeight: 700,
               fontSize: '1.13rem',
-              padding: '0.8rem 2.2rem',
+              padding: '1rem 2.2rem',
               cursor: 'pointer'
-            }} onClick={()=>nav('/services')}>All Services</button>
+            }} onClick={()=>nav('/services')}>See All Services</button>
           </div>
-          <div className="peer-stats" style={{ display: 'flex', gap: '2.5rem', justifyContent: 'center', marginTop: '2rem' }}>
-            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>3k+</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Peer Sessions</span></div>
-            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>800+</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Universities</span></div>
-            <div style={{ textAlign: 'center' }}><strong style={{ fontSize: '2rem', color: '#fff', fontWeight: 900 }}>6</strong><span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Countries</span></div>
+          <div
+            className="peer-stats"
+            style={{
+              display: 'flex',
+              gap: '2.5rem',
+              justifyContent: 'center',
+              marginTop: '2.2rem',
+              animation: 'heroFadeInUp 1.1s 0.8s cubic-bezier(.4,1.6,.6,1) both'
+            }}
+          >
+            <div style={{ textAlign: 'center' }}>
+              <strong style={{ fontSize: '2.2rem', color: '#fff', fontWeight: 900, textShadow: '0 2px 12px #a78bfa44' }}>3k+</strong>
+              <span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Peer Sessions</span>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <strong style={{ fontSize: '2.2rem', color: '#fff', fontWeight: 900, textShadow: '0 2px 12px #a78bfa44' }}>800+</strong>
+              <span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Universities</span>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <strong style={{ fontSize: '2.2rem', color: '#fff', fontWeight: 900, textShadow: '0 2px 12px #a78bfa44' }}>6</strong>
+              <span style={{ display: 'block', color: '#e0e7ff', fontWeight: 500 }}>Countries</span>
+            </div>
           </div>
         </div>
       </section>
@@ -1159,7 +1332,6 @@ const PeerCounsellingPage: React.FC = () => {
                 margin: '0 auto 1rem auto',
                 boxShadow: '0 2px 8px #9F7AEA22'
               }}>{f.step}</div>
-              {/* Heading and step number in same row */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
