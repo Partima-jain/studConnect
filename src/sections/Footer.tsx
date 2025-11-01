@@ -251,7 +251,7 @@ export const Footer: React.FC = () => {
           <a href="https://www.instagram.com/yournextuniversity/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ opacity: 0.7 }}>
             <img src="https://framerusercontent.com/images/2SwbRWBkLWqfbe0SoyPLo4gomA.png" alt="Instagram" width={28} height={28} style={{ borderRadius: '50%' }} />
           </a>
-          <a href="https://www.reddit.com/user/Few_Comfortable9627/" target="_blank" rel="noopener noreferrer" aria-label="Reddit" style={{ opacity: 0.7 }}>
+          <a href="https://www.reddit.com/user/YourNextUniversity/" target="_blank" rel="noopener noreferrer" aria-label="Reddit" style={{ opacity: 0.7 }}>
             <img src="https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/Screenshot%202025-09-01%20at%2012.59.33%E2%80%AFAM.png" alt="Reddit" width={28} height={28} style={{ borderRadius: '50%', background: '#fff' }} />
           </a>
           <a href="https://www.quora.com/profile/Your-Next-University" target="_blank" rel="noopener noreferrer" aria-label="Quora" style={{ opacity: 0.7 }}>
