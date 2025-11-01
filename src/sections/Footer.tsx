@@ -276,13 +276,19 @@ export const Footer: React.FC = () => {
             flex: '1 1 auto',
             minWidth: 120,
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
         >
-          © {new Date().getFullYear()} <span style={{ color: '#fff', fontWeight: 700, marginLeft: 4, marginRight: 4 }}>yournextuniversity</span>. All rights reserved.
+          <span>
+            © {new Date().getFullYear()} <span style={{ color: '#fff', fontWeight: 700, marginLeft: 4, marginRight: 4 }}>yournextuniversity</span>. All rights reserved.
+          </span>
+          <span style={{ color: '#e3e7f3', fontSize: '.93rem', fontWeight: 500, opacity: 0.8, marginTop: '0.2em' }}>
+            100, Green Park, New Delhi
+          </span>
         </div>
         {/* Right: Legal Links */}
         <div style={{
