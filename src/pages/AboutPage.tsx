@@ -333,9 +333,7 @@ const AnimatedGlobeImage: React.FC = () => {
   );
 };
 
-// Dotted line (not array of dots) between head and globe, tightly in the gap and not covering girl's face
 const DottedLine: React.FC = () => {
-  // These coordinates are tuned to fit the gap between the girl's head and the globe image
   const startX = 350; // just right of girl's head
   const startY = 100; // near top of girl's head
   const endX = 400;   // left edge of globe
@@ -385,7 +383,7 @@ export const AboutPage: React.FC = () => {
         maxWidth: '100vw',
         boxSizing: 'border-box',
         overflowX: 'hidden',
-        paddingTop: '90px', // Add space for fixed header
+        paddingTop: '90px',
       }}
     >
       {/* Hero Section */}
@@ -465,10 +463,6 @@ export const AboutPage: React.FC = () => {
               zIndex: 2
             }}
           />
-          {/* Dotted line (thinking effect) in gap between girl head and globe */}
-          <DottedLine />
-          {/* Animated Globe */}
-          <AnimatedGlobeImage />
         </div>
       </section>
 
