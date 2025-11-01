@@ -262,8 +262,7 @@ export const LandingPage: React.FC = () => {
 					onClick={() => navigate('/about')}
 					style={{
 						marginTop: '1.2rem',
-						background:
-							'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
+						background:'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
 						color: '#fff',
 						border: 'none',
 						borderRadius: 8,
@@ -322,7 +321,7 @@ export const LandingPage: React.FC = () => {
 					className={`about-3d-girl${aboutInView ? ' about-3d-animate' : ''}`}
 				/>
 				{/* Dotted line (thinking effect) in gap between girl head and globe */}
-				<svg
+				{/* <svg
 					width={90}
 					height={70}
 					style={{
@@ -341,9 +340,9 @@ export const LandingPage: React.FC = () => {
 						strokeDasharray="8,10"
 						opacity={0.7}
 					/>
-				</svg>
+				</svg> */}
 				{/* Animated Globe */}
-				<img
+				{/* <img
 					src="https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/Adobe%20Express%20-%20file.png"
 					alt="Dreaming of Abroad"
 					style={{
@@ -360,7 +359,7 @@ export const LandingPage: React.FC = () => {
 						animation: 'aboutGlobeFloat 2.2s infinite cubic-bezier(.4,2,.6,1)',
 					}}
 					className={`about-3d-globe${aboutInView ? ' about-3d-animate' : ''}`}
-				/>
+				/> */}
 				<style>{`
           @keyframes aboutGlobeFloat {
             0%, 100% { transform: translateY(0) scale(1);}
@@ -512,7 +511,8 @@ export const LandingPage: React.FC = () => {
 				<button
 					onClick={() => navigate('/services/peer-counselling')}
 					style={{
-						background: 'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
+						// Change from green gradient to a Gen-Z purple-pink gradient
+						background:'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
 						color: '#fff',
 						border: 'none',
 						borderRadius: 14,
@@ -520,7 +520,7 @@ export const LandingPage: React.FC = () => {
 						fontWeight: 800,
 						fontSize: '1.18rem',
 						cursor: 'pointer',
-						boxShadow: '0 4px 18px #22c55e33',
+						boxShadow: '0 2px 8px #9F7AEA22',
 						transition: 'background 0.18s',
 						letterSpacing: '.5px',
 						marginTop: '0.2rem',
@@ -860,15 +860,14 @@ export const LandingPage: React.FC = () => {
 					<button
 						onClick={() =>
 							window.open(
-								'https://www.universityliving.com/',
+								'https://www.casita.com/your-next-uni/',
 								'_blank',
 								'noopener,noreferrer'
 							)
 						}
 						style={{
 							marginTop: '1.2rem',
-							background:
-								'linear-gradient(90deg,#22c55e 0%,#4ade80 100%)',
+							background:'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
 							color: '#fff',
 							border: 'none',
 							borderRadius: 14,
@@ -876,7 +875,7 @@ export const LandingPage: React.FC = () => {
 							fontWeight: 700,
 							fontSize: '1.13rem',
 							cursor: 'pointer',
-							boxShadow: '0 4px 18px #22c55e33',
+							boxShadow: '0 2px 8px #9F7AEA22',
 							transition: 'background 0.18s',
 							letterSpacing: '.5px',
 						}}
@@ -1023,7 +1022,7 @@ export const LandingPage: React.FC = () => {
 						padding: '1rem 2.5rem',
 						textDecoration: 'none',
 						margin: '0.5rem 0 0 0',
-						boxShadow: '0 2px 8px #9F7AEA33',
+						boxShadow: '0 2px 8px #9F7AEA22',
 						transition: 'background 0.18s',
 						cursor: 'pointer'
 					}}
