@@ -252,7 +252,7 @@ export const Contact: React.FC = () => {
               <input
                 required
                 name="first_name"
-                placeholder="John"
+                placeholder=""
                 style={{ background: '#F8F6FF', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
                 value={formData.first_name}
                 onChange={e => setFormData(f => ({ ...f, first_name: e.target.value }))}
@@ -266,7 +266,7 @@ export const Contact: React.FC = () => {
               <input
                 required
                 name="last_name"
-                placeholder="Doe"
+                placeholder=""
                 style={{ background: '#F8F6FF', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
                 value={formData.last_name}
                 onChange={e => setFormData(f => ({ ...f, last_name: e.target.value }))}
@@ -341,7 +341,7 @@ export const Contact: React.FC = () => {
                 <input
                   required
                   name="phone"
-                  placeholder="99999 99999"
+                  placeholder=""
                   aria-invalid={!!errors.phone}
                   inputMode="numeric"
                   pattern="[0-9]*"
@@ -369,7 +369,7 @@ export const Contact: React.FC = () => {
                 required
                 name="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder=""
                 aria-invalid={!!errors.email}
                 style={{ background: '#F8F6FF', color: '#1B0044', border: '1.5px solid #D6C5F0', borderRadius: 10, padding: '0.7em 1em', fontSize: '1rem', transition: 'border 0.18s, box-shadow 0.18s', boxShadow: '0 1px 6px #E9D8FD22' }}
                 value={formData.email}
