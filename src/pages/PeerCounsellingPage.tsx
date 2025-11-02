@@ -683,19 +683,35 @@ const PeerCounsellingPage: React.FC = () => {
                   padding: '0.7rem 1.6rem',
                   cursor: 'pointer',
                   boxShadow: '0 2px 8px #a21caf33'
-                }} onClick={()=>startBooking(c)}>
+                }} onClick={() => {
+                  if (!user || !user.id) {
+                    nav('/auth/login', { state: { from: '/peer-counselling' } });
+                  } else {
+                    startBooking(c);
+                  }
+                }}>
                   Book Session
                 </button>
-                <button className="btn btn-secondary btn-small" style={{
-                  background: '#fff',
-                  color: '#a21caf',
-                  border: '1.5px solid #a21caf',
-                  borderRadius: 10,
-                  fontWeight: 700,
-                  fontSize: '1.07rem',
-                  padding: '0.7rem 1.6rem',
-                  cursor: 'pointer'
-                }} onClick={()=>setShowDetails(c)}>
+                <button
+                  className="btn btn-secondary btn-small"
+                  style={{
+                    background: '#fff',
+                    color: '#a21caf',
+                    border: '1.5px solid #a21caf',
+                    borderRadius: 10,
+                    fontWeight: 700,
+                    fontSize: '1.07rem',
+                    padding: '0.7rem 1.6rem',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => {
+                    if (!user || !user.id) {
+                      nav('/auth/login', { state: { from: '/peer-counselling' } });
+                    } else {
+                      setShowDetails(c);
+                    }
+                  }}
+                >
                   Show Details
                 </button>
               </div>

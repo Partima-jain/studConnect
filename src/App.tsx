@@ -58,9 +58,7 @@ export const App: React.FC = () => (
             <ServicesPage />
         } />
         <Route path="/services/peer-counselling" element={
-          <RequireAuth>
             <PeerCounsellingPage />
-          </RequireAuth>
         } />
         <Route path="/universities" element={
             <UniversitiesPage />
@@ -81,29 +79,19 @@ export const App: React.FC = () => (
         <Route path="/auth/login" element={<AuthLoginPage />} />
         <Route path="/auth/forgot-password" element={<AuthForgotPasswordPage />} />
         <Route path="/financial-services" element={
-          <RequireAuth>
             <FinancialServicesPage />
-          </RequireAuth>
         } />
         <Route path="/services/international-application-process" element={
-          <RequireAuth>
             <StudyApplication />
-          </RequireAuth>
         } />
         <Route path="/accommodation" element={
-          <RequireAuth>
             <AccommodationPage />
-          </RequireAuth>
         } />
         <Route path="/services/university-representative-counselling" element={
-          <RequireAuth>
             <UniversityRepresentativeCounsellingPage />
-          </RequireAuth>
         } />
         <Route path="/services/airport-pickup" element={
-          <RequireAuth>
             <AirportPickupPage />
-          </RequireAuth>
         } />
         <Route path="/career" element={<CareerPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
