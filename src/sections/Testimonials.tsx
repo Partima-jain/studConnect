@@ -1,31 +1,57 @@
 import React from 'react';
 import { useReveal } from '../hooks/useReveal';
 
+// Updated testimonials data
 const testimonials = [
 	{
 		name: 'Aarav',
-		result: 'UC Berkeley (MS CS) — Scholarship Winner',
-		text: '“Yournextuniversity’s mentors didn’t just review my essays—they helped me find my unique story. The honest feedback from real students made all the difference. I never felt like just another applicant.”',
+		result: 'Delhi → University of Melbourne, Australia',
+		text: '“Before I found Your Next University, I was juggling a dozen university websites and still had no clue what actually fit me. Their AI match showed me programs that aligned with my interests, not just my marks. I got into the University of Melbourne, and honestly — it feels like my dream finally got a roadmap.”',
 	},
 	{
-		name: 'Meera',
-		result: 'Full Tuition Scholarship — Germany',
-		text: '“I was overwhelmed by the DAAD process, but Yournextuniversity broke it down step by step. Their document checks and real-life tips made my application stand out. I got in, and with funding!”',
+		name: 'Sneha',
+		result: 'Hyderabad → University of Toronto, Canada',
+		text: '“I thought studying abroad was only for people with big budgets or family abroad. But the team at Your Next University made it feel doable — they found scholarships, guided my SOP, and even helped me prep for interviews. Today, I’m in Toronto, learning and growing every single day.”',
 	},
 	{
-		name: 'Yusuf',
-		result: 'Visa Approved & Scholarship',
-		text: '“From SOPs to mock interviews, Yournextuniversity made the whole process stress-free. I got my visa and a scholarship—couldn’t have done it alone.”',
+		name: 'Karan',
+		result: 'Ahmedabad → University of Warwick, UK',
+		text: '“After two rejections, I was mentally done. I randomly filled the assessment on Your Next University one night. Within a week, they helped me rewrite my SOP and shortlist better-fit universities. Warwick said yes. That ‘yes’ changed everything.”',
 	},
 	{
-		name: 'Fatima',
-		result: 'Masters in UK — 50% Scholarship',
-		text: '“My peer mentor helped me compare universities and funding options. I landed a top UK admit with a huge scholarship and felt supported at every step.”',
+		name: 'Priya',
+		result: 'Bhopal → Stanford University, USA',
+		text: '“I wasn’t sure my small-town background would stand out in global applications. But the mentors at Your Next University saw my story differently — they helped me position it as my strength. I’m now studying Computer Science at Stanford. I didn’t just apply — I applied confidently.”',
 	},
 	{
-		name: 'Daniel',
-		result: 'MS in Germany — Internship Secured',
-		text: '“The candid advice from current students helped me pick the right program and city. I found an internship before even landing in Germany!”',
+		name: 'Aditi',
+		result: 'Pune → National University of Singapore (NUS)',
+		text: '“I panicked when my visa got delayed — but the support team didn’t leave me hanging. They guided me through every step and kept my admission active. I’m now studying at NUS, working with a global student team, and living my best life.”',
+	},
+	{
+		name: 'Rohan',
+		result: 'Chennai → TU Munich, Germany',
+		text: '“Engineering abroad sounded fancy until I saw the paperwork. Your Next University literally made it a one-click journey — from finding the right program to uploading my docs. I’m now in Munich, working part-time at BMW, and couldn’t be happier.”',
+	},
+	{
+		name: 'Mansi',
+		result: 'Mumbai → Monash University, Australia',
+		text: '“The idea of going abroad terrified me — not academically, but financially. Your Next University found me scholarships I didn’t even know existed. I got into Monash and now mentor other students online. It’s like coming full circle.”',
+	},
+	{
+		name: 'Dev',
+		result: 'Jaipur → University of British Columbia, Canada',
+		text: '“I was that guy who thought his resume wasn’t impressive enough. But the way the team restructured my application made me realize I did have a story. Now, I’m studying Marketing at UBC and working part-time at a creative agency in Vancouver.”',
+	},
+	{
+		name: 'Tanya',
+		result: 'Delhi → Harvard University, USA',
+		text: '“I didn’t come from privilege, but I had purpose. Your Next University helped me communicate that — through essays, projects, and clarity. Today, I’m at Harvard, working on policy research that actually makes impact.”',
+	},
+	{
+		name: 'Isha',
+		result: 'Bangalore → King’s College London, UK',
+		text: '“I was completely lost — 4 countries, 6 universities, zero direction. Their counsellors actually listened to me, not just my grades. We picked King’s College London together, and it’s been the best decision of my life.”',
 	},
 ];
 
@@ -199,3 +225,5 @@ export const Testimonials: React.FC = () => {
 		</section>
 	);
 };
+
+export default Testimonials;
