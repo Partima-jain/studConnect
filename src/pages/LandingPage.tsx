@@ -140,6 +140,47 @@ export const LandingPage: React.FC = () => {
 	const servicesSectionRef = useRef<HTMLDivElement>(null);
 	const [servicesInView, setServicesInView] = useState(false);
 
+	// Peer counsellors API data
+	const [peerCounsellors, setPeerCounsellors] = useState<
+		{
+			id: number;
+			name: string;
+			university: string;
+			profile_image_url: string;
+			location: string;
+			program: string;
+			charges: number;
+		}[]
+	>([]);
+	const [scrollIndex, setScrollIndex] = useState(0);
+
+	useEffect(() => {
+		fetch('https://studconnect-backend.onrender.com/peer-counsellors')
+			.then(res => res.json())
+			.then(data => {
+				// Only pick required fields for display
+				const mapped = (data || []).map((c: any) => ({
+					id: c.id,
+					name: c.name,
+					university: c.university,
+					profile_image_url: c.profile_image_url,
+					location: c.location,
+					program: c.program,
+					charges: c.charges,
+				}));
+				setPeerCounsellors(mapped);
+			})
+			.catch(() => setPeerCounsellors([]));
+	}, []);
+
+	useEffect(() => {
+		if (peerCounsellors.length === 0) return;
+		const interval = setInterval(() => {
+			setScrollIndex(idx => (idx + 1) % peerCounsellors.length);
+		}, 2200);
+		return () => clearInterval(interval);
+	}, [peerCounsellors]);
+
 	useEffect(() => {
 		const el = aboutSectionRef.current;
 		if (!el) return;
@@ -196,7 +237,7 @@ export const LandingPage: React.FC = () => {
 				background: 'linear-gradient(100deg, #F0E6FF 0%, #D6C5F0 60%, #fff 100%)',
 				boxShadow: '0 8px 32px 0 #9F7AEA22',
 				display: 'flex',
-				flexWrap: 'wrap',
+				flexDirection: 'column',
 				alignItems: 'center',
 				justifyContent: 'center',
 				gap: '2.5rem',
@@ -232,13 +273,13 @@ export const LandingPage: React.FC = () => {
 				pointerEvents: 'none',
 			}} />
 			<div style={{
-				flex: 1,
-				minWidth: 320,
+				width: '100%',
 				maxWidth: 600,
 				zIndex: 2,
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'center',
+				alignItems: 'center',
 			}}>
 				<h1 style={{
 					fontSize: '2.7rem',
@@ -248,6 +289,7 @@ export const LandingPage: React.FC = () => {
 					marginBottom: '1.1rem',
 					color: '#1B0044',
 					textShadow: '0 4px 24px #9F7AEA22, 0 1px 2px #fff8',
+					textAlign: 'center',
 				}}>
 					India’s 1st <span style={{color:'#7e22c5ff'}}>Peer Counselling</span> Platform for Study Abroad
 				</h1>
@@ -258,6 +300,7 @@ export const LandingPage: React.FC = () => {
 					marginBottom: '1.1rem',
 					lineHeight: 1.3,
 					textShadow: '0 2px 8px #fff8, 0 1px 2px #0002',
+					textAlign: 'center',
 				}}>
 					Real Students. Real Stories. Real Guidance.<br/>
 					No Agents. No Gimmicks. Just Honest Help.
@@ -268,6 +311,7 @@ export const LandingPage: React.FC = () => {
 					fontWeight: 500,
 					marginBottom: '1.5rem',
 					lineHeight: 1.6,
+					textAlign: 'center',
 				}}>
 					Connect directly with students who’ve already walked the path you’re about to take. Get answers, clarity, and confidence from those who know the journey best—your peers. <br />
 					<b>Book a 1:1 call and get the truth, not the sales pitch.</b>
@@ -275,7 +319,6 @@ export const LandingPage: React.FC = () => {
 				<button
 					onClick={() => navigate('/services/peer-counselling')}
 					style={{
-						// Change from green gradient to a Gen-Z purple-pink gradient
 						background:'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
 						color: '#fff',
 						border: 'none',
@@ -292,41 +335,138 @@ export const LandingPage: React.FC = () => {
 				>
 					Book Session Now !!
 				</button>
-			</div>
-			{/* Illustration */}
-			<div style={{
-				flex: 1,
-				minWidth: 320,
-				maxWidth: 420,
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				zIndex: 2,
-				position: 'relative',
-			}}>
+				{/* Horizontally scrolling peer counsellors list */}
 				<div style={{
-					background: 'rgba(255,255,255,0.85)',
-					borderRadius: 32,
-					boxShadow: '0 8px 32px #9F7AEA22',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					position: 'relative',
 					width: '100%',
-					maxWidth: 380,
-					backdropFilter: 'blur(6px) saturate(1.1)',
-					WebkitBackdropFilter: 'blur(6px) saturate(1.1)',
+					overflow: 'hidden',
+					padding: '1.2rem 0',
+					marginTop: '2.5rem',
 				}}>
-					<img
-						src="https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/Screenshot%202025-08-31%20at%209.03.17%E2%80%AFPM.png"
-						alt="Peer Counselling Illustration"
+					<div
 						style={{
-							width: '100%',
-							display: 'block',
-							borderRadius: 24,
-							boxShadow: '0 4px 24px #9F7AEA22'
+							display: 'flex',
+							flexDirection: 'row',
+							gap: '1.7rem',
+							animation: 'scrollCounsellors 28s linear infinite',
+							padding: '0 0.5rem',
 						}}
-					/>
+					>
+						{peerCounsellors.map((counsellor, idx) => (
+							<a
+								key={counsellor.id}
+								href={`/mentors/${counsellor.id}`}
+								style={{
+									background: 'rgba(255,255,255,0.98)',
+									boxShadow: '0 4px 18px #9F7AEA22',
+									borderRadius: 18,
+									minWidth: 180,
+									width: 180,
+									maxWidth: 220,
+									padding: '1.2rem 1rem',
+									display: 'flex',
+									flexDirection: 'column',
+									alignItems: 'center',
+									justifyContent: 'center',
+									textAlign: 'center',
+									transition: 'box-shadow .18s, transform .18s',
+									cursor: 'pointer',
+									border: '1.5px solid #e0c3fc',
+									position: 'relative',
+								}}
+								className="peer-counsellor-card"
+							>
+								<div style={{
+									width: '80px',
+									height: '80px',
+									borderRadius: '16px',
+									overflow: 'hidden',
+									position: 'relative',
+									marginBottom: '0.7rem',
+								}}>
+									<img
+										src={counsellor.profile_image_url}
+										alt={counsellor.name}
+										style={{
+											width: '100%',
+											height: '100%',
+											objectFit: 'cover',
+											borderRadius: '16px',
+											boxShadow: '0 2px 12px #9F7AEA22',
+											border: '2px solid #fff',
+											background: '#f0e6ff',
+										}}
+									/>
+								</div>
+								<div style={{
+									fontWeight: 700,
+									fontSize: '1.08rem',
+									color: '#5727A3',
+									marginBottom: '0.2rem',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+									whiteSpace: 'nowrap',
+									width: '100%',
+								}}>
+									{counsellor.name}
+								</div>
+								<div style={{
+									fontSize: '.97rem',
+									color: '#1B0044',
+									fontWeight: 500,
+									marginBottom: '0.2rem',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+									whiteSpace: 'nowrap',
+									width: '100%',
+								}}>
+									{counsellor.university}
+								</div>
+								<div style={{
+									fontSize: '.93rem',
+									color: '#9F7AEA',
+									fontWeight: 500,
+									marginBottom: '0.2rem',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+									whiteSpace: 'nowrap',
+									width: '100%',
+								}}>
+									{counsellor.location}
+								</div>
+								<div style={{
+									fontSize: '.93rem',
+									color: '#5727A3',
+									fontWeight: 500,
+									marginBottom: '0.2rem',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+									whiteSpace: 'nowrap',
+									width: '100%',
+								}}>
+									{counsellor.program}
+								</div>
+								<div style={{
+									fontSize: '.93rem',
+									color: '#1B0044',
+									fontWeight: 500,
+									marginBottom: '0.2rem',
+								}}>
+									Charges: ₹{counsellor.charges}
+								</div>
+							</a>
+						))}
+					</div>
+					<style>{`
+						@keyframes scrollCounsellors {
+							0% { transform: translateX(0); }
+							100% { transform: translateX(-60%); }
+						}
+						.peer-counsellor-card:hover {
+							box-shadow: 0 12px 32px #9F7AEA44;
+							transform: scale(1.07) translateY(-4px);
+							border-color: #9F7AEA;
+						}
+					`}</style>
 				</div>
 			</div>
 		</section>
