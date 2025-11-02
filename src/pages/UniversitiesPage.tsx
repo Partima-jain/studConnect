@@ -7,6 +7,8 @@ import countriesData from './countries.json';
 import universitiesData from './universities.json';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
+// import Slider from 'rc-slider';
+// import 'rc-slider/assets/index.css';
 
 const BASE_URL = "https://studconnect-backend.onrender.com"; 
 // const BASE_URL = "http://127.0.0.1:8000";
@@ -43,8 +45,11 @@ export const UniversitiesPage: React.FC = () => {
   const [allUniversities, setAllUniversities] = useState<string[]>([]);
   const [allProgramNames, setAllProgramNames] = useState<string[]>([]);
 
-  // Add a ref to cache programs data by query params
   const programsCache = useRef<Map<string, { items: ProgramItem[]; total: number }>>(new Map());
+
+  const [tuitionRange, setTuitionRange] = useState<[number, number]>([0, 100000]);
+
+  const tuitionRangeTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const countryArr = Object.entries((countriesData as any).countries || {}).map(
@@ -71,8 +76,9 @@ export const UniversitiesPage: React.FC = () => {
       page,
       page_size: rowsPerPage,
     };
-    if (minTuition) params.min_fees = minTuition;
-    if (maxTuition) params.max_fees = maxTuition;
+    // Use tuitionRange for min/max fees
+    if (tuitionRange[0]) params.min_fees = tuitionRange[0];
+    if (tuitionRange[1]) params.max_fees = tuitionRange[1];
     if (programName) params.program_name = programName;
     if (universityName) params.university_name = universityName;
     if (country) {
@@ -81,26 +87,36 @@ export const UniversitiesPage: React.FC = () => {
     }
     const cacheKey = JSON.stringify(params);
 
-    // Check cache first
-    if (programsCache.current.has(cacheKey)) {
-      const cached = programsCache.current.get(cacheKey)!;
-      setPrograms(cached.items);
-      setTotal(cached.total);
-      setLoading(false);
-      return;
-    }
+    // Debounce API call for tuitionRange
+    if (tuitionRangeTimeout.current) clearTimeout(tuitionRangeTimeout.current);
 
-    fetch(`${BASE_URL}/api/program-details?${new URLSearchParams(params as any).toString()}`)
-      .then(res => res.json())
-      .then(res => {
-        setPrograms(res.items || []);
-        setTotal(res.total || 0);
-        // Store in cache
-        programsCache.current.set(cacheKey, { items: res.items || [], total: res.total || 0 });
-      })
-      .catch(e => setError(e.message || 'Failed loading programs'))
-      .finally(() => setLoading(false));
-  }, [minTuition, maxTuition, programName, universityName, country, page, rowsPerPage, allCountries]);
+    tuitionRangeTimeout.current = setTimeout(() => {
+      // Check cache first
+      if (programsCache.current.has(cacheKey)) {
+        const cached = programsCache.current.get(cacheKey)!;
+        setPrograms(cached.items);
+        setTotal(cached.total);
+        setLoading(false);
+        return;
+      }
+
+      fetch(`${BASE_URL}/api/program-details?${new URLSearchParams(params as any).toString()}`)
+        .then(res => res.json())
+        .then(res => {
+          setPrograms(res.items || []);
+          setTotal(res.total || 0);
+          programsCache.current.set(cacheKey, { items: res.items || [], total: res.total || 0 });
+        })
+        .catch(e => setError(e.message || 'Failed loading programs'))
+        .finally(() => setLoading(false));
+    }, 1000);
+
+    // Cleanup on unmount or param change
+    return () => {
+      if (tuitionRangeTimeout.current) clearTimeout(tuitionRangeTimeout.current);
+    };
+  // Only debounce on tuitionRange change, others can be instant
+  }, [tuitionRange, programName, universityName, country, page, rowsPerPage, allCountries]);
 
   const totalPages = Math.ceil(total / rowsPerPage);
 
@@ -229,38 +245,36 @@ export const UniversitiesPage: React.FC = () => {
                 <option key={p} value={p} />
               ))}
             </datalist>
-            <input
-              type="number"
-              placeholder="Min Tuition"
-              value={minTuition}
-              onChange={e => setMinTuition(e.target.value)}
-              style={{
-                padding: '.55rem .9rem',
-                borderRadius: '10px',
-                border: '1px solid #e5e7eb',
-                fontWeight: 500,
-                minWidth: 100,
-                background: '#f8fafc',
-                flex: '1 1 120px',
-                maxWidth: 160
-              }}
-            />
-            <input
-              type="number"
-              placeholder="Max Tuition"
-              value={maxTuition}
-              onChange={e => setMaxTuition(e.target.value)}
-              style={{
-                padding: '.55rem .9rem',
-                borderRadius: '10px',
-                border: '1px solid #e5e7eb',
-                fontWeight: 500,
-                minWidth: 100,
-                background: '#f8fafc',
-                flex: '1 1 120px',
-                maxWidth: 160
-              }}
-            />
+            {/* Tuition Range Slider */}
+            <div style={{ minWidth: 220, maxWidth: 320, flex: '1 1 220px', marginTop: '1.2rem' }}>
+              <label style={{ fontWeight: 600, color: '#5727A3', marginBottom: '.5rem', display: 'block' }}>
+                Tuition Range (₹)
+              </label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <input
+                  type="range"
+                  min={0}
+                  max={100000}
+                  step={1000}
+                  value={tuitionRange[0]}
+                  onChange={e => setTuitionRange([Number(e.target.value), tuitionRange[1]])}
+                  style={{ flex: 1 }}
+                />
+                <span>Min: {tuitionRange[0]}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '.5rem' }}>
+                <input
+                  type="range"
+                  min={0}
+                  max={100000}
+                  step={1000}
+                  value={tuitionRange[1]}
+                  onChange={e => setTuitionRange([tuitionRange[0], Number(e.target.value)])}
+                  style={{ flex: 1 }}
+                />
+                <span>Max: {tuitionRange[1]}</span>
+              </div>
+            </div>
           </div>
           <style>
             {`
