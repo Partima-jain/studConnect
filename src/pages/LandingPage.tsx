@@ -1045,7 +1045,7 @@ export const LandingPage: React.FC = () => {
 					<button
 						onClick={() =>
 							window.open(
-								'https://www.casita.com/your-next-uni',
+								'/accommodation',
 								'_blank',
 								'noopener,noreferrer'
 							)

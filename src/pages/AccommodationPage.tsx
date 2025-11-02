@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export const AccommodationPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [showCounsellingModal, setShowCounsellingModal] = useState(false);
   const [form, setForm] = useState({
     name: '',
@@ -185,7 +187,13 @@ export const AccommodationPage: React.FC = () => {
             Landing in a new country? Don’t stress. With our accommodation partners your student housing is sorted, safe, and student-approved—before you even step on the plane.
           </p>
           <button
-            onClick={() => window.open('https://www.casita.com/your-next-uni', '_blank', 'noopener,noreferrer')}
+            onClick={() => {
+              if (!user || !user.id) {
+                navigate('/auth/login', { state: { from: '/accommodation' } });
+              } else {
+                window.open('https://www.casita.com/your-next-uni', '_blank', 'noopener,noreferrer');
+              }
+            }}
             style={{
               marginTop: '1.2rem',
               background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
@@ -914,6 +922,12 @@ export const AccommodationPage: React.FC = () => {
               marginTop: '0.5rem',
               boxShadow: '0 2px 8px #9F7AEA22',
               transition: 'background 0.18s'
+            }}
+            onClick={e => {
+              if (!user || !user.id) {
+                e.preventDefault();
+                navigate('/auth/login', { state: { from: '/accommodation' } });
+              }
             }}
             onMouseOver={e => {
               (e.currentTarget as HTMLAnchorElement).style.background = 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)';
