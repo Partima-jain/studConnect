@@ -226,7 +226,7 @@ export const ProgramDetailsPage: React.FC = () => {
   const currency = schoolObj.currency || attrs.currency || attributes?.currency || '';
   const programSlug = attrs.slug || attributes?.slug || '';
 
-  // --- Helper for pretty field rows with better alignment ---
+  // --- Helper for pretty field rows with better alignment and consistent text styles ---
   const PrettyField = ({ label, value }: { label: string; value: any }) =>
     value !== undefined && value !== null && value !== '' ? (
       <div
@@ -234,13 +234,27 @@ export const ProgramDetailsPage: React.FC = () => {
           display: 'grid',
           gridTemplateColumns: '1fr 1.2fr',
           alignItems: 'center',
-          padding: '.4rem 0',
+          padding: '.5rem 0',
           borderBottom: '1px solid #f1f5f9',
           gap: '1.2rem',
         }}
       >
-        <span style={{ color: '#64748b', fontWeight: 600, textAlign: 'left', whiteSpace: 'nowrap' }}>{label}</span>
-        <span style={{ color: '#334155', fontWeight: 700, textAlign: 'right', wordBreak: 'break-word' }}>{value}</span>
+        <span style={{
+          color: '#64748b',
+          fontWeight: 600,
+          textAlign: 'left',
+          whiteSpace: 'nowrap',
+          fontSize: '1.05rem',
+          lineHeight: '1.7'
+        }}>{label}</span>
+        <span style={{
+          color: '#334155',
+          fontWeight: 700,
+          textAlign: 'right',
+          wordBreak: 'break-word',
+          fontSize: '1.05rem', // consistent font size for values
+          lineHeight: '1.7'
+        }}>{value}</span>
       </div>
     ) : null;
 
@@ -279,14 +293,17 @@ export const ProgramDetailsPage: React.FC = () => {
       <h2 style={{
         color: '#5727A3',
         fontWeight: 900,
-        fontSize: '1.25rem',
+        fontSize: '1.18rem',
         marginBottom: '1.1rem',
         letterSpacing: '.01em',
         background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
         WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent'
+        WebkitTextFillColor: 'transparent',
+        lineHeight: '1.3'
       }}>{title}</h2>
-      {children}
+      <div style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
+        {children}
+      </div>
     </section>
   );
 
@@ -301,6 +318,8 @@ export const ProgramDetailsPage: React.FC = () => {
         padding: '1rem 1.2rem',
         marginBottom: 14,
         minWidth: 0,
+        fontSize: '1.05rem',
+        lineHeight: '1.7'
       }}
     >
       <div style={{ fontWeight: 700, color: '#5727A3', fontSize: '1.08rem', marginBottom: 6 }}>
@@ -538,7 +557,6 @@ export const ProgramDetailsPage: React.FC = () => {
             width: '100%',
             height: 180,
             borderRadius: '2.2rem 2.2rem 0 0',
-            overflow: 'hidden',
             marginBottom: 40,
             background: '#e0e7ef',
             padding: 0
