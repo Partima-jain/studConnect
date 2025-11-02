@@ -236,215 +236,182 @@ export const HowItWorks: React.FC = () => {
 				>
 					<h2
 						style={{
-							fontSize: '2.2rem',
+							fontSize: '2.1rem',
 							fontWeight: 900,
 							textAlign: 'center',
 							letterSpacing: '-1px',
 							color: '#5727A3',
-							marginBottom: '2.2rem',
-							perspective: 400,
+							marginBottom: '1.5rem',
 							lineHeight: 1.1,
 							textShadow: '0 2px 8px #5727A311',
-							position: 'relative',
 						}}
 					>
-						<span
-							style={{
-								display: 'inline-block',
-								background:
-									'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
-								WebkitBackgroundClip: 'text',
-								WebkitTextFillColor: 'transparent',
-								fontWeight: 900,
-								letterSpacing: '-1px',
-							}}
-						>
-							Why Students Choose Us
-						</span>
+						Why Students Choose Us
 					</h2>
 				</div>
-				{/* Steps Carousel */}
+				{/* Cards in a row, no scroll */}
 				<div
 					style={{
-						maxWidth: 1200,
+						maxWidth: 900,
 						margin: '0 auto',
-						padding: '0 1.5rem',
-						overflowX: 'auto',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'stretch',
+						gap: '1.2rem',
+						flexWrap: 'wrap',
+						padding: '0 1.5rem 2.5rem 1.5rem',
 					}}
 				>
-					<div
-						className="howitworks-carousel"
-						style={{
-							display: 'flex',
-							gap: '2.2rem',
-							padding: '2rem 0 2.5rem 0',
-							overflowX: 'auto',
-							scrollSnapType: 'x mandatory',
-							WebkitOverflowScrolling: 'touch',
-						}}
-					>
-						{steps.map((step, idx) => (
+					{steps.map((step, idx) => (
+						<div
+							key={step.title}
+							className="howitworks-step-card"
+							style={{
+								flex: '1 1 180px',
+								minWidth: 180,
+								maxWidth: 220,
+								background: '#fff',
+								borderRadius: 14,
+								boxShadow: '0 2px 12px #5727A311',
+								padding: '1.2rem 0.7rem 1rem 0.7rem',
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+								position: 'relative',
+								transition: 'box-shadow .18s, transform .18s',
+								cursor: 'pointer',
+								borderLeft: `5px solid ${idx % 2 === 0 ? '#5727A3' : '#9F7AEA'}`,
+								zIndex: 1,
+								margin: '0',
+							}}
+							onMouseOver={(e) => {
+								(e.currentTarget as HTMLDivElement).style.boxShadow =
+									'0 8px 32px #5727A322';
+								(e.currentTarget as HTMLDivElement).style.transform =
+									'translateY(-4px) scale(1.03)';
+							}}
+							onMouseOut={(e) => {
+								(e.currentTarget as HTMLDivElement).style.boxShadow =
+									'0 2px 12px #5727A311';
+								(e.currentTarget as HTMLDivElement).style.transform = '';
+							}}
+						>
 							<div
-								key={step.title}
-								className="howitworks-step-card"
 								style={{
-									minWidth: 270,
-									maxWidth: 320,
-									background: '#fff',
-									borderRadius: 22,
-									boxShadow: '0 4px 24px #5727A311',
-									padding: '2.2rem 1.5rem 1.5rem 1.5rem',
+									position: 'absolute',
+									top: -18,
+									left: 16,
+									width: 32,
+									height: 32,
+									background:
+										idx % 2 === 0
+											? 'linear-gradient(135deg,#5727A3 0%,#9F7AEA 100%)'
+											: 'linear-gradient(135deg,#9F7AEA 0%,#5727A3 100%)',
+									color: '#fff',
+									borderRadius: '50%',
 									display: 'flex',
-									flexDirection: 'column',
 									alignItems: 'center',
-									position: 'relative',
-									scrollSnapAlign: 'start',
-									transition: 'box-shadow .18s, transform .18s',
-									cursor: 'pointer',
-									borderLeft: `6px solid ${
-										idx % 2 === 0 ? '#5727A3' : '#9F7AEA'
-									}`,
-									zIndex: 1,
-								}}
-								onMouseOver={(e) => {
-									(e.currentTarget as HTMLDivElement).style.boxShadow =
-										'0 8px 32px #5727A322';
-									(e.currentTarget as HTMLDivElement).style.transform =
-										'translateY(-4px) scale(1.03)';
-								}}
-								onMouseOut={(e) => {
-									(e.currentTarget as HTMLDivElement).style.boxShadow =
-										'0 4px 24px #5727A311';
-									(e.currentTarget as HTMLDivElement).style.transform = '';
+									justifyContent: 'center',
+									fontWeight: 800,
+									fontSize: '1rem',
+									boxShadow: '0 2px 8px #5727A322',
+									border: '2px solid #fff',
+									zIndex: 2,
 								}}
 							>
-								<div
-									style={{
-										position: 'absolute',
-										top: -28,
-										left: 24,
-										width: 48,
-										height: 48,
-										background:
-											idx % 2 === 0
-												? 'linear-gradient(135deg,#5727A3 0%,#9F7AEA 100%)'
-												: 'linear-gradient(135deg,#9F7AEA 0%,#5727A3 100%)',
-										color: '#fff',
-										borderRadius: '50%',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										fontWeight: 800,
-										fontSize: '1.3rem',
-										boxShadow: '0 2px 12px #5727A322',
-										border: '3px solid #fff',
-										zIndex: 2,
-									}}
-								>
-									{idx + 1}
-								</div>
-								{/* Decorative icon/circle instead of image */}
-								<div
-									style={{
-										width: 80,
-										height: 80,
-										margin: '1.5rem auto 1.1rem auto',
-										borderRadius: '50%',
-										background:
-											idx % 2 === 0
-												? 'linear-gradient(135deg,#D6C5F0 60%,#9F7AEA 100%)'
-												: 'linear-gradient(135deg,#fff 60%,#D6C5F0 100%)',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										boxShadow: '0 4px 16px #5727A318',
-									}}
-								>
-									{idx === 0 && (
-										// Modern chat/message icon
-										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
-											<rect x="13" y="15" width="18" height="12" rx="6" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
-											<path d="M19 27L17 31L22 29L27 31L25 27" stroke="#5727A3" strokeWidth="2" strokeLinejoin="round" fill="none"/>
-										</svg>
-									)}
-									{idx === 1 && (
-										// Modern wallet/money icon
-										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
-											<rect x="13" y="17" width="18" height="10" rx="3" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
-											<circle cx="29" cy="22" r="1.5" fill="#5727A3"/>
-											<path d="M13 21h18" stroke="#5727A3" strokeWidth="2"/>
-										</svg>
-									)}
-									{idx === 2 && (
-										// Modern globe icon
-										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
-											<circle cx="22" cy="22" r="10" stroke="#5727A3" strokeWidth="2.5"/>
-											<ellipse cx="22" cy="22" rx="10" ry="4" stroke="#5727A3" strokeWidth="2"/>
-											<path d="M22 12v20M12 22h20" stroke="#5727A3" strokeWidth="2"/>
-										</svg>
-									)}
-									{idx === 3 && (
-										// Modern smartphone icon
-										<svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-											<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
-											<rect x="16" y="12" width="12" height="20" rx="3" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
-											<rect x="20" y="28" width="4" height="2" rx="1" fill="#5727A3"/>
-										</svg>
-									)}
-								</div>
-								<h4
-									style={{
-										fontSize: '1.13rem',
-										color: '#5727A3',
-										fontWeight: 800,
-										margin: '0 0 .5rem 0',
-										textAlign: 'center',
-										letterSpacing: '-.5px',
-									}}
-								>
-									{step.title}
-								</h4>
-								<p
-									style={{
-										fontSize: '1.07rem',
-										color: '#3B2562',
-										textAlign: 'center',
-										margin: 0,
-										fontWeight: 500,
-										minHeight: 48,
-									}}
-								>
-									{step.desc}
-								</p>
+								{idx + 1}
 							</div>
-						))}
-					</div>
+							<div
+								style={{
+									width: 44,
+									height: 44,
+									margin: '1rem auto 0.7rem auto',
+									borderRadius: '50%',
+									background:
+										idx % 2 === 0
+											? 'linear-gradient(135deg,#D6C5F0 60%,#9F7AEA 100%)'
+											: 'linear-gradient(135deg,#fff 60%,#D6C5F0 100%)',
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									boxShadow: '0 2px 8px #5727A318',
+								}}
+							>
+								{/* ...existing icon SVGs... */}
+								{idx === 0 && (
+									<svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+										<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
+										<rect x="13" y="15" width="18" height="12" rx="6" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
+										<path d="M19 27L17 31L22 29L27 31L25 27" stroke="#5727A3" strokeWidth="2" strokeLinejoin="round" fill="none"/>
+									</svg>
+								)}
+								{idx === 1 && (
+									<svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+										<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
+										<rect x="13" y="17" width="18" height="10" rx="3" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
+										<circle cx="29" cy="22" r="1.5" fill="#5727A3"/>
+										<path d="M13 21h18" stroke="#5727A3" strokeWidth="2"/>
+									</svg>
+								)}
+								{idx === 2 && (
+									<svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+										<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
+										<circle cx="22" cy="22" r="10" stroke="#5727A3" strokeWidth="2.5"/>
+										<ellipse cx="22" cy="22" rx="10" ry="4" stroke="#5727A3" strokeWidth="2"/>
+										<path d="M22 12v20M12 22h20" stroke="#5727A3" strokeWidth="2"/>
+									</svg>
+								)}
+								{idx === 3 && (
+									<svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+										<circle cx="22" cy="22" r="20" fill="#fff" opacity="0.92"/>
+										<rect x="16" y="12" width="12" height="20" rx="3" stroke="#5727A3" strokeWidth="2.5" fill="none"/>
+										<rect x="20" y="28" width="4" height="2" rx="1" fill="#5727A3"/>
+									</svg>
+								)}
+							</div>
+							<h4
+								style={{
+									fontSize: '.98rem',
+									color: '#5727A3',
+									fontWeight: 800,
+									margin: '0 0 .3rem 0',
+									textAlign: 'center',
+									letterSpacing: '-.5px',
+								}}
+							>
+								{step.title}
+							</h4>
+							<p
+								style={{
+									fontSize: '.93rem',
+									color: '#3B2562',
+									textAlign: 'center',
+									margin: 0,
+									fontWeight: 500,
+									minHeight: 32,
+								}}
+							>
+								{step.desc}
+							</p>
+						</div>
+					))}
 				</div>
 			</div>
 			{/* Responsive styles */}
 			<style>
 				{`
         @media (max-width: 900px) {
-          .howitworks-carousel {
-            gap: 1.2rem !important;
-          }
           .howitworks-step-card {
-            min-width: 220px !important;
-            max-width: 260px !important;
-            padding: 1.5rem 1rem 1rem 1rem !important;
+            min-width: 140px !important;
+            max-width: 180px !important;
+            padding: .7rem .4rem .7rem .4rem !important;
           }
         }
         @media (max-width: 600px) {
-          .howitworks-carousel {
-            gap: .7rem !important;
-            padding: 1rem 0 1.5rem 0 !important;
-          }
           .howitworks-step-card {
-            max-width: 220px !important;
-            padding: 1rem .7rem 1rem .7rem !important;
+            max-width: 100vw !important;
+            min-width: 140px !important;
+            padding: .7rem .4rem .7rem .4rem !important;
           }
         }
         `}
