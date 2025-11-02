@@ -23,6 +23,7 @@ import UniversityRepresentativeCounsellingPage from './pages/UniversityRepresent
 import AirportPickupPage from './pages/AirportPickupPage';
 import Footer from './sections/Footer';
 import CareerPage from './pages/CareerPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
 // RequireAuth component to protect routes
 const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -104,6 +105,7 @@ export const App: React.FC = () => (
           </RequireAuth>
         } />
         <Route path="/career" element={<CareerPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>
       <Footer />
