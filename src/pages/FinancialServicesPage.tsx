@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 
 export const FinancialServicesPage: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <main
@@ -1059,15 +1063,28 @@ export const FinancialServicesPage: React.FC = () => {
             <li>Fast, digital process</li>
             <li>Personalized support for study abroad</li>
           </ul>
-          <a href="https://www.foreignadmits.com/" target="_blank" rel="noopener" style={{
-            color: '#fff',
-            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
-            borderRadius: 8,
-            padding: '.7rem 1.5rem',
-            fontWeight: 700,
-            textDecoration: 'none',
-            display: 'inline-block'
-          }}>Apply with ForeignAdmits</a>
+          <a
+            href="https://www.foreignadmits.com/"
+            target="_blank"
+            rel="noopener"
+            style={{
+              color: '#fff',
+              background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+              borderRadius: 8,
+              padding: '.7rem 1.5rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              display: 'inline-block'
+            }}
+            onClick={e => {
+              if (!user || !user.id) {
+                e.preventDefault();
+                navigate('/auth/login', { state: { from: '/financial-services' } });
+              }
+            }}
+          >
+            Apply with ForeignAdmits
+          </a>
         </div>
         {/* Example: Multiple Lenders/Providers */}
         <div style={{
@@ -1084,15 +1101,28 @@ export const FinancialServicesPage: React.FC = () => {
             <li>Fast approval process</li>
             <li>For international students</li>
           </ul>
-          <a href="https://www.leapfinance.com/" target="_blank" rel="noopener" style={{
-            color: '#fff',
-            background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
-            borderRadius: 8,
-            padding: '.7rem 1.5rem',
-            fontWeight: 700,
-            textDecoration: 'none',
-            display: 'inline-block'
-          }}>Apply with Leap Finance</a>
+          <a
+            href="https://www.leapfinance.com/"
+            target="_blank"
+            rel="noopener"
+            style={{
+              color: '#fff',
+              background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+              borderRadius: 8,
+              padding: '.7rem 1.5rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              display: 'inline-block'
+            }}
+            onClick={e => {
+              if (!user || !user.id) {
+                e.preventDefault();
+                navigate('/auth/login', { state: { from: '/financial-services' } });
+              }
+            }}
+          >
+            Apply with Leap Finance
+          </a>
         </div>
         
         {/* ...existing code for university scholarships... */}
@@ -1332,4 +1362,3 @@ export const FinancialServicesPage: React.FC = () => {
     </main>
   );
 };
-               
