@@ -325,7 +325,18 @@ export const Footer: React.FC = () => {
           >
             Privacy Policy
           </a>
-          <a href="./terms" target="_blank" style={{ color: '#e3e7f3', textDecoration: 'none', fontWeight: 500, opacity: 0.8, whiteSpace: 'nowrap' }}>Terms of Service</a>
+          <a
+            href="/terms-of-service"
+            style={{
+              color: '#e3e7f3',
+              textDecoration: 'none',
+              fontWeight: 500,
+              opacity: 0.8,
+              whiteSpace: 'nowrap'
+            }}
+          >
+            Terms of Service
+          </a>
         </div>
       </div>
       <style>
