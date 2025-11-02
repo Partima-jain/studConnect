@@ -375,136 +375,141 @@ export const LandingPage: React.FC = () => {
 				</div>
 				</div>
 				{/* Horizontally scrolling peer counsellors list */}
-				<div style={{
-					// width: '100%',
-					overflow: 'hidden',
-					padding: '1.2rem 0',
-					marginTop: '2.5rem',
-				}}>
+				<div
+					style={{
+						width: '100vw',
+						overflow: 'hidden',
+						padding: '1.2rem 0',
+						marginTop: '2.5rem',
+						position: 'relative',
+						left: '50%',
+						transform: 'translateX(-50%)',
+					}}
+				>
 					<div
+						className="scroll-container"
 						style={{
 							display: 'flex',
 							flexDirection: 'row',
 							gap: '1.7rem',
-							animation: peerCounsellors.length > 0 ? 'scrollCounsellors 18s linear infinite' : undefined,
 							padding: '0 0.5rem',
-							width: peerCounsellors.length > 0 ? `${peerCounsellors.length * 210 * 3}px` : undefined,
+							width: 'fit-content',
 						}}
 					>
-						{[...peerCounsellors, ...peerCounsellors, ...peerCounsellors].map((counsellor, idx) => (
-							<a
-								key={counsellor.id + '-' + idx}
-								href={`/mentors/${counsellor.id}`}
-								style={{
-									background: 'rgba(255,255,255,0.98)',
-									boxShadow: '0 4px 18px #9F7AEA22',
-									borderRadius: 18,
-									minWidth: 180,
-									width: 180,
-									maxWidth: 220,
-									padding: '1.2rem 1rem',
-									display: 'flex',
-									flexDirection: 'column',
-									alignItems: 'center',
-									justifyContent: 'center',
-									textAlign: 'center',
-									transition: 'box-shadow .18s, transform .18s',
-									cursor: 'pointer',
-									border: '1.5px solid #e0c3fc',
-									position: 'relative',
-								}}
-								className="peer-counsellor-card"
-							>
-								<div style={{
-									width: '80px',
-									height: '80px',
-									borderRadius: '16px',
-									overflow: 'hidden',
-									position: 'relative',
-									marginBottom: '0.7rem',
-								}}>
-									<img
-										src={counsellor.profile_image_url}
-										alt={counsellor.name}
-										style={{
-											width: '100%',
-											height: '100%',
-											objectFit: 'cover',
-											borderRadius: '16px',
-											boxShadow: '0 2px 12px #9F7AEA22',
-											border: '2px solid #fff',
-											background: '#f0e6ff',
-										}}
-									/>
-								</div>
-								<div style={{
-									fontWeight: 700,
-									fontSize: '1.08rem',
-									color: '#5727A3',
-									marginBottom: '0.2rem',
-									overflow: 'hidden',
-									textOverflow: 'ellipsis',
-									whiteSpace: 'nowrap',
-									width: '100%',
-								}}>
-									{counsellor.name}
-								</div>
-								<div style={{
-									fontSize: '.97rem',
-									color: '#1B0044',
-									fontWeight: 500,
-									marginBottom: '0.2rem',
-									overflow: 'hidden',
-									textOverflow: 'ellipsis',
-									whiteSpace: 'nowrap',
-									width: '100%',
-								}}>
-									{counsellor.university}
-								</div>
-								<div style={{
-									fontSize: '.93rem',
-									color: '#9F7AEA',
-									fontWeight: 500,
-									marginBottom: '0.2rem',
-									overflow: 'hidden',
-									textOverflow: 'ellipsis',
-									whiteSpace: 'nowrap',
-									width: '100%',
-								}}>
-									{counsellor.location}
-								</div>
-								<div style={{
-									fontSize: '.93rem',
-									color: '#5727A3',
-									fontWeight: 500,
-									marginBottom: '0.2rem',
-									overflow: 'hidden',
-									textOverflow: 'ellipsis',
-									whiteSpace: 'nowrap',
-									width: '100%',
-								}}>
-									{counsellor.program}
-								</div>
-								<div style={{
-									fontSize: '.93rem',
-									color: '#1B0044',
-									fontWeight: 500,
-									marginBottom: '0.2rem',
-								}}>
-									Charges: ₹{counsellor.charges}
-								</div>
-							</a>
-						))}
+						{Array.from({ length: 100 }).map((_, repeatIdx) =>
+							peerCounsellors.map((counsellor, idx) => (
+								<a
+									key={counsellor.id + '-' + repeatIdx + '-' + idx}
+									href={`/mentors/${counsellor.id}`}
+									style={{
+										background: 'rgba(255,255,255,0.98)',
+										boxShadow: '0 4px 18px #9F7AEA22',
+										borderRadius: 18,
+										minWidth: 180,
+										width: 180,
+										maxWidth: 220,
+										padding: '1.2rem 1rem',
+										display: 'flex',
+										flexDirection: 'column',
+										alignItems: 'center',
+										justifyContent: 'center',
+										textAlign: 'center',
+										transition: 'box-shadow .18s, transform .18s',
+										cursor: 'pointer',
+										border: '1.5px solid #e0c3fc',
+										position: 'relative',
+										flexShrink: 0,
+									}}
+									className="peer-counsellor-card"
+								>
+									<div style={{
+										width: '80px',
+										height: '80px',
+										borderRadius: '16px',
+										overflow: 'hidden',
+										position: 'relative',
+										marginBottom: '0.7rem',
+									}}>
+										<img
+											src={counsellor.profile_image_url}
+											alt={counsellor.name}
+											style={{
+												width: '100%',
+												height: '100%',
+												objectFit: 'cover',
+												borderRadius: '16px',
+												boxShadow: '0 2px 12px #9F7AEA22',
+												border: '2px solid #fff',
+												background: '#f0e6ff',
+											}}
+										/>
+									</div>
+									<div style={{
+										fontWeight: 700,
+										fontSize: '1.08rem',
+										color: '#5727A3',
+										marginBottom: '0.2rem',
+										overflow: 'hidden',
+										textOverflow: 'ellipsis',
+										whiteSpace: 'nowrap',
+										width: '100%',
+									}}>
+										{counsellor.name}
+									</div>
+									<div style={{
+										fontSize: '.97rem',
+										color: '#1B0044',
+										fontWeight: 500,
+										marginBottom: '0.2rem',
+										overflow: 'hidden',
+										textOverflow: 'ellipsis',
+										whiteSpace: 'nowrap',
+										width: '100%',
+									}}>
+										{counsellor.university}
+									</div>
+									<div style={{
+										fontSize: '.93rem',
+										color: '#9F7AEA',
+										fontWeight: 500,
+										marginBottom: '0.2rem',
+										overflow: 'hidden',
+										textOverflow: 'ellipsis',
+										whiteSpace: 'nowrap',
+										width: '100%',
+									}}>
+										{counsellor.location}
+									</div>
+									<div style={{
+										fontSize: '.93rem',
+										color: '#5727A3',
+										fontWeight: 500,
+										marginBottom: '0.2rem',
+										overflow: 'hidden',
+										textOverflow: 'ellipsis',
+										whiteSpace: 'nowrap',
+										width: '100%',
+									}}>
+										{counsellor.program}
+									</div>
+									
+								</a>
+							))
+						)}
 					</div>
 					<style>{`
+						.scroll-container {
+							animation: scrollCounsellors ${peerCounsellors.length * 2.5}s linear infinite;
+						}
 						@keyframes scrollCounsellors {
 							0% { transform: translateX(0); }
-							100% { transform: translateX(-${peerCounsellors.length * 210}px); }
+							100% { transform: translateX(-${peerCounsellors.length * (180 + 17)}px); }
 						}
 						.peer-counsellor-card:hover {
 							box-shadow: 0 12px 32px #9F7AEA44;
 							transform: scale(1.07) translateY(-4px);
 							border-color: #9F7AEA;
+							animation-play-state: paused;
 						}
 					`}</style>
 				</div>
