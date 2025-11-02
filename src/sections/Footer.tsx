@@ -264,39 +264,13 @@ export const Footer: React.FC = () => {
             <img src="https://framerusercontent.com/images/tYmJjzMKDE8AlzuzRQRFQh4FkY.png" alt="X" width={28} height={28} style={{ borderRadius: '50%' }} />
           </a>
         </div>
-        {/* Center: Copyright */}
-        <div
-          style={{
-            color: '#e1e6f2',
-            fontSize: '.97rem',
-            letterSpacing: '.01em',
-            opacity: 0.85,
-            textAlign: 'center',
-            fontWeight: 500,
-            flex: '1 1 auto',
-            minWidth: 120,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          <span>
-            © {new Date().getFullYear()} <span style={{ color: '#fff', fontWeight: 700, marginLeft: 4, marginRight: 4 }}>yournextuniversity</span>. All rights reserved.
-          </span>
-          <span style={{ color: '#e3e7f3', fontSize: '.93rem', fontWeight: 500, opacity: 0.8, marginTop: '0.2em' }}>
-            100, Green Park, New Delhi
-          </span>
-        </div>
-        {/* Right: Legal Links */}
+        {/* Center: Legal Links */}
         <div style={{
           display: 'flex',
           gap: '.9rem',
           alignItems: 'center',
           flex: '0 0 auto',
-          justifyContent: 'flex-end',
+          justifyContent: 'center',
           minWidth: 100,
           flexWrap: 'nowrap',
           whiteSpace: 'nowrap',
@@ -337,6 +311,33 @@ export const Footer: React.FC = () => {
           >
             Terms of Service
           </a>
+        </div>
+        {/* Right: Copyright and Address */}
+        <div
+          style={{
+            color: '#e1e6f2',
+            fontSize: '.97rem',
+            letterSpacing: '.01em',
+            opacity: 0.85,
+            textAlign: 'right',
+            fontWeight: 500,
+            flex: '0 0 auto',
+            minWidth: 120,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          <span>
+            © {new Date().getFullYear()} <span style={{ color: '#fff', fontWeight: 700, marginLeft: 4, marginRight: 4 }}>yournextuniversity</span>. All rights reserved.
+          </span>
+          <span style={{ color: '#e3e7f3', fontSize: '.93rem', fontWeight: 500, opacity: 0.8, marginTop: '0.2em' }}>
+            100, Green Park, New Delhi
+          </span>
         </div>
       </div>
       <style>
