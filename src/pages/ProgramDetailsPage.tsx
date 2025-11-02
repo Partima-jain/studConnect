@@ -843,6 +843,22 @@ export const ProgramDetailsPage: React.FC = () => {
         ↑
       </button>
 
+      {/* Disclaimer */}
+      <div style={{
+        margin: '2.5rem auto 1.5rem auto',
+        maxWidth: 700,
+        background: '#f8fafc',
+        borderLeft: '4px solid #9F7AEA',
+        borderRadius: 10,
+        padding: '1rem 1.3rem',
+        fontStyle: 'italic',
+        color: '#5727A3',
+        fontSize: '1.05rem',
+        textAlign: 'center'
+      }}>
+        <b>Disclaimer:</b> These details might not be 100% correct as per current analytics. Please verify from the program's official website for the most updated and accurate information.
+      </div>
+
       {/* Responsive styles */}
       <style>
         {`
