@@ -347,13 +347,14 @@ export const LandingPage: React.FC = () => {
 							display: 'flex',
 							flexDirection: 'row',
 							gap: '1.7rem',
-							animation: 'scrollCounsellors 28s linear infinite',
+							animation: peerCounsellors.length > 0 ? 'scrollCounsellors 18s linear infinite' : undefined,
 							padding: '0 0.5rem',
+							width: peerCounsellors.length > 0 ? `${peerCounsellors.length * 210 * 3}px` : undefined,
 						}}
 					>
-						{peerCounsellors.map((counsellor, idx) => (
+						{[...peerCounsellors, ...peerCounsellors, ...peerCounsellors].map((counsellor, idx) => (
 							<a
-								key={counsellor.id}
+								key={counsellor.id + '-' + idx}
 								href={`/mentors/${counsellor.id}`}
 								style={{
 									background: 'rgba(255,255,255,0.98)',
@@ -459,7 +460,7 @@ export const LandingPage: React.FC = () => {
 					<style>{`
 						@keyframes scrollCounsellors {
 							0% { transform: translateX(0); }
-							100% { transform: translateX(-60%); }
+							100% { transform: translateX(-${peerCounsellors.length * 210}px); }
 						}
 						.peer-counsellor-card:hover {
 							box-shadow: 0 12px 32px #9F7AEA44;
@@ -731,7 +732,6 @@ export const LandingPage: React.FC = () => {
 			card.addEventListener('mousemove', handleMouseMove);
 			card.addEventListener('mouseleave', handleMouseLeave);
 			return () => {
-				card.removeEventListener('mousemove', handleMouseMove);
 				card.removeEventListener('mouseleave', handleMouseLeave);
 			};
 		}, []);
@@ -1240,4 +1240,3 @@ export const LandingPage: React.FC = () => {
 		</>
 	);
 };
-				
