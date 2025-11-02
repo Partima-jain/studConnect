@@ -237,7 +237,7 @@ export const LandingPage: React.FC = () => {
 				background: 'linear-gradient(100deg, #F0E6FF 0%, #D6C5F0 60%, #fff 100%)',
 				boxShadow: '0 8px 32px 0 #9F7AEA22',
 				display: 'flex',
-				flexDirection: 'column',
+				flexWrap: 'wrap',
 				alignItems: 'center',
 				justifyContent: 'center',
 				gap: '2.5rem',
@@ -246,6 +246,7 @@ export const LandingPage: React.FC = () => {
 			}}
 			className="peer-counselling-hero-section"
 		>
+			{/* Decorative background blobs */}
 			<div style={{
 				position: 'absolute',
 				top: -80,
@@ -272,14 +273,15 @@ export const LandingPage: React.FC = () => {
 				opacity: 0.6,
 				pointerEvents: 'none',
 			}} />
+			{/* Text content */}
 			<div style={{
-				width: '100%',
+				flex: 1,
+				minWidth: 320,
 				maxWidth: 600,
 				zIndex: 2,
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'center',
-				alignItems: 'center',
 			}}>
 				<h1 style={{
 					fontSize: '2.7rem',
@@ -287,9 +289,11 @@ export const LandingPage: React.FC = () => {
 					letterSpacing: '-2px',
 					lineHeight: 1.08,
 					marginBottom: '1.1rem',
-					color: '#1B0044',
+					// background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+					// WebkitBackgroundClip: 'text',
+					// WebkitTextFillColor: 'transparent',
+					color: '#1B0044', // <-- dark color
 					textShadow: '0 4px 24px #9F7AEA22, 0 1px 2px #fff8',
-					textAlign: 'center',
 				}}>
 					India’s 1st <span style={{color:'#7e22c5ff'}}>Peer Counselling</span> Platform for Study Abroad
 				</h1>
@@ -300,7 +304,6 @@ export const LandingPage: React.FC = () => {
 					marginBottom: '1.1rem',
 					lineHeight: 1.3,
 					textShadow: '0 2px 8px #fff8, 0 1px 2px #0002',
-					textAlign: 'center',
 				}}>
 					Real Students. Real Stories. Real Guidance.<br/>
 					No Agents. No Gimmicks. Just Honest Help.
@@ -311,7 +314,6 @@ export const LandingPage: React.FC = () => {
 					fontWeight: 500,
 					marginBottom: '1.5rem',
 					lineHeight: 1.6,
-					textAlign: 'center',
 				}}>
 					Connect directly with students who’ve already walked the path you’re about to take. Get answers, clarity, and confidence from those who know the journey best—your peers. <br />
 					<b>Book a 1:1 call and get the truth, not the sales pitch.</b>
@@ -320,6 +322,7 @@ export const LandingPage: React.FC = () => {
 					onClick={() => navigate('/services/peer-counselling')}
 					style={{
 						background:'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
+						boxShadow: '0 2px 8px #9F7AEA22',
 						color: '#fff',
 						border: 'none',
 						borderRadius: 14,
@@ -327,7 +330,6 @@ export const LandingPage: React.FC = () => {
 						fontWeight: 800,
 						fontSize: '1.18rem',
 						cursor: 'pointer',
-						boxShadow: '0 2px 8px #9F7AEA22',
 						transition: 'background 0.18s',
 						letterSpacing: '.5px',
 						marginTop: '0.2rem',
@@ -335,9 +337,46 @@ export const LandingPage: React.FC = () => {
 				>
 					Book Session Now !!
 				</button>
+			</div>
+			{/* Illustration */}
+			<div style={{
+				flex: 1,
+				minWidth: 320,
+				maxWidth: 420,
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				zIndex: 2,
+				position: 'relative',
+			}}>
+				<div style={{
+					background: 'rgba(255,255,255,0.85)',
+					borderRadius: 32,
+					boxShadow: '0 8px 32px #9F7AEA22',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					position: 'relative',
+					width: '100%',
+					maxWidth: 380,
+					backdropFilter: 'blur(6px) saturate(1.1)',
+					WebkitBackdropFilter: 'blur(6px) saturate(1.1)',
+				}}>
+					<img
+						src="https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/Screenshot%202025-08-31%20at%209.03.17%E2%80%AFPM.png"
+						alt="Peer Counselling Illustration"
+						style={{
+							width: '100%',
+							display: 'block',
+							borderRadius: 24,
+							boxShadow: '0 4px 24px #9F7AEA22'
+						}}
+					/>
+				</div>
+				</div>
 				{/* Horizontally scrolling peer counsellors list */}
 				<div style={{
-					width: '100%',
+					// width: '100%',
 					overflow: 'hidden',
 					padding: '1.2rem 0',
 					marginTop: '2.5rem',
@@ -469,7 +508,7 @@ export const LandingPage: React.FC = () => {
 						}
 					`}</style>
 				</div>
-			</div>
+			
 		</section>
 	);
 
