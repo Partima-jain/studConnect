@@ -99,15 +99,16 @@ const FactCard: React.FC<{ label: string; value: React.ReactNode }> = ({ label, 
     <div style={{
       fontWeight: 700,
       color: PRIMARY,
-      fontSize: '.98rem',
+      fontSize: '1.05rem',
       marginBottom: '.1rem',
-      letterSpacing: '.2px'
+      letterSpacing: '.2px',
+      lineHeight: '1.7'
     }}>{label}</div>
     <div style={{
       color: '#334155',
       fontWeight: 600,
-      fontSize: '1.05rem',
-      lineHeight: 1.45
+      fontSize: '1.05rem', // consistent value size
+      lineHeight: '1.7'
     }}>{value}</div>
   </div>
 );
@@ -628,7 +629,7 @@ export const UniversityDetailPage: React.FC = () => {
             fontWeight: 700,
             color: PRIMARY,
             marginBottom: ".7rem",
-            fontSize: '1.18rem',
+            fontSize: '1.13rem', // consistent heading size
             letterSpacing: '.5px',
             background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
             WebkitBackgroundClip: 'text',
@@ -637,7 +638,7 @@ export const UniversityDetailPage: React.FC = () => {
           <div
             style={{
               color: TEXT,
-              fontSize: "1.13rem",
+              fontSize: "1.05rem", // consistent body text size
               lineHeight: 1.7,
               textShadow: '0 1px 4px #9F7AEA22'
             }}
