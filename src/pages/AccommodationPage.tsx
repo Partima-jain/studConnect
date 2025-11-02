@@ -185,7 +185,7 @@ export const AccommodationPage: React.FC = () => {
             Landing in a new country? Don’t stress. With our accommodation partners your student housing is sorted, safe, and student-approved—before you even step on the plane.
           </p>
           <button
-            onClick={() => window.open('https://www.universityliving.com/', '_blank', 'noopener,noreferrer')}
+            onClick={() => window.open('https://www.casita.com/your-next-uni', '_blank', 'noopener,noreferrer')}
             style={{
               marginTop: '1.2rem',
               background: 'linear-gradient(90deg, #5727A3 0%, #9F7AEA 100%)',
@@ -621,7 +621,7 @@ export const AccommodationPage: React.FC = () => {
           fontSize: '1.25rem',
           fontWeight: 900,
           color: '#5727A3',
-          marginBottom: '1.2rem',
+          marginBottom: '3rem',
           textAlign: 'center'
         }}>
           Factors to Consider before Finalizing a Student Accommodation
@@ -830,7 +830,7 @@ export const AccommodationPage: React.FC = () => {
         </div>
       </section>
 
-      {/* University Living Partner Section */}
+      {/* Casita Partner Section */}
       <section style={{
         maxWidth: 900,
         margin: '2.5rem auto 0 auto',
@@ -843,7 +843,7 @@ export const AccommodationPage: React.FC = () => {
         textAlign: 'center'
       }}>
         <h2 style={{
-          fontSize: '1.18rem',
+          fontSize: '2.18rem',
           fontWeight: 900,
           color: '#5727A3',
           marginBottom: '1.1rem'
@@ -867,8 +867,8 @@ export const AccommodationPage: React.FC = () => {
         >
           <img
             decoding="async"
-            src="https://pfecglobal.com.bd/wp-content/uploads/2025/07/Frame-1000001515-1.png"
-            alt="University Living Logo"
+            src="https://assets.casita.com/_next/static/media/dark-logo.72ccd553.svg"
+            alt="Casita Logo"
             style={{ width: 180, height: 'auto', marginBottom: 8 }}
           />
           <div className="features" style={{
@@ -881,24 +881,24 @@ export const AccommodationPage: React.FC = () => {
             fontSize: '1.05rem'
           }}>
             <div className="feature-item" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span role="img" aria-label="city" style={{ color: '#2563eb', fontSize: 20 }}>🏙️</span>
-              65000+ Properties across 640 Cities Globally
+              <span role="img" aria-label="city" style={{ color: '#2563eb', fontSize: 20 }}></span>
+              60,000+ Properties across 640 Cities Globally
             </div>
             <div className="feature-item" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span role="img" aria-label="shield" style={{ color: '#2563eb', fontSize: 20 }}>🛡️</span>
+              <span role="img" aria-label="shield" style={{ color: '#2563eb', fontSize: 20 }}></span>
               Safe &amp; Secure Options
             </div>
             <div className="feature-item" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span role="img" aria-label="check" style={{ color: '#2563eb', fontSize: 20 }}>✅</span>
+              <span role="img" aria-label="check" style={{ color: '#2563eb', fontSize: 20 }}></span>
               Verified Listings
             </div>
             <div className="feature-item" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span role="img" aria-label="support" style={{ color: '#2563eb', fontSize: 20 }}>🎧</span>
+              <span role="img" aria-label="support" style={{ color: '#2563eb', fontSize: 20 }}></span>
               24/7 Customer Support
             </div>
           </div>
           <a
-            href="https://www.universityliving.com/"
+            href="https://www.casita.com/your-next-uni"
             className="cta-button"
             target="_blank"
             rel="noopener"
@@ -926,7 +926,7 @@ export const AccommodationPage: React.FC = () => {
           </a>
         </div>
         <div style={{ marginTop: '1.1rem', color: '#64748b', fontSize: '.98rem' }}>
-          <b>Note:</b> All accommodation bookings and services are powered by <b style={{ color: '#9F7AEA' }}>University Living</b>.
+          <b>Note:</b> All accommodation bookings and services are powered by <b style={{ color: '#9F7AEA' }}>Caseta</b>.
         </div>
       </section>
 
@@ -968,7 +968,7 @@ export const AccommodationPage: React.FC = () => {
             transition: 'background 0.18s'
           }}
         >
-          🏠 Book Accommodation Counselling
+          Book Accommodation Counselling
         </button>
       </section>
 
