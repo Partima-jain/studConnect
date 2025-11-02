@@ -278,6 +278,19 @@ export const Footer: React.FC = () => {
               style={{ borderRadius: '7px', background: '#fff', boxShadow: '0 2px 8px #9F7AEA22' }}
             />
           </a>
+          <a
+            href="tel:+917985162538"
+            aria-label="Phone"
+            style={{ opacity: 0.9 }}
+          >
+            <img
+              src="https://pub-e63ee2f49d7e4f94b98011a5350eea0f.r2.dev/Screenshot%202025-11-02%20at%204.43.04%E2%80%AFPM.png"
+              alt="Phone"
+              width={28}
+              height={28}
+              style={{ borderRadius: '7px', background: '#fff', boxShadow: '0 2px 8px #9F7AEA22' }}
+            />
+          </a>
         </div>
         {/* Center: Legal Links */}
         <div style={{
