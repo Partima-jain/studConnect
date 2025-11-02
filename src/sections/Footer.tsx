@@ -301,7 +301,18 @@ export const Footer: React.FC = () => {
           flexWrap: 'nowrap',
           whiteSpace: 'nowrap',
         }}>
-          <a href="./career" target="_blank" style={{ color: '#e3e7f3', textDecoration: 'none', fontWeight: 500, opacity: 0.8, whiteSpace: 'nowrap' }}>Career</a>
+          <a
+            href="/career"
+            style={{
+              color: '#e3e7f3',
+              textDecoration: 'none',
+              fontWeight: 500,
+              opacity: 0.8,
+              whiteSpace: 'nowrap'
+            }}
+          >
+            Career
+          </a>
           <a href="./privacy" target="_blank" style={{ color: '#e3e7f3', textDecoration: 'none', fontWeight: 500, opacity: 0.8, whiteSpace: 'nowrap' }}>Privacy Policy</a>
           <a href="./terms" target="_blank" style={{ color: '#e3e7f3', textDecoration: 'none', fontWeight: 500, opacity: 0.8, whiteSpace: 'nowrap' }}>Terms of Service</a>
         </div>
