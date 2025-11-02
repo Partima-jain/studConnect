@@ -399,38 +399,73 @@ export const AboutPage: React.FC = () => {
         width: '100%',
         overflow: 'hidden'
       }}>
-        <div style={{ flex: 1, minWidth: 320 }}>
-          <h1 style={{
-            fontSize: '2.8rem',
-            fontWeight: 900,
-            color: '#5727A3',
-            marginBottom: '1.2rem',
-            letterSpacing: '-2px',
-            lineHeight: 1.1
-          }}>
-            Our Story: <span style={{
-              background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>The Amazon for Studying Abroad</span>
-          </h1>
-          <p style={{
-            fontSize: '1.13rem',
-            color: '#1B0044',
-            fontWeight: 500,
-            marginBottom: '1.2rem'
-          }}>
-            We didn’t build <b>Yournextuniversity</b> because we wanted to be another consultancy. We built it because we got tired of watching students get lost in a system full of half-truths, hidden costs, and overhyped promises.
-          </p>
-          <p style={{
-            fontSize: '1.13rem',
-            color: '#1B0044',
-            fontWeight: 500,
-            marginBottom: '1.2rem'
-          }}>
-            We’ve sat in the university offices. We’ve worked as official representatives for many international universities. We’ve seen firsthand how students are pushed into courses they don’t need, charged for services they never asked for, and left clueless once they land abroad.
-          </p>
-        </div>
+       <div style={{ flex: 1, minWidth: 320 }}>
+  <h1
+    style={{
+      fontSize: '2.8rem',
+      fontWeight: 900,
+      color: '#5727A3',
+      marginBottom: '1.2rem',
+      letterSpacing: '-2px',
+      lineHeight: 1.1,
+    }}
+  >
+    Our Story:{' '}
+    <span
+      style={{
+        background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+      }}
+    >
+      The Amazon for Studying Abroad
+    </span>
+  </h1>
+
+  <p
+    style={{
+      fontSize: '1.13rem',
+      color: '#1B0044',
+      fontWeight: 500,
+      marginBottom: '1.2rem',
+    }}
+  >
+    We didn’t build <b>Yournextuniversity</b> because we wanted to be another consultancy.
+    We built it because we got tired of watching students get lost in a system full of
+    half-truths, hidden costs, and overhyped promises.
+  </p>
+
+  <p
+    style={{
+      fontSize: '1.13rem',
+      color: '#1B0044',
+      fontWeight: 500,
+      marginBottom: '1.2rem',
+    }}
+  >
+    We’ve sat in the university offices. We’ve worked as official representatives for many
+    international universities. We’ve seen firsthand how students are pushed into courses they
+    don’t need, charged for services they never asked for, and left clueless once they land
+    abroad.
+  </p>
+
+  <p
+    style={{
+      fontSize: '1.13rem',
+      color: '#1B0044',
+      fontWeight: 500,
+      marginBottom: '1.2rem',
+    }}
+  >
+    <b>Yournextuniversity</b> was founded by{' '}
+    <b style={{ color: '#5727A3' }}>Rohan Thakur</b> – International Admissions, Australia
+    (worked with multiple <b>QS Top 100</b> universities), and{' '}
+    <b style={{ color: '#5727A3' }}>Nirmal Gautam</b> – Admissions, University of Wollongong,
+    Ex–Central Queensland University. Together, they’ve helped hundreds of students build
+    transparent, affordable, and successful global education journeys.
+  </p>
+</div>
+
         <div style={{ flex: 1, minWidth: 320, textAlign: 'center', position: 'relative', minHeight: 420 }}>
           {/* Radiant effect behind the girl */}
           <div
