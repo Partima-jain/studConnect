@@ -159,13 +159,12 @@ const PeerCounsellingPage: React.FC = () => {
       setBookingLoading(false);
       return;
     }
-    // Ensure correct types for backend (id as string or number as required)
     const payload = {
-      user_id: String(user.id), // ensure string if backend expects string
+      user_id: String(user.id),
       user_email: user.email,
-      counsellor_id: Number(selected.id), // ensure number if backend expects number
+      counsellor_id: Number(selected.id),
       counsellor_email: selected.email,
-      slot_id: Number(selectedSlot.slot_id), // ensure number if backend expects number
+      slot_id: Number(selectedSlot.slot_id),
       slot_date: `${selectedSlot.date}T${selectedSlot.start_time}`,
       payment_status: 'pending'
     };
@@ -181,14 +180,21 @@ const PeerCounsellingPage: React.FC = () => {
       }
       const data = await res.json();
       setBookingId(data.id);
-      setBookingStep('payment');
+      const amount = selected.charges;
+      nav(`/services/peer-counselling-billing?bookingId=${data.id}&amount=${amount}`, {
+        state: {
+          counsellor: selected,
+          slot: selectedSlot,
+          bookingId: data.id,
+          user,
+        }
+      });
     } catch (err) {
       alert('Booking failed. Please try again.');
     }
     setBookingLoading(false);
   };
 
-  // Razorpay payment integration (real flow)
   const handleRazorpayPayment = async () => {
     setBookingLoading(true);
     if (!user || !user.email) {
@@ -202,7 +208,6 @@ const PeerCounsellingPage: React.FC = () => {
       return;
     }
     try {
-      // 1. Create Razorpay order via backend
       const orderRes = await fetch(`${API_BASE}/payments/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1123,193 +1128,7 @@ const PeerCounsellingPage: React.FC = () => {
                 </div>
               </>
             )}
-            {bookingStep === 'payment' && (
-              <>
-                {/* 3D Animation Background */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    zIndex: 0,
-                    pointerEvents: 'none',
-                    overflow: 'hidden'
-                  }}
-                  aria-hidden
-                >
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '-80px',
-                      left: '-80px',
-                      width: 220,
-                      height: 220,
-                      background: 'radial-gradient(circle at 30% 30%, #A78BFA99 0%, #6D28D933 100%)',
-                      filter: 'blur(60px)',
-                      borderRadius: '50%',
-                      opacity: 0.7,
-                      animation: 'float3d1 12s ease-in-out infinite alternate'
-                    }}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: '-80px',
-                      right: '-80px',
-                      width: 180,
-                      height: 180,
-                      background: 'radial-gradient(circle at 70% 70%, #C4B5FDbb 0%, #A78BFA55 100%)',
-                      filter: 'blur(60px)',
-                      borderRadius: '50%',
-                      opacity: 0.6,
-                      animation: 'float3d2 14s ease-in-out infinite alternate'
-                    }}
-                  />
-                  <svg
-                    width="180"
-                    height="180"
-                    viewBox="0 0 320 320"
-                    style={{
-                      position: 'absolute',
-                      top: '60%',
-                      left: '-60px',
-                      opacity: 0.18,
-                      filter: 'blur(1.5px)',
-                      transform: 'rotate(-18deg)',
-                      animation: 'spin3d 22s linear infinite'
-                    }}
-                  >
-                    <defs>
-                      <linearGradient id="goldring2" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#FBBF24" />
-                        <stop offset="100%" stopColor="#F59E42" />
-                      </linearGradient>
-                    </defs>
-                    <ellipse
-                      cx="90"
-                      cy="90"
-                      rx="70"
-                      ry="28"
-                      fill="none"
-                      stroke="url(#goldring2)"
-                      strokeWidth="12"
-                    />
-                  </svg>
-                  <style>
-                    {`
-                      @keyframes float3d1 {
-                        0% { transform: translateY(0) scale(1);}
-                        100% { transform: translateY(40px) scale(1.08);}
-                      }
-                      @keyframes float3d2 {
-                        0% { transform: translateY(0) scale(1);}
-                        100% { transform: translateY(-30px) scale(1.12);}
-                      }
-                      @keyframes spin3d {
-                        100% { transform: rotate(342deg);}
-                      }
-                    `}
-                  </style>
-                </div>
-                <div style={{
-                  textAlign: 'center',
-                  position: 'relative',
-                  zIndex: 1,
-                  minHeight: 220,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <h3 style={{color:'#6366f1', textAlign: 'center'}}>Payment</h3>
-                  <p style={{textAlign: 'center'}}>Session Fee: <strong>₹{selected.charges}</strong></p>
-                  <div style={{marginBottom:'.7rem', color:'#6366f1', fontWeight:600, textAlign: 'center'}}>
-                    Date: {selectedSlot?.date} <br />
-                    Slot: {selectedSlot?.start_time} - {selectedSlot?.end_time}
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '1.2rem',
-                    margin: '1.2rem 0'
-                  }}>
-                    <button
-                      className="btn btn-primary"
-                      style={{
-                        background: 'linear-gradient(90deg, #5727A3 0%, #2d1457 100%)',
-                        color: '#fff',
-                        fontWeight: 700,
-                        fontSize: '1.09rem',
-                        borderRadius: 10,
-                        padding: '0.8rem 2.2rem',
-                        minWidth: 170,
-                        boxShadow: '0 6px 24px #a78bfa44, 0 2px 8px #9F7AEA22',
-                        transform: 'perspective(600px) rotateY(-6deg) scale(1.04)',
-                        transition: 'transform 0.18s, box-shadow 0.18s'
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.transform = 'perspective(600px) rotateY(-2deg) scale(1.07)')}
-                      onMouseLeave={e => (e.currentTarget.style.transform = 'perspective(600px) rotateY(-6deg) scale(1.04)')}
-                      onClick={handleRazorpayPayment}
-                      disabled={bookingLoading}
-                    >
-                      {bookingLoading ? 'Processing...' : 'Pay with Razorpay'}
-                    </button>
-                    <button
-                      className="btn btn-secondary"
-                      style={{
-                        background: '#fff',
-                        color: '#5727A3',
-                        border: '1.5px solid #9F7AEA',
-                        borderRadius: 10,
-                        fontWeight: 700,
-                        fontSize: '1.09rem',
-                        padding: '0.8rem 2.2rem',
-                        minWidth: 110,
-                        boxShadow: '0 6px 24px #a78bfa22, 0 2px 8px #9F7AEA11',
-                        transform: 'perspective(600px) rotateY(6deg) scale(1.04)',
-                        transition: 'transform 0.18s, box-shadow 0.18s'
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.transform = 'perspective(600px) rotateY(2deg) scale(1.07)')}
-                      onMouseLeave={e => (e.currentTarget.style.transform = 'perspective(600px) rotateY(6deg) scale(1.04)')}
-                      onClick={() => setBookingStep('slot')}
-                      disabled={bookingLoading}
-                    >
-                      Change Slot
-                    </button>
-                  </div>
-                  <div style={{fontSize:'.85rem', color:'#64748b', marginTop:'.7rem', textAlign: 'center'}}>
-                    Payment confirmation triggers a booking confirmation email.
-                  </div>
-                </div>
-              </>
-            )}
-            {bookingStep === 'confirmed' && (
-              <>
-                <h3 style={{color:'#22c55e'}}>Booking Confirmed!</h3>
-                <p>
-                  You will receive a confirmation email and WhatsApp message with your meeting link and reminders.
-                  <br />
-                  {meetingLink && (
-                    <span>
-                      <b>Meeting Link:</b> <a href={meetingLink} target="_blank" rel="noopener">{meetingLink}</a>
-                    </span>
-                  )}
-                </p>
-                <button
-                  className="btn btn-primary"
-                  style={{marginTop:'1.2rem',
-                margin: '0.3rem',}} // Add marginTop for spacing
-                  onClick={()=>{setSelected(null); setBookingStep(null); setSelectedDate(''); setSelectedSlot(null); setMeetingLink('');}}
-                >Done</button>
-              </>
-            )}
-            {/* <button
-              className="btn btn-small"
-              style={{marginTop:'1.2rem',
-                margin: '0.3rem',}} // Add marginTop for spacing
-              onClick={()=>{setSelected(null); setBookingStep(null); setSelectedDate(''); setSelectedSlot(null); setMeetingLink('');}}
-            >Close</button> */}
+            
           </div>
         </div>
       )}
