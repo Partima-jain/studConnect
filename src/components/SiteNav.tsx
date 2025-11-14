@@ -420,7 +420,6 @@ export const SiteNav: React.FC = () => {
                     <button
                       className="btn btn-small"
                       type="button"
-                      onClick={logout}
                       style={{
                         background: 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)',
                         color: '#fff',
@@ -435,7 +434,30 @@ export const SiteNav: React.FC = () => {
                         width: '100%',
                         textAlign: 'center'
                       }}
+                      onClick={logout}
                     >Logout</button>
+                    <button
+                      className="btn btn-small"
+                      type="button"
+                      style={{
+                        background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700,
+                        fontSize: '1.01rem',
+                        padding: '.55rem 1.1rem',
+                        boxShadow: '0 6px 18px -4px #5727A355, 0 2px 8px 0 #9F7AEA33',
+                        transition: 'all 0.25s',
+                        marginTop: 4,
+                        width: '100%',
+                        textAlign: 'center'
+                      }}
+                      onClick={() => {
+                        setShowProfileMenu(false);
+                        navigate('/my-sessions');
+                      }}
+                    >See Sessions</button>
                   </div>
                 )}
               </div>
