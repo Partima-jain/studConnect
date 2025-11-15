@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext'; // added
 
 const PeerCounsellingBillingPage = () => {
+  const { user } = useAuth(); // added
   // Billing form state
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState(user?.full_name || ''); // updated to use user
+  const [email, setEmail] = useState(user?.email || ''); // updated to use user
   const [phone, setPhone] = useState('');
   const [countryCode, setCountryCode] = useState('US');
   const [country, setCountry] = useState('United States');
@@ -11,6 +13,8 @@ const PeerCounsellingBillingPage = () => {
   const [discountCode, setDiscountCode] = useState('');
   const [discountApplied, setDiscountApplied] = useState(false);
   const [business, setBusiness] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   const priceINR = 699;
   const usdRate = 88.7;
@@ -18,6 +22,12 @@ const PeerCounsellingBillingPage = () => {
   const subtotalINR = priceINR;
   const totalINR = priceINR - (discountApplied ? 50 : 0);
   const totalUSD = (totalINR / usdRate).toFixed(2);
+
+  useEffect(() => {
+    // Update when user becomes available (e.g. after async auth load)
+    if (user?.email && !email) setEmail(user.email);
+    if (user?.full_name && !fullName) setFullName(user.full_name);
+  }, [user]); // added
 
   const handleApplyDiscount = () => {
     if (discountCode.trim().toLowerCase() === 'save50') {
@@ -28,11 +38,19 @@ const PeerCounsellingBillingPage = () => {
   };
 
   const handleContinue = () => {
-    if (!fullName || !email) {
-      alert('Please enter your name and email.');
-      return;
+    // clear previous errors
+    setNameError(false);
+    setEmailError(false);
+    let hasError = false;
+    if (!fullName.trim()) {
+      setNameError(true);
+      hasError = true;
     }
-    alert('Proceeding to payment...');
+    if (!email.trim()) {
+      setEmailError(true);
+      hasError = true;
+    }
+    if (hasError) return;
   };
 
   return (
@@ -196,19 +214,25 @@ const PeerCounsellingBillingPage = () => {
               <input
                 type="text"
                 value={fullName}
-                onChange={e => setFullName(e.target.value)}
+                onChange={e => { setFullName(e.target.value); if (nameError) setNameError(false); }}
                 placeholder="eg. John Doe"
                 required
                 style={{
                   width: '100%',
                   padding: '0.625rem 0.875rem',
                   borderRadius: '6px',
-                  border: '1px solid #d1d5db',
+                  border: `1px solid ${nameError ? '#ef4444' : '#d1d5db'}`,
                   fontSize: '0.875rem',
                   color: '#111827',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  outline: 'none'
                 }}
               />
+              {nameError && (
+                <div style={{ marginTop: '0.4rem', fontSize: '0.75rem', color: '#ef4444', fontWeight: 500 }}>
+                  Please enter your full name.
+                </div>
+              )}
             </div>
 
             {/* Email and Phone */}
@@ -220,19 +244,25 @@ const PeerCounsellingBillingPage = () => {
                 <input
                   type="email"
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="eg. john.doe@example.com"
-                  required
+                  onChange={e => { setEmail(e.target.value); if (emailError) setEmailError(false); }}
+                  placeholder={user?.email ? '' : ''}
+                 
                   style={{
                     width: '100%',
                     padding: '0.625rem 0.875rem',
                     borderRadius: '6px',
-                    border: '1px solid #d1d5db',
+                    border: `1px solid ${emailError ? '#ef4444' : '#d1d5db'}`,
                     fontSize: '0.875rem',
                     color: '#111827',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    outline: 'none'
                   }}
                 />
+                {emailError && (
+                  <div style={{ marginTop: '0.4rem', fontSize: '0.75rem', color: '#ef4444', fontWeight: 500 }}>
+                    Please enter your email address.
+                  </div>
+                )}
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
