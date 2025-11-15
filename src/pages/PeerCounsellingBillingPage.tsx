@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext'; // added
+import { useAuth } from '../context/AuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PeerCounsellingBillingPage = () => {
-  const { user } = useAuth(); // added
+  const { user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   // Billing form state
   const [fullName, setFullName] = useState(user?.full_name || ''); // updated to use user
   const [email, setEmail] = useState(user?.email || ''); // updated to use user
@@ -15,6 +18,9 @@ const PeerCounsellingBillingPage = () => {
   const [business, setBusiness] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [envWarning, setEnvWarning] = useState<string | null>(null);
 
   const priceINR = 699;
   const usdRate = 88.7;
@@ -23,11 +29,32 @@ const PeerCounsellingBillingPage = () => {
   const totalINR = priceINR - (discountApplied ? 50 : 0);
   const totalUSD = (totalINR / usdRate).toFixed(2);
 
+  // Derive bookingId & charges if passed in state or URL
+  const stateBookingId = (location.state && (location.state as any).bookingId) || null;
+  const params = new URLSearchParams(location.search);
+  const queryBookingId = params.get('bookingId');
+  const bookingId = stateBookingId || queryBookingId || null;
+  const passedAmount = (location.state && (location.state as any).amount) || params.get('amount');
+  // Use counsellor’s charge if provided, else the page price (699)
+  const counsellorCharges = Number(passedAmount) || priceINR;
+
+  const API_BASE_FALLBACK = 'https://studconnect-backend.onrender.com';
+  const apiBase =
+    (import.meta as any)?.env?.VITE_API_BASE_URL ||
+    (window as any).__API_BASE__ ||
+    API_BASE_FALLBACK;
+
   useEffect(() => {
     // Update when user becomes available (e.g. after async auth load)
     if (user?.email && !email) setEmail(user.email);
     if (user?.full_name && !fullName) setFullName(user.full_name);
   }, [user]); // added
+
+  // useEffect(() => {
+  //   if (!(import.meta as any)?.env?.VITE_API_BASE_URL) {
+  //     setEnvWarning(`VITE_API_BASE_URL not set. Using fallback: ${API_BASE_FALLBACK}`);
+  //   }
+  // }, []);
 
   const handleApplyDiscount = () => {
     if (discountCode.trim().toLowerCase() === 'save50') {
@@ -37,20 +64,46 @@ const PeerCounsellingBillingPage = () => {
     }
   };
 
-  const handleContinue = () => {
-    // clear previous errors
+  // Replace previous handleContinue with handlePayment (keep validation & red borders)
+  const handlePayment = async () => {
+    setPaymentError(null);
     setNameError(false);
     setEmailError(false);
     let hasError = false;
-    if (!fullName.trim()) {
-      setNameError(true);
-      hasError = true;
-    }
-    if (!email.trim()) {
-      setEmailError(true);
-      hasError = true;
-    }
+    if (!fullName.trim()) { setNameError(true); hasError = true; }
+    if (!email.trim()) { setEmailError(true); hasError = true; }
     if (hasError) return;
+    if (!bookingId) {
+      setPaymentError('Missing booking ID. Please restart your booking.');
+      return;
+    }
+    setIsProcessingPayment(true);
+    try {
+      const userToken = (user as any)?.token || localStorage.getItem('token') || '';
+      const safePhone = (phone && phone.trim()) ? phone.trim() : ''; // ensure string (no null)
+      const payload = {
+        amount: Number(totalINR),
+        currency: 'INR',
+        customer: { name: fullName.trim(), email: email.trim(), phone: safePhone },
+        booking_id: String(bookingId)
+      };
+      const res = await fetch(`${apiBase}/api/create-dodo-session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(userToken ? { Authorization: `Bearer ${userToken}` } : {})
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.detail || `Payment init failed (${res.status})`);
+      if (!data.checkout_url) throw new Error('Checkout URL not returned.');
+      window.location.href = data.checkout_url;
+    } catch (err: any) {
+      setPaymentError(err.message || 'Payment failed. Please try again.');
+    } finally {
+      setIsProcessingPayment(false);
+    }
   };
 
   return (
@@ -376,26 +429,53 @@ const PeerCounsellingBillingPage = () => {
               </label>
             </div>
 
+            {/* Warning for API base URL */}
+            {envWarning && (
+              <div style={{
+                maxWidth: 1200,
+                margin: '0 auto 1rem',
+                fontSize: '0.75rem',
+                color: '#b45309',
+                background: '#fffbeb',
+                border: '1px solid #fcd34d',
+                padding: '0.5rem 0.75rem',
+                borderRadius: 6
+              }}>
+                {envWarning}
+              </div>
+            )}
+
             {/* Continue Button */}
             <button
               type="button"
-              onClick={handleContinue}
+              onClick={handlePayment}
+              disabled={isProcessingPayment}
               style={{
                 width: '100%',
                 padding: '0.875rem',
-                background: '#111827',
+                background: isProcessingPayment ? '#6b7280' : '#111827',
                 color: 'white',
                 borderRadius: '6px',
                 border: 'none',
                 fontSize: '0.9375rem',
                 fontWeight: '600',
-                cursor: 'pointer',
-                marginBottom: '1.5rem'
+                cursor: isProcessingPayment ? 'not-allowed' : 'pointer',
+                marginBottom: '0.75rem',
+                transition: 'background .15s'
               }}
             >
-              Continue to Payment
+              {isProcessingPayment ? 'Processing...' : 'Continue to Payment'}
             </button>
-
+            {paymentError && (
+              <div style={{
+                marginBottom: '1rem',
+                fontSize: '0.75rem',
+                color: '#ef4444',
+                fontWeight: 500
+              }}>
+                {paymentError}
+              </div>
+            )}
             {/* Footer */}
             <div style={{ textAlign: 'center', fontSize: '0.75rem', color: '#6b7280', lineHeight: '1.5' }}>
               This order process is conducted by our online reseller & Merchant of Record,{' '}
