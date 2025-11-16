@@ -34,48 +34,100 @@ const PaymentSuccess: React.FC = () => {
   const paymentId = sp.get('payment_id') || sp.get('paymentId') || '';
   const rawStatus = sp.get('status');
   const [status, setStatus] = useState<PaymentState>(normalize(rawStatus));
-  const [verifying, setVerifying] = useState(false);
-  const [verifiedDetail, setVerifiedDetail] = useState<string | null>(null);
-  const [verifyError, setVerifyError] = useState<string | null>(null);
+  const [polling, setPolling] = useState(false);
+  const [attempts, setAttempts] = useState(0);
+  const [meetingLink, setMeetingLink] = useState<string | null>(null);
+  const [pollError, setPollError] = useState<string | null>(null);
+  const [timedOut, setTimedOut] = useState(false);
+
+  const MAX_ATTEMPTS = 30; // ~2 minutes (30 * 4s)
+  const POLL_INTERVAL_MS = 4000;
 
   useEffect(() => {
-    let interval: number | undefined;
-    const canVerify = bookingId && (status === 'processing' || status === 'unknown');
-    if (!canVerify) return;
+    if (!bookingId) return;
 
-    const verify = async () => {
-      setVerifying(true);
-      setVerifyError(null);
+    let interval: number | undefined;
+    let aborted = false;
+
+    const poll = async () => {
+      if (timedOut || status === 'failed' || (status === 'success' && meetingLink)) return;
+      setPolling(true);
+      setPollError(null);
       try {
-        const resp = await fetch(`${BACKEND_BASE}/debug/dodo-config`, { method: 'GET' });
-        await resp.text();
-        setVerifiedDetail(`Verification ping at ${new Date().toLocaleTimeString()}`);
+        const url = `${BACKEND_BASE}/peer-counsellors/booking-status?booking_id=${encodeURIComponent(bookingId)}`;
+        const resp = await fetch(url, { method: 'GET' });
+        const txt = await resp.text();
+        let data: any = {};
+        try { data = txt ? JSON.parse(txt) : {}; } catch {}
+        if (!resp.ok) {
+          throw new Error(data?.detail || txt || `Status check failed (${resp.status})`);
+        }
+
+        const paymentStatus = (data.payment_status || '').toLowerCase();
+        const link = data.meeting_link || null;
+
+        if (paymentStatus) {
+          if (['paid', 'success', 'succeeded', 'completed'].includes(paymentStatus)) {
+            setStatus('success');
+          } else if (['failed', 'error'].includes(paymentStatus)) {
+            setStatus('failed');
+          } else if (['pending', 'processing'].includes(paymentStatus)) {
+            setStatus('processing');
+          } else {
+            setStatus('unknown');
+          }
+        }
+
+        if (link) setMeetingLink(link);
+
+        if (paymentStatus === 'paid' && link) {
+          return;
+        }
+
+        if (paymentStatus === 'failed') {
+          return;
+        }
+
       } catch (e: any) {
-        setVerifyError(e.message || 'Verification failed');
+        setPollError(e.message || 'Polling error');
       } finally {
-        setVerifying(false);
+        setPolling(false);
+        setAttempts(a => {
+          const next = a + 1;
+            if (next >= MAX_ATTEMPTS && !meetingLink && status !== 'failed') {
+            setTimedOut(true);
+          }
+          return next;
+        });
       }
     };
 
-    verify();
-    interval = window.setInterval(verify, 8000);
-    return () => { if (interval) window.clearInterval(interval); };
-  }, [bookingId, status]);
+    if (!(status === 'success' && meetingLink)) {
+      poll();
+      interval = window.setInterval(poll, POLL_INTERVAL_MS);
+    }
+
+    return () => {
+      aborted = true;
+      if (interval) clearInterval(interval);
+    };
+  }, [bookingId, status, meetingLink, timedOut]);
 
   const meta = statusColor[status];
 
   const icon = (() => {
+    if (status === 'success' && meetingLink) return '✓';
     switch (status) {
-      case 'success': return '✓';
+      case 'success': return '⏳';
       case 'failed': return '✗';
       case 'cancelled': return '✗';
-      case 'processing': return '-';
+      case 'processing': return '…';
       default: return '?';
     }
   })();
 
   const titleMap: Record<PaymentState, string> = {
-    success: 'Payment Successful',
+    success: meetingLink ? 'Payment Confirmed' : 'Payment Confirmed - Awaiting Link',
     failed: 'Payment Failed',
     cancelled: 'Payment Cancelled',
     processing: 'Payment Processing',
@@ -83,11 +135,14 @@ const PaymentSuccess: React.FC = () => {
   };
 
   const descMap: Record<PaymentState, string> = {
-    success: 'Your booking has been confirmed. A confirmation email will arrive shortly.',
-    failed: 'The payment could not be completed. You may retry below.',
-    cancelled: 'You cancelled the payment before completion. You can restart below.',
-    processing: 'We are waiting for confirmation. This page will update automatically.',
-    unknown: 'We could not determine the payment status. You can retry the payment.'
+    success: meetingLink
+      ? 'Your session is confirmed. Use the meeting link below at the scheduled time.'
+      : 'Your payment is complete. Waiting for counsellor to provide meeting link.'
+    ,
+    failed: 'Payment failed. You can retry below.',
+    cancelled: 'You cancelled the payment. You can restart below.',
+    processing: 'Waiting for payment confirmation...',
+    unknown: 'Status unclear. You may retry or wait.'
   };
 
   const handleRetry = () => {
@@ -95,215 +150,88 @@ const PaymentSuccess: React.FC = () => {
     navigate(`/services/peer-counselling-billing?bookingId=${encodeURIComponent(bookingId)}`);
   };
 
-  const handleDashboard = () => {
-    if (bookingId) {
-      navigate(`/booking/${encodeURIComponent(bookingId)}`);
-    } else {
-      navigate('/booking');
-    }
+  const handleViewBooking = () => {
+    if (!bookingId) return;
+    navigate(`/booking/${encodeURIComponent(bookingId)}`);
   };
 
-  const handleSupport = () => {
-    navigate('/contact');
+  const handleSupport = () => navigate('/contact');
+  const handleBookAnother = () => navigate('/services/peer-counselling');
+  const manualRefresh = () => {
+    setAttempts(0);
+    setTimedOut(false);
+    setPollError(null);
   };
 
   return (
-    <main
-      style={{
-        minHeight: '100vh',
-        background: '#f9fafb',
-        fontFamily: 'Inter, system-ui, sans-serif',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2.5rem 1rem'
-      }}
-    >
-      <div
-        style={{
-          width: '100%',
-          maxWidth: 640,
-          background: '#ffffff',
-          border: '1px solid #e5e7eb',
-          borderRadius: 16,
-          padding: '2.2rem 2.2rem 2.6rem',
-          boxShadow: '0 4px 32px rgba(0,0,0,0.06)',
-          position: 'relative'
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: -28,
-            left: 24,
-            background: meta.bg,
-            border: `2px solid ${meta.border}`,
-            color: meta.text,
-            fontSize: '1.9rem',
-            width: 64,
-            height: 64,
-            borderRadius: 16,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-            fontWeight: 700
-          }}
-        >
+    <main style={{ minHeight:'100vh',background:'#f9fafb',fontFamily:'Inter,system-ui,sans-serif',display:'flex',alignItems:'center',justifyContent:'center',padding:'2.5rem 1rem' }}>
+      <div style={{ width:'100%',maxWidth:640,background:'#ffffff',border:'1px solid #e5e7eb',borderRadius:16,padding:'2.2rem 2.2rem 2.6rem',boxShadow:'0 4px 32px rgba(0,0,0,0.06)',position:'relative' }}>
+        <div style={{ position:'absolute',top:-28,left:24,background:meta.bg,border:`2px solid ${meta.border}`,color:meta.text,fontSize:'1.9rem',width:64,height:64,borderRadius:16,display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0 4px 20px rgba(0,0,0,0.08)',fontWeight:700 }}>
           {icon}
         </div>
 
-        <h1
-          style={{
-            margin: '1.2rem 0 0.75rem',
-            fontSize: '1.75rem',
-            fontWeight: 800,
-            letterSpacing: '-0.5px',
-            color: '#111827'
-          }}
-        >
+        <h1 style={{ margin:'1.2rem 0 0.75rem',fontSize:'1.75rem',fontWeight:800,letterSpacing:'-0.5px',color:'#111827' }}>
           {titleMap[status]}
         </h1>
 
-        <p
-          style={{
-            margin: '0 0 1.4rem',
-            fontSize: '.95rem',
-            lineHeight: 1.6,
-            color: '#374151',
-            fontWeight: 500
-          }}
-        >
+        <p style={{ margin:'0 0 1.4rem',fontSize:'.95rem',lineHeight:1.6,color:'#374151',fontWeight:500 }}>
           {descMap[status]}
         </p>
 
-        <div
-          style={{
-            background: meta.bg,
-            border: `1px solid ${meta.border}`,
-            color: meta.text,
-            padding: '0.9rem 1rem',
-            borderRadius: 12,
-            fontSize: '.75rem',
-            fontWeight: 600,
-            lineHeight: 1.5,
-            marginBottom: '1.2rem',
-            display: 'grid',
-            rowGap: '.4rem'
-          }}
-        >
+        <div style={{ background:meta.bg,border:`1px solid ${meta.border}`,color:meta.text,padding:'0.9rem 1rem',borderRadius:12,fontSize:'.75rem',fontWeight:600,lineHeight:1.5,marginBottom:'1.2rem',display:'grid',rowGap:'.4rem' }}>
           <div>Booking ID: {bookingId || 'N/A'}</div>
-            <div>Payment ID: {paymentId || 'N/A'}</div>
-          <div>Status: {status}</div>
-          {verifiedDetail && <div>Last verify: {verifiedDetail}</div>}
-          {verifyError && <div style={{ color: '#dc2626' }}>Verify error: {verifyError}</div>}
+          <div>Payment ID: {paymentId || 'N/A'}</div>
+          <div>Status: {status}{status==='success' && !meetingLink ? ' (awaiting link)' : ''}</div>
+          <div>Attempts: {attempts}/{MAX_ATTEMPTS}</div>
+          {polling && <div>Polling...</div>}
+          {pollError && <div style={{ color:'#dc2626' }}>Poll error: {pollError}</div>}
+          {timedOut && <div style={{ color:'#b45309' }}>Timed out waiting for confirmation.</div>}
+          {meetingLink && (
+            <div style={{ marginTop:'.4rem' }}>
+              Meeting Link: <a href={meetingLink} target="_blank" rel="noopener noreferrer" style={{ color:'#2563eb',textDecoration:'underline' }}>Join Session</a>
+            </div>
+          )}
         </div>
 
-        {/* Actions */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '.75rem',
-            flexWrap: 'wrap',
-            marginBottom: '1.5rem'
-          }}
-        >
-          {(status === 'failed' || status === 'cancelled' || status === 'unknown') && bookingId && (
-            <button
-              onClick={handleRetry}
-              style={{
-                background: '#111827',
-                color: '#fff',
-                padding: '.7rem 1.2rem',
-                borderRadius: 8,
-                border: 'none',
-                fontSize: '.8rem',
-                fontWeight: 600,
-                cursor: 'pointer'
-              }}
-            >
-              Retry Payment
-            </button>
+        <div style={{ display:'flex',gap:'.75rem',flexWrap:'wrap',marginBottom:'1.5rem' }}>
+          {(status === 'failed' || timedOut) && bookingId && (
+            <button onClick={handleRetry} style={btn('#111827','#fff')}>Retry Payment</button>
           )}
-          {status === 'success' && (
-            <button
-              onClick={handleDashboard}
-              style={{
-                background: '#10b981',
-                color: '#fff',
-                padding: '.7rem 1.2rem',
-                borderRadius: 8,
-                border: 'none',
-                fontSize: '.8rem',
-                fontWeight: 600,
-                cursor: 'pointer'
-              }}
-            >
-              View Booking{bookingId ? '' : 's'}
-            </button>
+          {status === 'success' && meetingLink && (
+            <button onClick={handleViewBooking} style={btn('#10b981','#fff')}>View Booking</button>
           )}
-          <button
-            onClick={handleSupport}
-            style={{
-              background: '#ffffff',
-              color: '#374151',
-              padding: '.7rem 1.2rem',
-              borderRadius: 8,
-              border: '1px solid #d1d5db',
-              fontSize: '.8rem',
-              fontWeight: 600,
-              cursor: 'pointer'
-            }}
-          >
-            Contact Support
-          </button>
-          <button
-            onClick={() => navigate('/services/peer-counselling')}
-            style={{
-              background: '#f3f4f6',
-              color: '#111827',
-              padding: '.7rem 1.2rem',
-              borderRadius: 8,
-              border: '1px solid #e5e7eb',
-              fontSize: '.8rem',
-              fontWeight: 600,
-              cursor: 'pointer'
-            }}
-          >
-            Book Another
-          </button>
+          <button onClick={handleSupport} style={btn('#ffffff','#374151',true)}>Contact Support</button>
+          <button onClick={handleBookAnother} style={btn('#f3f4f6','#111827',true)}>Book Another</button>
+          {(status === 'processing' || (status==='success' && !meetingLink) || status==='unknown') && !timedOut && (
+            <button onClick={manualRefresh} style={btn('#2563eb','#fff')}>Refresh</button>
+          )}
         </div>
 
-        {status === 'processing' && (
-          <div
-            style={{
-              fontSize: '.65rem',
-              color: '#0c4a6e',
-              background: '#f0f9ff',
-              border: '1px dashed #38bdf8',
-              padding: '.6rem .75rem',
-              borderRadius: 8,
-              fontWeight: 600
-            }}
-          >
-            We are still waiting for the final confirmation from the payment gateway. This page will refresh periodically.
+        {status === 'processing' && !timedOut && (
+          <div style={{ fontSize:'.65rem',color:'#0c4a6e',background:'#f0f9ff',border:'1px dashed #38bdf8',padding:'.6rem .75rem',borderRadius:8,fontWeight:600 }}>
+            Waiting for final confirmation. This page is auto-updating every {POLL_INTERVAL_MS/1000}s.
           </div>
         )}
 
-        <div
-          style={{
-            marginTop: '2rem',
-            fontSize: '.6rem',
-            lineHeight: 1.4,
-            color: '#6b7280',
-            fontWeight: 500
-          }}
-        >
-          If you believe this status is incorrect, please contact support with your Booking ID and Payment ID.
+        <div style={{ marginTop:'2rem',fontSize:'.6rem',lineHeight:1.4,color:'#6b7280',fontWeight:500 }}>
+          If the status does not update after a few minutes, retry payment or contact support with Booking & Payment IDs.
         </div>
       </div>
     </main>
   );
 };
+
+function btn(bg:string, fg:string, outline?:boolean): React.CSSProperties {
+  return {
+    background:bg,
+    color:fg,
+    padding:'.7rem 1.2rem',
+    borderRadius:8,
+    border:outline?'1px solid #d1d5db':'none',
+    fontSize:'.8rem',
+    fontWeight:600,
+    cursor:'pointer'
+  };
+}
 
 export default PaymentSuccess;
