@@ -436,7 +436,7 @@ export const SiteNav: React.FC = () => {
                       }}
                       onClick={logout}
                     >Logout</button>
-                    <button
+                    {/* <button
                       className="btn btn-small"
                       type="button"
                       style={{
@@ -455,9 +455,9 @@ export const SiteNav: React.FC = () => {
                       }}
                       onClick={() => {
                         setShowProfileMenu(false);
-                        navigate('/my-sessions');
+                        navigate('/booking');
                       }}
-                    >See Sessions</button>
+                    >See Sessions</button> */}
                   </div>
                 )}
               </div>

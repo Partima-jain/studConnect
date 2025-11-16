@@ -96,7 +96,11 @@ const PaymentSuccess: React.FC = () => {
   };
 
   const handleDashboard = () => {
-    navigate('/student');
+    if (bookingId) {
+      navigate(`/booking/${encodeURIComponent(bookingId)}`);
+    } else {
+      navigate('/booking');
+    }
   };
 
   const handleSupport = () => {
@@ -235,7 +239,7 @@ const PaymentSuccess: React.FC = () => {
                 cursor: 'pointer'
               }}
             >
-              Go to Dashboard
+              View Booking{bookingId ? '' : 's'}
             </button>
           )}
           <button

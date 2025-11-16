@@ -28,6 +28,7 @@ import TermsOfServicePage from './pages/TermsOfServicePage';
 import PeerCounsellingBillingPage from './pages/PeerCounsellingBillingPage';
 import MockPaymentPage from './pages/MockPaymentPage';
 import PaymentSuccess from './pages/PaymentSuccess';
+import BookingDetailsPage from './pages/BookingDetailsPage';
 
 // RequireAuth component to protect routes
 const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -102,6 +103,7 @@ export const App: React.FC = () => (
         <Route path="/terms-of-service" element={<TermsOfServicePage />} />
         <Route path="/mock-payment" element={<MockPaymentPage />} />
         <Route path="/payment-status" element={<PaymentSuccess />} />
+        <Route path="/booking/:id" element={<BookingDetailsPage />} />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>
       <Footer />
