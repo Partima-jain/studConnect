@@ -64,6 +64,9 @@ const PeerCounsellingBillingPage = () => {
     }
   };
 
+  const PRODUCT_ID = 'pdt_isuaGsszAodjHrUaplbG4';
+  const allowedPaymentMethodTypes = ['credit','debit','upi']; // upi optional, keep credit/debit fallback
+
   // Replace previous handleContinue with handlePayment (keep validation & red borders)
   const handlePayment = async () => {
     setPaymentError(null);
@@ -73,20 +76,48 @@ const PeerCounsellingBillingPage = () => {
     if (!fullName.trim()) { setNameError(true); hasError = true; }
     if (!email.trim()) { setEmailError(true); hasError = true; }
     if (hasError) return;
-    if (!bookingId) {
-      setPaymentError('Missing booking ID. Please restart your booking.');
-      return;
-    }
+    if (!bookingId) { setPaymentError('Missing booking ID. Please restart your booking.'); return; }
     setIsProcessingPayment(true);
     try {
       const userToken = (user as any)?.token || localStorage.getItem('token') || '';
-      const safePhone = (phone && phone.trim()) ? phone.trim() : ''; // ensure string (no null)
-      const payload = {
+      const safePhone = phone.trim() || undefined;
+      const returnUrl = `${window.location.origin}/payment-success?bookingId=${encodeURIComponent(bookingId)}`;
+      const safeAddress = address.trim() || 'Address Not Provided';
+
+      const payload: any = {
+        // REQUIRED top-level fields (missing before)
         amount: Number(totalINR),
+        booking_id: String(bookingId),
+        product_cart: [{ product_id: PRODUCT_ID, quantity: 1 }],
+        billing_address: {
+          line1: safeAddress,
+          country: country
+        },
+        customer: {
+          name: fullName.trim(),
+          email: email.trim(),
+          phone: safePhone
+        },
+        allowed_payment_method_types: allowedPaymentMethodTypes,
+        metadata: {
+          booking_id: String(bookingId),
+          user_id: user?.id || null,
+          business: business ? 'true' : 'false',
+          original_amount_inr: priceINR,
+          final_amount_inr: totalINR
+        },
         currency: 'INR',
-        customer: { name: fullName.trim(), email: email.trim(), phone: safePhone },
-        booking_id: String(bookingId)
+        tax_inclusive_pricing: true,
+        confirm: true,
+        return_url: returnUrl,
+        show_saved_payment_methods: false
       };
+
+      // Only include discount_code if applied (avoid null → string_type error)
+      if (discountApplied && discountCode.trim()) {
+        payload.discount_code = discountCode.trim().toLowerCase();
+      }
+
       const res = await fetch(`${apiBase}/api/create-dodo-session`, {
         method: 'POST',
         headers: {
@@ -95,10 +126,16 @@ const PeerCounsellingBillingPage = () => {
         },
         body: JSON.stringify(payload)
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.detail || `Payment init failed (${res.status})`);
-      if (!data.checkout_url) throw new Error('Checkout URL not returned.');
-      window.location.href = data.checkout_url;
+
+      const raw = await res.text();
+      let data: any = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch {}
+      if (!res.ok) throw new Error(data?.detail || raw || `Payment init failed (${res.status})`);
+      const url = data.checkout_url;
+      if (!url || typeof url !== 'string') throw new Error('Invalid checkout URL returned.');
+      if (url.includes('/error/')) throw new Error('Payment provider returned error URL.');
+      if (url.includes('/mock-payment')) throw new Error('Mock payment URL received — backend must call live Checkout Sessions API.');
+      window.location.href = url;
     } catch (err: any) {
       setPaymentError(err.message || 'Payment failed. Please try again.');
     } finally {
@@ -108,15 +145,17 @@ const PeerCounsellingBillingPage = () => {
 
   return (
     <div
+      className="pc-billing-root"
       style={{
         minHeight: '100vh',
         background: '#fafafa',
         padding: '2rem 1rem',
-        paddingTop: '120px', // Add top padding for navbar
+        paddingTop: '120px',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif'
       }}
     >
       <div
+        className="pc-billing-grid"
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
@@ -127,7 +166,7 @@ const PeerCounsellingBillingPage = () => {
         }}
       >
         {/* Left Side - Order Summary */}
-        <div style={{top: '2rem' }}>
+        <div className="pc-summary" style={{ top: '2rem' }}>
           {/* Header with Pay in USD */}
           <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -253,7 +292,7 @@ const PeerCounsellingBillingPage = () => {
         </div>
 
         {/* Right Side - Contact Form */}
-        <div style={{ background: 'white', borderRadius: '12px', padding: '2rem', border: '1px solid #e5e7eb' }}>
+        <div className="pc-form" style={{ background: 'white', borderRadius: '12px', padding: '2rem', border: '1px solid #e5e7eb' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#111827', marginBottom: '1.5rem' }}>
             Contact Information
           </h2>
@@ -450,6 +489,7 @@ const PeerCounsellingBillingPage = () => {
               type="button"
               onClick={handlePayment}
               disabled={isProcessingPayment}
+              className="pc-pay-btn"
               style={{
                 width: '100%',
                 padding: '0.875rem',
@@ -500,6 +540,103 @@ const PeerCounsellingBillingPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Responsive Styles */}
+      <style>
+        {`
+          /* Base adjustments */
+          .pc-billing-root {
+            box-sizing: border-box;
+          }
+          .pc-form input,
+          .pc-form select,
+          .pc-form button {
+            font-family: inherit;
+          }
+
+          /* Medium screens: stack columns (summary first, form second) */
+          @media (max-width: 960px) {
+            .pc-billing-grid {
+              grid-template-columns: 1fr !important;
+              gap: 2.2rem !important;
+            }
+            .pc-summary {
+              order: 1;
+            }
+            .pc-form {
+              order: 2;
+            }
+          }
+
+          /* Tablets / small screens */
+          @media (max-width: 780px) {
+            .pc-billing-root {
+              padding-top: 100px !important;
+              padding-left: 0.85rem !important;
+              padding-right: 0.85rem !important;
+            }
+            .pc-summary {
+              margin-bottom: 0.4rem !important;
+            }
+            .pc-form {
+              padding: 1.55rem 1.25rem 1.7rem !important;
+            }
+          }
+
+          /* Phones */
+          @media (max-width: 640px) {
+            .pc-billing-grid {
+              gap: 1.6rem !important;
+            }
+            .pc-summary h2,
+            .pc-summary .title {
+              font-size: 1.05rem !important;
+            }
+            .pc-form {
+              padding: 1.35rem 1rem !important;
+              border-radius: 10px !important;
+            }
+            .pc-form h2 {
+              font-size: 1.25rem !important;
+              margin-bottom: 1.05rem !important;
+            }
+            .pc-pay-btn {
+              font-size: 0.85rem !important;
+              padding: 0.8rem 0.9rem !important;
+            }
+            .pc-form input,
+            .pc-form select {
+              padding: 0.55rem 0.75rem !important;
+              font-size: 0.78rem !important;
+            }
+          }
+
+          /* Extra-small devices */
+          @media (max-width: 480px) {
+            .pc-billing-root {
+              padding-left: 0.6rem !important;
+              padding-right: 0.6rem !important;
+            }
+            .pc-form {
+              padding: 1.1rem 0.8rem !important;
+            }
+            .pc-form h2 {
+              font-size: 1.15rem !important;
+            }
+            .pc-pay-btn {
+              font-size: 0.8rem !important;
+              padding: 0.72rem 0.75rem !important;
+            }
+          }
+
+          /* Simplify header select on very small screens */
+          @media (max-width: 420px) {
+            .pc-summary select {
+              display: none !important;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
