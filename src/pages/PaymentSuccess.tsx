@@ -155,7 +155,10 @@ const PaymentSuccess: React.FC = () => {
     navigate(`/booking/${encodeURIComponent(bookingId)}`);
   };
 
-  const handleSupport = () => navigate('mailto:hello@yournextuniversity.com');
+  const handleSupport = () => {
+  window.location.href = "mailto:hello@yournextuniversity.com";
+};
+
   const handleBookAnother = () => navigate('/services/peer-counselling');
   const manualRefresh = () => {
     setAttempts(0);
