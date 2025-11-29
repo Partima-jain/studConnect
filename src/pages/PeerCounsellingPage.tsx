@@ -277,12 +277,7 @@ const PeerCounsellingPage: React.FC = () => {
 
   // Scroll to counsellor section on Book Session click
   const goContact = () => {
-    if (counsellorSectionRef.current) {
-      counsellorSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      nav('/contact');
-      requestAnimationFrame(()=>document.querySelector('#contact')?.scrollIntoView({ behavior:'smooth'}));
-    }
+    window.location.href = 'mailto:hello@yournextuniversity.com';
   };
 
   // Handle Stripe redirect result
