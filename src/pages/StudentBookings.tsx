@@ -129,48 +129,54 @@ const StudentBookings: React.FC = () => {
         {!loading && !error && bookings.length > 0 && (
           <div style={{ marginTop:'1.4rem',display:'flex',flexDirection:'column',gap:'1.2rem' }}>
             {bookings.map(b => (
-              <div key={b.booking_id} style={{ background:'#f8fafc',border:'1px solid #e2e8f0',borderRadius:10,padding:'1rem 1.1rem',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.7rem' }}>
-                <div>
-                  <div style={{ fontSize:'.7rem',fontWeight:700,color:'#6b7280' }}>Session Date</div>
-                  <div style={{ fontSize:'.85rem',fontWeight:600,color:'#111827' }}>{formatDate(b.slot_date)}</div>
+              <div
+                key={b.booking_id}
+                style={{
+                  background:'#f8fafc',
+                  border:'1px solid #e2e8f0',
+                  borderRadius:10,
+                  padding:'1.2rem 1.3rem',
+                  display:'flex',
+                  flexDirection:'column',
+                  gap:'0.7rem'
+                }}
+              >
+                <div style={{ fontSize:'1rem',fontWeight:700,color:'#111827',marginBottom:'0.2rem' }}>
+                  {formatDate(b.slot_date)}
                 </div>
-                <div>
-                  <div style={{ fontSize:'.7rem',fontWeight:700,color:'#6b7280' }}>Day</div>
-                  <div style={{ fontSize:'.85rem',fontWeight:600,color:'#111827' }}>{b.slot_day || '—'}</div>
-                </div>
-                <div>
-                  <div style={{ fontSize:'.7rem',fontWeight:700,color:'#6b7280' }}>Time</div>
-                  <div style={{ fontSize:'.85rem',fontWeight:600,color:'#111827' }}>
-                    {b.start_time && b.end_time ? `${b.start_time} - ${b.end_time}` : '—'}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ fontSize:'.7rem',fontWeight:700,color:'#6b7280' }}>Counsellor</div>
-                  <div style={{ fontSize:'.85rem',fontWeight:600,color:'#111827' }}>
+                <div style={{ display:'flex',flexWrap:'wrap',gap:'1.5rem',fontSize:'.92rem',color:'#374151' }}>
+                  
+                  <div>
+                    <span style={{ fontWeight:600,color:'#6b7280' }}>Counsellor: </span>
                     {b.counsellor_name || b.counsellor_email || '—'}
                   </div>
+                  <div>
+                    <span style={{ fontWeight:600,color:'#6b7280' }}>Charges: </span>
+                    {b.charges ? `₹${b.charges}` : '699 Rs'}
+                  </div>
                 </div>
-                <div>
-                  <div style={{ fontSize:'.7rem',fontWeight:700,color:'#6b7280' }}>Payment Status</div>
-                  <span style={{
-                    display:'inline-block',padding:'.25rem .6rem',borderRadius:6,fontSize:'.65rem',fontWeight:700,
-                    background: b.payment_status === 'paid' ? '#ecfdf5' : b.payment_status === 'failed' ? '#fef2f2' : '#f0f9ff',
-                    color: b.payment_status === 'paid' ? '#065f46' : b.payment_status === 'failed' ? '#991b1b' : '#075985'
-                  }}>
-                    {b.payment_status || '—'}
-                  </span>
+                <div style={{ display:'flex',alignItems:'center',gap:'1.2rem',marginTop:'0.2rem' }}>
+                  <div>
+                    <span style={{ fontWeight:600,color:'#6b7280' }}>Payment Status: </span>
+                    <span style={{
+                      display:'inline-block',padding:'.25rem .6rem',borderRadius:6,fontSize:'.8rem',fontWeight:700,
+                      background: b.payment_status === 'paid' ? '#ecfdf5' : b.payment_status === 'failed' ? '#fef2f2' : '#f0f9ff',
+                      color: b.payment_status === 'paid' ? '#065f46' : b.payment_status === 'failed' ? '#991b1b' : '#075985'
+                    }}>
+                      {b.payment_status || '—'}
+                    </span>
+                  </div>
+                  <div>
+                    <span style={{ fontWeight:600,color:'#6b7280' }}>Meeting Link: </span>
+                    {b.meeting_link ? (
+                      <a href={b.meeting_link} target="_blank" rel="noopener noreferrer" style={{ color:'#2563eb',fontWeight:600,wordBreak:'break-all' }}>Join</a>
+                    ) : (
+                      <span style={{ color:'#6b7280' }}>Not available</span>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <div style={{ fontSize:'.7rem',fontWeight:700,color:'#6b7280' }}>Charges</div>
-                  <div style={{ fontSize:'.85rem',fontWeight:600,color:'#111827' }}>₹{b.charges || '—'}</div>
-                </div>
-                <div>
-                  <div style={{ fontSize:'.7rem',fontWeight:700,color:'#6b7280' }}>Meeting Link</div>
-                  {b.meeting_link ? (
-                    <a href={b.meeting_link} target="_blank" rel="noopener noreferrer" style={{ color:'#2563eb',fontWeight:600,wordBreak:'break-all' }}>Join</a>
-                  ) : (
-                    <span style={{ color:'#6b7280' }}>Not available</span>
-                  )}
+                <div style={{ fontSize:'.8rem',color:'#6b7280',marginTop:'0.2rem' }}>
+                  <span style={{ fontWeight:600 }}>Booking Created:</span> {formatDate(b.created_at)}
                 </div>
               </div>
             ))}
