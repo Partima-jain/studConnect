@@ -83,7 +83,10 @@ const StudentBookings: React.FC = () => {
         });
         if (!resp.ok) throw new Error(await resp.text() || 'Failed to load bookings');
         const data = await resp.json();
-        setBookings(Array.isArray(data) ? data : []);
+        const paidBookings = Array.isArray(data)
+          ? data.filter((b: any) => b.payment_status === 'paid')
+          : [];
+        setBookings(paidBookings);
       } catch (e: any) {
         setError(e.message || 'Error loading bookings');
       } finally {
