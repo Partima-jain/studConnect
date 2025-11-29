@@ -29,6 +29,7 @@ import PeerCounsellingBillingPage from './pages/PeerCounsellingBillingPage';
 import MockPaymentPage from './pages/MockPaymentPage';
 import PaymentSuccess from './pages/PaymentSuccess';
 import BookingDetailsPage from './pages/BookingDetailsPage';
+import StudentBookings  from './pages/StudentBookings';
 
 // RequireAuth component to protect routes
 const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -104,6 +105,7 @@ export const App: React.FC = () => (
         <Route path="/mock-payment" element={<MockPaymentPage />} />
         <Route path="/payment-status" element={<PaymentSuccess />} />
         <Route path="/booking/:id" element={<BookingDetailsPage />} />
+        <Route path="/student-bookings" element={<StudentBookings />} />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>
       <Footer />

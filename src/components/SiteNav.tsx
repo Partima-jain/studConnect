@@ -421,25 +421,6 @@ export const SiteNav: React.FC = () => {
                       className="btn btn-small"
                       type="button"
                       style={{
-                        background: 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '10px',
-                        fontWeight: 700,
-                        fontSize: '1.01rem',
-                        padding: '.55rem 1.1rem',
-                        boxShadow: '0 6px 18px -4px #5727A355, 0 2px 8px 0 #9F7AEA33',
-                        transition: 'all 0.25s',
-                        marginTop: 4,
-                        width: '100%',
-                        textAlign: 'center'
-                      }}
-                      onClick={logout}
-                    >Logout</button>
-                    {/* <button
-                      className="btn btn-small"
-                      type="button"
-                      style={{
                         background: 'linear-gradient(90deg,#5727A3 0%,#9F7AEA 100%)',
                         color: '#fff',
                         border: 'none',
@@ -455,9 +436,28 @@ export const SiteNav: React.FC = () => {
                       }}
                       onClick={() => {
                         setShowProfileMenu(false);
-                        navigate('/booking');
+                        navigate('/student-bookings');
                       }}
-                    >See Sessions</button> */}
+                    >My Bookings & Payments</button>
+                    <button
+                      className="btn btn-small"
+                      type="button"
+                      style={{
+                        background: 'linear-gradient(90deg,#9F7AEA 0%,#5727A3 100%)',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700,
+                        fontSize: '1.01rem',
+                        padding: '.55rem 1.1rem',
+                        boxShadow: '0 6px 18px -4px #5727A355, 0 2px 8px 0 #9F7AEA33',
+                        transition: 'all 0.25s',
+                        marginTop: 4,
+                        width: '100%',
+                        textAlign: 'center'
+                      }}
+                      onClick={logout}
+                    >Logout</button>
                   </div>
                 )}
               </div>
