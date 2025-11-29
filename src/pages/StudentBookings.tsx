@@ -112,7 +112,7 @@ const StudentBookings: React.FC = () => {
 
   return (
     <main style={{ minHeight:'100vh',background:'#f9fafb',fontFamily:'Inter,system-ui,sans-serif',padding:'2.2rem 1.2rem' }}>
-      <div style={{ maxWidth:820,margin:'0 auto',background:'#fff',border:'1px solid #e5e7eb',borderRadius:16,padding:'2rem 2rem 2.4rem',boxShadow:'0 4px 24px rgba(0,0,0,0.06)' }}>
+      <div style={{ maxWidth:820,margin:'0 auto',marginTop:'2.5rem',background:'#fff',border:'1px solid #e5e7eb',borderRadius:16,padding:'2rem 2rem 2.4rem',boxShadow:'0 4px 24px rgba(0,0,0,0.06)' }}>
         <h1 style={{ margin:0,fontSize:'1.6rem',fontWeight:800,letterSpacing:'-0.5px',color:'#111827' }}>My Bookings & Payments</h1>
         <div style={{ marginTop:'.6rem',fontSize:'.75rem',color:'#6b7280',fontWeight:600 }}>
           All your peer counselling sessions and payment history.
