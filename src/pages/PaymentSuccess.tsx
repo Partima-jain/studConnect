@@ -152,7 +152,7 @@ const PaymentSuccess: React.FC = () => {
 
   const handleViewBooking = () => {
     if (!bookingId) return;
-    navigate(`/booking/${encodeURIComponent(bookingId)}`);
+    navigate(`/student-bookings`);
   };
 
   const handleSupport = () => {
