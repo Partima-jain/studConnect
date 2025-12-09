@@ -215,7 +215,6 @@ const PaymentSuccess: React.FC = () => {
             Waiting for final confirmation. This page is auto-updating every {POLL_INTERVAL_MS/1000}s.
           </div>
         )}
-
         <div style={{ marginTop:'2rem',fontSize:'.6rem',lineHeight:1.4,color:'#6b7280',fontWeight:500 }}>
           If the status does not update after a few minutes, retry payment or contact support with Booking & Payment IDs.
         </div>
