@@ -827,24 +827,6 @@ const PeerCounsellingPage: React.FC = () => {
                   <div style={{color:'#7c3aed', fontWeight:600, fontSize:'.97rem'}}>{showDetails.languages}</div>
                 </div>
               </section>
-              {/* Contact Section */}
-              {/* <section style={{
-                marginBottom: '1.2rem',
-                background: '#f8fafc',
-                borderRadius: 12,
-                padding: '1.1rem 1.2rem',
-                boxShadow: '0 1px 8px #9F7AEA11'
-              }}>
-                <h3 style={{
-                  color:'#7c3aed',
-                  fontWeight:800,
-                  fontSize:'1.13rem',
-                  margin:'0 0 .5rem 0'
-                }}>Contact</h3>
-                <div style={{color:'#475569', fontSize:'.99rem', marginBottom:'.2rem'}}><b>Email:</b> {showDetails.email}</div>
-                <div style={{color:'#475569', fontSize:'.99rem', marginBottom:'.2rem'}}><b>Phone:</b> {showDetails.phone}</div>
-                <div style={{color:'#475569', fontSize:'.99rem'}}><b>Preferred:</b> {showDetails.contact_method}</div>
-              </section> */}
               {/* Experience Section */}
               <section style={{
                 marginBottom: '1.2rem',
