@@ -828,7 +828,7 @@ const PeerCounsellingPage: React.FC = () => {
                 </div>
               </section>
               {/* Contact Section */}
-              <section style={{
+              {/* <section style={{
                 marginBottom: '1.2rem',
                 background: '#f8fafc',
                 borderRadius: 12,
@@ -844,7 +844,7 @@ const PeerCounsellingPage: React.FC = () => {
                 <div style={{color:'#475569', fontSize:'.99rem', marginBottom:'.2rem'}}><b>Email:</b> {showDetails.email}</div>
                 <div style={{color:'#475569', fontSize:'.99rem', marginBottom:'.2rem'}}><b>Phone:</b> {showDetails.phone}</div>
                 <div style={{color:'#475569', fontSize:'.99rem'}}><b>Preferred:</b> {showDetails.contact_method}</div>
-              </section>
+              </section> */}
               {/* Experience Section */}
               <section style={{
                 marginBottom: '1.2rem',
